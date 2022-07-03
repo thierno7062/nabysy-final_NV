@@ -1,0 +1,7 @@
+{
+  "name": "nabysy-final",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
