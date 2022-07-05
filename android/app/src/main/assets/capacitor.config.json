@@ -1,0 +1,6 @@
+{
+	"appId": "io.ionic.starter",
+	"appName": "nabysy-final",
+	"webDir": "www",
+	"bundledWebRuntime": false
+}
