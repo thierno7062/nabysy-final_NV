@@ -1,3 +1,86 @@
 <ion-app>
-  <ion-router-outlet></ion-router-outlet>
+  <!-- Menu Profil -->
+  <ion-menu contentId="menu-content" menuId="menu-content" side="start" type="overlay">
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Side Menu</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
+     <!--  <ion-list>
+        <ion-item>
+          <ion-label>Trach</ion-label>
+          <ion-icon slot="start" name="add"></ion-icon>
+        </ion-item>
+      </ion-list> -->
+      <div class="menu-header-bg"></div>
+      <div class="header-content">
+        <img src="../assets/QF653f.jpg" alt="">
+        <ion-label>
+          <h2>Thierno ABDOURAHMANE NIANG</h2>
+          <P>Comptable</P>
+        </ion-label>
+      </div>
+      <div class="action-button">
+        <ion-button>
+          <!-- <ion-icon slot="start" name="add"></ion-icon> Add Branch -->
+          <ion-icon slot="start" name="add"></ion-icon> Rapport d'activité
+        </ion-button>
+      </div>
+
+      <ion-list class="menu-items" lines="none">
+        <ion-item routerLink="/home" (click)="closeMenu()">
+          <ion-icon name="pie-chart-outline"></ion-icon> Accueil
+        </ion-item>
+        <ion-item routerLink="/personnel" (click)="closeMenu()">
+          <!-- <ion-icon name="browsers-outline"></ion-icon> Post session -->
+          <ion-icon name="person-outline"></ion-icon>Personnel
+        </ion-item>
+        <!-- <ion-item class="active"> -->
+          <ion-item routerLink="/absence" (click)="closeMenu()">
+          <!-- <ion-icon name="flash"></ion-icon> Live session -->
+          <ion-icon name="calendar-outline"></ion-icon>Absence
+        </ion-item>
+        <ion-item routerLink="/affectation" (click)="closeMenu()">
+          <!-- <ion-icon name="chatbubble-ellipses-outline"></ion-icon> Message -->
+          <ion-icon name="send-outline"></ion-icon> Affectation
+        </ion-item>
+        <ion-item routerLink="/salaires" (click)="closeMenu()">
+          <ion-icon name="cash-outline"></ion-icon>Salaire
+        </ion-item>
+        <ion-item routerLink="/login" (click)="closeMenu()">
+          <ion-icon name="exit-outline"></ion-icon>DECONNECTION
+        </ion-item>
+
+      </ion-list>
+    </ion-content>
+  </ion-menu>
+  <!-- <ion-router-outlet id="menu-content"></ion-router-outlet> -->
+
+<!-- Menu Direction -->
+  <ion-menu contentId="menu-content" menuId="menu-content2" side="start" type="overlay">
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Side Menu</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
+      <ion-list>
+        <ion-item>
+          <ion-label>Trash</ion-label>
+          <ion-icon slot="start" name="trash"></ion-icon>
+        </ion-item>
+        <ion-item>
+          <ion-label>Like</ion-label>
+          <ion-icon slot="start" name="heart"></ion-icon>
+        </ion-item>
+        <ion-item routerLink="/personnel">
+          <ion-label >Outbox</ion-label>
+          <ion-icon slot="start" name="Add" ></ion-icon>
+        </ion-item>
+      </ion-list>
+    </ion-content>
+  </ion-menu>
+  <ion-router-outlet id="menu-content"></ion-router-outlet>
+
 </ion-app>

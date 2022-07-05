@@ -1,0 +1,48 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-button fill="clear" slot="start" color="dark" (click)="_openSideNav()">
+      <ion-icon slot="icon-only" name="menu"> </ion-icon>
+    </ion-button>
+    <ion-buttons slot="end">
+      <ion-button (click)="addaffectation()"   fill="clear"  class="addaffect">AFFECTER EMPLOYE
+        <ion-icon name="send"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>services</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-list *ngFor="let employe of listeEmploye">
+    <ion-item-sliding>
+      <ion-item >
+        <ion-avatar slot="start">
+          <div class="avatar">
+            {{employe.Prenom.substring(0, 1).toUpperCase() }}
+          </div>
+        </ion-avatar>
+        <ion-label>
+          <h3 class="title">{{employe.Prenom + ' '+employe.Nom}}</h3>
+          <p class="subtext">{{'Adresse: '+ employe.Adresse +' Tel: ' + employe.Tel }}</p>
+        </ion-label>
+      </ion-item>
+      <ion-item-options side="end">
+        <ion-item-option color="danger" (click)="removeEmploye(employe)">
+          <ion-icon name="trash"></ion-icon>
+        </ion-item-option>
+        <ion-item-option color="success" (click)="updateEmploye(employe)">
+          Modifier
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+
+  </ion-list>
+
+
+  <ion-button (click)="addaffectation()"   class="addaffect1"  expand="block">
+    <ion-icon name="add"></ion-icon>
+    <ion-label>AFFECTER EMPLOYE</ion-label>
+  </ion-button>
+  <!--[routerLink]= "['/routePath']"-->
+
+</ion-content>

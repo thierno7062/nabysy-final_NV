@@ -1,0 +1,144 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>crud-absence</ion-title>
+    <ion-buttons slot="end">
+      <ion-button fill="clear" [routerLink]="[]">
+        <ion-icon slot="icon-only" name="person-circle"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-button slot="end" (click)="closeModal()"><ion-icon name="close-outline"></ion-icon></ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+<ion-card>
+  <ion-card-content>
+    <ion-list >
+      <ion-item>
+        <ion-label position="floating">Id Employe</ion-label>
+        <ion-input [(ngModel)]='this.idEmploye'></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Prenom</ion-label>
+        <ion-input [(ngModel)]='this.prenom' ></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Nom</ion-label>
+        <!-- <ion-input [(ngModel)]='this.Nom' [readonly]="true"></ion-input> -->
+        <ion-input [(ngModel)]='this.nom' ></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Date enregistrement</ion-label>
+        <ion-input [(ngModel)]='this.dateEnregistrement'></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Heure enregistrement</ion-label>
+        <ion-input [(ngModel)]='this.heureEnregistrement'  ></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Motif</ion-label>
+        <ion-input [(ngModel)]='this.motif' ></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Date Debut</ion-label>
+        <ion-input [(ngModel)]='this.dateDebut'></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Heure Debut</ion-label>
+        <ion-input [(ngModel)]='this.heureDebut'></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">DateFin</ion-label>
+        <ion-input [(ngModel)]='this.dateFin'></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating" >Heure Fin</ion-label>
+        <ion-input [(ngModel)]='this.heureFin'></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Annee</ion-label>
+        <ion-input [(ngModel)]='this.annee'></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">pourtous</ion-label>
+        <ion-input [(ngModel)]='this.pourtous'></ion-input>
+      </ion-item>
+  </ion-list>
+
+<ion-row>
+  <ion-col size="4" class="prev">
+    <ion-button>
+      <ion-icon name="arrow-back">
+      </ion-icon>
+    </ion-button>
+  </ion-col>
+
+
+  <ion-col size="4">
+    <ion-button fill="outline"
+    expand="block"
+    color="primary"
+    type="submit"
+    (click)="onSubmit()"
+    >
+  {{isUpdate ? 'Modifier' :'Enregistrer'}}</ion-button>
+  </ion-col>
+
+  <ion-col size="4" >
+    <ion-button class="next">
+      <ion-icon name="arrow-forward">
+      </ion-icon>
+    </ion-button>
+  </ion-col>
+</ion-row>
+  </ion-card-content>
+</ion-card>
+
+
+  <ion-item>
+
+    <ion-radio-group name="auto" >
+        <ion-list-header>
+          <ion-title>Absence Individuelle</ion-title>
+        </ion-list-header>
+        <ion-row>
+          <ion-item color="success">
+            <ion-label class="choix">OUI</ion-label>
+            <ion-radio value="oui" (click)="togglepaspourTous()"></ion-radio>
+          </ion-item>
+          <ion-item>
+            <ion-label class="choix" >NON</ion-label>
+            <ion-radio value="non" (click)="togglepourTous()"></ion-radio>
+          </ion-item>
+        </ion-row>
+    </ion-radio-group>
+  </ion-item>
+
+    <ion-item *ngIf="bulkIndividuel">
+      <ion-label>Liste des employés</ion-label>
+      <ion-select value="" multiple="true" placeholder="Selectionner un employe" [(ngModel)]="selectedValue">
+        <ion-select-option *ngFor="let employe of listeEmploye">
+              <ion-item>
+               <ion-label>
+                  <ion-input type="hidden">{{employe.ID}}+ ' '</ion-input>
+                  <h3 class="title">{{employe.Prenom + ' '+employe.Nom}}</h3>
+              </ion-label>
+              </ion-item>
+        </ion-select-option>
+
+      </ion-select>
+    </ion-item>
+
+
+    <!-- <ion-card>
+
+      <ion-list *ngIf="selectedValue.length>0" >
+        <ion-item >
+          {{selectedValue}}
+        </ion-item>
+
+      </ion-list>
+    </ion-card> -->
+  </ion-content>
+

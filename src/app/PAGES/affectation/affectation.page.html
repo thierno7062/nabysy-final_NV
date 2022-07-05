@@ -1,0 +1,140 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-button fill="clear" slot="start" color="dark" (click)="_openSideNav()">
+      <ion-icon slot="icon-only" name="menu"> </ion-icon>
+    </ion-button>
+    <ion-buttons slot="end">
+      <ion-button  expand="block" fill="clear" color="success" routerLink="/direction">
+        Ajouter Affectation
+      </ion-button>
+    </ion-buttons>
+    <ion-title class="ion-text-center">Affectation</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <ion-row>
+    <ion-col size="4"></ion-col>
+    <ion-col size="4" size-md="4" size-lg="4"> <h1 class="title">HISTORIQUE DES AFFECTATIONS</h1></ion-col>
+    <ion-col size="4"></ion-col>
+  </ion-row>
+
+
+    <ion-button (click)="toggleBulkEdit()" expand="full">
+      Cocher plusieurs cases
+    </ion-button>
+    <ion-button (click)="affectationMethode()" expand="full" color="danger" *ngIf="bulkEdit">
+      Supprimer Affectation
+    </ion-button>
+
+  <ion-row class="header-row">
+    <ion-col size="2" *ngIf="bulkEdit">
+      Select
+    </ion-col>
+    <!-- <ion-col size="2" size-md="2" size-lg="2" tappable (click)="sortBy('Nom')"> -->
+      <ion-col size="2"  tappable (click)="sortBy('Nom')">
+      Nom
+      <ion-icon name="arrow-down" *ngIf="sortDirection === 1"></ion-icon>
+      <ion-icon name="arrow-up" *ngIf="sortDirection === 2"></ion-icon>
+    </ion-col>
+    <!-- <ion-col size="2" size-md="4" size-lg="2"> -->
+      <ion-col size="2" >
+      Prénom
+    </ion-col>
+    <ion-col size="2" tappable (click)="sortBy('Date affectation')">
+      Date affectation
+      <ion-icon name="arrow-down" *ngIf="sortDirection === 1"></ion-icon>
+      <ion-icon name="arrow-up" *ngIf="sortDirection === 2"></ion-icon>
+    </ion-col>
+    <ion-col size="2">
+      Direction
+    </ion-col>
+    <ion-col size="2">
+      Service
+    </ion-col>
+    <ion-col size="2" *ngIf="!bulkEdit">
+      Détails
+    </ion-col> 
+  </ion-row>
+
+  <!-- <ion-row *ngFor="let row of listeAffectation; let i = index;" class="data-row" (click)="userdetails(row)" > -->
+    <ion-row *ngFor="let row of listeAffectation; let i = index;" class="data-row">
+
+    <ion-col size="2" *ngIf="bulkEdit">
+      <ion-checkbox [(ngModel)]="edit[i]"></ion-checkbox>
+        </ion-col> 
+        <!-- <ion-col size="2" size-md="2" size-lg="2"> -->
+          <ion-col size="2" >
+          {{ row.NOMEMPLOYE}}
+        </ion-col>
+        <!-- <ion-col  size="4" size-md="4" size-lg="2"> -->
+          <ion-col  size="2" >
+          {{ row.PRENOMEMPLOYE}}
+        </ion-col>
+        <ion-col size="2" >
+          {{ row.DateAffectation}}
+        </ion-col>
+        <ion-col size="2">
+          {{ row.DIRECTION}}
+        </ion-col>
+        <ion-col size="2" >
+          {{ row.NOMSERVICE}}
+        </ion-col>
+      <!-- <ion-col size="2" *ngIf="!bulkEdit"> -->
+      <ion-col size="2"  *ngIf="!bulkEdit">
+       <ion-button size="small" (click)="userdetails(i)" color="primary" fill="clear">
+        <ion-icon name="eye-outline"></ion-icon>
+      </ion-button>
+
+
+    </ion-col>
+
+  </ion-row>
+
+  <ion-row>
+    <ion-col size="12" class="ion-text-center">
+      {{page + 1}} of {{ totalPages}}
+    </ion-col>
+  </ion-row>
+
+  <ion-row>
+    <ion-col size="2">
+      <ion-button fill="clear" (click)="goFirst()">
+        <ion-icon name="play-back" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-col>
+    <ion-col size="2">
+      <ion-button fill="clear" (click)="prevPage()">
+        <ion-icon name="chevron-back" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-col>
+
+    <ion-col size="4" class="ion-text-center">
+      <ion-select interface="popover" [(ngModel)]="resultsCount" (ionChange)="loadAffectation()">
+        <ion-select-option [value]="5">5</ion-select-option>
+        <ion-select-option [value]="10">10</ion-select-option>
+        <ion-select-option [value]="25">25</ion-select-option>
+        <ion-select-option [value]="50">50</ion-select-option>
+      </ion-select>
+    </ion-col>
+
+    <ion-col size="2">
+      <ion-button fill="clear" (click)="nextPage()">
+        <ion-icon name="chevron-forward" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-col>
+    <ion-col size="2">
+      <ion-button fill="clear" (click)="goLast()">
+        <ion-icon name="play-forward" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-col>
+
+  </ion-row>
+
+
+
+
+</ion-content>
