@@ -11,9 +11,10 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./crud-absence.page.scss'],
 })
 export class CrudAbsencePage implements OnInit {
-  @Input() employe: any;
+  @Input() absence: any;
   listeEmploye: any;
   isUpdate= false;
+  bulkEdit= false;
   // eslint-disable-next-line @typescript-eslint/naming-convention
   idEmploye: ''; utilisateur: ''; paye: '';
   nom: ''; pourtous: ''; dateEnregistrement: '';
@@ -22,38 +23,56 @@ export class CrudAbsencePage implements OnInit {
   dateFin: ''; heureFin: '';
   motif: ''; annee: '';
 
+  nomEmp: ''; prenomEmp: ''; fonctionEmp: '';affectation: ''; telephone: '';
   bulkIndividuel= true;
   selectedValue: ''[]=[];
+  page = 0;
+  resultsCount = 10;
+  totalPages = 10;
+  sortEmploye= 0;
+  sortKey= null;
+  edit: any[];
 
   constructor(private modalctrl: ModalController,private popupModalService: PopupModalService,
     private http: HttpClient,
     private toastctrl: ToastController) {
-      this.readAPI(environment.endPoint+'employe_action.php?Action=GET_EMPLOYE&Token='+environment.tokenUser)
-      .subscribe((listes) =>{
-        // console.log(Listes);
-        this.listeEmploye=listes ;
-        console.log(this.listeEmploye);
-      });
+        this.loadEmploye();
+
      }
 
   ngOnInit() {
-    if (this.employe){
-      this.nom=this.employe.Nom;
-          this.prenom= this.employe.Prenom;
-          this.dateDebut= this.employe.DateDebut;
-          this.dateFin= this.employe.DateFin;
-          this.motif= this.employe.TextMotif;
-          this.idEmploye=  this.employe.IdEmploye;
-          this.dateEnregistrement= this.employe.DateEnreg;
-          this.heureEnregistrement= this.employe.HeureEnreg;
-          this.heureDebut= this.employe.HeureDebut;
-          this.heureFin= this.employe.HeureFin;
-          this.annee= this.employe.Annee;
-          this.paye= this.employe.IsPaye;
-          this.pourtous= this.employe.PourTous;
+    if (this.absence){
+      this.nom=this.absence.Nom;
+          this.prenom= this.absence.Prenom;
+          this.dateDebut= this.absence.DateDebut;
+          this.dateFin= this.absence.DateFin;
+          this.motif= this.absence.TextMotif;
+          this.idEmploye=  this.absence.IdEmploye;
+          this.dateEnregistrement= this.absence.DateEnreg;
+          this.heureEnregistrement= this.absence.HeureEnreg;
+          this.heureDebut= this.absence.HeureDebut;
+          this.heureFin= this.absence.HeureFin;
+          this.annee= this.absence.Annee;
+          this.paye= this.absence.IsPaye;
+          this.pourtous= this.absence.PourTous;
 
     this.isUpdate = true;
   }
+  }
+  loadEmploye(){
+    this.readAPI(environment.endPoint+'employe_action.php?Action=GET_EMPLOYE&Token='+environment.tokenUser)
+    .subscribe((listes) =>{
+      // console.log(Listes);
+      this.listeEmploye=listes ;
+      console.log(this.listeEmploye);
+      if(this.listeEmploye.ID>0){
+        this.nomEmp=this.listeEmploye.Nom;
+        this.prenomEmp=this.listeEmploye.Prenom;
+        this.fonctionEmp=this.listeEmploye.Fonction;
+        this.affectation=this.listeEmploye.LieuxAffectationType;
+        this.telephone=this.listeEmploye.Tel;
+        }
+    });
   }
   togglepourTous(){
     this.bulkIndividuel = false;
@@ -68,12 +87,6 @@ export class CrudAbsencePage implements OnInit {
 
   }
 
-  traiterAbsenceIndividuelle( indexTableau){
-    const employe=this.listeEmploye[indexTableau];
-    console.log(employe);
-    console.log('Id='+employe.ID);
-  }
-
   onSubmit(){
     //console.log(this.selectedValue);
     if(this.dateDebut===''){
@@ -81,46 +94,51 @@ export class CrudAbsencePage implements OnInit {
     }else if(this.motif===''){
       this.presentToast('Veillez mettre votre prénom SVP!!!!!!');
     }else{
-      console.log(this.selectedValue);
-      for (let i=0;i<=this.selectedValue.length; i++){
-        const elem=this.selectedValue[i];
-        console.log(elem);
-        console.log(this.selectedValue[i]);
-        this.traiterAbsenceIndividuelle(elem) ;
-      }
-
       return new Promise (() =>{
+        console.log('Objet en cour =',this);
+        console.log('listeEmploye =',this.listeEmploye);
         const headers = new Headers();
         headers.append('Accept', 'application/json');
         headers.append('Content-Type', 'application/json' );
         // ----------------------
-        let txId='';
-        if (this.employe){
-          txId='&IDABSENCE='+this.employe.ID ;
+        for (const [key, value] of Object.entries(this.edit)) {
+          const employe=this.listeEmploye[key];
+          this.absenceUnePersonne(employe.ID);
+
         }
+        this.modalctrl.dismiss(this.listeEmploye,'create');
+      return false;
 
-       /*  var TxService='';
-        if (this.service){
-          TxService='&IdService='+this.idService;
-        } */
-        const apiUrl=environment.endPoint+'calendrier_action.php?Action=AJOUTER_ABSENCE'+txId+'&IDEMPLOYE='+
-        this.idEmploye+'&DATEDEBUT='+this.dateDebut+'&DATEFIN='+this.dateFin+
-        '&PAYE='+this.paye+'&MOTIF='+this.motif+'&POURTOUS='+this.pourtous+
-        '&Nom='+this.nom+'&Prenom='+
-        this.prenom+'&Token='+environment.tokenUser;
         // ---------------
-        console.log(apiUrl);
-        this.http.get(apiUrl).subscribe(async data =>{
-          console.log(data);
-          if(data['OK']!== '0'){
-            // this.router.navigate(['/personnel']);
-            this.modalctrl.dismiss(data,'create');
-          }
-
-        });
       });
     }
   }
+  absenceUnePersonne(idPersonne,afficherTost=false){
+    const apiUrl=environment.endPoint+
+    'calendrier_action.php?Action=AJOUTER_ABSENCE&IdEmploye='+
+    idPersonne+'&DATEDEBUT='+this.dateDebut+'&DATEFIN='+this.dateFin+
+    '&PAYE='+this.paye+'&MOTIF='+this.motif+'&POURTOUS='+this.pourtous+
+    '&Nom='+this.nom+'&Prenom='+
+    this.prenom+'&Token='+environment.tokenUser;;
+
+
+    // this.url=environment.endPoint+'service_action.php?Action=GET_SERVICE&IdDirection='+this.direction.ID;
+      console.log(apiUrl);
+      this.readAPI(apiUrl)
+      .subscribe((reponseApi) =>{
+        console.log(reponseApi);
+        if(reponseApi['"OK"']!== '0'){
+          console.log(+this.prenom+' '+this.nom+' absent le '+this.dateDebut+ '...OK');
+          if (afficherTost){
+      this.presentToast(+this.prenom+' '+this.nom+' absent le '+this.dateDebut+ '...OK');
+          }
+          return true;
+        }else{
+          console.log('Ajout absence pour '+this.prenom+' '+this.nom+' ...Erreur');
+          return false ;
+        }
+      });
+}
   async presentToast(a){
     const toast = await this.toastctrl.create({
       message:a,
@@ -133,8 +151,48 @@ export class CrudAbsencePage implements OnInit {
     this.modalctrl.dismiss(null, 'closed');
 
   }
-  userdetails(){
-    this.popupModalService.presentModal2();
+  userdetails(userDetail: any){
+    this.popupModalService.presentModal2(userDetail);
+  }
+  sortBy(key){
+    this.sortKey= key;
+    this.sortEmploye++;
+  }
+  sort(){
+    if (this.sortEmploye === 1){
+      this.listeEmploye = this.listeEmploye.sort((a, b) =>{
+        console.log('a: ', a);
+        const valA = a[this.sortKey];
+        const valB = b[this.sortKey];
+        return valA.localeCompare(valB);
+      });
+    }else if (this.sortEmploye === 2){
+      this.listeEmploye = this.listeEmploye.sort((a, b) =>{
+        const valA = a[this.sortKey];
+        const valB = b[this.sortKey];
+        return valB.localeCompare(valA);
+      });
+    }else{
+      this.sortEmploye= 0;
+      this.sortKey= null;
+    }
+
+  }
+  nextPage(){
+    this.page++;
+    this.loadEmploye();
   }
 
+  prevPage(){
+    this.page--;
+    this.loadEmploye();
+  }
+  goFirst(){
+    this.page= 0;
+    this.loadEmploye();
+  }
+  goLast(){
+    this.page = this.totalPages - 1;
+    this.loadEmploye();
+  }
 }

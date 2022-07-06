@@ -13,27 +13,30 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-  <ion-list *ngFor="let employe of listeAbsence">
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <ion-list *ngFor="let absence of listeAbsence">
     <ion-item-sliding>
       <ion-item (click)="absencedetails()">
         <ion-avatar slot="start">
           <div class="avatar">
-            <!-- {{employe.TextMotif.substring(0, 1).toUpperCase() }} -->
-            {{employe.PourTous }}
+            <!-- {{absence.TextMotif.substring(0, 1).toUpperCase() }} -->
+            {{absence.PourTous }}
           </div>
         </ion-avatar>
         <ion-label>
-          <h3 class="title">{{employe.Utilisateur + ' '+employe.DateEnreg+' '+employe.HeureEnreg}}</h3>
-          <p class="subtext">{{'Date Début: '+ employe.DateDebut +'  '+' Date Fin: ' + employe.DateFin }}</p>
-          <p class="subtext">{{'Heure Début: '+ employe.HeureDebut +'  '+' Heure Fin: ' + employe.HeureFin }}</p>
-          <p class="subtext">{{'Année: '+ employe.Annee +'  '+' Nombre heure: ' + employe.NbHeure }}</p>
+          <h3 class="title">{{absence.Utilisateur + ' '+absence.DateEnreg+' '+absence.HeureEnreg}}</h3>
+          <p class="subtext">{{'Date Début: '+ absence.DateDebut +'  '+' Date Fin: ' + absence.DateFin }}</p>
+          <p class="subtext">{{'Heure Début: '+ absence.HeureDebut +'  '+' Heure Fin: ' + absence.HeureFin }}</p>
+          <p class="subtext">{{'Année: '+ absence.Annee +'  '+' Nombre heure: ' + absence.NbHeure }}</p>
         </ion-label>
       </ion-item>
       <ion-item-options side="end">
-        <ion-item-option color="danger" (click)="removeEmploye(employe)">
+        <ion-item-option color="danger" (click)="removeAbsence(absence)">
           <ion-icon name="trash"></ion-icon>
         </ion-item-option>
-        <ion-item-option color="success" (click)="updateEmploye(employe)">
+        <ion-item-option color="success" (click)="updateAbsence(absence)">
           Modifier
         </ion-item-option>
       </ion-item-options>

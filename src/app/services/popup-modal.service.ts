@@ -21,13 +21,25 @@ export class PopupModalService {
     });
     return await modal.present();
   }
-  async presentModal2(){
+  async presentModal2(userDetail: any){
+    const modal = await this.modalCtrl.create({
+      component: DetailEmployePage,
+      componentProps:{
+        data: userDetail,
+      }
+
+    });
+    return await modal.present();
+  }
+  async presentModalEmploye(){
     const modal = await this.modalCtrl.create({
       component: DetailEmployePage,
 
     });
     return await modal.present();
   }
+
+
   dismiss(){
     this.modalCtrl.dismiss({
       dismissed: true

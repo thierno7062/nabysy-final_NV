@@ -128,7 +128,7 @@ export class PersonnelPage implements OnInit {
     this.menu.open('menu-content');
   }
   userdetails(){
-    this.popupModalService.presentModal2();
+    this.popupModalService.presentModalEmploye();
   }
   doRefresh(event){
     this.refreshPerson();

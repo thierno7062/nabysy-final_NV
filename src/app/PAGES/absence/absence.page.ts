@@ -23,16 +23,19 @@ export class AbsencePage implements OnInit {
     private menu: MenuController,
     private http: HttpClient, private alertctrl: AlertController,
     private modalctrl: ModalController, private service: EmployeService) {
-       //console.log(environment.endPoint);
+    this.loadAbsence();
+    }
+
+  ngOnInit() {
+  }
+  loadAbsence(){
+     //console.log(environment.endPoint);
      this.readAPI(environment.endPoint+'calendrier_action.php?Action=GET_ABSENCE&Token='+environment.tokenUser)
      .subscribe((listes) =>{
        // console.log(Listes);
        this.listeAbsence=listes ;
        console.log(this.listeAbsence);
      });
-    }
-
-  ngOnInit() {
   }
   _openSideNav(){
     this.menu.enable(true,'menu-content');
@@ -53,6 +56,7 @@ export class AbsencePage implements OnInit {
         this.service.get(newIdEmploye).subscribe(async newdata =>{
             this.listeAbsence.push(newdata[0]);
             //console.log(this.listeEmploye);
+            this.loadAbsence();
         });
       }
     });
@@ -67,7 +71,7 @@ export class AbsencePage implements OnInit {
     this.popupModalService.presentModalAbsence();
   }
 
-  removeEmploye(employe: any){
+  removeAbsence(absence: any){
     this.alertctrl.create({
       header:'Suppresion',
       message:'voulez vous supprimer ?',
@@ -83,16 +87,17 @@ export class AbsencePage implements OnInit {
             headers.append('Accept', 'application/json');
             headers.append('Content-Type', 'application/json' );
             const apiUrl=environment.endPoint+'employe_action.php?Action=SUPPRIME_EMPLOYE&IdEmploye='+
-            employe.ID+'&Token='+environment.tokenUser;
+            absence.ID+'&Token='+environment.tokenUser;
             console.log(apiUrl);
             this.http.get(apiUrl).subscribe(async data =>{
               console.log(data);
               if(data['OK'] >0){
                  //this.router.navigate(['personnel']);
-                 const pos=this.listeAbsence.indexOf(employe);
+                 const pos=this.listeAbsence.indexOf(absence);
                  console.log(pos);
                  if (pos>-1){
                   this.listeAbsence.splice(pos,1);
+                  this.loadAbsence();
                  }
               }else{
                 console.log(data['OK']);
@@ -106,13 +111,17 @@ export class AbsencePage implements OnInit {
 
 
   }
-  updateEmploye(employe: any){
-    console.log(employe);
+  updateAbsence(absence: any){
+    console.log(absence);
     this.modalctrl.create({
       component: CrudAbsencePage,
-      componentProps:{ employe }
+      componentProps:{ absence }
     })
     .then(modal => modal.present());
 
+  }
+  doRefresh(event){
+    this.loadAbsence();
+    event.target.complete();
   }
 }
