@@ -144,7 +144,7 @@ export class CrudAbsencePage implements OnInit {
     idPersonne+'&DATEDEBUT='+this.dateDebut+'&DATEFIN='+this.dateFin+
     '&PAYE='+this.paye+'&MOTIF='+this.motif+'&POURTOUS='+this.pourtous+
     '&Nom='+this.nom+'&Prenom='+
-    this.prenom+'&Token='+environment.tokenUser;;
+    this.prenom+'&Token='+environment.tokenUser;
 
       console.log(apiUrl);
       this.readAPI(apiUrl)
