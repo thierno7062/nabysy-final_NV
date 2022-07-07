@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/dot-notation */
 import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { ModalController, ToastController } from '@ionic/angular';
 import { PopupModalService } from 'src/app/services/popup-modal.service';
 import { environment } from 'src/environments/environment';
@@ -15,6 +16,7 @@ export class CrudAbsencePage implements OnInit {
   listeEmploye: any;
   isUpdate= false;
   bulkEdit= false;
+  data: [];
   // eslint-disable-next-line @typescript-eslint/naming-convention
   idEmploye: ''; utilisateur: ''; paye: '';
   nom: ''; pourtous: ''; dateEnregistrement: '';
@@ -34,7 +36,7 @@ export class CrudAbsencePage implements OnInit {
   edit: any[];
 
   constructor(private modalctrl: ModalController,private popupModalService: PopupModalService,
-    private http: HttpClient,
+    private http: HttpClient,private route: ActivatedRoute,
     private toastctrl: ToastController) {
         this.loadEmploye();
 
@@ -60,7 +62,31 @@ export class CrudAbsencePage implements OnInit {
   }
   }
   loadEmploye(){
-    this.readAPI(environment.endPoint+'employe_action.php?Action=GET_EMPLOYE&Token='+environment.tokenUser)
+    this.route.queryParams.subscribe(res =>{
+      this.absence=res ;
+      //console.log(this.infoService);
+      if (this.absence){
+        this.prenom= this.absence.Prenom;
+          this.dateDebut= this.absence.DateDebut;
+          this.dateFin= this.absence.DateFin;
+          this.motif= this.absence.TextMotif;
+          this.idEmploye=  this.absence.IdEmploye;
+          this.dateEnregistrement= this.absence.DateEnreg;
+          this.heureEnregistrement= this.absence.HeureEnreg;
+          this.heureDebut= this.absence.HeureDebut;
+          this.heureFin= this.absence.HeureFin;
+          this.annee= this.absence.Annee;
+          this.paye= this.absence.IsPaye;
+          this.pourtous= this.absence.PourTous;
+      }
+    });
+      this.http.get(environment.endPoint+'employe_action.php?Action=GET_EMPLOYE&Token='+environment.tokenUser).subscribe(res => {
+      this.listeEmploye = res;
+      console.log('listeEmploye =',this.listeEmploye);
+      this.data= [];
+      this.sort();
+    });
+/*     this.readAPI(environment.endPoint+'employe_action.php?Action=GET_EMPLOYE&Token='+environment.tokenUser)
     .subscribe((listes) =>{
       // console.log(Listes);
       this.listeEmploye=listes ;
@@ -72,7 +98,7 @@ export class CrudAbsencePage implements OnInit {
         this.affectation=this.listeEmploye.LieuxAffectationType;
         this.telephone=this.listeEmploye.Tel;
         }
-    });
+    }); */
   }
   togglepourTous(){
     this.bulkIndividuel = false;
@@ -88,7 +114,6 @@ export class CrudAbsencePage implements OnInit {
   }
 
   onSubmit(){
-    //console.log(this.selectedValue);
     if(this.dateDebut===''){
       this.presentToast('Veillez mettre le nom SVP!!!!');
     }else if(this.motif===''){
@@ -121,8 +146,6 @@ export class CrudAbsencePage implements OnInit {
     '&Nom='+this.nom+'&Prenom='+
     this.prenom+'&Token='+environment.tokenUser;;
 
-
-    // this.url=environment.endPoint+'service_action.php?Action=GET_SERVICE&IdDirection='+this.direction.ID;
       console.log(apiUrl);
       this.readAPI(apiUrl)
       .subscribe((reponseApi) =>{

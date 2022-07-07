@@ -1,0 +1,20 @@
+ion-accordion::part(content){
+  padding: 2px;
+  background: #0a0a0a;
+}
+/* ion-accordion::part(header){
+  padding: 2px;
+  background: #00ff00;
+} */
+ion-accordion.accordion-expanding ion-item[slot="header"],
+ion-accordion.accordion-expanded ion-item[slot="header"]{
+  --background: var(--ion-color-secondary);
+  --color: #fff;
+}
+/*
+ion-accordion.accordion-expanding [slot="content"],
+ion-accordion.accordion-expanded [slot="content"]{
+  --ion-item-background: #cbc8e4;
+  --ion-item-color: #fff;
+}
+ */

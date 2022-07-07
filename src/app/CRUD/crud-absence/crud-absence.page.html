@@ -151,16 +151,16 @@
         <ion-checkbox [(ngModel)]="edit[i]"></ion-checkbox>
           </ion-col>
           <ion-col size="2" >
-            {{ row.nomEmp}}
+            {{ row.Nom}}
           </ion-col>
           <ion-col  size="2">
-            {{ row.prenomEmp}}
+            {{ row.Prenom}}
           </ion-col>
           <ion-col size="2">
-            {{ row.fonctionEmp}}
+            {{ row.Adresse}}
           </ion-col>
           <ion-col size="2" >
-            {{ row.affectation}}
+            {{ row.Tel}}
           </ion-col>
         <!--   <ion-col size="2" >
             {{ row.Tel}}
@@ -241,6 +241,33 @@
       </ion-col>
 
     </ion-row>
+  </ion-card-content>
+ </ion-card>
+ <ion-card>
+  <ion-card-content>
+    <ion-list *ngFor="let employe of listeEmploye; let i = index;">
+      <ion-item-sliding>
+        <ion-item>
+          <ion-avatar slot="start">
+
+              <!-- <ion-checkbox [(ngModel)]="edit[i]"></ion-checkbox> -->
+
+          </ion-avatar>
+          <ion-label>
+            <h3 class="title">{{employe.Prenom + ' '+employe.Nom}}</h3>
+            <p class="subtext">{{'Adresse: '+ employe.Adresse +' Tel: ' + employe.Tel }}</p>
+          </ion-label>
+        </ion-item>
+        <ion-item-options side="end">
+          <ion-item-option color="danger" >
+            <ion-icon name="trash"></ion-icon>
+          </ion-item-option>
+          <ion-item-option color="success">
+            Modifier
+          </ion-item-option>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ion-list>
   </ion-card-content>
  </ion-card>
 
