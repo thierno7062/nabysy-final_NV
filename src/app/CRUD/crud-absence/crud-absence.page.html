@@ -148,7 +148,7 @@
     <ion-row *ngFor="let row of listeEmploye; let i = index;" class="data-row">
 
       <ion-col size="2">
-        <ion-checkbox [(ngModel)]="edit[i]"></ion-checkbox>
+        <ion-checkbox [(ngModel)]="row.IsChecked"></ion-checkbox>
           </ion-col>
           <ion-col size="2" >
             {{ row.Nom}}

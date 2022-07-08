@@ -113,19 +113,20 @@
     </ion-col>
     <ion-col size="6" >
       <ion-accordion-group expand="inset">
-        <ion-accordion value="infos" *ngFor="let info of infoMensuel">
+        <!-- <ion-accordion value="infos" *ngFor="let info of infoMensuel"> -->
+          <ion-accordion value="infos">
           <ion-item slot="header">
-            <ion-label>{{info.MOIS}}</ion-label>
-          </ion-item>
+            <ion-label>{{mois}}</ion-label>
+          </ion-item> 
           <ion-list slot="content">
             <ion-item>
-              <ion-label>{{info.NBTOTAL_JOUR}}</ion-label>
+              <ion-label>{{nbTotalJour}}</ion-label>
             </ion-item>
             <ion-item>
-              <ion-label>{{info.NBHEURE_A_PAYER}}</ion-label>
+              <ion-label>{{nbheureApayer}}</ion-label>
             </ion-item>
             <ion-item>
-              <ion-label>{{info.TOTAL_HEURE_A_PAYER}}</ion-label>
+              <ion-label>{{totalHeureApayer}}</ion-label>
             </ion-item>
           </ion-list>
         </ion-accordion>

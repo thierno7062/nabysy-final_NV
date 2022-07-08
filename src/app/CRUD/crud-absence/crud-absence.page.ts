@@ -1,3 +1,4 @@
+/* eslint-disable prefer-arrow/prefer-arrow-functions */
 /* eslint-disable @typescript-eslint/dot-notation */
 import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
@@ -83,6 +84,8 @@ export class CrudAbsencePage implements OnInit {
       this.http.get(environment.endPoint+'employe_action.php?Action=GET_EMPLOYE&Token='+environment.tokenUser).subscribe(res => {
       this.listeEmploye = res;
       console.log('listeEmploye =',this.listeEmploye);
+      // eslint-disable-next-line @typescript-eslint/naming-convention
+      this.listeEmploye.forEach(function(employe, index,Lst) {Lst[index].IsChecked=0;});
       this.data= [];
       this.sort();
     });
@@ -125,12 +128,12 @@ export class CrudAbsencePage implements OnInit {
         const headers = new Headers();
         headers.append('Accept', 'application/json');
         headers.append('Content-Type', 'application/json' );
-        // ----------------------
-        for (const [key, value] of Object.entries(this.edit)) {
-          const employe=this.listeEmploye[key];
-          this.absenceUnePersonne(employe.ID);
 
-        }
+        this.listeEmploye.forEach((employe)=>{
+          if (employe.IsChecked>0){
+            this.absenceUnePersonne(employe.ID);
+          }
+        });
         this.modalctrl.dismiss(this.listeEmploye,'create');
       return false;
 

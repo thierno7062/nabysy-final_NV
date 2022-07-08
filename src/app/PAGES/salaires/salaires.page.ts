@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable @typescript-eslint/member-ordering */
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
@@ -16,6 +17,7 @@ export class SalairesPage implements OnInit {
   infoMensuel: any;
   nom: ''; qualifiquation: ''; periode: ''; base1: '';base2: ''; base3: ''; taux1: ''; taux2: ''; taux3: '';
   gain1: ''; gain2: ''; gain3: ''; salaireBrut: ''; totalRetenue: ''; salaireNet: '';
+  nbTotalJour: '';nbheureApayer: '';totalHeureApayer: ''; mois: '';
 
   searchTerm: string;
   // @ViewChild(IonAccordionGroup)accordionGroup: IonAccordionGroup;
@@ -57,6 +59,13 @@ export class SalairesPage implements OnInit {
       this.infoMensuel=listes ;
       console.log(this.infoMensuel);
     });
+    if(this.infoMensuel){
+      this.nbTotalJour= this.infoMensuel.NBTOTAL_JOUR;
+      this.nbheureApayer=this.infoMensuel.NBHEURE_A_PAYER;
+      this.totalHeureApayer=this.infoMensuel.TOTAL_HEURE_A_PAYER;
+      this.mois=this.infoMensuel.MOIS;
+
+    }
   }
   readAPI(url: string){
     return this.http.get(url);
