@@ -145,32 +145,22 @@
     </ion-row>
 
     <!-- <ion-row *ngFor="let row of listeEmploye; let i = index;" class="data-row" (click)="userdetails(row)" > -->
-    <ion-row *ngFor="let row of listeEmploye; let i = index;" class="data-row">
-
+    <ion-row *ngFor="let Emp of listeEmploye; index as i" class="data-row">
       <ion-col size="2">
-        <ion-checkbox [(ngModel)]="edit[i]"></ion-checkbox>
-          </ion-col>
-          <ion-col size="2" >
-            {{ row.Nom}}
-          </ion-col>
-          <ion-col  size="2">
-            {{ row.Prenom}}
-          </ion-col>
-          <ion-col size="2">
-            {{ row.Adresse}}
-          </ion-col>
-          <ion-col size="2" >
-            {{ row.Tel}}
-          </ion-col>
-        <!--   <ion-col size="2" >
-            {{ row.Tel}}
-          </ion-col> -->
-      <!-- <ion-col size="2" *ngIf="!bulkEdit">
-         <ion-button size="small" (click)="userdetails(i)" color="primary" fill="clear">
-          <ion-icon name="eye-outline"></ion-icon>
-        </ion-button>
-      </ion-col> -->
-
+        <ion-checkbox [(ngModel)]="Emp.IsChecked"></ion-checkbox>
+      </ion-col>      
+      <ion-col size="2" >
+        {{Emp.Nom}}
+      </ion-col>
+      <ion-col size="2" >
+        {{Emp.Prenom}}
+      </ion-col>
+      <ion-col size="2" >
+        {{Emp.Fonction}}
+      </ion-col>
+      <ion-col size="2" >
+        {{Emp.IdDirection}}
+      </ion-col>
     </ion-row>
 
     <!-- ***********************Submit************************** -->

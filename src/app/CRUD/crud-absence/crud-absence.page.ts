@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable @typescript-eslint/dot-notation */
 import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
@@ -17,6 +18,8 @@ export class CrudAbsencePage implements OnInit {
   isUpdate= false;
   bulkEdit= false;
   data: [];
+  listeEmployeSelected: Array<any>;
+  indexSelect: 0;
   // eslint-disable-next-line @typescript-eslint/naming-convention
   idEmploye: ''; utilisateur: ''; paye: '';
   nom: ''; pourtous: ''; dateEnregistrement: '';
@@ -34,6 +37,7 @@ export class CrudAbsencePage implements OnInit {
   sortEmploye= 0;
   sortKey= null;
   edit: any[];
+  vListe: any;
 
   constructor(private modalctrl: ModalController,private popupModalService: PopupModalService,
     private http: HttpClient,private route: ActivatedRoute,
@@ -84,8 +88,14 @@ export class CrudAbsencePage implements OnInit {
       this.listeEmploye = res;
       console.log('listeEmploye =',this.listeEmploye);
       this.data= [];
+      // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
+        this.vListe=this.listeEmploye.forEach(function(employe, index,Lst) {
+        Lst[index].IsChecked=0;
+        return Lst;
+      });
       this.sort();
     });
+    //console.log(this.vListe);
 /*     this.readAPI(environment.endPoint+'employe_action.php?Action=GET_EMPLOYE&Token='+environment.tokenUser)
     .subscribe((listes) =>{
       // console.log(Listes);
@@ -102,10 +112,10 @@ export class CrudAbsencePage implements OnInit {
   }
   togglepourTous(){
     this.bulkIndividuel = false;
-    console.log('listeEmploye =',this.listeEmploye);
   }
   togglepaspourTous(){
     this.bulkIndividuel = true;
+    console.log('listeEmploye =',this.listeEmploye);
   }
 
   readAPI(url: string){
@@ -126,11 +136,11 @@ export class CrudAbsencePage implements OnInit {
         headers.append('Accept', 'application/json');
         headers.append('Content-Type', 'application/json' );
         // ----------------------
-        for (const [key, value] of Object.entries(this.edit)) {
-          const employe=this.listeEmploye[key];
-          this.absenceUnePersonne(employe.ID);
-
-        }
+        this.listeEmploye.forEach((employe)=>{
+          if (employe.IsChecked>0){
+            this.absenceUnePersonne(employe.ID);
+          }
+        });
         this.modalctrl.dismiss(this.listeEmploye,'create');
       return false;
 
