@@ -17,10 +17,11 @@ export class CrudAbsencePage implements OnInit {
   listeEmploye: any;
   isUpdate= false;
   bulkEdit= false;
+  isPaid: boolean;
   data: [];
-  // eslint-disable-next-line @typescript-eslint/naming-convention
-  idEmploye: ''; utilisateur: ''; paye: '';
-  nom: ''; pourtous: ''; dateEnregistrement: '';
+  choix: boolean;
+  idEmploye: ''; utilisateur: ''; paye: any;
+  nom: ''; pourtous: any; dateEnregistrement: '';
   prenom: ''; heureEnregistrement: '';
   dateDebut: ''; heureDebut: '';
   dateFin: ''; heureFin: '';
@@ -44,8 +45,8 @@ export class CrudAbsencePage implements OnInit {
      }
 
   ngOnInit() {
-    if (this.absence){
-      this.nom=this.absence.Nom;
+    if (this.absence.ID > 0){
+          this.nom=this.absence.Nom;
           this.prenom= this.absence.Prenom;
           this.dateDebut= this.absence.DateDebut;
           this.dateFin= this.absence.DateFin;
@@ -59,7 +60,15 @@ export class CrudAbsencePage implements OnInit {
           this.paye= this.absence.IsPaye;
           this.pourtous= this.absence.PourTous;
 
-    this.isUpdate = true;
+          this.isUpdate = true;
+          this.bulkIndividuel= false;
+          if(this.paye > 0){
+            this.isPaid= true;
+
+          }else{
+            this.isPaid= false;
+          }
+
   }
   }
   loadEmploye(){
@@ -146,9 +155,18 @@ export class CrudAbsencePage implements OnInit {
     'calendrier_action.php?Action=AJOUTER_ABSENCE&IdEmploye='+
     idPersonne+'&DATEDEBUT='+this.dateDebut+'&DATEFIN='+this.dateFin+
     '&PAYE='+this.paye+'&MOTIF='+this.motif+'&POURTOUS='+this.pourtous+
-    '&Nom='+this.nom+'&Prenom='+
-    this.prenom+'&Token='+environment.tokenUser;
-
+    '&HEUREDEBUT='+this.heureDebut+'&HEUREFIN='+
+    this.heureFin+'&Token='+environment.tokenUser;
+    if(this.isPaid===true){
+      this.paye=1;
+    }else{
+      this.paye=0;
+    }
+    if(this.choix===true){
+      this.pourtous=0;
+    }else{
+      this.pourtous=1;
+    }
       console.log(apiUrl);
       this.readAPI(apiUrl)
       .subscribe((reponseApi) =>{

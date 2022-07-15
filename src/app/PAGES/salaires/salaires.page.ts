@@ -24,13 +24,14 @@ export class SalairesPage implements OnInit {
 
   constructor(private router: Router,  private modalctrl: ModalController,private alertctrl: AlertController,
     private menu: MenuController, private http: HttpClient) {
-      this.loadSalary(); this.loadInfoMensuel();
+      this.loadSalary();
+      this.loadInfoMensuel();
     }
 
   ngOnInit() {
   }
   loadSalary(){
-    this.readAPI(environment.endPoint+'salaire_action.php?Action=GET_BULLETIN&IdEmploye=51&MOIS=6&ANNEE=2022&Token='+environment.tokenUser)
+    this.readAPI(environment.endPoint+'salaire_action.php?Action=GET_BULLETIN&IdEmploye=51&ANNEE=2022&Token='+environment.tokenUser)
     .subscribe((listes) =>{
       console.log(listes);
       //  this.dt1=Listes['0'];
@@ -41,11 +42,11 @@ export class SalairesPage implements OnInit {
     if(this.listeSalaire){
       this.nom=this.listeSalaire.NOMEMPLOYE; this.qualifiquation= this.listeSalaire.QUALIFICATION;
       this.periode=this.listeSalaire.PERIODE_DE_PAIE;
-      this.base1=this.listeSalaire.LIGNE_GAIN_PRIME.Base; this.base2=this.listeSalaire.LIGNE_GAIN_PRIME.Base;
+      /* this.base1=this.listeSalaire.LIGNE_GAIN_PRIME.Base; this.base2=this.listeSalaire.LIGNE_GAIN_PRIME.Base;
       this.base3=this.listeSalaire.LIGNE_GAIN_PRIME.Base; this.taux1=this.listeSalaire.LIGNE_GAIN_PRIME.Taux;
        this.taux2=this.listeSalaire.LIGNE_GAIN_PRIME.Taux;this.taux3=this.listeSalaire.LIGNE_GAIN_PRIME.Taux;
        this.gain1=this.listeSalaire.LIGNE_GAIN_PRIME.Gain;  this.gain2=this.listeSalaire.LIGNE_GAIN_PRIME.Gain;
-       this.gain3=this.listeSalaire.LIGNE_GAIN_PRIME.Gain;  this.salaireBrut=this.listeSalaire.SALAIRE_BRUT;
+       this.gain3=this.listeSalaire.LIGNE_GAIN_PRIME.Gain;*/  this.salaireBrut=this.listeSalaire.SALAIRE_BRUT;
         this.totalRetenue=this.listeSalaire.LIGNE_GAIN_PRIME.TOTAL_RETENU;  this.salaireNet=this.listeSalaire.SALAIRE_NET;
 
     }
@@ -68,6 +69,7 @@ export class SalairesPage implements OnInit {
     }
   }
   readAPI(url: string){
+    console.log(url);
     return this.http.get(url);
 
   }

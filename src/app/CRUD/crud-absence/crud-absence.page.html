@@ -1,6 +1,7 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>crud-absence</ion-title>
+    <ion-title *ngIf="!isUpdate">Ajouter-absence</ion-title>
+    <ion-title *ngIf="isUpdate">{{this.prenom +' '+ this.nom }}</ion-title>
     <ion-buttons slot="end">
       <ion-button fill="clear" [routerLink]="[]">
         <ion-icon slot="icon-only" name="person-circle"></ion-icon>
@@ -15,27 +16,11 @@
 <ion-card>
   <ion-card-content>
     <ion-list >
-      <ion-item>
-        <ion-label position="floating">Id Employe</ion-label>
-        <ion-input [(ngModel)]='this.idEmploye'></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label position="floating">Prenom</ion-label>
-        <ion-input [(ngModel)]='this.prenom' ></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label position="floating">Nom</ion-label>
+      <!-- <ion-item>  -->
+        <!-- <ion-label position="floating">Nom</ion-label> -->
         <!-- <ion-input [(ngModel)]='this.Nom' [readonly]="true"></ion-input> -->
-        <ion-input [(ngModel)]='this.nom' ></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label position="floating">Date enregistrement</ion-label>
-        <ion-input [(ngModel)]='this.dateEnregistrement'></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label position="floating">Heure enregistrement</ion-label>
-        <ion-input [(ngModel)]='this.heureEnregistrement'  ></ion-input>
-      </ion-item>
+        <!-- <ion-input [(ngModel)]='this.nom' ></ion-input> -->
+      <!-- </ion-item> -->
       <ion-item>
         <ion-label position="floating">Motif</ion-label>
         <ion-input [(ngModel)]='this.motif' ></ion-input>
@@ -57,17 +42,17 @@
         <ion-input [(ngModel)]='this.heureFin'></ion-input>
       </ion-item>
       <ion-item>
-        <ion-label position="floating">Annee</ion-label>
-        <ion-input [(ngModel)]='this.annee'></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label position="floating">pourtous</ion-label>
-        <ion-input [(ngModel)]='this.pourtous'></ion-input>
+        <!-- <ion-label position="floating">Paye</ion-label>
+        <ion-input [(ngModel)]='this.paye'></ion-input> -->
+        <ion-label>Paye</ion-label>
+        <h2  *ngIf="isPaid">OUI</h2>
+        <h2  *ngIf="!isPaid">NON</h2>
+        <ion-toggle (ionChange)="togglepaspourTous()" mode="ios" [(ngModel)]="isPaid" ></ion-toggle>
       </ion-item>
     </ion-list>
 
-    <ion-row *ngIf="!bulkIndividuel">
-      <ion-col size="4" class="prev">
+    <ion-row  >
+      <ion-col size="4" class="prev" *ngIf="!choix">
         <ion-button>
           <ion-icon name="arrow-back">
           </ion-icon>
@@ -75,7 +60,7 @@
       </ion-col>
 
 
-      <ion-col size="4">
+      <ion-col size="4" *ngIf="!choix">
         <ion-button fill="outline"
         expand="block"
         color="primary"
@@ -85,18 +70,21 @@
       {{isUpdate ? 'Modifier' :'Enregistrer'}}</ion-button>
       </ion-col>
 
-      <ion-col size="4" >
+      <ion-col size="4" *ngIf="!choix">
         <ion-button class="next">
           <ion-icon name="arrow-forward">
           </ion-icon>
         </ion-button>
+      </ion-col>
+      <ion-col size="12" *ngIf="choix">
+        <h2>Veillez sélectionner les employés correspondants ci-dessous</h2>
       </ion-col>
     </ion-row>
   </ion-card-content>
 </ion-card>
 
 
-  <ion-item>
+  <!-- <ion-item *ngIf="inputUpdate">
 
     <ion-radio-group name="auto" >
         <ion-list-header>
@@ -113,9 +101,19 @@
           </ion-item>
         </ion-row>
     </ion-radio-group>
-  </ion-item>
+  </ion-item> -->
+  <ion-list lines="none" *ngIf="!isUpdate">
+    <ion-item>
+      <ion-label>Absence Individuelle</ion-label>
+      <h2  *ngIf="choix">OUI</h2>
+      <h2  *ngIf="!choix">NON</h2>
+      <ion-toggle (ionChange)="togglepaspourTous()" mode="ios" [(ngModel)]="choix"></ion-toggle>
+    </ion-item>
+    <hr style="border-bottom:1px solid gray ;">
+  </ion-list>
 
- <ion-card *ngIf="bulkIndividuel">
+ <!-- <ion-card *ngIf="bulkIndividuel"> -->
+  <ion-card *ngIf="choix">
   <ion-card-content>
     <ion-row class="header-row" >
       <ion-col size="2" >
@@ -239,38 +237,8 @@
           <ion-icon name="play-forward" slot="icon-only"></ion-icon>
         </ion-button>
       </ion-col>
-
     </ion-row>
   </ion-card-content>
  </ion-card>
- <ion-card>
-  <ion-card-content>
-    <ion-list *ngFor="let employe of listeEmploye; let i = index;">
-      <ion-item-sliding>
-        <ion-item>
-          <ion-avatar slot="start">
-
-              <!-- <ion-checkbox [(ngModel)]="edit[i]"></ion-checkbox> -->
-
-          </ion-avatar>
-          <ion-label>
-            <h3 class="title">{{employe.Prenom + ' '+employe.Nom}}</h3>
-            <p class="subtext">{{'Adresse: '+ employe.Adresse +' Tel: ' + employe.Tel }}</p>
-          </ion-label>
-        </ion-item>
-        <ion-item-options side="end">
-          <ion-item-option color="danger" >
-            <ion-icon name="trash"></ion-icon>
-          </ion-item-option>
-          <ion-item-option color="success">
-            Modifier
-          </ion-item-option>
-        </ion-item-options>
-      </ion-item-sliding>
-    </ion-list>
-  </ion-card-content>
- </ion-card>
-
-
   </ion-content>
 
