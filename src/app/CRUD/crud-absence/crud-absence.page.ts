@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 /* eslint-disable prefer-arrow/prefer-arrow-functions */
 /* eslint-disable @typescript-eslint/dot-notation */
 import { HttpClient } from '@angular/common/http';
@@ -139,6 +140,7 @@ export class CrudAbsencePage implements OnInit {
         headers.append('Content-Type', 'application/json' );
 
         this.listeEmploye.forEach((employe)=>{
+          console.log(employe);
           if (employe.IsChecked>0){
             this.absenceUnePersonne(employe.ID);
           }
@@ -151,22 +153,25 @@ export class CrudAbsencePage implements OnInit {
     }
   }
   absenceUnePersonne(idPersonne,afficherTost=false){
+    if(this.isPaid===true){
+      this.paye= '1';
+    }else{
+      this.paye='0';
+    }
+    if(this.choix===true){
+      this.pourtous= '0';
+    }else{
+      this.pourtous= '1';
+    }
+    console.log(this.paye);
+    console.log(this.pourtous);
     const apiUrl=environment.endPoint+
-    'calendrier_action.php?Action=AJOUTER_ABSENCE&IdEmploye='+
+    'calendrier_action.php?Action=AJOUTER_ABSENCE&IDEMPLOYE='+
     idPersonne+'&DATEDEBUT='+this.dateDebut+'&DATEFIN='+this.dateFin+
     '&PAYE='+this.paye+'&MOTIF='+this.motif+'&POURTOUS='+this.pourtous+
     '&HEUREDEBUT='+this.heureDebut+'&HEUREFIN='+
     this.heureFin+'&Token='+environment.tokenUser;
-    if(this.isPaid===true){
-      this.paye=1;
-    }else{
-      this.paye=0;
-    }
-    if(this.choix===true){
-      this.pourtous=0;
-    }else{
-      this.pourtous=1;
-    }
+
       console.log(apiUrl);
       this.readAPI(apiUrl)
       .subscribe((reponseApi) =>{

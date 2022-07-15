@@ -17,3 +17,41 @@
   font-weight: 600;
   font-size: 16px;
 }
+/* ion-toolbar{
+  ion-icon {
+    width: 48px;
+      height: 48px;
+
+      &[size="small"] {
+         width: 20px;
+         height: 20px;
+      }
+    }
+} */
+.refresh{
+  align-content: center;
+  margin-right: 100px;
+  width: 30px;
+  height: 48px;
+
+  &[size="small"] {
+     width: 20px;
+     height: 20px;
+  }
+}
+
+ion-content{
+  --background: #F0F4FD;
+
+  p{
+    font-size: 16px;
+    line-height: 22px;
+    font-weight: 300;
+
+    // color: #8c8c8c;
+
+    margin: 0;
+  }
+
+
+}

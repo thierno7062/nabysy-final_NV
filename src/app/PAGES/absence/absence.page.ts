@@ -19,6 +19,36 @@ export class AbsencePage implements OnInit {
   searchTerm: string;
   bulkEdit= false;
 
+  todoAbsence= [{
+    dateEnreg: 'Coding', dateFin: '',
+    heureEnreg: '13-10-21', heureFin: '',
+    textMotif: 'hight',
+    dateDebut: 'Work',
+    heureDebut: '',
+  },
+{
+  dateEnreg: 'Design', dateFin: '',
+    heureEnreg: '13-10-21', heureFin: '',
+    textMotif: 'low',
+    dateDebut: 'Work',
+},
+{
+  dateEnreg: 'Shopping', dateFin: '',
+    heureEnreg: '30-10-21', heureFin: '',
+    textMotif: 'middle',
+    dateDebut: 'Personal',
+},
+{
+  dateEnreg: 'Workout', dateFin: '',
+    heureEnreg: '25-10-21', heureFin: '',
+    textMotif: 'hight',
+    dateDebut: 'Personal',
+}];
+
+today: number = Date.now();
+sortDirection= 0;
+  sortKey= null;
+
   constructor(private router: Router,private popupModalService: PopupModalService,
     private menu: MenuController,
     private http: HttpClient, private alertctrl: AlertController,
@@ -86,7 +116,7 @@ export class AbsencePage implements OnInit {
             const headers = new Headers();
             headers.append('Accept', 'application/json');
             headers.append('Content-Type', 'application/json' );
-            const apiUrl=environment.endPoint+'employe_action.php?Action=SUPPRIME_EMPLOYE&IdEmploye='+
+            const apiUrl=environment.endPoint+'calendrier_action.php?Action=SUPPRIMER_ABSENCE&IDABSENCE='+
             absence.ID+'&Token='+environment.tokenUser;
             console.log(apiUrl);
             this.http.get(apiUrl).subscribe(async data =>{

@@ -47,7 +47,7 @@
         <ion-label>Paye</ion-label>
         <h2  *ngIf="isPaid">OUI</h2>
         <h2  *ngIf="!isPaid">NON</h2>
-        <ion-toggle (ionChange)="togglepaspourTous()" mode="ios" [(ngModel)]="isPaid" ></ion-toggle>
+        <ion-toggle mode="ios" [(ngModel)]="isPaid" ></ion-toggle>
       </ion-item>
     </ion-list>
 
@@ -77,7 +77,9 @@
         </ion-button>
       </ion-col>
       <ion-col size="12" *ngIf="choix">
-        <h2>Veillez sélectionner les employés correspondants ci-dessous</h2>
+        <ion-item>
+          <ion-label>Veillez sélectionner les employés correspondants ci-dessous</ion-label>
+        </ion-item>
       </ion-col>
     </ion-row>
   </ion-card-content>
