@@ -45,54 +45,32 @@
     </ion-item-sliding>
 
   </ion-list> -->
+  <div class="ion-searchbar">
+    <ion-label color="light">
+      <ion-searchbar
+      placeholder="Rechercher une absence ici..."
+      [(ngModel)]="searchTerm"
+      showCancelButton="focus"
+      cancelButtonText="center"
+      cancelButtonIcon="none"
+      animated></ion-searchbar>
+    </ion-label>
+    <ion-buttons slot="end">
+      <ion-button (click)="sort(key)">
+        <ion-icon name="funnel-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </div>
 
-  <ion-card *ngFor="let item of todoAbsence" class="ion-margin">
-    <ion-card-header>
-      <ion-card-subtitle [style.color]="item.textMotif === 'hight' ? 'red' : (item.textMotif === 'low' ? 'green' : 'orange')">
-        {{item.dateDebut}}
-      </ion-card-subtitle>
-
-      <ion-item>
-        <ion-icon *ngIf="item.textMotif === 'hight'" color="danger" size="small" name="ellipse"></ion-icon>
-        <ion-icon *ngIf="item.textMotif === 'middle'" color="warning" size="small" name="ellipse"></ion-icon>
-        <ion-icon *ngIf="item.textMotif === 'low'" color="success" size="small" name="ellipse"></ion-icon>
-
-        <!-- <ion-icon [style.color]="item.textMotif === 'hight' ? 'red' : (item.textMotif === 'low' ? 'green' : 'orange')" size="small" name="ellipse"></ion-icon> -->
-
-        <ion-label>{{item.dateEnreg}}</ion-label>
-      </ion-item>
-    </ion-card-header>
-    <ion-card-content>
-      <!-- <ion-label>Due {{item.heureEnreg | date:'fullDate'}}</ion-label> -->
-      <ion-label>Due {{today | date:'fullDate' }}</ion-label>
-    </ion-card-content>
-
-    <ion-row>
-      <ion-item>
-        <ion-icon name="share-outline"></ion-icon>
-        <p>Share</p>
-      </ion-item>
-
-      <ion-item>
-        <ion-icon  name="checkmark-outline"></ion-icon>
-        <p>Complete</p>
-      </ion-item>
-
-      <ion-item>
-        <ion-icon  name="trash-outline"></ion-icon>
-        <p>Cancel</p>
-      </ion-item>
-    </ion-row>
-  </ion-card>
 
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button>
+    <ion-fab-button (click)="addTask()">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
 
 
-  <ion-card *ngFor="let item of listeAbsence" class="ion-margin">
+  <ion-card *ngFor="let item of listeAbsence | filter: searchTerm | orderBy: key: reverse" class="ion-margin">
     <ion-card-header>
       <ion-card-subtitle [style.color]="item.Utilisateur === 'thierno' ? 'red' : (item.Utilisateur === 'adama' ? 'green' : 'orange')">
         <strong>{{item.Utilisateur}}</strong>

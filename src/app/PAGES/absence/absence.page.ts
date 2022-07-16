@@ -1,12 +1,15 @@
+/* eslint-disable @typescript-eslint/member-ordering */
 /* eslint-disable @typescript-eslint/dot-notation */
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController, MenuController, ModalController } from '@ionic/angular';
+import { Key } from 'protractor';
 import { CrudAbsencePage } from 'src/app/CRUD/crud-absence/crud-absence.page';
 import { EmployeService } from 'src/app/services/employe.service';
 import { PopupModalService } from 'src/app/services/popup-modal.service';
 import { environment } from 'src/environments/environment';
+import { PrimePage } from '../prime/prime.page';
 
 @Component({
   selector: 'app-absence',
@@ -15,7 +18,7 @@ import { environment } from 'src/environments/environment';
 })
 export class AbsencePage implements OnInit {
   listeAbsence: any;
-
+  id: any;
   searchTerm: string;
   bulkEdit= false;
 
@@ -46,8 +49,7 @@ export class AbsencePage implements OnInit {
 }];
 
 today: number = Date.now();
-sortDirection= 0;
-  sortKey= null;
+
 
   constructor(private router: Router,private popupModalService: PopupModalService,
     private menu: MenuController,
@@ -57,6 +59,10 @@ sortDirection= 0;
     }
 
   ngOnInit() {
+    if(this.listeAbsence){
+      this.id=this.listeAbsence.ID;
+    }
+    this.sort(this.id);
   }
   loadAbsence(){
      //console.log(environment.endPoint);
@@ -66,6 +72,7 @@ sortDirection= 0;
        this.listeAbsence=listes ;
        console.log(this.listeAbsence);
      });
+
   }
   _openSideNav(){
     this.menu.enable(true,'menu-content');
@@ -154,4 +161,18 @@ sortDirection= 0;
     this.loadAbsence();
     event.target.complete();
   }
+  async addTask(){
+    const modal = await this.modalctrl.create({
+      component: PrimePage
+    });
+    return await modal.present();
+  }
+  // key= this.id;
+  reverse= false;
+  sort(key){
+
+   this.id = key;
+   this.reverse = !this.reverse;
+  }
+
 }
