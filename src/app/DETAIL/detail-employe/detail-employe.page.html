@@ -1,9 +1,100 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>detail-employe</ion-title>
+    <ion-button slot="end" (click)="closeModal()"><ion-icon name="close-outline"></ion-icon></ion-button>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content [fullscreen]="true">
+  <!-- page header -->
+  <ion-header mode="ios">
+    <ion-toolbar>
+      <ion-button slot="start" fill="solid" class="button-back">
+        <ion-icon name="chevron-back"></ion-icon>
+      </ion-button>
+      <ion-button slot="end" fill="solid" class="button-edit">
+        <ion-icon name="pencil"></ion-icon>
+      </ion-button>
+    </ion-toolbar>
+  </ion-header>
+  <div class="page-container">
+    <!-- hero -->
+    <div class="hero-container">
+      <ion-img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2342&q=80"></ion-img>
+      <ion-chip>
+        <ion-icon name="star"></ion-icon>
+        <ion-label>4.2</ion-label>
+      </ion-chip>
+    </div>
 
+    <!-- content -->
+    <div class="content-container">
+      <!-- user info -->
+      <div class="name-container">
+        <ion-text algin="center">
+          <h1>Cindy Carter</h1>
+        </ion-text>
+
+        <ion-button>
+          <ion-label>OPEN</ion-label>
+          <ion-icon slot="end" name="ellipsis-horizontal"></ion-icon>
+        </ion-button>
+      </div>
+
+      <!-- location -->
+      <div class="location">
+        <ion-text> Based in <span class="emphasis">Berlin</span> </ion-text>
+      </div>
+
+      <!-- talent scout -->
+      <div class="talent-scout-container">
+        <ion-item class="ion-no-padding" lines="none">
+          <div class="inner-container">
+            <div class="info-container">
+              <ion-avatar>
+                <ion-img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1361&q=80"></ion-img>
+              </ion-avatar>
+              <div class="text-container">
+                <ion-text><span class="name">Karol Thomas</span></ion-text>
+                <ion-text><span class="description">Talent Scout</span></ion-text>
+              </div>
+            </div>
+            <ion-button>
+              <ion-icon name="chatbubble"></ion-icon>
+            </ion-button>
+          </div>
+        </ion-item>
+      </div>
+
+      <!-- stats -->
+      <div class="stats-container">
+        <div class="stat-container">
+          <ion-text><span class="stat">500</span></ion-text>
+          <ion-text><span class="description">LinkedIn Contacts</span></ion-text>
+        </div>
+        <div class="stat-container">
+          <ion-text><span class="stat">4</span></ion-text>
+          <ion-text><span class="description">Recommendations</span></ion-text>
+        </div>
+        <div class="stat-container">
+          <ion-text><span class="stat">10</span></ion-text>
+          <ion-text><span class="description">Years of Experience</span></ion-text>
+        </div>
+      </div>
+
+      <!-- about -->
+      <div class="about-container">
+        <ion-text>
+          <p>Hello everyone. I am looking forward to get to know you and your companies needs to find the perfect match and establish sustainable and long lasting relations.</p>
+        </ion-text>
+      </div>
+
+      <!-- tags -->
+      <div class="tags-container">
+        <ion-chip>Research</ion-chip>
+        <ion-chip>Management</ion-chip>
+        <ion-chip>Recruiting</ion-chip>
+      </div>
+    </div>
+  </div>
 </ion-content>

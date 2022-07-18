@@ -14,10 +14,12 @@ import { environment } from 'src/environments/environment';
 export class SalairesPage implements OnInit {
   listeSalaire: any;
   url: string ;
-  infoMensuel: any;
+  infoMensuel: any; id: number;
+  afficheBulletin: boolean;
   nom: ''; qualifiquation: ''; periode: ''; base1: '';base2: ''; base3: ''; taux1: ''; taux2: ''; taux3: '';
-  gain1: ''; gain2: ''; gain3: ''; salaireBrut: ''; totalRetenue: ''; salaireNet: '';
-  nbTotalJour: '';nbheureApayer: '';totalHeureApayer: ''; mois: '';
+  gain1: ''; gain2: ''; gain3: ''; salaireBrut: ''; totalRetenue: ''; salaireNet: '';categorie: ''; situationFa: '';
+  nbTotalJour: '';nbheureApayer: '';totalHeureApayer: ''; mois: ''; adresse: ''; partTrimf: ''; partIrpp: ''; periodePaie: '';
+  dateEmbauche: '';gainPrime: any; ligneCotisation: any;
 
   searchTerm: string;
   // @ViewChild(IonAccordionGroup)accordionGroup: IonAccordionGroup;
@@ -25,29 +27,41 @@ export class SalairesPage implements OnInit {
   constructor(private router: Router,  private modalctrl: ModalController,private alertctrl: AlertController,
     private menu: MenuController, private http: HttpClient) {
       this.loadSalary();
-      this.loadInfoMensuel();
+      /* this.loadInfoMensuel(); */
+      if(this.listeSalaire){
+        this.id=this.listeSalaire.IdEmploye;
+        if(this.id>0)
+        {this.afficheBulletin= true;}
+      }else{
+        this.afficheBulletin=false;
+      }
     }
 
   ngOnInit() {
+    this.loadSalary();
   }
   loadSalary(){
-    this.readAPI(environment.endPoint+'salaire_action.php?Action=GET_BULLETIN&IdEmploye=51&ANNEE=2022&Token='+environment.tokenUser)
+    this.readAPI(environment.endPoint+'salaire_action.php?Action=GET_BULLETIN&IdEmploye='+this.id+
+    '&ANNEE=2022&Token='+environment.tokenUser)
     .subscribe((listes) =>{
       console.log(listes);
       //  this.dt1=Listes['0'];
 
       this.listeSalaire=listes ;
-      console.log(this.listeSalaire);
+      //console.log(this.listeSalaire);
+      console.log(this.listeSalaire.BULLETIN_SALAIRE.LIGNE_GAIN_PRIME);
     });
     if(this.listeSalaire){
-      this.nom=this.listeSalaire.NOMEMPLOYE; this.qualifiquation= this.listeSalaire.QUALIFICATION;
-      this.periode=this.listeSalaire.PERIODE_DE_PAIE;
-      /* this.base1=this.listeSalaire.LIGNE_GAIN_PRIME.Base; this.base2=this.listeSalaire.LIGNE_GAIN_PRIME.Base;
-      this.base3=this.listeSalaire.LIGNE_GAIN_PRIME.Base; this.taux1=this.listeSalaire.LIGNE_GAIN_PRIME.Taux;
-       this.taux2=this.listeSalaire.LIGNE_GAIN_PRIME.Taux;this.taux3=this.listeSalaire.LIGNE_GAIN_PRIME.Taux;
-       this.gain1=this.listeSalaire.LIGNE_GAIN_PRIME.Gain;  this.gain2=this.listeSalaire.LIGNE_GAIN_PRIME.Gain;
-       this.gain3=this.listeSalaire.LIGNE_GAIN_PRIME.Gain;*/  this.salaireBrut=this.listeSalaire.SALAIRE_BRUT;
-        this.totalRetenue=this.listeSalaire.LIGNE_GAIN_PRIME.TOTAL_RETENU;  this.salaireNet=this.listeSalaire.SALAIRE_NET;
+      this.nom=this.listeSalaire.BULLETIN_SALAIRE.NOMEMPLOYE; this.qualifiquation= this.listeSalaire.BULLETIN_SALAIRE.QUALIFICATION;
+      this.periode=this.listeSalaire.BULLETIN_SALAIRE.PERIODE_DE_PAIE; this.adresse=this.listeSalaire.BULLETIN_SALAIRE.ADRESSEEMPLOYE;
+        this.salaireBrut=this.listeSalaire.BULLETIN_SALAIRE.SALAIRE_BRUT;
+        this.totalRetenue=this.listeSalaire.BULLETIN_SALAIRE.LIGNE_GAIN_PRIME.TOTAL_RETENU;
+        this.salaireNet=this.listeSalaire.BULLETIN_SALAIRE.SALAIRE_NET; this.categorie=this.listeSalaire.BULLETIN_SALAIRE.CATEGORIE;
+        this.situationFa=this.listeSalaire.BULLETIN_SALAIRE.SITUATION_FAMILLE;this.partTrimf=this.listeSalaire.BULLETIN_SALAIRE.PART_TRIMF;
+        this.partIrpp=this.listeSalaire.BULLETIN_SALAIRE.PART_IRPP;this.periodePaie=this.listeSalaire.BULLETIN_SALAIRE.PERIODE_DE_PAIE;
+        this.dateEmbauche=this.listeSalaire.BULLETIN_SALAIRE.DATE_EMBAUCHE;
+        this.gainPrime=this.listeSalaire.BULLETIN_SALAIRE.LIGNE_GAIN_PRIME;
+        this.ligneCotisation=this.listeSalaire.BULLETIN_SALAIRE.LIGNE_COTISATION;
 
     }
   }
@@ -84,8 +98,10 @@ export class SalairesPage implements OnInit {
     this.menu.open('menu-content');
   }
   doRefresh(event){
-    this.loadInfoMensuel();
     this.loadSalary();
     event.target.complete();
+  }
+  getBulletin(){
+    this.loadSalary();
   }
 }

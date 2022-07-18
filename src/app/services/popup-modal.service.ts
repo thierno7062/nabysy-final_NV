@@ -31,9 +31,12 @@ export class PopupModalService {
     });
     return await modal.present();
   }
-  async presentModalEmploye(){
+  async presentModalEmploye(userDetail: any){
     const modal = await this.modalCtrl.create({
       component: DetailEmployePage,
+      componentProps:{
+        data: userDetail,
+      }
 
     });
     return await modal.present();

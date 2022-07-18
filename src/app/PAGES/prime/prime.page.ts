@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { IonSlides, ModalController } from '@ionic/angular';
 
 @Component({
   selector: 'app-prime',
@@ -7,21 +7,29 @@ import { ModalController } from '@ionic/angular';
   styleUrls: ['./prime.page.scss'],
 })
 export class PrimePage implements OnInit {
-  categorie=[];
+  @ViewChild('slide') slide: IonSlides;
+  segmentList: Array<string> = ['Segment 1', 'Segment 2', 'Segment 3'];
+  selectedSegment: string;
+  slideList: Array<string> = [
+    'Slide Segment 1',
+    'Slide Segment 2',
+    'Slide Segment 3',
+  ];
 
-  taskName: any;
-  taskDate: any;
-  taskCategorie: any;
-  taskPriority: any;
 
-  constructor(public modalCtrl: ModalController) { }
+  constructor(public modalCtrl: ModalController) {
+    this.selectedSegment = this.segmentList[0];
+  }
 
   ngOnInit() {
   }
-  async dismis(){
-    await this.modalCtrl.dismiss();
+  _segmentSelected(item: string, index: number) {
+    this.slide.slideTo(index);
   }
-  selectedCategorie(index){
-    this.taskCategorie=this.categorie[index];
+
+  _ionSlideDidChange(event: any) {
+    this.slide.getActiveIndex().then((index) => {
+      this.selectedSegment = this.segmentList[index];
+    });
   }
 }

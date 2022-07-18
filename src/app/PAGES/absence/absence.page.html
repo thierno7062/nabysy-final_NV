@@ -55,11 +55,31 @@
       cancelButtonIcon="none"
       animated></ion-searchbar>
     </ion-label>
-    <ion-buttons slot="end">
-      <ion-button (click)="sort(key)">
+    <ion-buttons slot="start">
+      <ion-button (click)="sort(id)">
         <ion-icon name="funnel-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
+
+    <ion-item  lines="none" class="trie">
+      <ion-icon name="funnel-outline" slot="start" class="icon_trie" :icon="ticketOutline"></ion-icon>
+      <ion-select  multiple="true" value="none">
+        <ion-select-option >Peperoni</ion-select-option>
+        <ion-select-option value="hawaii">Hawaii</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-button >
+      <ion-icon name="funnel-outline" slot="start" class="icon_trie" >
+        <ion-select  multiple="true" value="none">
+          <ion-select-option >Peperoni</ion-select-option>
+          <ion-select-option value="hawaii">Hawaii</ion-select-option>
+        </ion-select>
+      </ion-icon>
+    </ion-button>
+
+
+
+
   </div>
 
 
@@ -70,15 +90,12 @@
   </ion-fab>
 
 
-  <ion-card *ngFor="let item of listeAbsence | filter: searchTerm | orderBy: key: reverse" class="ion-margin">
+  <ion-card *ngFor="let item of listeAbsence | filter: searchTerm | orderBy: id: reverse" class="ion-margin">
     <ion-card-header>
       <ion-card-subtitle [style.color]="item.Utilisateur === 'thierno' ? 'red' : (item.Utilisateur === 'adama' ? 'green' : 'orange')">
         <strong>{{item.Utilisateur}}</strong>
       </ion-card-subtitle>
-
-
       <ion-item>
-
         <ion-icon [style.color]="item.DateEnreg === today ? 'red' : 'green'" size="small" name="ellipse"></ion-icon>
 
         <ion-label *ngIf="item.PourTous>'0'">Absence pour tous</ion-label>

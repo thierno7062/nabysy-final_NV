@@ -13,7 +13,7 @@ import { PrimePage } from './prime.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    PrimePageRoutingModule
+    PrimePageRoutingModule,
   ],
   declarations: [PrimePage]
 })

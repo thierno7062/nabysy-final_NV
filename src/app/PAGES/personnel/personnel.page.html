@@ -20,7 +20,7 @@
 
   <ion-list *ngFor="let employe of listeEmploye">
     <ion-item-sliding>
-      <ion-item (click)="userdetails()">
+      <ion-item (click)="userdetails(employe)">
         <ion-avatar slot="start">
           <div class="avatar">
             {{employe.Prenom.substring(0, 1).toUpperCase() }}

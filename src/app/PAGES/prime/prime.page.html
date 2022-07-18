@@ -1,46 +1,12 @@
 <ion-header>
   <ion-toolbar>
-    <!-- <ion-title>prime</ion-title> -->
-    <ion-title>Add New Task</ion-title>
-    <ion-icon slot="end" name="close" size="large" (click)="dismis()" class="ion-padding"></ion-icon>
+    <ion-title>prime</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-<ion-card>
-  <ion-item>
-    <ion-textarea placeholder="Write your task here"></ion-textarea>
-  </ion-item>
 
-  <ion-item>
-    <ion-label>Priority</ion-label>
-      <ion-select [(ngModel)]="taskPriority">
-        <ion-select-option value="Low">Low</ion-select-option>
-        <ion-select-option value="Middle">Middle</ion-select-option>
-        <ion-select-option value="Hight">Hight</ion-select-option>
-      </ion-select>
-  </ion-item>
-
-  <ion-item>
-    <ion-icon slot="start" name="calendar-outline"></ion-icon>
-    <ion-label>Due Date</ion-label>
-    <ion-datetime displayFormat="D MMM YYYY H:mm"></ion-datetime>
-  </ion-item>
-
-  <ion-item>
-    <ion-icon slot="start" name="pricetag-outline"></ion-icon>
-    <ion-label>Category</ion-label>
-    <span>{{taskCategorie}}</span>
-  </ion-item>
-
-  <ion-item>
-    <ion-chip *ngFor="let category of categorie; let i = index">
-      <ion-label>{{categorie}}</ion-label>
-    </ion-chip>
-  </ion-item>
-
-  <ion-button class="ion-margin" expand="block">
-   Add Task
-  </ion-button>
-</ion-card>
 </ion-content>
+
+<!-- ******************************* -->
+

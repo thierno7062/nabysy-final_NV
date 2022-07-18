@@ -23,3 +23,264 @@ ion-accordion.accordion-expanded [slot="content"]{
 .ion-accordion{
   margin-top: 30px;
 }
+ion-content{
+  ion-row{
+    font-weight: 500;
+    border-bottom: 5px solid #000;
+    border-right: 5px solid #000;
+    ion-col{
+      border-right: 3px solid #000;
+      border-left: 0;
+
+    }
+    &.ion-row1{
+      ion-text{
+        h1{
+          margin: 0;
+
+        }
+        .firm{
+          text-align: center;
+          margin-top: 40px;
+         font-size: 40px;
+         font-weight: bold;
+        }
+        .firm2{
+          text-align: center;
+          margin-top: 40px;
+         font-size: 25px;
+         font-weight: bold;
+        }
+      }
+    }
+    &.ion-row2{
+      ion-text{
+        h2{
+          font-weight: bold;
+          text-align: center;
+        }
+        h3{
+          font-weight: bold;
+          text-align: center;
+        }
+      }
+    }
+    &.ion-row3{
+      ion-text{
+        h1{
+          text-align: center;
+
+          &.name{
+          font-weight: bold;
+          }
+        }
+      }
+    }
+    &.ion-row4{
+      // width: 1px;
+      ion-col{
+        height: 25px;
+      }
+    }
+    &.ion-row5{
+      ion-col{
+        ion-text{
+          h2{
+            font-weight: bold;
+          text-align: center;
+          }
+          p{
+            text-align: center;
+          }
+        }
+
+      }
+    }
+    &.ion-row6{
+      // width: 1px;
+      ion-col{
+        height: 75px;
+
+      }
+    }
+    &.ion-row7{
+      border-bottom: 0;
+      ion-col{
+        height: 25px;
+        ion-text{
+          p{
+            text-align: center;
+            margin-top: 0;
+            font-weight: bold;
+            font-size: large;
+          }
+        }
+        &.separation{
+          border-bottom: 5px solid #000;
+          border-top: 0;
+          border-left: 0;
+
+         }
+         &.rubrique{
+          border-bottom: 5px solid #000;
+          border-right: 0;
+         }
+         &.rubrique2{
+          border-bottom: 5px solid #000;
+          border-right: 0;
+         }
+      }
+    }
+    &.ion-row8{
+      border-bottom: 0;
+      ion-col{
+        ion-text{
+          h3{
+            font-weight: bold;
+            text-align: center;
+          }
+          p{
+            text-align: center;
+          }
+        }
+        &.separation{
+          border-bottom: 0;
+          border-top: 5px solid #000;
+          background-color: rgb(66, 64, 64);
+         }
+         &.rubrique{
+          border-bottom: 5px solid #000;
+         }
+
+      }
+    }
+    &.ion-row9{
+      // width: 1px;
+      border-bottom: 0;
+      ion-col{
+        ion-text{
+          h3{
+            font-weight: bold;
+            text-align: center;
+          }
+          p{
+            text-align: center;
+          }
+        }
+        &.separation{
+          border-bottom: 0;
+          border-top: 0;
+          background-color: rgb(66, 64, 64);
+         }
+         }
+    }
+    &.ion-row10{
+      // width: 1px;
+      ion-col{
+        ion-text{
+          h3{
+            font-weight: bold;
+            text-align: center;
+          }
+          p{
+            text-align: center;
+          }
+        }
+        &.separation{
+          border-bottom: 0;
+          border-top: 0;
+          background-color: rgb(66, 64, 64);
+         }
+         &.rubrique{
+          border-top: 5px solid #000;
+         }
+        }
+    }
+    &.ion-row11{
+      // width: 1px;
+      border-bottom: 0;
+      ion-col{
+        ion-text{
+          h3{
+            font-weight: bold;
+            text-align: center;
+          }
+          p{
+            text-align: center;
+          }
+        }
+        &.separation{
+          border-bottom: 0;
+          border-top: 0;
+          background-color: rgb(66, 64, 64);
+         }
+         }
+    }
+    &.ion-row12{
+      border-bottom: 0;
+          border-top: 0;
+      // width: 1px;
+      // border-top: 5px solid #000;
+      ion-col{
+        ion-text{
+          h3{
+            font-weight: bold;
+            text-align: center;
+          }
+          p{
+            text-align: center;
+          }
+        }
+        &.separation{
+          border-bottom: 0;
+          border-top: 0;
+          background-color: rgb(66, 64, 64);
+         }
+         &.rubrique2{
+          border-bottom: 0;
+          border-top: 0;
+         }
+         &.rubrique3{
+          border-bottom: 0;
+          border-top: 0;
+         }
+         &.rubrique{
+          border-top: 5px solid #000;
+         }
+      }
+    }
+    &.ion-row13{
+          border-top: 0;
+      // width: 1px;
+      // border-top: 5px solid #000;
+      ion-col{
+        ion-text{
+          h3{
+            font-weight: bold;
+            text-align: center;
+          }
+          p{
+            text-align: center;
+          }
+        }
+        &.separation{
+          border-bottom: 0;
+          border-top: 0;
+          background-color: rgb(66, 64, 64);
+         }
+         &.rubrique2{
+          border-bottom: 0;
+          border-top: 0;
+         }
+         &.rubrique3{
+          border-bottom: 0;
+          border-top: 0;
+         }
+         &.rubrique{
+          border-top: 5px solid #000;
+         }
+      }
+    }
+
+  }
+}

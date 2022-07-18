@@ -11,7 +11,7 @@ import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, IonicModule.forRoot(),HttpClientModule, AppRoutingModule],
+  imports: [BrowserModule,IonicModule.forRoot(),HttpClientModule, AppRoutingModule],
   providers: [
     ToastController,
     MenuController,

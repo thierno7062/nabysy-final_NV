@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-inferrable-types */
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 /* eslint-disable prefer-arrow/prefer-arrow-functions */
 /* eslint-disable @typescript-eslint/dot-notation */
@@ -21,8 +22,8 @@ export class CrudAbsencePage implements OnInit {
   isPaid: boolean;
   data: [];
   choix: boolean;
-  idEmploye: ''; utilisateur: ''; paye: any;
-  nom: ''; pourtous: any; dateEnregistrement: '';
+  idEmploye: ''; utilisateur: ''; paye: any=0;
+  nom: ''; pourtous: any=1; dateEnregistrement: '';
   prenom: ''; heureEnregistrement: '';
   dateDebut: ''; heureDebut: '';
   dateFin: ''; heureFin: '';
@@ -154,14 +155,14 @@ export class CrudAbsencePage implements OnInit {
   }
   absenceUnePersonne(idPersonne,afficherTost=false){
     if(this.isPaid===true){
-      this.paye= '1';
+      this.paye= 1;
     }else{
-      this.paye='0';
+      this.paye= 0;
     }
     if(this.choix===true){
-      this.pourtous= '0';
+      this.pourtous= 0;
     }else{
-      this.pourtous= '1';
+      this.pourtous= 1;
     }
     console.log(this.paye);
     console.log(this.pourtous);
