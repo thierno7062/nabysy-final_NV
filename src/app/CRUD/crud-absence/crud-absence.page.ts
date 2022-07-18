@@ -1,4 +1,6 @@
-/* eslint-disable @typescript-eslint/naming-convention */
+/* eslint-disable @typescript-eslint/no-inferrable-types */
+/* eslint-disable @typescript-eslint/no-unused-expressions */
+/* eslint-disable prefer-arrow/prefer-arrow-functions */
 /* eslint-disable @typescript-eslint/dot-notation */
 import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
@@ -17,12 +19,11 @@ export class CrudAbsencePage implements OnInit {
   listeEmploye: any;
   isUpdate= false;
   bulkEdit= false;
+  isPaid: boolean;
   data: [];
-  listeEmployeSelected: Array<any>;
-  indexSelect: 0;
-  // eslint-disable-next-line @typescript-eslint/naming-convention
-  idEmploye: ''; utilisateur: ''; paye: '';
-  nom: ''; pourtous: ''; dateEnregistrement: '';
+  choix: boolean;
+  idEmploye: ''; utilisateur: ''; paye: any=0;
+  nom: ''; pourtous: any=1; dateEnregistrement: '';
   prenom: ''; heureEnregistrement: '';
   dateDebut: ''; heureDebut: '';
   dateFin: ''; heureFin: '';
@@ -37,7 +38,6 @@ export class CrudAbsencePage implements OnInit {
   sortEmploye= 0;
   sortKey= null;
   edit: any[];
-  vListe: any;
 
   constructor(private modalctrl: ModalController,private popupModalService: PopupModalService,
     private http: HttpClient,private route: ActivatedRoute,
@@ -47,8 +47,8 @@ export class CrudAbsencePage implements OnInit {
      }
 
   ngOnInit() {
-    if (this.absence){
-      this.nom=this.absence.Nom;
+    if (this.absence.ID > 0){
+          this.nom=this.absence.Nom;
           this.prenom= this.absence.Prenom;
           this.dateDebut= this.absence.DateDebut;
           this.dateFin= this.absence.DateFin;
@@ -62,7 +62,15 @@ export class CrudAbsencePage implements OnInit {
           this.paye= this.absence.IsPaye;
           this.pourtous= this.absence.PourTous;
 
-    this.isUpdate = true;
+          this.isUpdate = true;
+          this.bulkIndividuel= false;
+          if(this.paye > 0){
+            this.isPaid= true;
+
+          }else{
+            this.isPaid= false;
+          }
+
   }
   }
   loadEmploye(){
@@ -87,15 +95,11 @@ export class CrudAbsencePage implements OnInit {
       this.http.get(environment.endPoint+'employe_action.php?Action=GET_EMPLOYE&Token='+environment.tokenUser).subscribe(res => {
       this.listeEmploye = res;
       console.log('listeEmploye =',this.listeEmploye);
+      // eslint-disable-next-line @typescript-eslint/naming-convention
+      this.listeEmploye.forEach(function(employe, index,Lst) {Lst[index].IsChecked=0;});
       this.data= [];
-      // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
-        this.vListe=this.listeEmploye.forEach(function(employe, index,Lst) {
-        Lst[index].IsChecked=0;
-        return Lst;
-      });
       this.sort();
     });
-    //console.log(this.vListe);
 /*     this.readAPI(environment.endPoint+'employe_action.php?Action=GET_EMPLOYE&Token='+environment.tokenUser)
     .subscribe((listes) =>{
       // console.log(Listes);
@@ -112,10 +116,10 @@ export class CrudAbsencePage implements OnInit {
   }
   togglepourTous(){
     this.bulkIndividuel = false;
+    console.log('listeEmploye =',this.listeEmploye);
   }
   togglepaspourTous(){
     this.bulkIndividuel = true;
-    console.log('listeEmploye =',this.listeEmploye);
   }
 
   readAPI(url: string){
@@ -135,26 +139,39 @@ export class CrudAbsencePage implements OnInit {
         const headers = new Headers();
         headers.append('Accept', 'application/json');
         headers.append('Content-Type', 'application/json' );
-        // ----------------------
+
         this.listeEmploye.forEach((employe)=>{
+          console.log(employe);
           if (employe.IsChecked>0){
             this.absenceUnePersonne(employe.ID);
           }
         });
         this.modalctrl.dismiss(this.listeEmploye,'create');
-      return false;
+        return false;
 
         // ---------------
       });
     }
   }
   absenceUnePersonne(idPersonne,afficherTost=false){
+    if(this.isPaid===true){
+      this.paye= 1;
+    }else{
+      this.paye= 0;
+    }
+    if(this.choix===true){
+      this.pourtous= 0;
+    }else{
+      this.pourtous= 1;
+    }
+    console.log(this.paye);
+    console.log(this.pourtous);
     const apiUrl=environment.endPoint+
-    'calendrier_action.php?Action=AJOUTER_ABSENCE&IdEmploye='+
+    'calendrier_action.php?Action=AJOUTER_ABSENCE&IDEMPLOYE='+
     idPersonne+'&DATEDEBUT='+this.dateDebut+'&DATEFIN='+this.dateFin+
     '&PAYE='+this.paye+'&MOTIF='+this.motif+'&POURTOUS='+this.pourtous+
-    '&Nom='+this.nom+'&Prenom='+
-    this.prenom+'&Token='+environment.tokenUser;
+    '&HEUREDEBUT='+this.heureDebut+'&HEUREFIN='+
+    this.heureFin+'&Token='+environment.tokenUser;
 
       console.log(apiUrl);
       this.readAPI(apiUrl)
