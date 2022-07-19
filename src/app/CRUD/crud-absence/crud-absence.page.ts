@@ -39,6 +39,8 @@ export class CrudAbsencePage implements OnInit {
   sortKey= null;
   edit: any[];
 
+  choixAbscencePourTous=true;
+
   constructor(private modalctrl: ModalController,private popupModalService: PopupModalService,
     private http: HttpClient,private route: ActivatedRoute,
     private toastctrl: ToastController) {
@@ -47,6 +49,7 @@ export class CrudAbsencePage implements OnInit {
      }
 
   ngOnInit() {
+    this.choixAbscencePourTous=true;
     if (this.absence.ID > 0){
           this.nom=this.absence.Nom;
           this.prenom= this.absence.Prenom;
@@ -61,7 +64,9 @@ export class CrudAbsencePage implements OnInit {
           this.annee= this.absence.Annee;
           this.paye= this.absence.IsPaye;
           this.pourtous= this.absence.PourTous;
-
+          if (this.pourtous===0){
+            this.choixAbscencePourTous=false;
+          }
           this.isUpdate = true;
           this.bulkIndividuel= false;
           if(this.paye > 0){
@@ -71,35 +76,40 @@ export class CrudAbsencePage implements OnInit {
             this.isPaid= false;
           }
 
+    }
   }
-  }
+
   loadEmploye(){
     this.route.queryParams.subscribe(res =>{
-      this.absence=res ;
-      //console.log(this.infoService);
-      if (this.absence){
-        this.prenom= this.absence.Prenom;
-          this.dateDebut= this.absence.DateDebut;
-          this.dateFin= this.absence.DateFin;
-          this.motif= this.absence.TextMotif;
-          this.idEmploye=  this.absence.IdEmploye;
-          this.dateEnregistrement= this.absence.DateEnreg;
-          this.heureEnregistrement= this.absence.HeureEnreg;
-          this.heureDebut= this.absence.HeureDebut;
-          this.heureFin= this.absence.HeureFin;
-          this.annee= this.absence.Annee;
-          this.paye= this.absence.IsPaye;
-          this.pourtous= this.absence.PourTous;
-      }
-    });
-      this.http.get(environment.endPoint+'employe_action.php?Action=GET_EMPLOYE&Token='+environment.tokenUser).subscribe(res => {
-      this.listeEmploye = res;
-      console.log('listeEmploye =',this.listeEmploye);
-      // eslint-disable-next-line @typescript-eslint/naming-convention
-      this.listeEmploye.forEach(function(employe, index,Lst) {Lst[index].IsChecked=0;});
-      this.data= [];
-      this.sort();
-    });
+          this.absence=res ;
+          //console.log(this.infoService);
+          if (this.absence){
+            this.prenom= this.absence.Prenom;
+              this.dateDebut= this.absence.DateDebut;
+              this.dateFin= this.absence.DateFin;
+              this.motif= this.absence.TextMotif;
+              this.idEmploye=  this.absence.IdEmploye;
+              this.dateEnregistrement= this.absence.DateEnreg;
+              this.heureEnregistrement= this.absence.HeureEnreg;
+              this.heureDebut= this.absence.HeureDebut;
+              this.heureFin= this.absence.HeureFin;
+              this.annee= this.absence.Annee;
+              this.paye= this.absence.IsPaye;
+              this.pourtous= this.absence.PourTous;
+              if (this.pourtous===0){
+                this.choixAbscencePourTous=false;
+              }
+          }
+      });
+
+    this.http.get(environment.endPoint+'employe_action.php?Action=GET_EMPLOYE&Token='+environment.tokenUser).subscribe(res => {
+    this.listeEmploye = res;
+    //console.log('listeEmploye =',this.listeEmploye);
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+    this.listeEmploye.forEach(function(employe, index,Lst) {Lst[index].IsChecked=0;});
+    this.data= [];
+    this.sort();
+  });
 /*     this.readAPI(environment.endPoint+'employe_action.php?Action=GET_EMPLOYE&Token='+environment.tokenUser)
     .subscribe((listes) =>{
       // console.log(Listes);
@@ -116,10 +126,13 @@ export class CrudAbsencePage implements OnInit {
   }
   togglepourTous(){
     this.bulkIndividuel = false;
-    console.log('listeEmploye =',this.listeEmploye);
+    this.choixAbscencePourTous=!this.choixAbscencePourTous;
+    console.log('choixAbscencePourTous =',this.choixAbscencePourTous);
   }
   togglepaspourTous(){
-    this.bulkIndividuel = true;
+    this.bulkIndividuel = !this.bulkIndividuel;
+    this.choixAbscencePourTous=!this.choixAbscencePourTous;
+    console.log('choixAbscencePourTous =',this.choixAbscencePourTous);
   }
 
   readAPI(url: string){
@@ -129,25 +142,27 @@ export class CrudAbsencePage implements OnInit {
 
   onSubmit(){
     if(this.dateDebut===''){
-      this.presentToast('Veillez mettre le nom SVP!!!!');
+      this.presentToast('Veillez indiquer la Date de début SVP!!!!');
     }else if(this.motif===''){
-      this.presentToast('Veillez mettre votre prénom SVP!!!!!!');
+      this.presentToast('Veillez indiquer le motif SVP!!!!!!');
     }else{
       return new Promise (() =>{
-        console.log('Objet en cour =',this);
-        console.log('listeEmploye =',this.listeEmploye);
+        console.log('Pour tous =',!this.bulkIndividuel);
         const headers = new Headers();
         headers.append('Accept', 'application/json');
         headers.append('Content-Type', 'application/json' );
-
-        this.listeEmploye.forEach((employe)=>{
-          console.log(employe);
-          if (employe.IsChecked>0){
-            this.absenceUnePersonne(employe.ID);
-          }
-        });
+        if (this.choixAbscencePourTous){
+          this.absencePourTous(true);
+        }else{
+          this.listeEmploye.forEach((employe)=>{
+            if (employe.IsChecked>0){
+              console.log(employe);
+              this.absenceUnePersonne(employe.ID);
+            }
+          });
+        }
         this.modalctrl.dismiss(this.listeEmploye,'create');
-      return false;
+        return false;
 
         // ---------------
       });
@@ -178,9 +193,9 @@ export class CrudAbsencePage implements OnInit {
       .subscribe((reponseApi) =>{
         console.log(reponseApi);
         if(reponseApi['"OK"']!== '0'){
-          console.log(+this.prenom+' '+this.nom+' absent le '+this.dateDebut+ '...OK');
+          console.log('Absence individuelle Ajoutée');
           if (afficherTost){
-      this.presentToast(+this.prenom+' '+this.nom+' absent le '+this.dateDebut+ '...OK');
+            this.presentToast('Absence individuelle Ajoutée pout IdEmployé '+idPersonne+ ' : OK');
           }
           return true;
         }else{
@@ -188,7 +203,7 @@ export class CrudAbsencePage implements OnInit {
           return false ;
         }
       });
-}
+  }
   async presentToast(a){
     const toast = await this.toastctrl.create({
       message:a,
@@ -244,5 +259,41 @@ export class CrudAbsencePage implements OnInit {
   goLast(){
     this.page = this.totalPages - 1;
     this.loadEmploye();
+  }
+
+  absencePourTous(afficherTost=false){
+    if(this.isPaid===true){
+      this.paye= 1;
+    }else{
+      this.paye= 0;
+    }
+    if(this.choix===true){
+      this.pourtous= 0;
+    }else{
+      this.pourtous= 1;
+    }
+    console.log(this.paye);
+    console.log(this.pourtous);
+    const apiUrl=environment.endPoint+
+    'calendrier_action.php?Action=AJOUTER_ABSENCE&DATEDEBUT='+this.dateDebut+'&DATEFIN='+this.dateFin+
+    '&PAYE='+this.paye+'&MOTIF='+this.motif+'&POURTOUS=1'+
+    '&HEUREDEBUT='+this.heureDebut+'&HEUREFIN='+
+    this.heureFin+'&Token='+environment.tokenUser;
+
+      console.log(apiUrl);
+      this.readAPI(apiUrl)
+      .subscribe((reponseApi) =>{
+        console.log(reponseApi);
+        if(reponseApi['"OK"']!== '0'){
+          console.log('Absence ajoutée correctement '+this.motif);
+          if (afficherTost){
+            this.presentToast('Absent pour tous du '+this.motif+ ' ajoutée correctement.');
+          }
+          return true;
+        }else{
+          console.log('Erreur absence pour '+this.motif+' non ajoutée');
+          return false ;
+        }
+      });
   }
 }
