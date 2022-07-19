@@ -7,13 +7,15 @@ import { IonicModule } from '@ionic/angular';
 import { SalairesPageRoutingModule } from './salaires-routing.module';
 
 import { SalairesPage } from './salaires.page';
+import { IonicSelectableModule } from 'ionic-selectable';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    SalairesPageRoutingModule
+    SalairesPageRoutingModule,
+    IonicSelectableModule
   ],
   declarations: [SalairesPage]
 })

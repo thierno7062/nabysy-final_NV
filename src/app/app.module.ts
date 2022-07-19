@@ -7,11 +7,13 @@ import { IonicModule, IonicRouteStrategy, MenuController, ToastController } from
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
+import { IonicSelectableModule } from 'ionic-selectable';
 
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule,IonicModule.forRoot(),HttpClientModule, AppRoutingModule],
+  imports: [BrowserModule,IonicModule.forRoot(),
+    HttpClientModule, AppRoutingModule, IonicSelectableModule],
   providers: [
     ToastController,
     MenuController,

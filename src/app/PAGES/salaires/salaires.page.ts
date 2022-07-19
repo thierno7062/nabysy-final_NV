@@ -22,8 +22,13 @@ export class SalairesPage implements OnInit {
   dateEmbauche: '';gainPrime: any; ligneCotisation: any;
 
   searchTerm: string;
-  // @ViewChild(IonAccordionGroup)accordionGroup: IonAccordionGroup;
+  selected_user= null;
+  selected= [];
+  users: any;
+  nomEmp: ''; prenomEmp: '';
 
+
+  listeEmploye: any;
   constructor(private router: Router,  private modalctrl: ModalController,private alertctrl: AlertController,
     private menu: MenuController, private http: HttpClient) {
       this.loadSalary();
@@ -39,6 +44,7 @@ export class SalairesPage implements OnInit {
 
   ngOnInit() {
     this.loadSalary();
+    this.loadEmploye();
   }
   loadSalary(){
     this.readAPI(environment.endPoint+'salaire_action.php?Action=GET_BULLETIN&IdEmploye='+this.id+
@@ -80,6 +86,23 @@ export class SalairesPage implements OnInit {
       this.totalHeureApayer=this.infoMensuel.TOTAL_HEURE_A_PAYER;
       this.mois=this.infoMensuel.MOIS;
 
+    }
+  }
+  loadEmploye(){
+    this.readAPI(environment.endPoint+'employe_action.php?Action=GET_EMPLOYE&Token='+environment.tokenUser)
+    .subscribe((listes) =>{
+      // console.log(Listes);
+      this.listeEmploye=listes ;
+      this.users=listes;
+      /* this.users.ID=listes['"ID"'];
+          this.users.Nom=listes['"Nom"'];
+          this.users.Adresse=listes['"Adresse"'];
+          this.users.Telephone=listes['"Tel"']; */
+      console.log(this.listeEmploye);
+    });
+    if(this.users){
+      this.nomEmp=this.users.Nom;
+      this.prenomEmp=this.users.Prenom;
     }
   }
   readAPI(url: string){
