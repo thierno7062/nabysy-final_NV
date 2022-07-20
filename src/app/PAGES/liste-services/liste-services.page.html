@@ -59,12 +59,12 @@
     </ion-row>
 
     <ion-row class="ion-margin-vertical">
-      <ion-col   *ngFor="let service of listeService"  size="6" >
+      <ion-col   *ngFor="let service of listeService"  size="12" size-sm="6" size-md="4" size-lg="3" size-xl="2" >
         <ion-card class="ion-text-center" >
           <ion-card-header (click)="goToFicheServices(service)">
             <div align="center" size="6">
               <ion-thumbnail [style.background]="'rgba(27, 150, 181, 0.1)'">
-                <img [src]="'assets/workplace.png'"/>
+                <img [src]="'assets/workplace.png'" alt=""/>
               </ion-thumbnail>
             </div>
           </ion-card-header>
@@ -85,11 +85,10 @@
 
 
     </ion-row>
-
   </ion-grid>
 
- <!--  <ion-card *ngFor="let service of listeService" (click)="goToFicheServices(service)">
-    <ion-img [src]="direcion.urlToImage"></ion-img>
+<!--   <ion-card *ngFor="let service of listeService" (click)="goToFicheServices(service)">
+    <ion-img [src]="'assets/workplace.png'"></ion-img>
     <ion-card-header>
       <ion-card-subtitle>{{service.Nom }}</ion-card-subtitle>
       <ion-card-title>{{service.Adresse}}</ion-card-title>
@@ -98,6 +97,7 @@
     <ion-card-content>{{service.Tel}}</ion-card-content>
 
   </ion-card> -->
+
 
 
 </ion-content>

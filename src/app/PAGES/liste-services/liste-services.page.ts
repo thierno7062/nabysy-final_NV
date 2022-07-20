@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController, MenuController, ModalController } from '@ionic/angular';
+import { Observable } from 'rxjs';
 import { CrudServicePage } from 'src/app/CRUD/crud-service/crud-service.page';
 import { EmployeService } from 'src/app/services/employe.service';
 import { environment } from 'src/environments/environment';
@@ -13,6 +14,7 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./liste-services.page.scss'],
 })
 export class ListeServicesPage implements OnInit {
+  // products: Observable<any>;
   direction: any;
   listeService: any;
   url: string ;
@@ -22,6 +24,7 @@ export class ListeServicesPage implements OnInit {
     adresse:'',
     telephone:'',
   };
+
   constructor(private router: Router,private route: ActivatedRoute, private modalctrl: ModalController,
     private menu: MenuController,private service: EmployeService,private alertctrl: AlertController,
     private http: HttpClient) {
@@ -41,6 +44,7 @@ export class ListeServicesPage implements OnInit {
       this.readAPI(this.url)
       .subscribe((data) =>{
         this.listeService=data ;
+        // this.products=data;
         console.log(data);
         console.log(data['0']);
         this.nabyData.id=data['"Id"'];

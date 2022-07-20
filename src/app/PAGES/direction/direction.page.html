@@ -12,7 +12,7 @@
       color="dark"
       animated></ion-searchbar> -->
     <ion-avatar slot="end">
-      <img src="assets/man.png" />
+      <img src="assets/man.png" alt="" />
     </ion-avatar>
   </ion-item>
 </ion-header>
@@ -88,14 +88,14 @@
     </ion-row> -->
 
     <ion-row class="ion-margin-vertical">
-      <ion-col   *ngFor="let direction of listeDirections | filter:searchTerm" size="6">
+      <ion-col   *ngFor="let direction of listeDirections | filter:searchTerm" size="12" size-sm="6" size-md="4" size-lg="3" size-xl="2">
       <!-- <ion-col   *ngFor="let direction of listeDirections" size="6" > -->
 
         <ion-card class="ion-text-center" >
           <ion-card-header  (click)="goToServices(direction )">
             <div align="center" size="6">
               <ion-thumbnail [style.background]="'rgba(27, 150, 181, 0.1)'">
-                <img [src]="'assets/office (1).png'"/>
+                <img [src]="'assets/office (1).png'" alt=""/>
               </ion-thumbnail>
             </div>
           </ion-card-header>
