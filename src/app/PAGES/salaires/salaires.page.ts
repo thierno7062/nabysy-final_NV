@@ -2,9 +2,11 @@
 /* eslint-disable @typescript-eslint/member-ordering */
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AlertController, IonAccordionGroup, MenuController, ModalController } from '@ionic/angular';
+import { FileOpener } from '@awesome-cordova-plugins/file-opener/ngx';
+import { Printer, PrintOptions } from '@awesome-cordova-plugins/printer/ngx';
+import { AlertController, IonAccordionGroup, MenuController, ModalController, Platform } from '@ionic/angular';
 import { IonicSelectableComponent } from 'ionic-selectable';
 import { environment } from 'src/environments/environment';
 
@@ -38,8 +40,11 @@ export class SalairesPage implements OnInit {
   portCountryControl: FormControl;
 
   listeEmploye: any;
+  bulkEdit= false;
+
   constructor(private router: Router,  private modalctrl: ModalController,private alertctrl: AlertController,
-    private menu: MenuController, private http: HttpClient) {
+    private menu: MenuController, private http: HttpClient,private printer: Printer,
+    private fb: FormBuilder, private plt: Platform, private fileOpener: FileOpener) {
       this.loadEmploye();
       this.loadSalary();
       /* this.loadInfoMensuel(); */
@@ -156,8 +161,42 @@ export class SalairesPage implements OnInit {
 
     }
     this.loadSalary();
-    this.doRefresh(Event);
 
   }
+  bulletinBulkEdit(){
+    this.bulkEdit = !this.bulkEdit;
+    this.loadSalary();
+  }
+  // Print Bulletin
+ /*  this.printer.isAvailable().then(onSuccess, onError);
+
+  let options: PrintOptions = {
+      name: 'MyDocument',
+      duplex: true,
+      orientation: 'landscape',
+      monochrome: true
+  }
+
+  this.printer.print(content, options).then(onSuccess, onError); */
+
+
+  /* print() {
+    this.printer.isAvailable().then((onSuccess: any) => {
+    const content = document.getElementById('printer').innerHTML;
+    const options: PrintOptions = {
+    name: 'MyDocument',
+    duplex: true,
+    orientation: 'portrait',
+    monochrome: true
+    };
+    this.printer.print(content, options).then((value: any) => {
+    console.log('value:', value);
+    }, (error) => {
+    console.log('eror:', error);
+    });
+    }, (err) => {
+    console.log('err:', err);
+    });
+  } */
 
 }

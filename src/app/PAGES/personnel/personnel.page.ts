@@ -20,17 +20,26 @@ export class PersonnelPage implements OnInit {
   searchTerm: string;
   bulkEdit= false;
 
+  sortDirection= 0;
+  sortKey= null;
+
 
   constructor(private router: Router,private popupModalService: PopupModalService,
     private menu: MenuController,
     private http: HttpClient, private alertctrl: AlertController,
     private modalctrl: ModalController, private service: EmployeService, private loadingService: LoadingService) {
       this.refreshPerson();
+      this.sort();
      }
 
   ngOnInit() {
     this.refreshPerson();
-
+   /*  for(let i= 0;i<100;i++){
+      const obj ={id:'id'+i.toString(), name:'name'+i.toString(),
+    salary:'salary'+i.toString()};
+    this.listeEmploye.push(obj);
+    }*/
+    this.sort();
   }
 
   refreshPerson(){
@@ -41,6 +50,7 @@ export class PersonnelPage implements OnInit {
       this.listeEmploye=listes ;
       console.log(this.listeEmploye);
     });
+    this.sort();
   }
 
   readAPI(url: string){
@@ -133,5 +143,35 @@ export class PersonnelPage implements OnInit {
   doRefresh(event){
     this.refreshPerson();
     event.target.complete();
+  }
+  removeVarious(){
+    this.bulkEdit=true;
+  }
+  save(){
+    this.bulkEdit=false;
+  }
+  sortBy(key){
+    this.sortKey= key;
+    this.sortDirection++;
+  }
+  sort(){
+    if (this.sortDirection === 1){
+      this.listeEmploye = this.listeEmploye.sort((a, b) =>{
+        console.log('a: ', a);
+        const valA = a[this.sortKey];
+        const valB = b[this.sortKey];
+        return valA.localeCompare(valB);
+      });
+    }else if (this.sortDirection === 2){
+      this.listeEmploye = this.listeEmploye.sort((a, b) =>{
+        const valA = a[this.sortKey];
+        const valB = b[this.sortKey];
+        return valB.localeCompare(valA);
+      });
+    }else{
+      this.sortDirection= 0;
+      this.sortKey= null;
+    }
+
   }
 }

@@ -8,6 +8,11 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { IonicSelectableModule } from 'ionic-selectable';
+// import { Printer } from '@awesome-cordova-plugins/printer/ngx';
+import { Printer, PrintOptions } from '@awesome-cordova-plugins/printer/ngx';
+import { FileOpener } from '@awesome-cordova-plugins/file-opener/ngx';
+import { PDFGenerator} from '@ionic-native/pdf-generator/ngx';
+
 
 
 @NgModule({
@@ -17,7 +22,9 @@ import { IonicSelectableModule } from 'ionic-selectable';
   providers: [
     ToastController,
     MenuController,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
+    Printer,
+    FileOpener,
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, PDFGenerator],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

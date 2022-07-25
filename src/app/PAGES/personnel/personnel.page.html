@@ -7,6 +7,12 @@
       <ion-button color="primary" (click)="addEmploye()">
         Ajouter
       </ion-button>
+      <ion-button color="primary" (click)=" removeVarious()" *ngIf="!bulkEdit">
+        Editer
+      </ion-button>
+      <ion-button color="primary" (click)=" save()" *ngIf="bulkEdit">
+        Enregistrer
+      </ion-button>
     </ion-buttons>
     <ion-title>personnel</ion-title>
   </ion-toolbar>
@@ -18,27 +24,71 @@
   </ion-refresher>
 
 
-  <ion-list *ngFor="let employe of listeEmploye">
-    <ion-item-sliding>
-      <ion-item (click)="userdetails(employe)">
-        <ion-avatar slot="start">
-          <div class="avatar">
-            {{employe.Prenom.substring(0, 1).toUpperCase() }}
-          </div>
-        </ion-avatar>
-        <ion-label>
-          <h3 class="title">{{employe.Prenom + ' '+employe.Nom}}</h3>
-          <p class="subtext">{{'Adresse: '+ employe.Adresse +' Tel: ' + employe.Tel }}</p>
-        </ion-label>
-      </ion-item>
-      <ion-item-options side="end">
-        <ion-item-option color="danger" (click)="removeEmploye(employe)">
-          <ion-icon name="trash"></ion-icon>
-        </ion-item-option>
-        <ion-item-option color="success" (click)="updateEmploye(employe)">
-          Modifier
-        </ion-item-option>
-      </ion-item-options>
-    </ion-item-sliding>
-  </ion-list>
+
+
+  <!-- tableaux -->
+  <div id="div1">
+    <table style="width: 100%;position:absolute;top: 100px;;bottom:0;left:0;right:0;" border="1">
+      <thead style="background-color: #222; color: #fff">
+        <th style="text-align: center;">Action</th>
+        <th style="text-align: center;">Matricule</th>
+        <th style="text-align: center;" tappable (click)="sortBy('Prenom')">Prénom  <ion-icon name="arrow-down" *ngIf="sortDirection === 1"></ion-icon>
+          <ion-icon name="arrow-up" *ngIf="sortDirection === 2"></ion-icon></th>
+        <th style="text-align: center;">Nom</th>
+        <th style="text-align: center;">Sexe</th>
+        <th style="text-align: center;">Fonction</th>
+        <th style="text-align: center;">Adresse</th>
+        <th style="text-align: center;">Téléphone</th>
+        <th style="text-align: center;">Affectation</th>
+        <th style="text-align: center;">né(e) le</th>
+      </thead>
+      <tbody>
+        <tr *ngFor="let d of listeEmploye" class="data-row">
+          <td style="text-align: center;" *ngIf="bulkEdit">
+          <ion-icon slot="start" name="eye-outline"  color="primary" tappable (click)="userdetails(d)"></ion-icon>
+          <ion-icon slot="start" name="create-outline" color="success" tappable (click)="updateEmploye(d)" ></ion-icon>
+          <ion-icon slot="start" name="trash-outline" color="danger" tappable (click)="removeEmploye(d)"></ion-icon></td>
+          <td style="text-align: center;" *ngIf="!bulkEdit">
+            <ion-icon slot="start" name="eye-outline"  color="primary" tappable (click)="userdetails(d)"></ion-icon></td>
+            <td style="text-align: center;">{{' '+d.ID}}</td>
+          <td style="text-align: center;">{{d.Prenom}}</td>
+          <td style="text-align: center;">{{d.Nom}}</td>
+          <td style="text-align: center;">{{d.Sexe}}</td>
+          <td style="text-align: center;">{{d.Fonction}}</td>
+          <td style="text-align: center;">{{d.Adresse}}</td>
+          <td style="text-align: center;">{{d.Tel}}</td>
+          <td style="text-align: center;">{{d.LieuxAffectationType}}</td>
+          <td style="text-align: center;">{{d.DATENAIS}}</td>
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
+
+  <!-- <div class="div2">
+
+    <ion-list *ngFor="let employe of listeEmploye">
+      <ion-item-sliding>
+        <ion-item (click)="userdetails(employe)">
+          <ion-avatar slot="start">
+            <div class="avatar">
+              {{employe.Prenom.substring(0, 1).toUpperCase() }}
+            </div>
+          </ion-avatar>
+          <ion-label>
+            <h3 class="title">{{employe.Prenom + ' '+employe.Nom}}</h3>
+            <p class="subtext">{{'Adresse: '+ employe.Adresse +' Tel: ' + employe.Tel }}</p>
+          </ion-label>
+        </ion-item>
+        <ion-item-options side="end">
+          <ion-item-option color="danger" (click)="removeEmploye(employe)">
+            <ion-icon name="trash"></ion-icon>
+          </ion-item-option>
+          <ion-item-option color="success" (click)="updateEmploye(employe)">
+            Modifier
+          </ion-item-option>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ion-list>
+  </div> -->
 </ion-content>

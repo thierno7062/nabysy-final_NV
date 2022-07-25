@@ -22,7 +22,9 @@ export class EmployeService {
   private url= environment.endPoint+'employe_action.php?Action=GET_EMPLOYE&Token='+environment.tokenUser;
   private urlDelete;
 
-  constructor(private http: HttpClient,private loadingService: LoadingService) { }
+  constructor(
+    private http: HttpClient,
+    private loadingService: LoadingService) { }
   getAll(){
     return this.http.get(this.url);
   }

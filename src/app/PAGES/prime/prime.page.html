@@ -1,108 +1,30 @@
-<!-- <ion-header>
+<ion-header>
   <ion-toolbar>
     <ion-title>prime</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <form [formGroup]="myForm" (ngSubmit)="createPdf()">
+    <ion-item>
+      <ion-label position="floating"> <ion-text color="danger">thierno</ion-text></ion-label>
+      <ion-input  formControlName="from" type="text"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating"> <ion-text color="danger">Paul</ion-text></ion-label>
+      <ion-input  formControlName="to" type="text"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating"><ion-text color="danger">Test</ion-text></ion-label>
+      <ion-textarea  formControlName="text" rows="3"></ion-textarea>
+    </ion-item>
+    <ion-button block color="primary" type="submit" (click)="createPdf()">
+      Create PDF
+    </ion-button>
+  </form>
 
-</ion-content> -->
-
-<!-- ******************************* -->
-<ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="/home"></ion-back-button>
-    </ion-buttons>
-    <ion-title>Templates</ion-title>
-  </ion-toolbar>
-</ion-header>
-<ion-content>
-  <ion-item lines="full">
-    <a href="{{'footer-template' }}">
-      GitHub
-    </a>
-  </ion-item>
-  <ion-item lines="full">
-    <ion-label class="ion-text-wrap">
-      Setting footer template.
-    </ion-label>
-  </ion-item>
-  <ion-item>
-    <ion-label>Port</ion-label>
-    <ionic-selectable #portComponent [(ngModel)]="port" itemValueField="id"
-      itemTextField="name" [items]="ports" [isMultiple]="true"
-      [canAddItem]="true" [canSaveItem]="true" [canClear]="true"
-      (onSaveItem)="onSavePort($event)">
-      <ng-template ionicSelectableAddItemTemplate let-port="item"
-        let-isAdd="isAdd">
-        <form [formGroup]="portForm">
-          <ion-list>
-            <ion-item-divider>
-              {{isAdd ? 'Add' : 'Edit'}} Port
-            </ion-item-divider>
-            <ion-item>
-              <ion-label>Name</ion-label>
-              <ion-input type="text" formControlName="portName"
-                autocorrect="off">
-              </ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-label>Country</ion-label>
-              <ionic-selectable formControlName="portCountry"
-                itemValueField="id" itemTextField="name" [items]="countries">
-              </ionic-selectable>
-            </ion-item>
-          </ion-list>
-        </form>
-        <ion-footer>
-          <ion-toolbar>
-            <ion-row>
-              <ion-col>
-                <ion-button expand="full"
-                  (click)="portComponent.hideAddItemTemplate()">
-                  Cancel
-                </ion-button>
-              </ion-col>
-              <ion-col>
-                <ion-button expand="full"
-                  (click)="isAdd ? addPort() : savePort(port)"
-                  [disabled]="!portForm.valid">
-                  {{isAdd ? 'Add' : 'Save'}}
-                </ion-button>
-              </ion-col>
-            </ion-row>
-          </ion-toolbar>
-        </ion-footer>
-      </ng-template>
-      <ng-template ionicSelectableFooterTemplate>
-        <ion-toolbar>
-          <ion-row>
-            <ion-col *ngIf="portComponent.canClear">
-              <ion-button expand="full" (click)="clear()"
-                [disabled]="!portComponent.itemsToConfirm.length">
-                {{portComponent.clearButtonText}}
-              </ion-button>
-            </ion-col>
-            <ion-col>
-              <ion-button expand="full" (click)="toggleItems()">
-                {{portComponent.itemsToConfirm.length ? 'Deselect' : 'Select'}}
-                All
-              </ion-button>
-            </ion-col>
-            <ion-col *ngIf="portComponent.canAddItem">
-              <ion-button expand="full" (click)="onAddPort()">
-                {{portComponent.addButtonText}}
-              </ion-button>
-            </ion-col>
-            <ion-col>
-              <ion-button expand="full" (click)="confirm()">
-                {{portComponent.confirmButtonText}}
-              </ion-button>
-            </ion-col>
-          </ion-row>
-        </ion-toolbar>
-      </ng-template>
-    </ionic-selectable>
-  </ion-item>
+  <img [src]="photoPreview" *ngIf="photoPreview" alt="">
+  <ion-button (click)="takePicture()" expand="full" color="primary" shape="round"> Add Picture</ion-button>
+  <ion-button (click)="downloadPdf()" expand="full" color="secondary" shape="round" [disabled]="!pdfObj"> Save PDF</ion-button>
 </ion-content>
+

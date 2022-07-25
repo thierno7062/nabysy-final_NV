@@ -108,9 +108,26 @@
                 </ion-card-content>
               </ion-card>
             </ion-col>
+
+            <ion-col size="12" size-sm="6" size-md="4" size-lg="3" size-xl="2" class="ion-justify-content-center">
+              <!-- <ion-card>
+                  <ion-card-content>
+                  </ion-card-content>
+                </ion-card> -->
+                <ion-button  fill="clear" shape="round"> Voir </ion-button>
+                <ion-button  fill="clear" shape="round"> Modifier </ion-button>
+                <ion-button  fill="clear" shape="round"> Suivant </ion-button>
+                <ion-button  fill="clear" shape="round"> Précédent </ion-button>
+            </ion-col>
+
+            <ion-col size="12" size-sm="6" size-md="4" size-lg="3" size-xl="2" class="ion-justify-content-center">
+
+                <ion-button (click)="bulletinBulkEdit()" >Afficher Bulletin</ion-button>
+                <ion-button (click)="bulletinBulkEdit()" >Imprimer Bulletin</ion-button>
+
+            </ion-col>
           </ion-row>
-         </ion-grid>
-        <ion-button (click)="doRefresh($event)" slot="center">Afficher Bulletin</ion-button>
+        </ion-grid>
 
   </div>
 
@@ -120,114 +137,124 @@
     </ion-card-content>
   </ion-card>
   <!-- Bulletin de salaire -->
-  <ion-row class="ion-row1">
-    <ion-col size="3" ><ion-text ><h1 class="firm">CAFINE SARL</h1> </ion-text></ion-col>
-    <ion-col size="6">
-      <ion-text ><h1> <strong>Adresse:</strong> Zone Industrielle Pikine Icotaf</h1></ion-text>
-      <ion-text ><h1> <strong>Téléphone:</strong> 00221 77 883 45 00</h1></ion-text>
-      <ion-text ><h1> <strong>Fax:</strong>  00221 33 834 75 10</h1></ion-text>
-      <ion-text ><h1> <strong>Email:</strong> cafine@orange.sn</h1></ion-text>
-      </ion-col>
-    <ion-col size="3"><ion-text><h1 class="firm2" >BULLETIN DE PAIE</h1></ion-text></ion-col>
-  </ion-row >
-  <ion-row class="ion-row2">
-    <ion-col size="3"><ion-text ><h3>CONVENTION COLLECTIVE</h3></ion-text></ion-col>
-    <ion-col size="6"><ion-text ><h2>NOM & PRENOM</h2></ion-text></ion-col>
-    <ion-col size="3"><ion-text ><h3>ADRESSE</h3></ion-text></ion-col>
-  </ion-row>
-  <ion-row class="ion-row3">
-    <ion-col size="3"><ion-text ><h1>{{qualifiquation}}</h1></ion-text></ion-col>
-    <ion-col size="6"><ion-text ><h1 class="name">{{this.nom}}</h1></ion-text></ion-col>
-    <ion-col size="3"><ion-text ><h1>{{adresse}}</h1></ion-text></ion-col>
-  </ion-row>
-  <ion-row  class="ion-row4">
-    <ion-col size="12"></ion-col>
-  </ion-row>
-  <ion-row class="ion-row5">
-    <ion-col size="3"><ion-text><h2>QUALIFICATION</h2></ion-text> </ion-col>
-    <ion-col size="1"><ion-text><P>N° D'ORDRE</P></ion-text></ion-col>
-    <ion-col size="1"><ion-text><P>CATEGORIE</P></ion-text></ion-col>
-    <ion-col size="1"><ion-text><P>SITUATION FAMILIALE</P></ion-text></ion-col>
-    <ion-col size="1"><ion-text><P>PART TRIMF</P></ion-text></ion-col>
-    <ion-col size="1"><ion-text><P>PART IRPP</P></ion-text></ion-col>
-    <ion-col size="2"><ion-text><P>PERIODE DE PAIE</P></ion-text></ion-col>
-    <ion-col size="2"><ion-text><P>DATE D'EMBAUCHE</P></ion-text></ion-col>
-  </ion-row>
-  <ion-row class="ion-row6">
-    <ion-col size="3"><ion-text><h1>{{qualifiquation}}</h1></ion-text> </ion-col>
-    <ion-col size="1"><ion-text><P></P></ion-text></ion-col>
-    <ion-col size="1"><ion-text><P>{{categorie}}</P></ion-text></ion-col>
-    <ion-col size="1"><ion-text><P>{{situationFa}}</P></ion-text></ion-col>
-    <ion-col size="1"><ion-text><P>{{partTrimf}}</P></ion-text></ion-col>
-    <ion-col size="1"><ion-text><P>{{partIrpp}}</P></ion-text></ion-col>
-    <ion-col size="2"><ion-text><P>{{periodePaie}}</P></ion-text></ion-col>
-    <ion-col size="2"><ion-text><P>{{dateEmbauche}}</P></ion-text></ion-col>
-  </ion-row>
-  <ion-row  class="ion-row7">
-    <ion-col size="8.8" class="rubrique"></ion-col>
-    <ion-col size="0.1" class="separation"></ion-col>
-    <!-- <ion-col size="3"><ion-text><p>COTISATIONS PATRONALES</p></ion-text> </ion-col> -->
-    <ion-col size="3" class="rubrique2" ><ion-text><p>COTISATIONS</p></ion-text> </ion-col>
-  </ion-row>
-  <ion-row class="ion-row8">
-    <ion-col size="3" class="rubrique"><ion-text><h3>LIBELLE RUBRIQUE</h3></ion-text> </ion-col>
-    <ion-col size="1.9" class="rubrique"><ion-text><P>BASE</P></ion-text></ion-col>
-    <ion-col size="1" class="rubrique"><ion-text><P>TAUX</P></ion-text></ion-col>
-    <ion-col size="1.5" class="rubrique"><ion-text><P>GAINS</P></ion-text></ion-col>
-    <ion-col size="1.4" class="rubrique"><ion-text><P>RETENUES</P></ion-text></ion-col>
-    <ion-col size="0.1"class="separation"></ion-col>
-    <ion-col size="1" class="rubrique"><div><ion-text><P>TAUX</P></ion-text></div></ion-col>
-    <ion-col size="2" class="rubrique"><ion-text><P>MONTANT</P></ion-text></ion-col>
-  </ion-row>
-  <ion-row class="ion-row9" *ngFor="let bulletin of gainPrime">
-    <ion-col size="3"><ion-text><h3>{{bulletin.Libelle}}</h3></ion-text> </ion-col>
-    <ion-col size="1.9"><ion-text><P>{{bulletin.Base}}</P></ion-text></ion-col>
-    <ion-col size="1"><ion-text><P>{{bulletin.Taux}}</P></ion-text></ion-col>
-    <ion-col size="1.5"><ion-text><P>{{bulletin.Gain}}</P></ion-text></ion-col>
-    <ion-col size="1.4"><ion-text><P>{{bulletin.Retenu}}</P></ion-text></ion-col>
-    <ion-col size="0.1" class="separation"></ion-col>
-    <ion-col size="1"><ion-text><P>{{bulletin.COTISATION_PATRONALE_TAUX}}</P></ion-text></ion-col>
-    <ion-col size="2"><ion-text><P>{{bulletin.COTISATION_PATRONALE_MONTANT}}</P></ion-text></ion-col>
-  </ion-row>
-  <ion-row class="ion-row10">
-    <ion-col size="3" class="rubrique"><ion-text><h3>**Salaire Brut** (1)</h3></ion-text> </ion-col>
-    <ion-col size="1.9"class="rubrique"><ion-text><P></P></ion-text></ion-col>
-    <ion-col size="1"class="rubrique"><ion-text><P></P></ion-text></ion-col>
-    <ion-col size="1.5"class="rubrique"><ion-text><P>{{this.salaireBrut}}</P></ion-text></ion-col>
-    <ion-col size="1.4"class="rubrique"><ion-text><P></P></ion-text></ion-col>
-    <ion-col size="0.1" class="separation"></ion-col>
-    <ion-col size="1" class="rubrique"><div><ion-text><P></P></ion-text></div></ion-col>
-    <ion-col size="2"class="rubrique"><ion-text><P></P></ion-text></ion-col>
-  </ion-row>
-  <ion-row class="ion-row11" *ngFor="let bulletin of ligneCotisation">
-    <ion-col size="3"><ion-text><h3>{{bulletin.Libelle}}</h3></ion-text> </ion-col>
-    <ion-col size="1.9"><ion-text><P>{{bulletin.Base}}</P></ion-text></ion-col>
-    <ion-col size="1"><ion-text><P>{{bulletin.Taux}}</P></ion-text></ion-col>
-    <ion-col size="1.5"><ion-text><P>{{bulletin.Gain}}</P></ion-text></ion-col>
-    <ion-col size="1.4"><ion-text><P>{{bulletin.Retenu}}</P></ion-text></ion-col>
-    <ion-col size="0.1" class="separation"></ion-col>
-    <ion-col size="1"><ion-text><P>{{bulletin.COTISATION_PATRONALE_TAUX}}</P></ion-text></ion-col>
-    <ion-col size="2"><ion-text><P>{{bulletin.COTISATION_PATRONALE_MONTANT}}</P></ion-text></ion-col>
-  </ion-row>
-  <ion-row class="ion-row12">
-    <ion-col size="3" class="rubrique"><ion-text><h3>**Total des retenues** (2)</h3></ion-text> </ion-col>
-    <ion-col size="1.9"class="rubrique"><ion-text><P></P></ion-text></ion-col>
-    <ion-col size="1"class="rubrique"><ion-text><P></P></ion-text></ion-col>
-    <ion-col size="1.5"class="rubrique"><ion-text><P></P></ion-text></ion-col>
-    <ion-col size="1.4"class="rubrique"><ion-text><P></P></ion-text></ion-col>
-    <ion-col size="0.1" class="separation"></ion-col>
-    <ion-col size="1" class="rubrique2"><div><ion-text><P></P></ion-text></div></ion-col>
-    <ion-col size="2"class="rubrique3"><ion-text><P></P></ion-text></ion-col>
-  </ion-row>
-  <ion-row class="ion-row13">
-    <ion-col size="3" class="rubrique"><ion-text><h3>**Salaire Net** (3) = (1) - (2)</h3></ion-text> </ion-col>
-    <ion-col size="1.9"class="rubrique"><ion-text><P></P></ion-text></ion-col>
-    <ion-col size="1"class="rubrique"><ion-text><P></P></ion-text></ion-col>
-    <ion-col size="1.5"class="rubrique"><ion-text><P></P></ion-text></ion-col>
-    <ion-col size="1.4"class="rubrique"><ion-text><P></P></ion-text></ion-col>
-    <ion-col size="0.1" class="separation"></ion-col>
-    <ion-col size="1" class="rubrique2"><div><ion-text><P></P></ion-text></div></ion-col>
-    <ion-col size="2"class="rubrique3"><ion-text><P></P></ion-text></ion-col>
-  </ion-row>
+  <div *ngIf="bulkEdit">
 
+    <ion-row class="ion-row1" >
+      <ion-col size="3" ><ion-text ><h1 class="firm">CAFINE SARL</h1> </ion-text></ion-col>
+      <ion-col size="6">
+        <ion-text ><h1> <strong>Adresse:</strong> Zone Industrielle Pikine Icotaf</h1></ion-text>
+        <ion-text ><h1> <strong>Téléphone:</strong> 00221 77 883 45 00</h1></ion-text>
+        <ion-text ><h1> <strong>Fax:</strong>  00221 33 834 75 10</h1></ion-text>
+        <ion-text ><h1> <strong>Email:</strong> cafine@orange.sn</h1></ion-text>
+        </ion-col>
+      <ion-col size="3"><ion-text><h1 class="firm2" >BULLETIN DE PAIE</h1></ion-text></ion-col>
+    </ion-row >
+    <ion-row class="ion-row2">
+      <ion-col size="3"><ion-text ><h3>CONVENTION COLLECTIVE</h3></ion-text></ion-col>
+      <ion-col size="6"><ion-text ><h2>NOM & PRENOM</h2></ion-text></ion-col>
+      <ion-col size="3"><ion-text ><h3>ADRESSE</h3></ion-text></ion-col>
+    </ion-row>
+    <ion-row class="ion-row3">
+      <ion-col size="3"><ion-text ><h1>{{qualifiquation}}</h1></ion-text></ion-col>
+      <ion-col size="6"><ion-text ><h1 class="name">{{this.nom}}</h1></ion-text></ion-col>
+      <ion-col size="3"><ion-text ><h1>{{adresse}}</h1></ion-text></ion-col>
+    </ion-row>
+    <ion-row  class="ion-row4">
+      <ion-col size="12"></ion-col>
+    </ion-row>
+    <ion-row class="ion-row5">
+      <ion-col size="3"><ion-text><h2>QUALIFICATION</h2></ion-text> </ion-col>
+      <ion-col size="1"><ion-text><P>N° D'ORDRE</P></ion-text></ion-col>
+      <ion-col size="1"><ion-text><P>CATEGORIE</P></ion-text></ion-col>
+      <ion-col size="1"><ion-text><P>SITUATION FAMILIALE</P></ion-text></ion-col>
+      <ion-col size="1"><ion-text><P>PART TRIMF</P></ion-text></ion-col>
+      <ion-col size="1"><ion-text><P>PART IRPP</P></ion-text></ion-col>
+      <ion-col size="2"><ion-text><P>PERIODE DE PAIE</P></ion-text></ion-col>
+      <ion-col size="2"><ion-text><P>DATE D'EMBAUCHE</P></ion-text></ion-col>
+    </ion-row>
+    <ion-row class="ion-row6">
+      <ion-col size="3"><ion-text><h1>{{qualifiquation}}</h1></ion-text> </ion-col>
+      <ion-col size="1"><ion-text><P></P></ion-text></ion-col>
+      <ion-col size="1"><ion-text><P>{{categorie}}</P></ion-text></ion-col>
+      <ion-col size="1"><ion-text><P>{{situationFa}}</P></ion-text></ion-col>
+      <ion-col size="1"><ion-text><P>{{partTrimf}}</P></ion-text></ion-col>
+      <ion-col size="1"><ion-text><P>{{partIrpp}}</P></ion-text></ion-col>
+      <ion-col size="2"><ion-text><P>{{periodePaie}}</P></ion-text></ion-col>
+      <ion-col size="2"><ion-text><P>{{dateEmbauche}}</P></ion-text></ion-col>
+    </ion-row>
+    <ion-row  class="ion-row7">
+      <ion-col size="8.8" class="rubrique"></ion-col>
+      <ion-col size="0.1" class="separation"></ion-col>
+      <!-- <ion-col size="3"><ion-text><p>COTISATIONS PATRONALES</p></ion-text> </ion-col> -->
+      <ion-col size="3" class="rubrique2" ><ion-text><p>COTISATIONS</p></ion-text> </ion-col>
+    </ion-row>
+    <ion-row class="ion-row8">
+      <ion-col size="3" class="rubrique"><ion-text><h3>LIBELLE RUBRIQUE</h3></ion-text> </ion-col>
+      <ion-col size="1.9" class="rubrique"><ion-text><P>BASE</P></ion-text></ion-col>
+      <ion-col size="1" class="rubrique"><ion-text><P>TAUX</P></ion-text></ion-col>
+      <ion-col size="1.5" class="rubrique"><ion-text><P>GAINS</P></ion-text></ion-col>
+      <ion-col size="1.4" class="rubrique"><ion-text><P>RETENUES</P></ion-text></ion-col>
+      <ion-col size="0.1"class="separation"></ion-col>
+      <ion-col size="1" class="rubrique"><div><ion-text><P>TAUX</P></ion-text></div></ion-col>
+      <ion-col size="2" class="rubrique"><ion-text><P>MONTANT</P></ion-text></ion-col>
+    </ion-row>
+    <ion-row class="ion-row9" *ngFor="let bulletin of gainPrime">
+      <ion-col size="3"><ion-text><h3>{{bulletin.Libelle}}</h3></ion-text> </ion-col>
+      <ion-col size="1.9"><ion-text><P>{{bulletin.Base}}</P></ion-text></ion-col>
+      <ion-col size="1"><ion-text><P>{{bulletin.Taux}}</P></ion-text></ion-col>
+      <ion-col size="1.5"><ion-text><P>{{bulletin.Gain}}</P></ion-text></ion-col>
+      <ion-col size="1.4"><ion-text><P>{{bulletin.Retenu}}</P></ion-text></ion-col>
+      <ion-col size="0.1" class="separation"></ion-col>
+      <ion-col size="1"><ion-text><P>{{bulletin.COTISATION_PATRONALE_TAUX}}</P></ion-text></ion-col>
+      <ion-col size="2"><ion-text><P>{{bulletin.COTISATION_PATRONALE_MONTANT}}</P></ion-text></ion-col>
+    </ion-row>
+    <ion-row class="ion-row10">
+      <ion-col size="3" class="rubrique"><ion-text><h3>**Salaire Brut** (1)</h3></ion-text> </ion-col>
+      <ion-col size="1.9"class="rubrique"><ion-text><P></P></ion-text></ion-col>
+      <ion-col size="1"class="rubrique"><ion-text><P></P></ion-text></ion-col>
+      <ion-col size="1.5"class="rubrique"><ion-text><P>{{this.salaireBrut}}</P></ion-text></ion-col>
+      <ion-col size="1.4"class="rubrique"><ion-text><P></P></ion-text></ion-col>
+      <ion-col size="0.1" class="separation"></ion-col>
+      <ion-col size="1" class="rubrique"><div><ion-text><P></P></ion-text></div></ion-col>
+      <ion-col size="2"class="rubrique"><ion-text><P></P></ion-text></ion-col>
+    </ion-row>
+    <ion-row class="ion-row11" *ngFor="let bulletin of ligneCotisation">
+      <ion-col size="3"><ion-text><h3>{{bulletin.Libelle}}</h3></ion-text> </ion-col>
+      <ion-col size="1.9"><ion-text><P>{{bulletin.Base}}</P></ion-text></ion-col>
+      <ion-col size="1"><ion-text><P>{{bulletin.Taux}}</P></ion-text></ion-col>
+      <ion-col size="1.5"><ion-text><P>{{bulletin.Gain}}</P></ion-text></ion-col>
+      <ion-col size="1.4"><ion-text><P>{{bulletin.Retenu}}</P></ion-text></ion-col>
+      <ion-col size="0.1" class="separation"></ion-col>
+      <ion-col size="1"><ion-text><P>{{bulletin.COTISATION_PATRONALE_TAUX}}</P></ion-text></ion-col>
+      <ion-col size="2"><ion-text><P>{{bulletin.COTISATION_PATRONALE_MONTANT}}</P></ion-text></ion-col>
+    </ion-row>
+    <ion-row class="ion-row12">
+      <ion-col size="3" class="rubrique"><ion-text><h3>**Total des retenues** (2)</h3></ion-text> </ion-col>
+      <ion-col size="1.9"class="rubrique"><ion-text><P></P></ion-text></ion-col>
+      <ion-col size="1"class="rubrique"><ion-text><P></P></ion-text></ion-col>
+      <ion-col size="1.5"class="rubrique"><ion-text><P></P></ion-text></ion-col>
+      <ion-col size="1.4"class="rubrique"><ion-text><P></P></ion-text></ion-col>
+      <ion-col size="0.1" class="separation"></ion-col>
+      <ion-col size="1" class="rubrique2"><div><ion-text><P></P></ion-text></div></ion-col>
+      <ion-col size="2"class="rubrique3"><ion-text><P></P></ion-text></ion-col>
+    </ion-row>
+    <ion-row class="ion-row13">
+      <ion-col size="3" class="rubrique"><ion-text><h3>**Salaire Net** (3) = (1) - (2)</h3></ion-text> </ion-col>
+      <ion-col size="1.9"class="rubrique"><ion-text><P></P></ion-text></ion-col>
+      <ion-col size="1"class="rubrique"><ion-text><P></P></ion-text></ion-col>
+      <ion-col size="1.5"class="rubrique"><ion-text><P></P></ion-text></ion-col>
+      <ion-col size="1.4"class="rubrique"><ion-text><P></P></ion-text></ion-col>
+      <ion-col size="0.1" class="separation"></ion-col>
+      <ion-col size="1" class="rubrique2"><div><ion-text><P></P></ion-text></div></ion-col>
+      <ion-col size="2"class="rubrique3"><ion-text><P></P></ion-text></ion-col>
+    </ion-row>
+  </div>
+
+  <!-- Fonction print -->
+  <div class="ion-padding">
+    <div id="printer">
+    The world is your oyster.
+    </div>
+    </div>
+    <!-- <button class="button" (click)="print()">Print</button> -->
 </ion-content>

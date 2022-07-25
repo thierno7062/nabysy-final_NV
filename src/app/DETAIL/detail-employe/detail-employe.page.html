@@ -9,8 +9,8 @@
   <!-- page header -->
   <ion-header mode="ios">
     <ion-toolbar>
-      <ion-button slot="start" fill="solid" class="button-back">
-        <ion-icon name="chevron-back"></ion-icon>
+      <ion-button slot="start" fill="solid" class="button-back"(click)="closeModal()">
+        <ion-icon name="chevron-back" ></ion-icon>
       </ion-button>
       <ion-button slot="end" fill="solid" class="button-edit">
         <ion-icon name="pencil"></ion-icon>
@@ -32,7 +32,7 @@
       <!-- user info -->
       <div class="name-container">
         <ion-text algin="center">
-          <h1>Cindy Carter</h1>
+          <h1>{{userDetails.Prenom+' '}} {{userDetails.Nom}}</h1>
         </ion-text>
 
         <ion-button>
@@ -43,7 +43,7 @@
 
       <!-- location -->
       <div class="location">
-        <ion-text> Based in <span class="emphasis">Berlin</span> </ion-text>
+        <ion-text> Adresse: <span class="emphasis">{{' '+userDetails.Adresse}}</span> </ion-text>
       </div>
 
       <!-- talent scout -->
@@ -55,8 +55,8 @@
                 <ion-img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1361&q=80"></ion-img>
               </ion-avatar>
               <div class="text-container">
-                <ion-text><span class="name">Karol Thomas</span></ion-text>
-                <ion-text><span class="description">Talent Scout</span></ion-text>
+                <ion-text><span class="name">{{userDetails.Prenom+' '}} {{userDetails.Nom}}</span></ion-text>
+                <ion-text><span class="description">{{userDetails?.Fonction}}</span></ion-text>
               </div>
             </div>
             <ion-button>
