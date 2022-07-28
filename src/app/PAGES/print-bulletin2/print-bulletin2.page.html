@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Ionic HTML to PDF
+    </ion-title>
+    <ion-buttons slot="primary">
+      <ion-button color="danger" fill="outline">
+        View PDF
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content padding>
+  <div class="ion-padding">
+    <div id="printer">
+    The world is your oyster.
+    </div>
+    </div>
+    <ion-button (click)="pdfDownload()" fill="outline" color="primary">
+      DOWNLOAD PDF
+    </ion-button>
+</ion-content>

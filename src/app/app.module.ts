@@ -10,6 +10,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { IonicSelectableModule } from 'ionic-selectable';
 // import { Printer } from '@awesome-cordova-plugins/printer/ngx';
 import { Printer, PrintOptions } from '@awesome-cordova-plugins/printer/ngx';
+import { File } from '@ionic-native/file/ngx';
 import { FileOpener } from '@awesome-cordova-plugins/file-opener/ngx';
 import { PDFGenerator} from '@ionic-native/pdf-generator/ngx';
 
@@ -23,6 +24,7 @@ import { PDFGenerator} from '@ionic-native/pdf-generator/ngx';
     ToastController,
     MenuController,
     Printer,
+    File,
     FileOpener,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, PDFGenerator],
   bootstrap: [AppComponent],

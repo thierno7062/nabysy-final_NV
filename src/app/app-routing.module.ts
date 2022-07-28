@@ -86,7 +86,15 @@ const routes: Routes = [
   {
     path: 'detail-employe',
     loadChildren: () => import('./DETAIL/detail-employe/detail-employe.module').then( m => m.DetailEmployePageModule)
+  },  {
+    path: 'print-bulletin',
+    loadChildren: () => import('./pages/print-bulletin/print-bulletin.module').then( m => m.PrintBulletinPageModule)
   },
+  {
+    path: 'print-bulletin2',
+    loadChildren: () => import('./pages/print-bulletin2/print-bulletin2.module').then( m => m.PrintBulletin2PageModule)
+  },
+
 ];
 
 @NgModule({
