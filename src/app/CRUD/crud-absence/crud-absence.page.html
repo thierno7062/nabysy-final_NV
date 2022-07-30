@@ -16,34 +16,70 @@
 <ion-card>
   <ion-card-content>
     <ion-list >
-      <!-- <ion-item>  -->
-        <!-- <ion-label position="floating">Nom</ion-label> -->
-        <!-- <ion-input [(ngModel)]='this.Nom' [readonly]="true"></ion-input> -->
-        <!-- <ion-input [(ngModel)]='this.nom' ></ion-input> -->
-      <!-- </ion-item> -->
       <ion-item>
         <ion-label position="floating">Motif</ion-label>
         <ion-input [(ngModel)]='this.motif' ></ion-input>
       </ion-item>
-      <ion-item>
+      <!-- <ion-item>
         <ion-label position="floating">Date Debut</ion-label>
         <ion-input [(ngModel)]='this.dateDebut'></ion-input>
+      </ion-item> -->
+      <ion-item id="open-modal" >
+
+        <ion-label>Date de départ</ion-label>
+        <ion-text tappable slot="end">{{ formattedString }}</ion-text>
+        <ion-icon icon="calendar-outline" slot="end" color="primary" tappable></ion-icon>
       </ion-item>
+      <ion-modal trigger="open-modal" mode="md" class="open-modal">
+        <ng-template>
+          <ion-content>
+            <ion-datetime
+              #datetime
+              [value]="dateValue" size="cover"
+              (ionChange)="dateChanged(datetime.value)"
+              (ionCancel)="showPicker=false;">
+            </ion-datetime >
+              <ion-button (click)="close()" color="danger" class="dismiss">Dismiss</ion-button>
+              <ion-button (click)="select()" color="primary" >Select</ion-button>
+          </ion-content>
+        </ng-template>
+      </ion-modal>
+
       <ion-item>
-        <ion-label position="floating">Heure Debut</ion-label>
-        <ion-input [(ngModel)]='this.heureDebut'></ion-input>
+        <ion-label>Heure Debut</ion-label>
+        <ion-text tappable slot="end">{{ timeString }}</ion-text>
       </ion-item>
-      <ion-item>
-        <ion-label position="floating">DateFin</ion-label>
-        <ion-input [(ngModel)]='this.dateFin'></ion-input>
+
+      <!-- Date de fin -->
+      <ion-item id="open-modal2">
+        <ion-label>Date de Fin </ion-label>
+        <ion-text tappable slot="end">{{ formattedString2 }}</ion-text>
+        <ion-icon icon="calendar-outline" slot="end" color="primary" tappable></ion-icon>
       </ion-item>
+
+      <ion-modal trigger="open-modal2" mode="md">
+        <ng-template>
+          <ion-content>
+            <ion-datetime
+              #datetime
+              [value]="dateValue" size="cover"
+              (ionChange)="dateChangedFin(datetime.value)"
+              (ionCancel)="showPicker=false;">
+            </ion-datetime >
+
+              <ion-button (click)="close()" color="danger" class="dismiss">Dismiss</ion-button>
+              <ion-button (click)="select()" color="primary" >Select</ion-button>
+
+          </ion-content>
+        </ng-template>
+      </ion-modal>
+
       <ion-item>
-        <ion-label position="floating" >Heure Fin</ion-label>
-        <ion-input [(ngModel)]='this.heureFin'></ion-input>
+        <ion-label>Heure Fin</ion-label>
+        <ion-text tappable slot="end">{{ timeString2 }}</ion-text>
       </ion-item>
+
       <ion-item>
-        <!-- <ion-label position="floating">Paye</ion-label>
-        <ion-input [(ngModel)]='this.paye'></ion-input> -->
         <ion-label>Paye</ion-label>
         <h2  *ngIf="isPaid">OUI</h2>
         <h2  *ngIf="!isPaid">NON</h2>
@@ -76,6 +112,10 @@
           </ion-icon>
         </ion-button>
       </ion-col>
+      <p color="primary">{{this.selectedDate}}</p><br>
+      <p><strong color="success" >{{'   '+this.selectedDate2}}</strong></p>
+      <h1 color="danger">{{'   '+this.selectedTime}}</h1>
+      <h1 color="danger">{{'   '+this.selectedTime2}}</h1>
       <ion-col size="12" *ngIf="choix">
         <ion-item>
           <ion-label>Veillez sélectionner les employés correspondants ci-dessous</ion-label>

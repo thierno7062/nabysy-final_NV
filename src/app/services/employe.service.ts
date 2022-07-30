@@ -33,6 +33,11 @@ export class EmployeService {
     this.url= environment.endPoint+'employe_action.php?Action=GET_EMPLOYE&IdEmploye='+id+'&Token='+environment.tokenUser;
     return this.http.get(this.url);
   }
+  getPrime(id: ''){
+    this.loadingService.presentLoading();
+    this.url= environment.endPoint+'performance_action.php?Action=ADD_PERFORMANCE&IdEmploye='+id+'&Token='+environment.tokenUser;
+    return this.http.get(this.url);
+  }
 
   create(employe: any){
     return this.http.post(this.url, employe);

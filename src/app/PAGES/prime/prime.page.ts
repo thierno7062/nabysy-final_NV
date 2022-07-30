@@ -1,18 +1,17 @@
+/* eslint-disable @typescript-eslint/dot-notation */
 /* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable prefer-const */
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
-import {   Plugins } from '@capacitor/core';
-import {  CameraResultType, CameraSource,  } from '@capacitor/camera';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { FileOpener } from '@awesome-cordova-plugins/file-opener/ngx';
-import { Platform } from '@ionic/angular';
-
-const {Camera, Filesystem, FileSystemDirectory} = Plugins;
-
-import pdfMake from 'pdfmake/build/pdfmake';
-import pdfFonts from 'pdfmake/build/vfs_fonts';
-pdfMake.vfs= pdfFonts.pdfMake.vfs;
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
+import { AlertController, IonDatetime, MenuController, ModalController } from '@ionic/angular';
+import { EmployeService } from 'src/app/services/employe.service';
+import { LoadingService } from 'src/app/services/loading.service';
+import { PopupModalService } from 'src/app/services/popup-modal.service';
+import { environment } from 'src/environments/environment';
+import { format, parseISO } from 'date-fns';
+import { IonicSelectableComponent } from 'ionic-selectable';
+import { CrudPrimePage } from 'src/app/CRUD/crud-prime/crud-prime.page';
 
 
 @Component({
@@ -20,143 +19,245 @@ pdfMake.vfs= pdfFonts.pdfMake.vfs;
   templateUrl: './prime.page.html',
   styleUrls: ['./prime.page.scss'],
 })
+
+
 export class PrimePage implements OnInit {
+  @ViewChild(IonDatetime) datetime: IonDatetime;
+  @ViewChild('selectComponent') selectComponent: IonicSelectableComponent;
+  listePrime: any;
+  bulkEdit= false;
+  sortDirection= 0;
+  sortKey= null;
 
- // Create PDF to print:
- myForm: FormGroup;
- pdfObj= null;
- base64Image = null;
- photoPreview= null;
- logoData = null;
+  // Employe
+  selected_user= null;
+  selected: any;
+  users: any;
+  listeEmploye: any;
+  toggle= true;
+  id: number;
 
 
-  constructor(private http: HttpClient,private fb: FormBuilder, private plt: Platform, private fileOpener: FileOpener) {
+
+  // Pick Date
+   today: any;
+ /* age =0; */
+  selectedDate= format(new Date(),'yyyy-MM-dd');
+  selectedDate2= format(new Date(),'yyyy-MM-dd');
+  modes = ['date', 'month', 'month-year','year'];
+  selectedMode= 'date';
+  showPicker = false;
+  dateValue= format(new Date(),'yyyy-MM-dd');
+  formattedString= '';
+  formattedString2= '';
+
+
+  constructor(private http: HttpClient,private router: Router,private popupModalService: PopupModalService,
+    private menu: MenuController, private modalctrl: ModalController,  private service: EmployeService,
+    private alertctrl: AlertController,
+    private loadingService: LoadingService) {
+      // this.confirm();
+      this.setToday();
+      this.today = new Date().getDate();
+      this.loadEmploye();
 
   }
 
   ngOnInit() {
-    this.myForm= this.fb.group({
-      showLogo:true,
-      from: 'thierno',
-      to: 'Paul',
-      text: 'TEST'
-    });
-    this.loadLocalAssetToBase64();
+
   }
 
-  loadLocalAssetToBase64(){
-this.http.get('./assets/man.png', {responseType: 'blob'})
-.subscribe(res =>{
-  const reader= new FileReader();
-  reader.onloadend = () =>{
-    this.logoData= reader.result;
-  };
-  reader.readAsDataURL(res);
-});
-  }
+  setToday(){
+    // this.formattedString= format(parseISO(format(new Date(), 'yyyy-MM-dd')+ 'T09:00:00.000Z'), 'HH:mm, MMM d, yyyy');
+    this.formattedString= format(parseISO(format(new Date(), 'yyyy-MM-dd')+ 'T09:00:00.000Z'), ' yyyy-MM-d ');
+    this.formattedString2= format(parseISO(format(new Date(), 'yyyy-MM-dd')+ 'T09:00:00.000Z'), ' yyyy-MM-d ');
+    }
+    dateChanged(value){
+      this.dateValue= value;
+     this.formattedString= format(parseISO(value),  ' MMM d, yyyy');
+     this.showPicker= false;
+     this.selectedDate=value;
+     }
+     dateChangedFin(value){
+      this.dateValue= value;
+     this.formattedString2= format(parseISO(value),  ' MMM d, yyyy');
+     this.showPicker= false;
+     this.selectedDate2=value;
+     }
+     close(){
+       this.datetime.cancel(true);
+     }
+     select(){
+       this.datetime.confirm(true);
 
-  async takePicture(){
-    const image = await Camera.getPhoto({
-      quality: 100,
-      allowEditing: false,
-      resultType: CameraResultType.Base64,
-      source: CameraSource.Camera
-
-    });
-    console.log('image');
-    this.photoPreview=`data:image/jpeg;base64,${ image.base64Image}`;
-  }
-  createPdf(){
-    const formValue = this.myForm.value;
-    const image =this.photoPreview? { image: this.photoPreview, width:300 } : {};
-
-    let logo = {};
-    if(formValue.showLogo){
-      logo = { image: this.logoData, width: 50};
+     }
+  loadPrime(){
+    let IdEmploye='';
+    if(this.id){
+      IdEmploye ='&IdEmploye='+this.id ;
+      console.log(IdEmploye);
     }
 
-    const docDefinition= {
-      watermark: { text: 'Ionic Academy', color: 'blue', opacity: 0.2, bold: true},
-      content: [
-        {
-          columns: [
+    this.readAPI(environment.endPoint+'performance_action.php?Action=GET_PERFORMANCE&GROUP=DATEENREG&ORDRE=TOTAL_PERFORMANCE&DATEDEPART='+
+    this.selectedDate+'&DATEFIN='+this.selectedDate2+IdEmploye+'&Token='+environment.tokenUser)
+    .subscribe((listes) =>{
+      this.loadingService.dismiss();
+      // console.log(Listes);
+      this.listePrime=listes ;
+      console.log(this.listePrime);
+    });
+    this.sort();
 
-            logo,
-            {
-              text: new Date().toTimeString(),
-              alignment: 'right'
-            }
-          ]
-        },
-        { text: 'REMINDER', style: 'header'},
-        {
-          columns:[
-            {
-              width: '50%',
-              text: 'From',
-              style: 'subheader'
-            },
-            {
-              width: '50%',
-              text: 'To',
-              style: 'subheader'
-            }
-          ]
-        },
-        {
-          columns: [
-            {
-              width: '50%',
-              text: formValue.from
-            },
-            {
-              width: '50%',
-              text: formValue.to
-            }
-          ]
-        },
-        image,
-        { text: formValue.text, margin: [0, 20, 0, 20]},
-      ],
-      styles:{
-        header:{
-          fontSize: 18,
-          bold: true,
-          margin: [0, 15, 0, 0]
-        },
-        subheader: {
-          fontSize: 14,
-          bold: true,
-          margin: [0, 15, 0, 0]
-        }
+  }
+  readAPI(url: string){
+    return this.http.get(url);
+
+  }
+  loadEmploye(){
+    this.readAPI(environment.endPoint+'employe_action.php?Action=GET_EMPLOYE&Token='+environment.tokenUser)
+    .subscribe((listes) =>{
+      // console.log(Listes);
+      this.listeEmploye=listes ;
+      this.users=listes;
+      /* this.users.ID=listes['"ID"'];
+          this.users.Nom=listes['"Nom"'];
+          this.users.Adresse=listes['"Adresse"'];
+          this.users.Telephone=listes['"Tel"']; */
+      console.log(this.listeEmploye);
+    });
+  }
+  addPrime(){
+    this.modalctrl.create({
+      component: CrudPrimePage
+    }).
+    then(modal =>{
+      modal.present();
+      return modal.onDidDismiss();
+    }).then(({data, role})=> {
+      console.log(data);
+      console.log(role);
+      if(role === 'create'){
+        const newPrime=data.Extra;
+        this.service.getPrime(newPrime).subscribe(async newdata =>{
+            this.listePrime.push(newdata[0]);
+            //console.log(this.listeEmploye);
+            this.loadPrime();
+        });
       }
-    };
-    this.pdfObj = pdfMake.createPdf(docDefinition);
-    console.log(this.pdfObj);
+    });
+  }
+  removePrime(employe: any){
+    this.alertctrl.create({
+      header:'Suppresion',
+      message:'voulez vous supprimer ?',
+      buttons:[{
+        text:'oui',
+        handler:()=>new Promise (() =>{
+            const headers = new Headers();
+            headers.append('Accept', 'application/json');
+            headers.append('Content-Type', 'application/json' );
+            const apiUrl=environment.endPoint+'performance_action.php?Action=SUPPRIME_PERFORMANCE&IDPERFORMANCE='+
+            employe.ID+'&Token='+environment.tokenUser;
+            console.log(apiUrl);
+            this.http.get(apiUrl).subscribe(async data =>{
+              console.log(data);
+              if(data['OK']>0){
+                 //this.router.navigate(['personnel']);
+                 const pos=this.listePrime.indexOf(employe);
+                 console.log(pos);
+                 if (pos>-1){
+                  this.listePrime.splice(pos,1);
+                  // this.refreshPerson();
+                 }
+              }else{
+                console.log(data['OK']);
+              }
+            });
+          })
+      },
+       {text:'No'}
+    ]
+    }).then(alertE1 =>alertE1.present()) ;
+
+
+
   }
 
-  downloadPdf(){
-    if(this.plt.is('cordova')){
-      this.pdfObj.getBase64(async (data)=>{
-        try{
-          let path = `pdf/myletter_${Date.now()}.pdf`;
+  updatePrime(employe: any){
+    console.log(employe);
+    this.modalctrl.create({
+      component: CrudPrimePage,
+      componentProps:{ employe }
+    })
+    .then(modal => modal.present());
+    this.loadPrime();
 
-          const result = await Filesystem.writeFile({
-            path,
-            data,
-            directory: FileSystemDirectory.Documents,
-            recursive:true
-            // encoding: FilesystemEncoding.UTF8
-          });
-          this.fileOpener.open(`${result.uri}`, 'application/pdf');
+  }
+  _openSideNav(){
+    this.menu.enable(true,'menu-content');
+    this.menu.open('menu-content');
+  }
+  primedetails(userDetail: any){
+    this.popupModalService.presentModalEmploye(userDetail);
+  }
+  doRefresh(event){
+     this.loadPrime();
+     this.loadEmploye();
+    event.target.complete();
+  }
+  removeVarious(){
+    this.bulkEdit=true;
+  }
+  save(){
+    this.bulkEdit=false;
+  }
 
-        }catch (e){
-          console.error('Unable to write file', e);
-        }
+  sortBy(key){
+    this.sortKey= key;
+    this.sortDirection++;
+  }
+  sort(){
+    if (this.sortDirection === 1){
+      this.listePrime = this.listePrime.sort((a, b) =>{
+        console.log('a: ', a);
+        const valA = a[this.sortKey];
+        const valB = b[this.sortKey];
+        return valA.localeCompare(valB);
       });
-
+    }else if (this.sortDirection === 2){
+      this.listePrime = this.listePrime.sort((a, b) =>{
+        const valA = a[this.sortKey];
+        const valB = b[this.sortKey];
+        return valB.localeCompare(valA);
+      });
     }else{
-      this.pdfObj.download();
+      this.sortDirection= 0;
+      this.sortKey= null;
     }
+
+  }
+  openFromCode(){
+    this.selectComponent.open();
+  }
+  clear(){
+    this.selectComponent.clear();
+    this.selectComponent.close();
+
+  }
+  toggleItems(){
+    this.selectComponent.toggleItems(this.toggle);
+    this.toggle= !this.toggle;
+
+  }
+  confirm(){
+    this.selectComponent.confirm();
+    this.selectComponent.close();
+    console.log(this.selected);
+    if(this.selected){
+      this.id=this.selected.ID;
+
+    }
+    this.loadPrime();
+
   }
 }

@@ -13,12 +13,13 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { FileOpener } from '@awesome-cordova-plugins/file-opener/ngx';
 import { Printer } from '@awesome-cordova-plugins/printer/ngx';
-import { AlertController, MenuController, ModalController, Platform } from '@ionic/angular';
+import { AlertController, IonDatetime, MenuController, ModalController, Platform } from '@ionic/angular';
 import { IonicSelectableComponent } from 'ionic-selectable';
 import { environment } from 'src/environments/environment';
 
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
+import { format } from 'date-fns';
 
 (<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
 
@@ -40,22 +41,36 @@ export class SalairesPage implements OnInit {
   nbTotalJour: '';nbheureApayer: '';totalHeureApayer: ''; mois: ''; adresse: ''; partTrimf: ''; partIrpp: ''; periodePaie: '';
   dateEmbauche: '';gainPrime: any; ligneCotisation: any; SALAIRE_BRUT: '';
 
+  // ionic selectable************
   searchTerm: string;
   selected_user= null;
   selected: any;
   users: any;
   toggle= true;
   @ViewChild('selectComponent') selectComponent: IonicSelectableComponent;
-  employeForm: FormGroup;
+ /*  employeForm: FormGroup;
   portNameControl: FormControl;
-  portCountryControl: FormControl;
+  portCountryControl: FormControl; */
 
   listeEmploye: any;
   bulkEdit= false;
 
-  //pdf make
+  //pdf make******************************
   pdfObj = null;
   items: any; items2: any;
+
+  // Pick Date**********************
+  @ViewChild(IonDatetime) datetime: IonDatetime;
+  today: any;
+  /* age =0; */
+   selectedDate= format(new Date(),'yyyy-MM-dd');
+   modes = ['date', 'date-time', 'month', 'month-year','time', 'time-date','year'];
+   selectedMode= 'date';
+   showPicker = false;
+   // // dateValue= format(new Date(),'yyyy-MM-dd');
+   dateValue= format(new Date(),'yyyy-MM-dd')+ 'T09:00:00.000Z';
+   formattedString= '';
+
   constructor(private router: Router,  private modalctrl: ModalController,private alertctrl: AlertController,
     private menu: MenuController, private http: HttpClient,private printer: Printer,
     private fb: FormBuilder, private plt: Platform, private fileOpener: FileOpener) {
@@ -81,10 +96,6 @@ export class SalairesPage implements OnInit {
       // console.log(Listes);
       this.listeEmploye=listes ;
       this.users=listes;
-      /* this.users.ID=listes['"ID"'];
-          this.users.Nom=listes['"Nom"'];
-          this.users.Adresse=listes['"Adresse"'];
-          this.users.Telephone=listes['"Tel"']; */
       console.log(this.listeEmploye);
     });
   }
@@ -137,17 +148,11 @@ export class SalairesPage implements OnInit {
     return this.http.get(url);
 
   }
-  closeAccordion(){
-    // this.accordionGroup.value= '';
-  }
-  toggleSection(){
-    // this.accordionGroup.value= 'infos';
-  }
   _openSideNav(){
     this.menu.enable(true,'menu-content');
     this.menu.open('menu-content');
   }
-  doRefresh(event: { target: { complete: () => void } }){
+  doRefresh(event){
     this.loadSalary();
     event.target.complete();
   }
@@ -495,7 +500,7 @@ export class SalairesPage implements OnInit {
 
       ],
       defaultStyle: {
-        fontSize: 10,
+        fontSize: 8,
       }
     };
 

@@ -9,3 +9,24 @@
       border-bottom: 1px solid #000;
 
     }
+ion-content{
+  ion-card{
+    ion-card-content{
+      ion-list{
+        ion-modal{
+         &.open-modal{
+
+              /*  background: transparent;
+
+              --padding-top: 10vh;
+              --padding-start: 20px;
+              --padding-end: 20px;*/
+              --background: transparent;
+
+
+          }
+        }
+      }
+    }
+  }
+}

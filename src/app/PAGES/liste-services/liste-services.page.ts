@@ -1,8 +1,11 @@
+/* eslint-disable @typescript-eslint/member-ordering */
+/* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable @typescript-eslint/dot-notation */
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController, MenuController, ModalController } from '@ionic/angular';
+import { IonicSelectableComponent } from 'ionic-selectable';
 import { Observable } from 'rxjs';
 import { CrudServicePage } from 'src/app/CRUD/crud-service/crud-service.page';
 import { EmployeService } from 'src/app/services/employe.service';
@@ -25,21 +28,57 @@ export class ListeServicesPage implements OnInit {
     telephone:'',
   };
 
+   // ionic selectable************
+   searchTerm: string;
+   selected_user= null;
+   selected: any;
+   users: any;
+   toggle= true;
+   id: number;
+   @ViewChild('selectComponent') selectComponent: IonicSelectableComponent;
+   listeEmploye: any;
+   listeDirections: any;
+
   constructor(private router: Router,private route: ActivatedRoute, private modalctrl: ModalController,
     private menu: MenuController,private service: EmployeService,private alertctrl: AlertController,
     private http: HttpClient) {
      this.refreshServices();
+     this.loadEmploye();
+     this.refreshDirection();
     }
 
   ngOnInit() {
-    // this.refreshServices();
+    if(this.id){
+      this.id=this.direction.ID;
+    }
+
+  }
+  loadEmploye(){
+    this.readAPI(environment.endPoint+'employe_action.php?Action=GET_EMPLOYE&Token='+environment.tokenUser)
+    .subscribe((listes) =>{
+      // console.log(Listes);
+      this.listeEmploye=listes ;
+      console.log(this.listeEmploye);
+    });
+  }
+  refreshDirection(){
+    this.readAPI(environment.endPoint+'direction_action.php?Action=GET_DIRECTION')
+    .subscribe((Listes) =>{
+      console.log(Listes);
+      //  this.dt1=Listes['0'];
+
+      this.listeDirections=Listes ;
+      this.users=Listes;
+      console.log(this.listeDirections);
+    });
   }
   refreshServices(){
     this.route.queryParams.subscribe(res =>{
       console.log(res);
       this.direction=res;
       //console.log(this.direction);
-      this.url=environment.endPoint+'service_action.php?Action=GET_SERVICE&IdDirection='+this.direction.ID;
+      this.id=this.direction.ID;
+      this.url=environment.endPoint+'service_action.php?Action=GET_SERVICE&IdDirection='+this.id;
 
       this.readAPI(this.url)
       .subscribe((data) =>{
@@ -153,5 +192,32 @@ export class ListeServicesPage implements OnInit {
   doRefresh(event){
     this.refreshServices();
     event.target.complete();
+  }
+
+
+  //ionic selectable
+  openFromCode(){
+    this.selectComponent.open();
+  }
+  clear(){
+    this.selectComponent.clear();
+    this.selectComponent.close();
+
+  }
+  toggleItems(){
+    this.selectComponent.toggleItems(this.toggle);
+    this.toggle= !this.toggle;
+
+  }
+  confirm(){
+    this.selectComponent.confirm();
+    this.selectComponent.close();
+    console.log(this.selected);
+    if(this.selected){
+      this.id=this.selected.ID;
+
+    }
+    this.refreshServices();
+
   }
 }

@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-button (click)="closeModal()" expand="block" fill="clear" color="danger">
+        Fermer
+      </ion-button>
+    </ion-buttons>
+    <ion-title>crud-prime</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-list >
+    <ion-item>
+      <ion-label position="floating">ID Employe</ion-label>
+      <ion-input [(ngModel)]='this.ID'></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Nombre de point</ion-label>
+      <ion-input [(ngModel)]='this.point'  ></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Motif</ion-label>
+      <ion-input [(ngModel)]='this.motif'></ion-input>
+    </ion-item>
+  </ion-list>
+  <ion-button fill="outline"expand="block"color="primary"type="submit"(click)="onSubmit()">
+    {{isUpdate ? 'Modifier' :'Enregistrer'}}
+  </ion-button>
+</ion-content>

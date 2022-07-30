@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController, MenuController, ModalController } from '@ionic/angular';
+import { format } from 'date-fns';
 import { Key } from 'protractor';
 import { CrudAbsencePage } from 'src/app/CRUD/crud-absence/crud-absence.page';
 import { EmployeService } from 'src/app/services/employe.service';
@@ -22,31 +23,7 @@ export class AbsencePage implements OnInit {
   searchTerm: string;
   bulkEdit= false;
 
-  todoAbsence= [{
-    dateEnreg: 'Coding', dateFin: '',
-    heureEnreg: '13-10-21', heureFin: '',
-    textMotif: 'hight',
-    dateDebut: 'Work',
-    heureDebut: '',
-  },
-{
-  dateEnreg: 'Design', dateFin: '',
-    heureEnreg: '13-10-21', heureFin: '',
-    textMotif: 'low',
-    dateDebut: 'Work',
-},
-{
-  dateEnreg: 'Shopping', dateFin: '',
-    heureEnreg: '30-10-21', heureFin: '',
-    textMotif: 'middle',
-    dateDebut: 'Personal',
-},
-{
-  dateEnreg: 'Workout', dateFin: '',
-    heureEnreg: '25-10-21', heureFin: '',
-    textMotif: 'hight',
-    dateDebut: 'Personal',
-}];
+  /*  */
 
 today: number = Date.now();
 

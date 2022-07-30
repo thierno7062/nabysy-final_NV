@@ -94,6 +94,10 @@ const routes: Routes = [
     path: 'print-bulletin2',
     loadChildren: () => import('./pages/print-bulletin2/print-bulletin2.module').then( m => m.PrintBulletin2PageModule)
   },
+  {
+    path: 'crud-prime',
+    loadChildren: () => import('./CRUD/crud-prime/crud-prime.module').then( m => m.CrudPrimePageModule)
+  },
 
 ];
 

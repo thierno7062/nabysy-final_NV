@@ -8,6 +8,7 @@ import { PrimePageRoutingModule } from './prime-routing.module';
 
 import { PrimePage } from './prime.page';
 import { IonicSelectableModule } from 'ionic-selectable';
+import { NgCalendarModule  } from 'ionic2-calendar';
 
 @NgModule({
   imports: [
@@ -16,7 +17,8 @@ import { IonicSelectableModule } from 'ionic-selectable';
     IonicModule,
     PrimePageRoutingModule,
     IonicSelectableModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgCalendarModule,
   ],
   declarations: [PrimePage]
 })

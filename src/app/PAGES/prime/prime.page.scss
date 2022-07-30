@@ -1,4 +1,52 @@
+
+ion-content{
+  
+
 div {
-  height: 85vh;
-  padding-top: 250px;
+/*   height: 85vh;
+  padding-top: 250px; */
+  margin-bottom: 3%;
+  &#div1{
+    ion-grid{
+      ion-row{
+        ion-col{
+          &#col1{
+            border: 2px solid #3880ff;
+            .recherche{
+              margin-bottom: 20px;
+              text-align: center;
+              text-decoration: underline solid;
+              font-weight: bolder;
+            }
+            &.depart{
+              text-align: center;
+              font-weight: 50;
+            }
+          }
+        }
+      }
+    }
+  }
+
+
+}
+}
+
+ion-datetime{
+  background: #fff;
+}
+.dismiss{
+  margin-right: 400px;
+}
+.ion-grid-user{
+  --ion--grid--padding-sm: 20px;
+  --ion--grid--padding-md: 30px;
+  --ion--grid--padding-lg: 40px;
+  --ion--grid--padding-xl: 10 0px;
+}
+.ion-row-user{
+  border: 0;
+  ion-col{
+    border: 0;
+  }
 }

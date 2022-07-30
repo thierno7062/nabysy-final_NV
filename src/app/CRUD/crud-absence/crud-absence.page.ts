@@ -3,9 +3,10 @@
 /* eslint-disable prefer-arrow/prefer-arrow-functions */
 /* eslint-disable @typescript-eslint/dot-notation */
 import { HttpClient } from '@angular/common/http';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ModalController, ToastController } from '@ionic/angular';
+import { IonDatetime, ModalController, ToastController } from '@ionic/angular';
+import { format, parseISO } from 'date-fns';
 import { PopupModalService } from 'src/app/services/popup-modal.service';
 import { environment } from 'src/environments/environment';
 
@@ -16,13 +17,14 @@ import { environment } from 'src/environments/environment';
 })
 export class CrudAbsencePage implements OnInit {
   @Input() absence: any;
+  @ViewChild(IonDatetime) datetime: IonDatetime;
   listeEmploye: any;
   isUpdate= false;
   bulkEdit= false;
   isPaid: boolean;
   data: [];
   choix: boolean;
-  idEmploye: ''; utilisateur: ''; paye: any=0;
+  idEmploye: ''; utilisateur: ''; paye: any;
   nom: ''; pourtous: any=1; dateEnregistrement: '';
   prenom: ''; heureEnregistrement: '';
   dateDebut: ''; heureDebut: '';
@@ -41,10 +43,37 @@ export class CrudAbsencePage implements OnInit {
 
   choixAbscencePourTous=true;
 
+  // Pick Date
+  today: any;
+  /* age =0; */
+   selectedDate= format(new Date(),'yyyy-MM-dd');
+   selectedDate2= format(new Date(),'yyyy-MM-dd');
+   selectedTime= format(new Date(),'HH-mm-ss');
+   selectedTime2= format(new Date(),'HH-mm-ss');
+   modes = ['date', 'month', 'month-year','year'];
+   selectedMode= 'date';
+   showPicker = false;
+   dateValue= format(new Date(),'yyyy-MM-dd')+ 'T09:00:00.000Z';
+   formattedString= '';
+   formattedString2= '';
+   timeString= '';
+   timeString2= '';
+
   constructor(private modalctrl: ModalController,private popupModalService: PopupModalService,
     private http: HttpClient,private route: ActivatedRoute,
     private toastctrl: ToastController) {
         this.loadEmploye();
+        this.setToday();
+      this.today = new Date().getDate();
+      if(this.absence){
+        this.paye= this.absence.IsPaye;
+        if(this.absence.IsPaye === '0'){
+
+          this.isPaid= false;
+        }else{
+          this.isPaid= true;
+        }
+      }
 
      }
 
@@ -53,14 +82,14 @@ export class CrudAbsencePage implements OnInit {
     if (this.absence.ID > 0){
           this.nom=this.absence.Nom;
           this.prenom= this.absence.Prenom;
-          this.dateDebut= this.absence.DateDebut;
-          this.dateFin= this.absence.DateFin;
+          this.formattedString= this.absence.DateDebut;
+          this.formattedString2= this.absence.DateFin;
           this.motif= this.absence.TextMotif;
           this.idEmploye=  this.absence.IdEmploye;
           this.dateEnregistrement= this.absence.DateEnreg;
           this.heureEnregistrement= this.absence.HeureEnreg;
-          this.heureDebut= this.absence.HeureDebut;
-          this.heureFin= this.absence.HeureFin;
+          this.timeString= this.absence.HeureDebut;
+          this.timeString2= this.absence.HeureFin;
           this.annee= this.absence.Annee;
           this.paye= this.absence.IsPaye;
           this.pourtous= this.absence.PourTous;
@@ -69,13 +98,12 @@ export class CrudAbsencePage implements OnInit {
           }
           this.isUpdate = true;
           this.bulkIndividuel= false;
-          if(this.paye > 0){
-            this.isPaid= true;
+          if(this.paye === '0'){
 
-          }else{
             this.isPaid= false;
+          }else{
+            this.isPaid= true;
           }
-
     }
   }
 
@@ -141,10 +169,14 @@ export class CrudAbsencePage implements OnInit {
   }
 
   onSubmit(){
-    if(this.dateDebut===''){
+    if(this.formattedString===''){
       this.presentToast('Veillez indiquer la Date de début SVP!!!!');
-    }else if(this.motif===''){
-      this.presentToast('Veillez indiquer le motif SVP!!!!!!');
+    }else if(this.formattedString2===''){
+      this.presentToast('Veillez indiquer la date de fin  SVP!!!!!!');
+    }else if(this.timeString===''){
+      this.presentToast('Veillez indiquer l\'heure de début  SVP!!!!!!');
+    }else if(this.timeString2===''){
+      this.presentToast('Veillez indiquer l\'heure de fin  SVP!!!!!!');
     }else{
       return new Promise (() =>{
         console.log('Pour tous =',!this.bulkIndividuel);
@@ -170,23 +202,23 @@ export class CrudAbsencePage implements OnInit {
   }
   absenceUnePersonne(idPersonne,afficherTost=false){
     if(this.isPaid===true){
-      this.paye= 1;
+      this.paye= '1';
     }else{
-      this.paye= 0;
+      this.paye= '0';
     }
     if(this.choix===true){
-      this.pourtous= 0;
+      this.pourtous= '0';
     }else{
-      this.pourtous= 1;
+      this.pourtous= '1';
     }
     console.log(this.paye);
     console.log(this.pourtous);
     const apiUrl=environment.endPoint+
     'calendrier_action.php?Action=AJOUTER_ABSENCE&IDEMPLOYE='+
-    idPersonne+'&DATEDEBUT='+this.dateDebut+'&DATEFIN='+this.dateFin+
+    idPersonne+'&DATEDEBUT='+this.formattedString+'&DATEFIN='+this.formattedString2+
     '&PAYE='+this.paye+'&MOTIF='+this.motif+'&POURTOUS='+this.pourtous+
-    '&HEUREDEBUT='+this.heureDebut+'&HEUREFIN='+
-    this.heureFin+'&Token='+environment.tokenUser;
+    '&HEUREDEBUT='+this.timeString+'&HEUREFIN='+
+    this.timeString2+'&Token='+environment.tokenUser;
 
       console.log(apiUrl);
       this.readAPI(apiUrl)
@@ -296,4 +328,34 @@ export class CrudAbsencePage implements OnInit {
         }
       });
   }
+
+  //Date
+  setToday(){
+    // this.formattedString= format(parseISO(format(new Date(), 'yyyy-MM-dd')+ 'T09:00:00.000Z'), 'HH:mm, MMM d, yyyy');
+    this.formattedString= format(parseISO(format(new Date(), 'yyyy-MM-dd')+ 'T09:00:00.000Z'),  'HH:mm:ss, yyyy-MM-d ');
+    this.formattedString2= format(parseISO(format(new Date(), 'yyyy-MM-dd')+ 'T09:00:00.000Z'), 'HH:mm:ss, yyyy-MM-d ');
+    this.timeString= format(parseISO(format(new Date(), 'yyyy-MM-dd')+ 'T09:00:00.000Z'), 'HH:mm:ss');
+    this.timeString2= format(parseISO(format(new Date(), 'yyyy-MM-dd')+ 'T09:00:00.000Z'), 'HH:mm:ss');
+    }
+    dateChanged(value){
+     this.dateValue= value;
+     this.formattedString= format(parseISO(value),  'yyyy-MM-dd');
+     this.timeString= format(parseISO(value),  ' HH:mm:ss');
+     this.showPicker= false;
+     this.selectedDate=value;
+     }
+     dateChangedFin(value){
+      this.dateValue= value;
+     this.formattedString2= format(parseISO(value),  'yyyy-MM-dd');
+     this.timeString2= format(parseISO(value),  ' HH:mm:ss');
+     this.showPicker= false;
+     this.selectedDate2=value;
+     }
+     close(){
+       this.datetime.cancel(true);
+     }
+     select(){
+       this.datetime.confirm(true);
+
+     }
 }

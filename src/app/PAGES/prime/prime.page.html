@@ -1,30 +1,185 @@
 <ion-header>
   <ion-toolbar>
+    <ion-button fill="clear" slot="start" color="dark" (click)="_openSideNav()">
+      <ion-icon slot="icon-only" name="menu"> </ion-icon>
+    </ion-button>
+    <ion-buttons slot="end">
+      <ion-button color="primary" (click)="addPrime()">
+        Ajouter
+      </ion-button>
+      <ion-button color="primary" (click)=" removeVarious()" *ngIf="!bulkEdit">
+        Editer
+      </ion-button>
+      <ion-button color="primary" (click)=" save()" *ngIf="bulkEdit">
+        Enregistrer
+      </ion-button>
+    </ion-buttons>
     <ion-title>prime</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <form [formGroup]="myForm" (ngSubmit)="createPdf()">
-    <ion-item>
-      <ion-label position="floating"> <ion-text color="danger">thierno</ion-text></ion-label>
-      <ion-input  formControlName="from" type="text"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label position="floating"> <ion-text color="danger">Paul</ion-text></ion-label>
-      <ion-input  formControlName="to" type="text"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label position="floating"><ion-text color="danger">Test</ion-text></ion-label>
-      <ion-textarea  formControlName="text" rows="3"></ion-textarea>
-    </ion-item>
-    <ion-button block color="primary" type="submit" (click)="createPdf()">
-      Create PDF
-    </ion-button>
-  </form>
+  <!-- ******************** -->
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <!-- ***************************** -->
 
-  <img [src]="photoPreview" *ngIf="photoPreview" alt="">
-  <ion-button (click)="takePicture()" expand="full" color="primary" shape="round"> Add Picture</ion-button>
-  <ion-button (click)="downloadPdf()" expand="full" color="secondary" shape="round" [disabled]="!pdfObj"> Save PDF</ion-button>
+  <div class="ion-justify-content-center" id="div1" >
+
+    <ion-grid  class="ion-grid-user">
+      <ion-row class="ion-justify-content-center" class="ion-row-user">
+        <ion-col size="12" size-sm="6" size-md="4" size-lg="3" size-xl="3" class="ion-justify-content-center"
+          id="col1">
+          <ion-title class="recherche">RECHERCHE</ion-title>
+          <!-- Date de départ -->
+          <!-- <ion-title class="depart">Date de départ <br><ion-icon name="arrow-down-outline" ></ion-icon></ion-title> -->
+          <ion-item id="open-modal">
+            <!-- <ion-icon icon="calendar-outline" slot="start" color="primary"></ion-icon> -->
+            <ion-label>Date de départ</ion-label>
+            <ion-text tappable slot="end">{{ formattedString }}</ion-text>
+          </ion-item>
+
+          <ion-modal trigger="open-modal" mode="md">
+            <ng-template>
+              <ion-content>
+                <ion-datetime
+                  #datetime
+                  [value]="dateValue" size="cover"
+                  (ionChange)="dateChanged(datetime.value)"
+                  (ionCancel)="showPicker=false;">
+                </ion-datetime >
+
+                  <ion-button (click)="close()" color="danger" class="dismiss">Dismiss</ion-button>
+                  <ion-button (click)="select()" color="primary" >Select</ion-button>
+
+              </ion-content>
+            </ng-template>
+          </ion-modal>
+          <!-- Date de fin -->
+          <ion-item id="open-modal2">
+            <!-- <ion-icon icon="calendar-outline" slot="start" color="primary"></ion-icon> -->
+            <ion-label>Date de Fin </ion-label>
+            <ion-text tappable slot="end">{{ formattedString2 }}</ion-text>
+          </ion-item>
+
+          <ion-modal trigger="open-modal2" mode="md">
+            <ng-template>
+              <ion-content>
+                <ion-datetime
+                  #datetime
+                  [value]="dateValue" size="cover"
+                  (ionChange)="dateChangedFin(datetime.value)"
+                  (ionCancel)="showPicker=false;">
+                </ion-datetime >
+
+                  <ion-button (click)="close()" color="danger" class="dismiss">Dismiss</ion-button>
+                  <ion-button (click)="select()" color="primary" >Select</ion-button>
+
+              </ion-content>
+            </ng-template>
+          </ion-modal>
+
+          <!-- Select Employe -->
+            <ion-item>
+              <ion-label>Selectionnez un employe</ion-label>
+
+              <ionic-selectable #selectComponent [(ngModel)]="selected" itemValueField="ID"
+              itemTextField="Prenom" [items]="users" headerColor="primary"
+              searchFailText=" Rien n'a été trouvé:("  [canClear]="true"
+              >
+              <!-- ****************************** -->
+              <ng-template ionicSelectableCloseButtonTemplate color="danger">
+                <ion-button fill="clear" color="danger">
+                  <ion-icon  name="close-circle"></ion-icon>
+                </ion-button>
+
+              </ng-template>
+
+              <ng-template ionicSelectableItemTemplate let-user="item">
+                {{user.Prenom +' '+ user.Nom +'   ====> '+user.Fonction+' ===>Matricule: '+user.ID }}
+              </ng-template>
+              <!-- ******************************** -->
+              <ng-template ionicSelectableFooterTemplate>
+                <ion-toolbar>
+                  <ion-row>
+                    <ion-col size="4">
+                      <ion-button expand="full" (click)="clear()">
+                        Annuler
+                      </ion-button>
+                    </ion-col >
+                    <ion-col  size="4">
+                      <ion-button expand="full" (click)="toggleItems()" [disabled]="!selectComponent.itemsToConfirm.length">
+                        Décocher
+                      </ion-button>
+                    </ion-col>
+                    <ion-col size="4">
+                      <ion-button expand="full" (click)="confirm()" [disabled]="!selectComponent.itemsToConfirm.length">
+                        Confirmer
+                      </ion-button>
+                    </ion-col>
+                  </ion-row>
+                </ion-toolbar>
+              </ng-template>
+            </ionic-selectable>
+            </ion-item>
+          <ion-button (click)="loadPrime()" expand="block" shape="round" color="success"> VALIDER</ion-button>
+        </ion-col>
+
+        <ion-col size="12" size-sm="6" size-md="4" size-lg="3" size-xl="2" class="ion-justify-content-center">
+
+        </ion-col>
+
+        <ion-col size="12" size-sm="6" size-md="4" size-lg="3" size-xl="2" class="ion-justify-content-center">
+
+
+
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+  </div>
+
+
+
+
+   <!-- tableaux -->
+  <div >
+    <table style="width: 100%;bottom:0;left:0;right:0;" border="1">
+      <thead style="background-color: #222; color: #fff">
+        <th style="text-align: center;">Action</th>
+        <th style="text-align: center;" tappable (click)="sortBy('Prenom')">Prénom  <ion-icon name="arrow-down" *ngIf="sortDirection === 1"></ion-icon>
+          <ion-icon name="arrow-up" *ngIf="sortDirection === 2"></ion-icon></th>
+          <th style="text-align: center;">Nom</th>
+          <th style="text-align: center;">Sexe</th>
+          <th style="text-align: center;">Fonction</th>
+          <th style="text-align: center;">Nombre performance</th>
+          <th style="text-align: center;">Total performance</th>
+          <th style="text-align: center;">Motif</th>
+          <th style="text-align: center;">Commentaires</th>
+        <th style="text-align: center;">Point</th>
+      </thead>
+      <tbody>
+        <tr *ngFor="let d of listePrime" class="data-row">
+          <td style="text-align: center;" *ngIf="bulkEdit">
+          <ion-icon slot="start" name="eye-outline"  color="primary" tappable (click)="primedetails(d)"></ion-icon>
+          <ion-icon slot="start" name="create-outline" color="success" tappable (click)="updatePrime(d)" ></ion-icon>
+          <ion-icon slot="start" name="trash-outline" color="danger" tappable (click)="removePrime(d)"></ion-icon></td>
+          <td style="text-align: center;" *ngIf="!bulkEdit">
+          <ion-icon slot="start" name="eye-outline"  color="primary" tappable (click)="primedetails(d)"></ion-icon></td>
+          <td style="text-align: center;">{{d.PrenomEmploye}}</td>
+          <td style="text-align: center;">{{d.NomEmploye}}</td>
+          <td style="text-align: center;">{{d.SexeEmploye}}</td>
+          <td style="text-align: center;">{{d.FonctionEmploye}}</td>
+          <td style="text-align: center;">{{d.NB_ENREGISTREMENT}}</td>
+          <td style="text-align: center;">{{d.TOTAL_PERFORMANCE}}</td>
+          <td style="text-align: center;">{{d.Motif}}</td>
+          <td style="text-align: center;">{{+d.Commentaires}}</td>
+          <td style="text-align: center;">{{d.NbPointAjoute}}</td>
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
 </ion-content>
 
