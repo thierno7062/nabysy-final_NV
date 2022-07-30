@@ -94,11 +94,11 @@ export class PrimePage implements OnInit {
   loadPrime(){
     let IdEmploye='';
     if(this.id){
-      IdEmploye ='&IdEmploye='+this.id ;
+      IdEmploye ='&IDEMPLOYE='+this.id ;
       console.log(IdEmploye);
     }
 
-    this.readAPI(environment.endPoint+'performance_action.php?Action=GET_PERFORMANCE&GROUP=DATEENREG&ORDRE=TOTAL_PERFORMANCE&DATEDEPART='+
+    this.readAPI(environment.endPoint+'performance_action.php?Action=GET_PERFORMANCE&ORDRE=TOTAL_PERFORMANCE&DATEDEPART='+
     this.selectedDate+'&DATEFIN='+this.selectedDate2+IdEmploye+'&Token='+environment.tokenUser)
     .subscribe((listes) =>{
       this.loadingService.dismiss();

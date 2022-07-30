@@ -20,7 +20,7 @@
   <div class="page-container">
     <!-- hero -->
     <div class="hero-container">
-      <ion-img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2342&q=80"></ion-img>
+      <ion-img src={{userDetails.PHOTO_URL}}></ion-img>
       <ion-chip>
         <ion-icon name="star"></ion-icon>
         <ion-label>4.2</ion-label>
@@ -52,7 +52,7 @@
           <div class="inner-container">
             <div class="info-container">
               <ion-avatar>
-                <ion-img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1361&q=80"></ion-img>
+                <ion-img src={{userDetails.PHOTO_URL}}></ion-img>
               </ion-avatar>
               <div class="text-container">
                 <ion-text><span class="name">{{userDetails.Prenom+' '}} {{userDetails.Nom}}</span></ion-text>
