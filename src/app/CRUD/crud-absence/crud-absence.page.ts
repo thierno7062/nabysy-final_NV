@@ -24,7 +24,7 @@ export class CrudAbsencePage implements OnInit {
   isPaid: boolean;
   data: [];
   choix: boolean;
-  idEmploye: ''; utilisateur: ''; paye: any;
+  idEmploye: ''; utilisateur: ''; paye: any; idAbsence: any;
   nom: ''; pourtous: any=1; dateEnregistrement: '';
   prenom: ''; heureEnregistrement: '';
   dateDebut: ''; heureDebut: '';
@@ -80,16 +80,21 @@ export class CrudAbsencePage implements OnInit {
   ngOnInit() {
     this.choixAbscencePourTous=true;
     if (this.absence.ID > 0){
+          this.idAbsence=this.absence.ID;
           this.nom=this.absence.Nom;
           this.prenom= this.absence.Prenom;
           this.formattedString= this.absence.DateDebut;
+          this.selectedDate= this.absence.DateDebut;
           this.formattedString2= this.absence.DateFin;
+          this.selectedDate2= this.absence.DateFin;
           this.motif= this.absence.TextMotif;
           this.idEmploye=  this.absence.IdEmploye;
           this.dateEnregistrement= this.absence.DateEnreg;
           this.heureEnregistrement= this.absence.HeureEnreg;
           this.timeString= this.absence.HeureDebut;
+          this.selectedTime= this.absence.HeureDebut;
           this.timeString2= this.absence.HeureFin;
+          this.selectedTime2= this.absence.HeureFin;
           this.annee= this.absence.Annee;
           this.paye= this.absence.IsPaye;
           this.pourtous= this.absence.PourTous;
@@ -215,10 +220,10 @@ export class CrudAbsencePage implements OnInit {
     console.log(this.pourtous);
     const apiUrl=environment.endPoint+
     'calendrier_action.php?Action=AJOUTER_ABSENCE&IDEMPLOYE='+
-    idPersonne+'&DATEDEBUT='+this.formattedString+'&DATEFIN='+this.formattedString2+
+    idPersonne+'&DATEDEBUT='+this.selectedDate+'&DATEFIN='+this.selectedDate2+
     '&PAYE='+this.paye+'&MOTIF='+this.motif+'&POURTOUS='+this.pourtous+
-    '&HEUREDEBUT='+this.timeString+'&HEUREFIN='+
-    this.timeString2+'&Token='+environment.tokenUser;
+    '&HEUREDEBUT='+this.selectedTime+'&HEUREFIN='+
+    this.selectedTime2+'&Token='+environment.tokenUser;
 
       console.log(apiUrl);
       this.readAPI(apiUrl)
@@ -235,6 +240,74 @@ export class CrudAbsencePage implements OnInit {
           return false ;
         }
       });
+  }
+  updateabsenceUnePersonne(idPersonne,afficherTost=false){
+    if(this.isPaid===true){
+      this.paye= '1';
+    }else{
+      this.paye= '0';
+    }
+    if(this.choix===true){
+      this.pourtous= '0';
+    }else{
+      this.pourtous= '1';
+    }
+    console.log(this.paye);
+    console.log(this.pourtous);
+    const apiUrl=environment.endPoint+
+    'calendrier_action.php?Action=EDITER_ABSENCE&IDEMPLOYE='+
+    idPersonne+'&IDABSENCE='+this.idAbsence+'&DATEDEBUT='+this.selectedDate+'&DATEFIN='+this.selectedDate2+
+    '&PAYE='+this.paye+'&MOTIF='+this.motif+'&POURTOUS='+this.pourtous+
+    '&HEUREDEBUT='+this.selectedTime+'&HEUREFIN='+
+    this.selectedTime2+'&Token='+environment.tokenUser;
+
+      console.log(apiUrl);
+      this.readAPI(apiUrl)
+      .subscribe((reponseApi) =>{
+        console.log(reponseApi);
+        if(reponseApi['"OK"']!== '0'){
+          console.log('Absence individuelle modifiée');
+          if (afficherTost){
+            this.presentToast('Absence individuelle modifiée pour IdEmployé '+idPersonne+ ' : OK');
+          }
+          return true;
+        }else{
+          console.log('Modification absence pour '+this.prenom+' '+this.nom+' ...Erreur');
+          return false ;
+        }
+      });
+  }
+  onUpdate(){
+    if(this.formattedString===''){
+      this.presentToast('Veillez indiquer la Date de début SVP!!!!');
+    }else if(this.formattedString2===''){
+      this.presentToast('Veillez indiquer la date de fin  SVP!!!!!!');
+    }else if(this.timeString===''){
+      this.presentToast('Veillez indiquer l\'heure de début  SVP!!!!!!');
+    }else if(this.timeString2===''){
+      this.presentToast('Veillez indiquer l\'heure de fin  SVP!!!!!!');
+    }else{
+      return new Promise (() =>{
+        console.log('Pour tous =',!this.bulkIndividuel);
+        const headers = new Headers();
+        headers.append('Accept', 'application/json');
+        headers.append('Content-Type', 'application/json' );
+        if (this.choixAbscencePourTous){
+          this.absencePourTousUpdate(true);
+        }else{
+          this.listeEmploye.forEach((employe)=>{
+            if (employe.IsChecked>0){
+              console.log(employe);
+              this.updateabsenceUnePersonne(employe.ID);
+            }
+          });
+        }
+        this.modalctrl.dismiss(this.listeEmploye,'create');
+        return false;
+
+        // ---------------
+      });
+    }
   }
   async presentToast(a){
     const toast = await this.toastctrl.create({
@@ -307,10 +380,10 @@ export class CrudAbsencePage implements OnInit {
     console.log(this.paye);
     console.log(this.pourtous);
     const apiUrl=environment.endPoint+
-    'calendrier_action.php?Action=AJOUTER_ABSENCE&DATEDEBUT='+this.dateDebut+'&DATEFIN='+this.dateFin+
+    'calendrier_action.php?Action=AJOUTER_ABSENCE&DATEDEBUT='+this.selectedDate+'&DATEFIN='+this.selectedDate2+
     '&PAYE='+this.paye+'&MOTIF='+this.motif+'&POURTOUS=1'+
-    '&HEUREDEBUT='+this.heureDebut+'&HEUREFIN='+
-    this.heureFin+'&Token='+environment.tokenUser;
+    '&HEUREDEBUT='+this.selectedTime+'&HEUREFIN='+
+    this.selectedTime2+'&Token='+environment.tokenUser;
 
       console.log(apiUrl);
       this.readAPI(apiUrl)
@@ -324,6 +397,41 @@ export class CrudAbsencePage implements OnInit {
           return true;
         }else{
           console.log('Erreur absence pour '+this.motif+' non ajoutée');
+          return false ;
+        }
+      });
+  }
+  absencePourTousUpdate(afficherTost=false){
+    if(this.isPaid===true){
+      this.paye= 1;
+    }else{
+      this.paye= 0;
+    }
+    if(this.choix===true){
+      this.pourtous= 0;
+    }else{
+      this.pourtous= 1;
+    }
+    console.log(this.paye);
+    console.log(this.pourtous);
+    const apiUrl=environment.endPoint+
+    'calendrier_action.php?Action=EDITER_ABSENCE&IDABSENCE='+this.idAbsence+'&DATEDEBUT='+this.selectedDate+'&DATEFIN='+this.selectedDate2+
+    '&PAYE='+this.paye+'&MOTIF='+this.motif+'&POURTOUS=1'+
+    '&HEUREDEBUT='+this.selectedTime+'&HEUREFIN='+
+    this.selectedTime2+'&Token='+environment.tokenUser;
+
+      console.log(apiUrl);
+      this.readAPI(apiUrl)
+      .subscribe((reponseApi) =>{
+        console.log(reponseApi);
+        if(reponseApi['"OK"']!== '0'){
+          console.log('Absence modifiée correctement '+this.motif);
+          if (afficherTost){
+            this.presentToast('Absent pour tous du '+this.motif+ ' modifiée correctement.');
+          }
+          return true;
+        }else{
+          console.log('Erreur absence pour '+this.motif+' non modifiée');
           return false ;
         }
       });
@@ -342,14 +450,16 @@ export class CrudAbsencePage implements OnInit {
      this.formattedString= format(parseISO(value),  'yyyy-MM-dd');
      this.timeString= format(parseISO(value),  ' HH:mm:ss');
      this.showPicker= false;
-     this.selectedDate=value;
+     this.selectedDate=format(parseISO(value),'yyyy-MM-dd');
+     this.selectedTime=format(parseISO(value),'HH:mm:ss');
      }
      dateChangedFin(value){
       this.dateValue= value;
      this.formattedString2= format(parseISO(value),  'yyyy-MM-dd');
      this.timeString2= format(parseISO(value),  ' HH:mm:ss');
      this.showPicker= false;
-     this.selectedDate2=value;
+     this.selectedDate2=format(parseISO(value),'yyyy-MM-dd');
+     this.selectedTime2=format(parseISO(value),'HH:mm:ss');
      }
      close(){
        this.datetime.cancel(true);

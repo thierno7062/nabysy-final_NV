@@ -96,12 +96,19 @@
       </ion-col>
 
 
-      <ion-col size="4" *ngIf="!choix">
-        <ion-button fill="outline"
+      <ion-col size="4" *ngIf="!choix" >
+        <ion-button fill="outline" *ngIf="!isUpdate"
         expand="block"
         color="primary"
         type="submit"
         (click)="onSubmit()"
+        >
+      {{isUpdate ? 'Modifier' :'Enregistrer'}}</ion-button>
+      <ion-button fill="outline" *ngIf="isUpdate"
+        expand="block"
+        color="primary"
+        type="submit"
+        (click)="onUpdate()"
         >
       {{isUpdate ? 'Modifier' :'Enregistrer'}}</ion-button>
       </ion-col>
@@ -112,10 +119,22 @@
           </ion-icon>
         </ion-button>
       </ion-col>
-      <p color="primary">{{this.selectedDate}}</p><br>
-      <p><strong color="success" >{{'   '+this.selectedDate2}}</strong></p>
-      <h1 color="danger">{{'   '+this.selectedTime}}</h1>
-      <h1 color="danger">{{'   '+this.selectedTime2}}</h1>
+      <ion-list>
+        <ion-label color="primary">{{this.selectedDate}}</ion-label><br>
+        <ion-label color="danger" style="margin-bottom: 3px;">{{'   '+this.selectedTime}}</ion-label><br>
+        <ion-label>{{'   '+this.selectedDate2}}</ion-label><br>
+        <ion-label color="danger">{{'   '+this.selectedTime2}}</ion-label><br>
+        <!-- <ion-item>
+        </ion-item>
+        <ion-item>
+        </ion-item>
+        <ion-item>
+        </ion-item>
+        <ion-item>
+        </ion-item> -->
+      </ion-list>
+
+
       <ion-col size="12" *ngIf="choix">
         <ion-item>
           <ion-label>Veillez sélectionner les employés correspondants ci-dessous</ion-label>
@@ -224,13 +243,20 @@
 
 
       <ion-col size="4">
-        <ion-button fill="outline"
+        <ion-button fill="outline" *ngIf="!isUpdate"
         expand="block"
         color="primary"
         type="submit"
         (click)="onSubmit()"
         >
       {{isUpdate ? 'Modifier' :'Enregistrer'}}</ion-button>
+      <ion-button fill="outline" *ngIf="isUpdate"
+      expand="block"
+      color="primary"
+      type="submit"
+      (click)="onUpdate()"
+      >
+    {{isUpdate ? 'Modifier' :'Enregistrer'}}</ion-button>
       </ion-col>
 
       <ion-col size="4" >
