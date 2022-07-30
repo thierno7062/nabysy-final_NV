@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { PopupModalService } from 'src/app/services/popup-modal.service';
 
 @Component({
   selector: 'app-detail-absence',
@@ -7,9 +8,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DetailAbsencePage implements OnInit {
 
-  constructor() { }
+  constructor(private popupModalService: PopupModalService,) { }
 
   ngOnInit() {
+  }
+
+
+
+
+
+
+
+
+  closeModal(){
+    this.popupModalService.dismiss();
   }
 
 }
