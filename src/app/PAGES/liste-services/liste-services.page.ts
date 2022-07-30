@@ -217,7 +217,8 @@ export class ListeServicesPage implements OnInit {
       this.id=this.selected.ID;
 
     }
-    this.refreshServices();
+    console.log(this.selected);
+    // this.goToFicheServices(this.selected);
 
   }
 }
