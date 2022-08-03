@@ -322,7 +322,7 @@ export class CrudAbsencePage implements OnInit {
 
   }
   userdetails(userDetail: any){
-    this.popupModalService.presentModal2(userDetail);
+    this.popupModalService.presentModalEmploye(userDetail);
   }
   sortBy(key){
     this.sortKey= key;

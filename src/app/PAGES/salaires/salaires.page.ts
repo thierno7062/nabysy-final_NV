@@ -69,7 +69,7 @@ export class SalairesPage implements OnInit {
    showPicker = false;
    // // dateValue= format(new Date(),'yyyy-MM-dd');
    dateValue= format(new Date(),'yyyy-MM-dd')+ 'T09:00:00.000Z';
-   formattedString= '';
+   formattedString= ''; showtof: boolean; tof: any;
 
   constructor(private router: Router,  private modalctrl: ModalController,private alertctrl: AlertController,
     private menu: MenuController, private http: HttpClient,private printer: Printer,
@@ -84,7 +84,16 @@ export class SalairesPage implements OnInit {
       }else{
         this.afficheBulletin=false;
       }
-    }
+      if(this.listeEmploye){
+        this.listeEmploye.PHOTO_URL=this.tof;
+        if(this.tof)
+        {
+          this.showtof= true;
+        }else{
+          this.showtof= false;
+        }
+      }
+      }
   ngOnInit() {
     this.loadEmploye();
     this.loadSalary();

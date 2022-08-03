@@ -12,7 +12,7 @@
       <ion-button slot="start" fill="solid" class="button-back"(click)="closeModal()">
         <ion-icon name="chevron-back" ></ion-icon>
       </ion-button>
-      <ion-button slot="end" fill="solid" class="button-edit">
+      <ion-button slot="end" fill="solid" class="button-edit" routerLink="/employe">
         <ion-icon name="pencil"></ion-icon>
       </ion-button>
     </ion-toolbar>
@@ -35,9 +35,9 @@
           <h1>{{userDetails.Prenom+' '}} {{userDetails.Nom}}</h1>
         </ion-text>
 
-        <ion-button>
+        <ion-button (click)="userdetails(userdetails)">
           <ion-label>OPEN</ion-label>
-          <ion-icon slot="end" name="ellipsis-horizontal"></ion-icon>
+          <ion-icon slot="end" name="ellipsis-horizontal" ></ion-icon>
         </ion-button>
       </div>
 

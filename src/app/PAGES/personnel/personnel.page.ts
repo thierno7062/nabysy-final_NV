@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/member-ordering */
 /* eslint-disable @typescript-eslint/dot-notation */
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { AlertController, MenuController, ModalController } from '@ionic/angular';
+import { AlertController, IonSlides, MenuController, ModalController } from '@ionic/angular';
 import { CrudEmployePage } from 'src/app/CRUD/crud-employe/crud-employe.page';
 import { EmployeService } from 'src/app/services/employe.service';
 import { LoadingService } from 'src/app/services/loading.service';
@@ -23,11 +24,22 @@ export class PersonnelPage implements OnInit {
   sortDirection= 0;
   sortKey= null;
 
+  // Segments
+  segmentList: Array<string> = ['Détails', 'Icônes', 'Segment 3'];
+  selectedSegment: string;
+  slideList: Array<string> = [
+    'Slide Segment 1',
+    'Slide Segment 2',
+    'Slide Segment 3',
+  ];
+
+  @ViewChild('slide') slide: IonSlides;
 
   constructor(private router: Router,private popupModalService: PopupModalService,
     private menu: MenuController,
     private http: HttpClient, private alertctrl: AlertController,
     private modalctrl: ModalController, private service: EmployeService, private loadingService: LoadingService) {
+      this.selectedSegment = this.segmentList[0];
       this.refreshPerson();
       this.sort();
      }
@@ -42,6 +54,18 @@ export class PersonnelPage implements OnInit {
     this.sort();
   }
 
+  //Segment
+  _segmentSelected(item: string, index: number) {
+    this.slide.slideTo(index);
+  }
+
+  _ionSlideDidChange(event: any) {
+    this.slide.getActiveIndex().then((index) => {
+      this.selectedSegment = this.segmentList[index];
+    });
+  }
+
+  //load API
   refreshPerson(){
     this.readAPI(environment.endPoint+'employe_action.php?Action=GET_EMPLOYE&Token='+environment.tokenUser)
     .subscribe((listes) =>{
@@ -173,5 +197,10 @@ export class PersonnelPage implements OnInit {
       this.sortKey= null;
     }
 
+  }
+  userdetails2(userDetail){
+    this.router.navigate(['/crud-employe'],{
+      queryParams:userDetail
+    });
   }
 }

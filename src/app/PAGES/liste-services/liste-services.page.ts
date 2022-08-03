@@ -102,6 +102,11 @@ export class ListeServicesPage implements OnInit {
       queryParams:ficheService
     });
   }
+  goToListeServices(ficheService){
+    this.router.navigate(['/liste-services'],{
+      queryParams:ficheService
+    });
+  }
   _openSideNav(){
     this.menu.enable(true,'menu-content');
     this.menu.open('menu-content');
@@ -218,7 +223,7 @@ export class ListeServicesPage implements OnInit {
 
     }
     console.log(this.selected);
-    // this.goToFicheServices(this.selected);
+    this.goToListeServices(this.selected);
 
   }
 }

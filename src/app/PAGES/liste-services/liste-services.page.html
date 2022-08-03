@@ -44,7 +44,7 @@
           <b>NABY SY SA</b>
         </ion-label>
         <ion-item>
-          <ion-label>Selectionnez un employe</ion-label>
+          <ion-label>Selectionnez une Direction</ion-label>
           <ionic-selectable #selectComponent [(ngModel)]="selected" itemValueField="ID"
           itemTextField="Prenom" [items]="users" headerColor="primary"
           searchFailText=" Rien n'a été trouvé:("  [canClear]="true"
@@ -58,7 +58,8 @@
           </ng-template>
 
           <ng-template ionicSelectableItemTemplate let-user="item">
-            {{ user.Nom +'  ====> Adresse: '+user.Adresse+' ===>Téléphone: '+user.Tel }}
+            <!-- {{ user.Nom +'  ====> Adresse: '+user.Adresse+' ===>Téléphone: '+user.Tel }} -->
+            {{ user.Nom  }}
           </ng-template>
           <!-- ******************************** -->
           <ng-template ionicSelectableFooterTemplate>

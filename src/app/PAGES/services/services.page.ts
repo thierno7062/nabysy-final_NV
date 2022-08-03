@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable @typescript-eslint/dot-notation */
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
@@ -37,33 +38,7 @@ export class ServicesPage implements OnInit {
     private menu: MenuController,
     private http: HttpClient, private alertctrl: AlertController,
     private modalctrl: ModalController, private service: EmployeService) {
-      this.route.queryParams.subscribe(res =>{
-        console.log(res);
-        this.detailService=res;
-        console.log(this.detailService);
-        let txZone='';
-        if (this.detailService.ID>0){
-          txZone='&IdService='+this.detailService.ID ;
-        }else if(this.detailService.IdDirection>0){
-          txZone='&IdDirection='+this.detailService.IdDirection ;
-        }
-        this.url=environment.endPoint+'employe_action.php?Action=GET_EMPLOYE'+txZone+'&Token='+environment.tokenUser;
-
-        this.readAPI(this.url)
-        .subscribe((data) =>{
-          this.listeEmploye=data ;
-          console.log(data);
-          console.log(data['0']);
-           this.nabyData.id=data['"Id"'];
-          this.nabyData.prenom=data['"Prenom"'];
-          this.nabyData.nom=data['"Nom"'];
-          this.nabyData.fonction=data['"Fonction"'];
-          this.nabyData.sexe=data['"Sexe"'];
-          this.nabyData.adresse=data['"Adresse"'];
-          this.nabyData.telephone=data['"Tel"'];
-          this.nabyData.idDirection=data['"IdDirection"'];
-        });
-      });
+      this.refreshServices();
 
      }
 
@@ -76,6 +51,35 @@ export class ServicesPage implements OnInit {
 
   }
 
+refreshServices(){
+  this.route.queryParams.subscribe(res =>{
+    console.log(res);
+    this.detailService=res;
+    console.log(this.detailService);
+    let txZone='';
+    if (this.detailService.ID>0){
+      txZone='&IdService='+this.detailService.ID ;
+    }else if(this.detailService.IdDirection>0){
+      txZone='&IdDirection='+this.detailService.IdDirection ;
+    }
+    this.url=environment.endPoint+'employe_action.php?Action=GET_EMPLOYE'+txZone+'&Token='+environment.tokenUser;
+
+    this.readAPI(this.url)
+    .subscribe((data) =>{
+      this.listeEmploye=data ;
+      console.log(data);
+      console.log(data['0']);
+       this.nabyData.id=data['"Id"'];
+      this.nabyData.prenom=data['"Prenom"'];
+      this.nabyData.nom=data['"Nom"'];
+      this.nabyData.fonction=data['"Fonction"'];
+      this.nabyData.sexe=data['"Sexe"'];
+      this.nabyData.adresse=data['"Adresse"'];
+      this.nabyData.telephone=data['"Tel"'];
+      this.nabyData.idDirection=data['"IdDirection"'];
+    });
+  });
+}
 
   addaffectation(){
     this.modalctrl.create({
@@ -92,7 +96,8 @@ export class ServicesPage implements OnInit {
         var newIdEmploye=data['Extra'];
         this.service.get(newIdEmploye).subscribe(async newdata =>{
             this.listeEmploye.push(newdata[0]);
-            //console.log(this.listeEmploye);
+            console.log(this.listeEmploye);
+            this.refreshServices();
         });
       }
     });
@@ -149,5 +154,9 @@ export class ServicesPage implements OnInit {
   }
   closeMenu(){
     this.menu.close('menu-content');
+  }
+  doRefresh(event){
+    this.refreshServices();
+    event.target.complete();
   }
 }

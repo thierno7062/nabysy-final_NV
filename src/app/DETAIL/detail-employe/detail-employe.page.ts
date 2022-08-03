@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { NavParams } from '@ionic/angular';
 import { PopupModalService } from 'src/app/services/popup-modal.service';
 
@@ -15,7 +16,7 @@ export class DetailEmployePage implements OnInit {
   sexeFn: boolean;
   sexeInc: boolean;
 
-  constructor(private popupModalService: PopupModalService, private navParams: NavParams) { }
+  constructor(private router: Router,private popupModalService: PopupModalService, private navParams: NavParams) { }
 
   ngOnInit() {
     this.userDetails= this.navParams.get('data');
@@ -35,5 +36,10 @@ export class DetailEmployePage implements OnInit {
   closeModal(){
     this.popupModalService.dismiss();
   }
-
+  userdetails(userDetail: any){
+    this.router.navigate(['/employe'],{
+      queryParams:userDetail
+    });
+    this.popupModalService.dismiss();
+  }
 }

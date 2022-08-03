@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ModalController } from '@ionic/angular';
+import { EmployePage } from '../CRUD/employe/employe.page';
 import { DetailAbsencePage } from '../DETAIL/detail-absence/detail-absence.page';
 import { DetailAffectationPage } from '../DETAIL/detail-affectation/detail-affectation.page';
 import { DetailEmployePage } from '../DETAIL/detail-employe/detail-employe.page';
@@ -21,16 +22,18 @@ export class PopupModalService {
     });
     return await modal.present();
   }
-  async presentModal2(userDetail: any){
+
+ /*  async presentModalEmployeForm(userDetail: any){
     const modal = await this.modalCtrl.create({
-      component: DetailEmployePage,
+      component: EmployePage,
       componentProps:{
         data: userDetail,
       }
 
     });
     return await modal.present();
-  }
+  } */
+
   async presentModalEmploye(userDetail: any){
     const modal = await this.modalCtrl.create({
       component: DetailEmployePage,

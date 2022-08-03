@@ -16,6 +16,17 @@
     </ion-buttons>
     <ion-title>personnel</ion-title>
   </ion-toolbar>
+
+  <!-- Segment -->
+  <ion-toolbar color="tertiary">
+    <ion-segment [(ngModel)]="selectedSegment">
+        <ion-segment-button [value]="item" *ngFor="let item of segmentList;let i = index"
+            (click)="_segmentSelected(item,i)">
+            <ion-label class="segment-text">{{item}}</ion-label>
+        </ion-segment-button>
+    </ion-segment>
+</ion-toolbar>
+
 </ion-header>
 
 <ion-content class="ion-padding">
@@ -23,47 +34,98 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
+  <ion-slides #slide (ionSlideDidChange)="_ionSlideDidChange($event)">
+
+    <ion-slide value="0">
+      <div class="stats-container" >
+
+                <!-- tableaux -->
+        <div id="div1" class="stat-container">
+          <!-- <table style="width: 100%;position:absolute;top: 100px;;bottom:0;left:0;right:0;" border="1"> -->
+            <table  border="1" style="width: auto;">
+            <thead style="background-color: #222; color: #fff">
+              <th style="text-align: center;">Action</th>
+              <th style="text-align: center;">Matricule</th>
+              <th style="text-align: center;" tappable (click)="sortBy('Prenom')">Prénom  <ion-icon name="arrow-down" *ngIf="sortDirection === 1"></ion-icon>
+                <ion-icon name="arrow-up" *ngIf="sortDirection === 2"></ion-icon></th>
+              <th style="text-align: center;">Nom</th>
+              <th style="text-align: center;">Sexe</th>
+              <th style="text-align: center;">Fonction</th>
+              <th style="text-align: center;">Adresse</th>
+              <th style="text-align: center;">Téléphone</th>
+              <th style="text-align: center;">Affectation</th>
+              <th style="text-align: center;">né(e) le</th>
+            </thead>
+            <tbody>
+              <tr *ngFor="let d of listeEmploye" class="data-row">
+                <td style="text-align: center;" *ngIf="bulkEdit">
+                <ion-icon slot="start" name="eye-outline"  color="primary" tappable (click)="userdetails(d)"></ion-icon>
+                <ion-icon slot="start" name="create-outline" color="success" tappable (click)="updateEmploye(d)" ></ion-icon>
+                <ion-icon slot="start" name="trash-outline" color="danger" tappable (click)="removeEmploye(d)"></ion-icon></td>
+                <td style="text-align: center;" *ngIf="!bulkEdit">
+                  <ion-icon slot="start" name="eye-outline"  color="primary" tappable (click)="userdetails(d)"></ion-icon></td>
+                  <td style="text-align: center;">{{' '+d.ID}}</td>
+                <td style="text-align: center;">{{d.Prenom}}</td>
+                <td style="text-align: center;">{{d.Nom}}</td>
+                <td style="text-align: center;">{{d.Sexe}}</td>
+                <td style="text-align: center;">{{d.Fonction}}</td>
+                <td style="text-align: center;">{{d.Adresse}}</td>
+                <td style="text-align: center;">{{d.Tel}}</td>
+                <td style="text-align: center;">{{d.LieuxAffectationType}}</td>
+                <td style="text-align: center;">{{d.DATENAIS}}</td>
+              </tr>
+            </tbody>
+          </table>
+
+        </div>
+      </div>
+
+    </ion-slide>
+
+
+    <ion-slide value="1">
+        <div>
+          <ion-row class="ion-margin-vertical">
+            <ion-col   *ngFor="let employe of listeEmploye" size="12" size-sm="6" size-md="4" size-lg="3" size-xl="2">
+            <!-- <ion-col   *ngFor="let direction of listeDirections" size="6" > -->
+
+              <ion-card class="ion-text-center" >
+                <ion-card-header  (click)="userdetails2(employe )">
+                  <div align="center" size="6">
+                    <ion-thumbnail [style.background]="'rgba(27, 150, 181, 0.1)'">
+                      <img [src]="employe.PHOTO_URL" alt=""/>
+                    </ion-thumbnail>
+                  </div>
+                </ion-card-header>
+                <ion-card-content>
+                  <ion-label color="dark">{{employe.Prenom}}  {{employe.Nom }}</ion-label>
+                </ion-card-content>
+                <ion-card-content *ngIf="bulkEdit">
+                  <ion-button size="small" slot="start" (click)="removeEmploye(employe)">
+                    <ion-icon slot="icon-only" name="trash"></ion-icon>
+                  </ion-button>
+                  <ion-button size="small" slot="end" (click)="userdetails2(employe)">
+                      <ion-icon slot="icon-only" name="create"></ion-icon>
+                  </ion-button>
+                </ion-card-content>
+              </ion-card>
+            </ion-col>
+
+
+          </ion-row>
+        </div>
+    </ion-slide>
+
+    <ion-slide value="2">
+        <div>
+            <ion-label>3rd Segment</ion-label>
+        </div>
+    </ion-slide>
+
+  </ion-slides>
 
 
 
-  <!-- tableaux -->
-  <div id="div1">
-    <table style="width: 100%;position:absolute;top: 100px;;bottom:0;left:0;right:0;" border="1">
-      <thead style="background-color: #222; color: #fff">
-        <th style="text-align: center;">Action</th>
-        <th style="text-align: center;">Matricule</th>
-        <th style="text-align: center;" tappable (click)="sortBy('Prenom')">Prénom  <ion-icon name="arrow-down" *ngIf="sortDirection === 1"></ion-icon>
-          <ion-icon name="arrow-up" *ngIf="sortDirection === 2"></ion-icon></th>
-        <th style="text-align: center;">Nom</th>
-        <th style="text-align: center;">Sexe</th>
-        <th style="text-align: center;">Fonction</th>
-        <th style="text-align: center;">Adresse</th>
-        <th style="text-align: center;">Téléphone</th>
-        <th style="text-align: center;">Affectation</th>
-        <th style="text-align: center;">né(e) le</th>
-      </thead>
-      <tbody>
-        <tr *ngFor="let d of listeEmploye" class="data-row">
-          <td style="text-align: center;" *ngIf="bulkEdit">
-          <ion-icon slot="start" name="eye-outline"  color="primary" tappable (click)="userdetails(d)"></ion-icon>
-          <ion-icon slot="start" name="create-outline" color="success" tappable (click)="updateEmploye(d)" ></ion-icon>
-          <ion-icon slot="start" name="trash-outline" color="danger" tappable (click)="removeEmploye(d)"></ion-icon></td>
-          <td style="text-align: center;" *ngIf="!bulkEdit">
-            <ion-icon slot="start" name="eye-outline"  color="primary" tappable (click)="userdetails(d)"></ion-icon></td>
-            <td style="text-align: center;">{{' '+d.ID}}</td>
-          <td style="text-align: center;">{{d.Prenom}}</td>
-          <td style="text-align: center;">{{d.Nom}}</td>
-          <td style="text-align: center;">{{d.Sexe}}</td>
-          <td style="text-align: center;">{{d.Fonction}}</td>
-          <td style="text-align: center;">{{d.Adresse}}</td>
-          <td style="text-align: center;">{{d.Tel}}</td>
-          <td style="text-align: center;">{{d.LieuxAffectationType}}</td>
-          <td style="text-align: center;">{{d.DATENAIS}}</td>
-        </tr>
-      </tbody>
-    </table>
-
-  </div>
 
   <!-- <div class="div2">
 

@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController, MenuController, ModalController } from '@ionic/angular';
-import { format } from 'date-fns';
+import { format, parseISO } from 'date-fns';
 import { Key } from 'protractor';
 import { CrudAbsencePage } from 'src/app/CRUD/crud-absence/crud-absence.page';
 import { EmployeService } from 'src/app/services/employe.service';
@@ -25,7 +25,8 @@ export class AbsencePage implements OnInit {
 
   /*  */
 
-today: number = Date.now();
+  today= format(new Date(),'yyyy-MM-dd');
+  yesterday: any ; yesterdayToString: any; hier: any;
 
 
   constructor(private router: Router,private popupModalService: PopupModalService,
@@ -33,6 +34,11 @@ today: number = Date.now();
     private http: HttpClient, private alertctrl: AlertController,
     private modalctrl: ModalController, private service: EmployeService) {
     this.loadAbsence();
+    // this.today =format(new Date(), 'yyyy-MM-dd');
+    this.yesterday = new Date(this.today);
+    this.yesterday.setDate(this.yesterday.getDate() - 1);
+    // this.yesterdayToString=format(parseISO(this.yesterday),'yyyy-MM-dd');
+    this.yesterdayToString=format(this.yesterday,'yyyy-MM-dd');
     }
 
   ngOnInit() {
@@ -41,6 +47,7 @@ today: number = Date.now();
     }
     this.sort(this.id);
   }
+
   loadAbsence(){
      //console.log(environment.endPoint);
      this.readAPI(environment.endPoint+'calendrier_action.php?Action=GET_ABSENCE&Token='+environment.tokenUser)

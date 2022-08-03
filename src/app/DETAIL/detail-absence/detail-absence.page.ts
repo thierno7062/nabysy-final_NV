@@ -14,12 +14,6 @@ export class DetailAbsencePage implements OnInit {
   }
 
 
-
-
-
-
-
-
   closeModal(){
     this.popupModalService.dismiss();
   }

@@ -98,6 +98,10 @@ const routes: Routes = [
     path: 'crud-prime',
     loadChildren: () => import('./CRUD/crud-prime/crud-prime.module').then( m => m.CrudPrimePageModule)
   },
+  {
+    path: 'employe',
+    loadChildren: () => import('./CRUD/employe/employe.module').then( m => m.EmployePageModule)
+  },
 
 ];
 

@@ -93,7 +93,8 @@
           <ion-row class="ion-justify-content-center" class="ion-row-user">
             <ion-col size="12" size-sm="6" size-md="4" size-lg="3" size-xl="2" class="ion-justify-content-center">
               <ion-card>
-                <img src="../assets/man.png" alt="">
+                <!-- <img src="../assets/man.png" alt="" > -->
+                <img [src]=" selected.PHOTO_URL " alt=""  >
 
                 <ion-card-header>
                   <ion-card-title>{{selected.Prenom +' '+ selected.Nom}}</ion-card-title>

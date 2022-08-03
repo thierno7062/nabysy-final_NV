@@ -10,62 +10,238 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-  <!-- <ion-list #f="ngForm" name="FormEmploye"  (ngSubmit)="onSubmit(f)"> -->
-    <ion-list >
-      <ion-item>
-        <ion-label position="floating">Prenom</ion-label>
-        <ion-input [(ngModel)]='this.prenom'></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label position="floating">Nom</ion-label>
-        <ion-input [(ngModel)]='this.nom'  ></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label position="floating">Fonction</ion-label>
-        <ion-input [(ngModel)]='this.fonction' ></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label position="floating">Adresse</ion-label>
-        <ion-input [(ngModel)]='this.adresse'></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label position="floating">Téléphone</ion-label>
-        <ion-input [(ngModel)]='this.telephone' type="number"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label position="floating">Sexe</ion-label>
-        <ion-input [(ngModel)]='this.sexe'></ion-input>
-      </ion-item>
-      <ion-item  *ngIf="hideMe">
-        <ion-label position="floating" >Direction</ion-label>
-        <ion-input [(ngModel)]='this.direction' [readonly]="true" class="iddirection"></ion-input>
-      </ion-item>
-      <ion-item *ngIf="hideMe">
-        <ion-label position="floating">Service</ion-label>
-        <ion-input [(ngModel)]='this.service' [readonly]="true" class="idservice"></ion-input>
-      </ion-item>
-      <ion-row *ngIf="message">
-        <ion-col size="4"></ion-col>
-        <ion-col size="4" size-md="4" size-lg="4">
-         <h1 class="title" *ngIf="message_txt_M">Non Affecté</h1>
-         <h1 class="title" *ngIf="message_txt_F">Non Affectée</h1>
-         <h1 class="title" *ngIf="message_txt">Non Affecté(e)</h1>
-        </ion-col>
-        <ion-col size="4"></ion-col>
-      </ion-row>
-  </ion-list>
+  <!-- refresh Page -->
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
 
-<ion-row>
-  <ion-col size="2">
-    <ion-button>
+
+   <!-- page header -->
+   <ion-header mode="ios">
+    <ion-toolbar>
+      <ion-button slot="start" fill="solid" class="button-back"(click)="closeModal()">
+        <ion-icon name="chevron-back" ></ion-icon>
+      </ion-button>
+      <ion-button slot="end" fill="solid" class="button-edit" routerLink="/employe">
+        <ion-icon name="pencil"></ion-icon>
+      </ion-button>
+    </ion-toolbar>
+  </ion-header>
+  <div class="page-container">
+    <!-- hero -->
+    <div class="hero-container">
+      <ion-img src={{employe.PHOTO_URL}}></ion-img>
+      <ion-chip>
+        <ion-icon name="star"></ion-icon>
+        <ion-label>4.2</ion-label>
+      </ion-chip>
+    </div>
+
+    <!-- content -->
+    <div class="content-container">
+      <!-- user info -->
+      <div class="name-container">
+        <ion-text algin="center">
+          <h1>{{employe.Prenom+' '}} {{employe.Nom}}</h1>
+        </ion-text>
+
+        <!-- <ion-button (click)="userdetails(employe)"> -->
+          <ion-button >
+          <ion-label>OPEN</ion-label>
+          <ion-icon slot="end" name="ellipsis-horizontal" ></ion-icon>
+        </ion-button>
+      </div>
+
+      <!-- location -->
+      <div class="location">
+        <ion-text> Adresse: <span class="emphasis">{{' '+employe.Adresse}}</span> </ion-text>
+      </div>
+
+      <!-- talent scout -->
+      <div class="talent-scout-container">
+        <ion-item class="ion-no-padding" lines="none">
+          <div class="inner-container">
+            <div class="info-container">
+              <ion-avatar>
+                <ion-img src={{employe.PHOTO_URL}}></ion-img>
+              </ion-avatar>
+              <div class="text-container">
+                <ion-text><span class="name">{{employe.Prenom+' '}} {{employe.Nom}}</span></ion-text>
+                <ion-text><span class="description">{{employe?.Fonction}}</span></ion-text>
+              </div>
+            </div>
+            <ion-button>
+              <ion-icon name="chatbubble"></ion-icon>
+            </ion-button>
+          </div>
+        </ion-item>
+      </div>
+
+      <!-- stats -->
+      <div class="stats-container">
+        <div class="stat-container">
+          <ion-text><span class="stat">{{employe.Salaire}}</span></ion-text>
+          <ion-text><span class="description">Salaire</span></ion-text>
+        </div>
+        <div class="stat-container">
+          <ion-text><span class="stat">{{employe.SurSalaire}}</span></ion-text>
+          <ion-text><span class="description">SurSalaire</span></ion-text>
+        </div>
+        <div class="stat-container">
+          <ion-text><span class="stat">10 ans</span></ion-text>
+          <ion-text><span class="description">Année d'expérience</span></ion-text>
+        </div>
+        <div class="stat-container">
+          <ion-text><span class="stat">10 ans</span></ion-text>
+          <ion-text><span class="description">Année d'expérience</span></ion-text>
+        </div>
+        <div class="stat-container">
+          <ion-text><span class="stat">10 ans</span></ion-text>
+          <ion-text><span class="description">Année d'expérience</span></ion-text>
+        </div>
+        <div class="stat-container">
+          <ion-text><span class="stat">10 ans</span></ion-text>
+          <ion-text><span class="description">Année d'expérience</span></ion-text>
+        </div>
+      </div>
+
+      <!-- about -->
+      <div class="about-container">
+
+      </div>
+
+      <!-- tags -->
+      <div class="tags-container">
+        <ion-chip color="primary">{{this.employe.Fonction}}</ion-chip>
+        <ion-chip color="secondary" *ngIf="hideMe">{{this.nom_Direction}}</ion-chip>
+        <ion-chip color="success" *ngIf="hideMe2">{{this.nom_Service}}</ion-chip>
+      </div>
+    </div>
+  </div>
+  <ion-row class="ion-margin-vertical">
+    <ion-col size="12" size-sm="6" size-md="6" size-lg="6" size-xl="6" style="border: 2px solid rgb(20, 20, 20);">
+
+      <ion-list >
+        <ion-item>
+          <ion-label position="floating">Prenom</ion-label>
+          <ion-input [(ngModel)]='this.prenom'></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Nom</ion-label>
+          <ion-input [(ngModel)]='this.nom'  ></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Date de Naissance</ion-label>
+          <ion-input [(ngModel)]='this.DATENAIS' ></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Fonction</ion-label>
+          <ion-input [(ngModel)]='this.fonction' ></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Adresse</ion-label>
+          <ion-input [(ngModel)]='this.adresse'></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Téléphone</ion-label>
+          <ion-input [(ngModel)]='this.telephone' type="number" value="221775618816"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Sexe</ion-label>
+          <ion-input [(ngModel)]='this.sexe'></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Situation familiale</ion-label>
+          <ion-input [(ngModel)]='this.SITUATION_FAMILLE' ></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Date d'embauche</ion-label>
+          <ion-input [(ngModel)]='this.DateEmbauche'></ion-input>
+        </ion-item>
+        <ion-item  *ngIf="hideMe">
+          <ion-label position="floating" >Direction</ion-label>
+          <ion-input [(ngModel)]='this.nom_Direction' [readonly]="true" class="iddirection"></ion-input>
+        </ion-item>
+        <ion-item *ngIf="hideMe2">
+          <ion-label position="floating">Service</ion-label>
+          <ion-input [(ngModel)]='this.nom_Service' [readonly]="true" class="idservice"></ion-input>
+        </ion-item>
+        <ion-row *ngIf="message">
+          <ion-col size="4"></ion-col>
+          <ion-col size="4" size-md="4" size-lg="4">
+           <h1 class="title" *ngIf="message_txt_M">Non Affecté</h1>
+           <h1 class="title" *ngIf="message_txt_F">Non Affectée</h1>
+           <h1 class="title" *ngIf="message_txt">Non Affecté(e)</h1>
+          </ion-col>
+          <ion-col size="4"></ion-col>
+        </ion-row>
+    </ion-list>
+    </ion-col>
+    <!-- ******************** -->
+    <ion-col size="12" size-sm="6" size-md="6" size-lg="6" size-xl="6" style="border: 2px solid rgb(20, 20, 20);">
+      <ion-list >
+        <ion-item>
+          <ion-label position="floating">Salaire</ion-label>
+          <ion-input [(ngModel)]='this.Salaire'></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">SurSalaire</ion-label>
+          <ion-input [(ngModel)]='this.SurSalaire'  ></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Nombre de Performance</ion-label>
+          <ion-input [(ngModel)]='this.NbPerformance' ></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">PART_TRIMF</ion-label>
+          <ion-input [(ngModel)]='this.PART_TRIMF'></ion-input>
+        </ion-item>
+        <ion-item  >
+          <ion-label position="floating" >PART IRPP</ion-label>
+          <ion-input [(ngModel)]='this.PART_IRPP' ></ion-input>
+        </ion-item>
+        <ion-item >
+          <ion-label position="floating">IPRES_TAUX_PATRONAL</ion-label>
+          <ion-input [(ngModel)]='this.IPRES_TAUX_PATRONAL' ></ion-input>
+        </ion-item>
+        <ion-item >
+          <ion-label position="floating">IPRES_TAUX_E</ion-label>
+          <ion-input [(ngModel)]='this.IPRES_TAUX_E' ></ion-input>
+        </ion-item>
+        <ion-item >
+          <ion-label position="floating">CSS_TAUX_ALLOCFAMILLE_PATRONAL</ion-label>
+          <ion-input [(ngModel)]='this.CSS_TAUX_ALLOCFAMILLE_PATRONAL' ></ion-input>
+        </ion-item>
+        <ion-item >
+          <ion-label position="floating">CSS_TAUX_ACCIDENT_PATRONAL</ion-label>
+          <ion-input [(ngModel)]='this.CSS_TAUX_ACCIDENT_PATRONAL' ></ion-input>
+        </ion-item>
+        <ion-item >
+          <ion-label position="floating">CFCE_TAUX_PATRONAL</ion-label>
+          <ion-input [(ngModel)]='this.CFCE_TAUX_PATRONAL' ></ion-input>
+        </ion-item>
+        <ion-item >
+          <ion-label position="floating">IPRES_TAUXCOMPLCADRE_E</ion-label>
+          <ion-input [(ngModel)]='this.IPRES_TAUXCOMPLCADRE_E' ></ion-input>
+        </ion-item>
+        <ion-item >
+          <ion-label position="floating">IPRES_TAUXCOMPLCADRE_P</ion-label>
+          <ion-input [(ngModel)]='this.IPRES_TAUXCOMPLCADRE_P' ></ion-input>
+        </ion-item>
+    </ion-list>
+    </ion-col>
+  </ion-row>
+
+<ion-row class="ion-margin-horizontal">
+  <ion-col size="2" size-sm="4" size-md="4" size-lg="4" size-xl="4" class="ion-text-center">
+    <ion-button >
       <ion-icon name="arrow-back">
       </ion-icon>PRECEDENT
     </ion-button>
   </ion-col>
 
-  <ion-col size="2"></ion-col>
 
-  <ion-col size="4">
+  <ion-col size="12" size-sm="4" size-md="4" size-lg="4" size-xl="4" class="ion-text-center">
     <ion-button fill="outline"
     expand="block"
     color="primary"
@@ -75,9 +251,8 @@
   {{isUpdate ? 'Modifier' :'Enregistrer'}}</ion-button>
   </ion-col>
 
-  <ion-col size="2"></ion-col>
 
-  <ion-col size="2">
+  <ion-col size="2" size-sm="4" size-md="4" size-lg="4" size-xl="4" class="ion-text-center">
     <ion-button>SUIVANT
       <ion-icon name="arrow-forward">
       </ion-icon>

@@ -35,7 +35,8 @@
         <ion-icon name="funnel-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
-
+   <!--  <p>{{yesterday | date: 'yyyy-MM-dd'}}</p>
+    <p>{{yesterdayToString}}</p> -->
     <ion-item  lines="none" class="trie">
       <ion-icon name="funnel-outline" slot="start" class="icon_trie" :icon="ticketOutline"></ion-icon>
       <ion-select  multiple="true" value="none">
@@ -70,11 +71,15 @@
       <ion-card-subtitle [style.color]="item.Utilisateur === 'thierno' ? 'red' : (item.Utilisateur === 'adama' ? 'green' : 'orange')">
         <strong>{{item.Utilisateur}}</strong>
       </ion-card-subtitle>
-      <ion-item>
-        <ion-icon [style.color]="item.DateEnreg === today ? 'red' : 'green'" size="small" name="ellipse"></ion-icon>
+      <ion-item >
+        <ion-label>{{item.TextMotif}}</ion-label>
+        <ion-label *ngIf="item.DateEnreg === today" >
+          <ion-text style="background-color: orange;">NOUVEAU</ion-text></ion-label>
+        <ion-label slot="end" *ngIf="item.PourTous>'0'">Absence pour tous</ion-label>
+        <ion-label slot="end" *ngIf="item.PourTous==='0'">{{item.Prenom+' '+item.Nom}}</ion-label>
+        <ion-icon [style.color]="item.DateEnreg === today ? 'red' :(item.DateEnreg === yesterdayToString ?'orange': 'green')"
+        size="small" name="ellipse" slot="end"></ion-icon>
 
-        <ion-label *ngIf="item.PourTous>'0'">Absence pour tous</ion-label>
-        <ion-label *ngIf="item.PourTous==='0'">{{item.Prenom+' '+item.Nom}}</ion-label>
       </ion-item>
     </ion-card-header>
     <ion-card-content>
@@ -83,7 +88,8 @@
           <ion-accordion value="infos">
           <ion-item slot="header">
             <!-- <ion-label>Date {{item.DateEnreg | date:'fullDate' }}</ion-label> -->
-            <ion-label>Enregistrée le  {{item.DateEnreg | date:'fullDate'}} {{'à '+item.HeureEnreg}}</ion-label>
+            <!-- <ion-label>Enregistrée le  {{item.DateEnreg | date:'fullDate'}} {{'à '+item.HeureEnreg}}</ion-label> -->
+            <ion-label>Enregistrée  {{item.DateEnreg===today ?"Aujourd\'hui" : (item.DateEnreg=== yesterdayToString ? 'Hier': 'le '+item.DateEnreg | date:'fullDate')}} {{'à '+item.HeureEnreg}}</ion-label>
             <ion-label slot="end">N°  {{item.ID }}</ion-label>
 
           </ion-item>
@@ -135,7 +141,7 @@
                   <ion-label>{{'Nombre d\'heures: '+item.NBHEURE}}</ion-label>
                 </ion-item>
                 <ion-item>
-                  
+
                   <ion-label>
                     Enregistrée par:
                     <strong [style.color]="item.Utilisateur === 'thierno' ? 'red' : (item.Utilisateur === 'adama' ? 'green' : 'orange')">
