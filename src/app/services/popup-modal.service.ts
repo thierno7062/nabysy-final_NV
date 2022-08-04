@@ -5,12 +5,16 @@ import { DetailAbsencePage } from '../DETAIL/detail-absence/detail-absence.page'
 import { DetailAffectationPage } from '../DETAIL/detail-affectation/detail-affectation.page';
 import { DetailEmployePage } from '../DETAIL/detail-employe/detail-employe.page';
 
+/* Prise en charge des Photos */
+import { PhotoService } from 'src/app/services/photo.service';
+/* --------------------------------------------------------------------- */
+
 @Injectable({
   providedIn: 'root'
 })
 export class PopupModalService {
 
-  constructor( private modalCtrl: ModalController) { }
+  constructor( private modalCtrl: ModalController , private photoService: PhotoService) { }
 
   async presentAffectationModal(userDetail: any){
     const modal = await this.modalCtrl.create({
@@ -58,4 +62,5 @@ export class PopupModalService {
     });
     return await modal.present();
   }
+
 }

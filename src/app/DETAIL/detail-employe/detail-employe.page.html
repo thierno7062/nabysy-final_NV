@@ -20,6 +20,11 @@
   <div class="page-container">
     <!-- hero -->
     <div class="hero-container">
+      <!-- Test Prise de Photo-->
+      <ion-fab-button (click)="addPhotoToGallery(5)">
+        <ion-icon name="camera"></ion-icon>
+      </ion-fab-button>
+
       <ion-img src={{userDetails.PHOTO_URL}}></ion-img>
       <ion-chip>
         <ion-icon name="star"></ion-icon>

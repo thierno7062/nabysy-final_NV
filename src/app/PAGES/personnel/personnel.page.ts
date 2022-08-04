@@ -38,6 +38,7 @@ export class PersonnelPage implements OnInit {
   constructor(private router: Router,private popupModalService: PopupModalService,
     private menu: MenuController,
     private http: HttpClient, private alertctrl: AlertController,
+    // eslint-disable-next-line max-len
     private modalctrl: ModalController, private service: EmployeService, private loadingService: LoadingService) {
       this.selectedSegment = this.segmentList[0];
       this.refreshPerson();
@@ -203,4 +204,6 @@ export class PersonnelPage implements OnInit {
       queryParams:userDetail
     });
   }
+
+
 }
