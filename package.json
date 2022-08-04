@@ -36,6 +36,7 @@
     "@ionic-native/core": "^5.36.0",
     "@ionic-native/file": "^5.36.0",
     "@ionic-native/file-opener": "^5.36.0",
+    "@ionic-native/file-transfer": "^4.20.0",
     "@ionic-native/pdf-generator": "^5.36.0",
     "@ionic-native/printer": "^5.36.0",
     "@ionic/angular": "^6.2.1",

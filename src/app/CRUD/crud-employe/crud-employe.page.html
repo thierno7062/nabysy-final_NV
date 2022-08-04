@@ -22,7 +22,7 @@
       <ion-button slot="start" fill="solid" class="button-back"(click)="closeModal()">
         <ion-icon name="chevron-back" ></ion-icon>
       </ion-button>
-      <ion-button slot="end" fill="solid" class="button-edit" routerLink="/employe">
+      <ion-button slot="end" fill="solid" class="button-edit" (click)="addPhotoToGallery(employe.ID)">
         <ion-icon name="pencil"></ion-icon>
       </ion-button>
     </ion-toolbar>
@@ -65,6 +65,11 @@
               <ion-avatar>
                 <ion-img src={{employe.PHOTO_URL}}></ion-img>
               </ion-avatar>
+                <!-- Test Prise de Photo-->
+                  <!-- <ion-fab-button (click)="addPhotoToGallery(employe.ID)">
+                    <ion-icon name="camera"></ion-icon>
+                  </ion-fab-button> -->
+
               <div class="text-container">
                 <ion-text><span class="name">{{employe.Prenom+' '}} {{employe.Nom}}</span></ion-text>
                 <ion-text><span class="description">{{employe?.Fonction}}</span></ion-text>

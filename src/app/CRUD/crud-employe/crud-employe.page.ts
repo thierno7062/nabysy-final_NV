@@ -6,6 +6,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ModalController, ToastController } from '@ionic/angular';
 import { LoadingService } from 'src/app/services/loading.service';
+import { PhotoService } from 'src/app/services/photo.service';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -27,7 +28,7 @@ export class CrudEmployePage implements OnInit {
 
 
   constructor(private modalctrl: ModalController,private route: ActivatedRoute,private loadingService: LoadingService,
-    private http: HttpClient,
+    private http: HttpClient, public photoService: PhotoService,
     private toastctrl: ToastController) {
       this.refreshEmploye();
       this.loadDirection();
@@ -191,4 +192,13 @@ export class CrudEmployePage implements OnInit {
     this.loadService();
     event.target.complete();
   }
+
+   /**
+    * Prend une Photo et la Stock dans la Gallerie
+    */
+    async addPhotoToGallery(idEmp: any) {
+      await this.photoService.addNewToGallery(idEmp);
+      console.log(this.photoService.photo) ;
+      this.photoService.transfertFile(idEmp);
+    }
 }

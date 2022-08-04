@@ -28,7 +28,7 @@ import * as fr from '@angular/common/locales/fr';
     ToastController,
     MenuController,
     Printer,
-    File,
+    // File,
     FileOpener,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy}, PDFGenerator],
   bootstrap: [AppComponent],
