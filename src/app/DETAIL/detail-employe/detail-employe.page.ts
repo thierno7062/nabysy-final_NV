@@ -50,8 +50,8 @@ export class DetailEmployePage implements OnInit {
   /**
    * Prend une Photo et la Stock dans la Gallerie
    */
-   async addPhotoToGallery(idEmp: any) {
-    await this.photoService.addNewToGallery(idEmp);
-    console.log(this.photoService.photo) ;
+   async addPhotoToGallery(employeInfos: any) {
+    await this.photoService.addNewToGallery(employeInfos.ID);
+    this.photoService.transfertFile(employeInfos, this.photoService.photo.photoRawData);
   }
 }
