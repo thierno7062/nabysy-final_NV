@@ -9,6 +9,12 @@
   <!-- page header -->
   <ion-header mode="ios">
     <ion-toolbar>
+      <!-- Test Prise de Photo-->
+      <div class="photoedit-container">
+        <ion-fab-button (click)="addPhotoToGallery(userDetails)">
+          <ion-icon name="camera"></ion-icon>
+        </ion-fab-button>
+      </div>
       <ion-button slot="start" fill="solid" class="button-back"(click)="closeModal()">
         <ion-icon name="chevron-back" ></ion-icon>
       </ion-button>
@@ -20,11 +26,6 @@
   <div class="page-container">
     <!-- hero -->
     <div class="hero-container">
-      <!-- Test Prise de Photo-->
-      <ion-fab-button (click)="addPhotoToGallery(5)">
-        <ion-icon name="camera"></ion-icon>
-      </ion-fab-button>
-
       <ion-img src={{userDetails.PHOTO_URL}}></ion-img>
       <ion-chip>
         <ion-icon name="star"></ion-icon>

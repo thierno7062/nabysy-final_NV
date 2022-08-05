@@ -196,9 +196,8 @@ export class CrudEmployePage implements OnInit {
    /**
     * Prend une Photo et la Stock dans la Gallerie
     */
-    async addPhotoToGallery(idEmp: any) {
-      await this.photoService.addNewToGallery(idEmp);
-      console.log(this.photoService.photo) ;
-      this.photoService.transfertFile(idEmp);
+    async addPhotoToGallery(Emp: any) {
+      await this.photoService.addNewToGallery(Emp);
+      const result = await this.photoService.transfertFile(Emp,this.photoService.photo.photoRawData);
     }
 }
