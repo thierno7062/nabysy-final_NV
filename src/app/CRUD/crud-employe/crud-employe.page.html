@@ -20,17 +20,17 @@
    <ion-header mode="ios">
     <ion-toolbar>
       <ion-button slot="start" fill="solid" class="button-back"(click)="closeModal()">
-        <ion-icon name="chevron-back" ></ion-icon>
+        <ion-icon name="chevron-back" routerLink="./"></ion-icon>
       </ion-button>
-      <ion-button slot="end" fill="solid" class="button-edit" (click)="addPhotoToGallery(employe.ID)">
+      <ion-button slot="end" fill="solid" class="button-edit" (click)="addPhotoToGallery(employe)">
         <ion-icon name="pencil"></ion-icon>
       </ion-button>
     </ion-toolbar>
   </ion-header>
   <div class="page-container">
     <!-- hero -->
-    <div class="hero-container">
-      <ion-img src={{employe.PHOTO_URL}}></ion-img>
+    <div class="hero-container" >
+      <ion-img src={{employe.PHOTO_URL}} (click)="showPicture(employe)" tappable></ion-img>
       <ion-chip>
         <ion-icon name="star"></ion-icon>
         <ion-label>4.2</ion-label>
@@ -62,7 +62,7 @@
         <ion-item class="ion-no-padding" lines="none">
           <div class="inner-container">
             <div class="info-container">
-              <ion-avatar>
+              <ion-avatar (click)="showPicture(employe)"tappable>
                 <ion-img src={{employe.PHOTO_URL}}></ion-img>
               </ion-avatar>
                 <!-- Test Prise de Photo-->
@@ -135,10 +135,30 @@
           <ion-label position="floating">Nom</ion-label>
           <ion-input [(ngModel)]='this.nom'  ></ion-input>
         </ion-item>
-        <ion-item>
+        <!-- <ion-item>
           <ion-label position="floating">Date de Naissance</ion-label>
-          <ion-input [(ngModel)]='this.DATENAIS' ></ion-input>
+          <ion-input [(ngModel)]='this.formattedString' ></ion-input>
+        </ion-item> -->
+
+        <ion-item id="open-modal" >
+          <ion-label position="floating">Date de Naissance</ion-label>
+          <ion-input tappable [(ngModel)]='this.formattedString'></ion-input>
+          <ion-icon icon="calendar-outline" slot="end" color="primary" tappable></ion-icon>
         </ion-item>
+        <ion-modal trigger="open-modal" mode="md" class="open-modal">
+          <ng-template>
+            <ion-content>
+              <ion-datetime
+                #datetime
+                [value]="dateValue" size="cover"
+                (ionChange)="dateChanged(datetime.value)"
+                (ionCancel)="showPicker=false;">
+              </ion-datetime >
+                <ion-button (click)="close()" color="danger" class="dismiss">Dismiss</ion-button>
+                <ion-button (click)="select()" color="primary" >Select</ion-button>
+            </ion-content>
+          </ng-template>
+        </ion-modal>
         <ion-item>
           <ion-label position="floating">Fonction</ion-label>
           <ion-input [(ngModel)]='this.fonction' ></ion-input>
@@ -151,18 +171,46 @@
           <ion-label position="floating">Téléphone</ion-label>
           <ion-input [(ngModel)]='this.telephone' type="number" value="221775618816"></ion-input>
         </ion-item>
-        <ion-item>
+        <!-- <ion-item>
           <ion-label position="floating">Sexe</ion-label>
           <ion-input [(ngModel)]='this.sexe'></ion-input>
+        </ion-item> -->
+        <ion-item>
+          <ion-label>Sexe</ion-label>
+          <ion-select placeholder="Sélectionnez" [(ngModel)]="sexe">
+            <ion-select-option value="M">Masculin</ion-select-option>
+            <ion-select-option value="F">Féminin</ion-select-option>
+          </ion-select>
         </ion-item>
         <ion-item>
           <ion-label position="floating">Situation familiale</ion-label>
           <ion-input [(ngModel)]='this.SITUATION_FAMILLE' ></ion-input>
         </ion-item>
-        <ion-item>
+        <!-- <ion-item>
           <ion-label position="floating">Date d'embauche</ion-label>
-          <ion-input [(ngModel)]='this.DateEmbauche'></ion-input>
+          <ion-input [(ngModel)]='this.formattedString2'></ion-input>
+        </ion-item> -->
+        <ion-item id="open-modal2">
+          <ion-label position="floating">Date d'embauche</ion-label>
+          <ion-input tappable [(ngModel)]='this.formattedString2'></ion-input>
+          <ion-icon icon="calendar-outline" slot="end" color="primary" tappable></ion-icon>
         </ion-item>
+
+        <ion-modal trigger="open-modal2" mode="md">
+          <ng-template>
+            <ion-content>
+              <ion-datetime
+                #datetime
+                [value]="dateValue" size="cover"
+                (ionChange)="dateChangedFin(datetime.value)"
+                (ionCancel)="showPicker=false;">
+              </ion-datetime >
+                <ion-button (click)="close()" color="danger" class="dismiss">Dismiss</ion-button>
+                <ion-button (click)="select()" color="primary" >Select</ion-button>
+            </ion-content>
+          </ng-template>
+        </ion-modal>
+
         <ion-item  *ngIf="hideMe">
           <ion-label position="floating" >Direction</ion-label>
           <ion-input [(ngModel)]='this.nom_Direction' [readonly]="true" class="iddirection"></ion-input>
@@ -176,7 +224,7 @@
           <ion-col size="4" size-md="4" size-lg="4">
            <h1 class="title" *ngIf="message_txt_M">Non Affecté</h1>
            <h1 class="title" *ngIf="message_txt_F">Non Affectée</h1>
-           <h1 class="title" *ngIf="message_txt">Non Affecté(e)</h1>
+           <!-- <h1 class="title" *ngIf="message_txt">Non Affecté(e)</h1> -->
           </ion-col>
           <ion-col size="4"></ion-col>
         </ion-row>

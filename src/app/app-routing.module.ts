@@ -102,6 +102,10 @@ const routes: Routes = [
     path: 'employe',
     loadChildren: () => import('./CRUD/employe/employe.module').then( m => m.EmployePageModule)
   },
+  {
+    path: 'photoviewer',
+    loadChildren: () => import('./DETAIL/photoviewer/photoviewer.module').then( m => m.PhotoviewerPageModule)
+  },
 
 ];
 

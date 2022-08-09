@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 /* eslint-disable prefer-arrow/prefer-arrow-functions */
@@ -9,6 +10,8 @@ import { IonDatetime, ModalController, ToastController } from '@ionic/angular';
 import { format, parseISO } from 'date-fns';
 import { PopupModalService } from 'src/app/services/popup-modal.service';
 import { environment } from 'src/environments/environment';
+
+
 
 @Component({
   selector: 'app-crud-absence',
@@ -115,7 +118,6 @@ export class CrudAbsencePage implements OnInit {
   loadEmploye(){
     this.route.queryParams.subscribe(res =>{
           this.absence=res ;
-          //console.log(this.infoService);
           if (this.absence){
             this.prenom= this.absence.Prenom;
               this.dateDebut= this.absence.DateDebut;
@@ -137,25 +139,11 @@ export class CrudAbsencePage implements OnInit {
 
     this.http.get(environment.endPoint+'employe_action.php?Action=GET_EMPLOYE&Token='+environment.tokenUser).subscribe(res => {
     this.listeEmploye = res;
-    //console.log('listeEmploye =',this.listeEmploye);
-    // eslint-disable-next-line @typescript-eslint/naming-convention
     this.listeEmploye.forEach(function(employe, index,Lst) {Lst[index].IsChecked=0;});
     this.data= [];
     this.sort();
   });
-/*     this.readAPI(environment.endPoint+'employe_action.php?Action=GET_EMPLOYE&Token='+environment.tokenUser)
-    .subscribe((listes) =>{
-      // console.log(Listes);
-      this.listeEmploye=listes ;
-      console.log(this.listeEmploye);
-      if(this.listeEmploye.ID>0){
-        this.nomEmp=this.listeEmploye.Nom;
-        this.prenomEmp=this.listeEmploye.Prenom;
-        this.fonctionEmp=this.listeEmploye.Fonction;
-        this.affectation=this.listeEmploye.LieuxAffectationType;
-        this.telephone=this.listeEmploye.Tel;
-        }
-    }); */
+
   }
   togglepourTous(){
     this.bulkIndividuel = false;
@@ -468,4 +456,5 @@ export class CrudAbsencePage implements OnInit {
        this.datetime.confirm(true);
 
      }
+
 }

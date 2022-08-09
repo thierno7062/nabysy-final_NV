@@ -1,7 +1,9 @@
 {
   "name": "nabysy-final",
   "integrations": {
-    "capacitor": {}
+    "capacitor": {},
+    "cordova": {}
   },
-  "type": "angular"
+  "type": "angular",
+  "id": "3e165592"
 }

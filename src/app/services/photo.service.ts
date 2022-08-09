@@ -65,7 +65,7 @@ export class PhotoService {
       await this.uploadService.uploadFile(fichier,photoUrl);
       this.infoUpload=this.uploadService.InfoUpload;
       employeInfos.PHOTO_URL=this.infoUpload.reponse.Extra ;
-      //console.log(this.infoUpload);
+      console.log(this.infoUpload);
     } catch ( error ) {
       console.log( 'Erreur Envoie du Fichier.' );
       console.log( error );

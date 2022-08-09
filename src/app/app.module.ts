@@ -9,11 +9,12 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { IonicSelectableModule } from 'ionic-selectable';
-// import { Printer } from '@awesome-cordova-plugins/printer/ngx';
 import { Printer, PrintOptions } from '@awesome-cordova-plugins/printer/ngx';
 import { File } from '@ionic-native/file/ngx';
 import { FileOpener } from '@awesome-cordova-plugins/file-opener/ngx';
 import { PDFGenerator} from '@ionic-native/pdf-generator/ngx';
+import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
+// import { PhotoViewer } from '@awesome-cordova-plugins/photo-viewer/ngx';
 
 import { registerLocaleData } from '@angular/common';
 import * as fr from '@angular/common/locales/fr';
@@ -28,8 +29,9 @@ import * as fr from '@angular/common/locales/fr';
     ToastController,
     MenuController,
     Printer,
-    // File,
+    File,
     FileOpener,
+    PhotoViewer,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy}, PDFGenerator],
   bootstrap: [AppComponent],
 })

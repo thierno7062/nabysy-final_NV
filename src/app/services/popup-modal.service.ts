@@ -7,6 +7,8 @@ import { DetailEmployePage } from '../DETAIL/detail-employe/detail-employe.page'
 
 /* Prise en charge des Photos */
 import { PhotoService } from 'src/app/services/photo.service';
+import { PhotoViewer } from '@awesome-cordova-plugins/photo-viewer/ngx';
+import { PhotoviewerPage } from '../DETAIL/photoviewer/photoviewer.page';
 /* --------------------------------------------------------------------- */
 
 @Injectable({
@@ -27,16 +29,17 @@ export class PopupModalService {
     return await modal.present();
   }
 
- /*  async presentModalEmployeForm(userDetail: any){
+  async presentModalPhoto(userDetail: any){
     const modal = await this.modalCtrl.create({
-      component: EmployePage,
+      component: PhotoviewerPage,
+      cssClass: 'my-custom-modal-css',
       componentProps:{
         data: userDetail,
       }
 
     });
     return await modal.present();
-  } */
+  }
 
   async presentModalEmploye(userDetail: any){
     const modal = await this.modalCtrl.create({

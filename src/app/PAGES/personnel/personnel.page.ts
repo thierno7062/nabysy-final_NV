@@ -25,12 +25,11 @@ export class PersonnelPage implements OnInit {
   sortKey= null;
 
   // Segments
-  segmentList: Array<string> = ['Détails', 'Icônes', 'Segment 3'];
+  segmentList: Array<string> = ['Détails', 'Icônes'];
   selectedSegment: string;
   slideList: Array<string> = [
     'Slide Segment 1',
     'Slide Segment 2',
-    'Slide Segment 3',
   ];
 
   @ViewChild('slide') slide: IonSlides;

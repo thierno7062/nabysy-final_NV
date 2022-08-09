@@ -88,7 +88,7 @@
             <ion-col   *ngFor="let employe of listeEmploye" size="12" size-sm="6" size-md="4" size-lg="3" size-xl="2">
             <!-- <ion-col   *ngFor="let direction of listeDirections" size="6" > -->
 
-              <ion-card class="ion-text-center" >
+              <ion-card class="ion-text-center" tappable>
                 <ion-card-header  (click)="userdetails2(employe )">
                   <div align="center" size="6">
                     <ion-thumbnail [style.background]="'rgba(27, 150, 181, 0.1)'">
@@ -115,41 +115,11 @@
         </div>
     </ion-slide>
 
-    <ion-slide value="2">
+    <!-- <ion-slide value="2">
         <div>
             <ion-label>3rd Segment</ion-label>
         </div>
-    </ion-slide>
+    </ion-slide> -->
 
   </ion-slides>
-
-
-
-
-  <!-- <div class="div2">
-
-    <ion-list *ngFor="let employe of listeEmploye">
-      <ion-item-sliding>
-        <ion-item (click)="userdetails(employe)">
-          <ion-avatar slot="start">
-            <div class="avatar">
-              {{employe.Prenom.substring(0, 1).toUpperCase() }}
-            </div>
-          </ion-avatar>
-          <ion-label>
-            <h3 class="title">{{employe.Prenom + ' '+employe.Nom}}</h3>
-            <p class="subtext">{{'Adresse: '+ employe.Adresse +' Tel: ' + employe.Tel }}</p>
-          </ion-label>
-        </ion-item>
-        <ion-item-options side="end">
-          <ion-item-option color="danger" (click)="removeEmploye(employe)">
-            <ion-icon name="trash"></ion-icon>
-          </ion-item-option>
-          <ion-item-option color="success" (click)="updateEmploye(employe)">
-            Modifier
-          </ion-item-option>
-        </ion-item-options>
-      </ion-item-sliding>
-    </ion-list>
-  </div> -->
 </ion-content>

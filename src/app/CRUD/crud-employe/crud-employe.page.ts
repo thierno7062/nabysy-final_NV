@@ -1,13 +1,20 @@
+/* eslint-disable @typescript-eslint/no-shadow */
 /* eslint-disable max-len */
 /* eslint-disable @typescript-eslint/dot-notation */
 /* eslint-disable @typescript-eslint/naming-convention */
 import { HttpClient } from '@angular/common/http';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ModalController, ToastController } from '@ionic/angular';
 import { LoadingService } from 'src/app/services/loading.service';
 import { PhotoService } from 'src/app/services/photo.service';
 import { environment } from 'src/environments/environment';
+import { PhotoViewer } from '@awesome-cordova-plugins/photo-viewer/ngx';
+import { Platform } from '@ionic/angular';
+import { PopupModalService } from 'src/app/services/popup-modal.service';
+import { format, parseISO } from 'date-fns';
+import { IonDatetime } from '@ionic/angular';
+
 
 @Component({
   selector: 'app-crud-employe',
@@ -15,21 +22,32 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./crud-employe.page.scss'],
 })
 export class CrudEmployePage implements OnInit {
+  @ViewChild(IonDatetime) datetime: IonDatetime;
   // @Input() employe: any;
   isUpdate= false;
   // eslint-disable-next-line @typescript-eslint/naming-convention
   nom: string;  prenom: string;  fonction: string; adresse: string; telephone: string;  sexe: string;
     idDirection: number;  idService: string;  hideMe: boolean;  message: boolean; hideMe2: boolean;
-  message_txt_M: boolean;  message_txt_F: boolean;  message_txt: boolean;  url: string ; id: number;  employe: any;  infoEmploye: any;
-  direction: any; service: any; nom_Direction: string;nom_Service: string;DATENAIS: '';  SITUATION_FAMILLE: '';DateEmbauche: '';
-  Salaire: number; SurSalaire: number; NbPerformance: number; PART_TRIMF: '';PART_IRPP: '';IPRES_TAUX_PATRONAL: '';IPRES_TAUX_E: '';
-  CSS_TAUX_ALLOCFAMILLE_PATRONAL: '';CSS_TAUX_ACCIDENT_PATRONAL: '';CFCE_TAUX_PATRONAL: '';IPRES_TAUXCOMPLCADRE_E: '';
-  IPRES_TAUXCOMPLCADRE_P: '';
+  message_txt_M: boolean;  message_txt_F: boolean;  url: string ; id: number;  employe: any;  infoEmploye: any;
+  direction: any; service: any; nom_Direction: string;nom_Service: string;SITUATION_FAMILLE: ''; Salaire: number; SurSalaire: number;
+  NbPerformance: number; PART_TRIMF: '';PART_IRPP: '';IPRES_TAUX_PATRONAL: '';IPRES_TAUX_E: '';CSS_TAUX_ALLOCFAMILLE_PATRONAL: '';
+  CSS_TAUX_ACCIDENT_PATRONAL: '';CFCE_TAUX_PATRONAL: '';IPRES_TAUXCOMPLCADRE_E: '';IPRES_TAUXCOMPLCADRE_P: '';
 
+  /*
+  **DATE TIME
+  */
+  selectedDate= format(new Date(),'yyyy-MM-dd');
+   selectedDate2= format(new Date(),'yyyy-MM-dd');
+  //  modes = ['date', 'month', 'month-year','year'];
+   selectedMode= 'date';
+   showPicker = false;
+   dateValue= format(new Date(),'yyyy-MM-dd');
+   formattedString= '';
+   formattedString2= '';
 
   constructor(private modalctrl: ModalController,private route: ActivatedRoute,private loadingService: LoadingService,
-    private http: HttpClient, public photoService: PhotoService,
-    private toastctrl: ToastController) {
+    private http: HttpClient, public photoService: PhotoService,/* private photoViewer: PhotoViewer, */private platform: Platform,
+    private toastctrl: ToastController,private popupModalService: PopupModalService) {
       this.refreshEmploye();
       this.loadDirection();
       this.loadService();
@@ -42,7 +60,8 @@ export class CrudEmployePage implements OnInit {
       this.nom=this.employe.Nom; this.prenom= this.employe.Prenom; this.fonction= this.employe.Fonction;
       this.adresse= this.employe.Adresse; this.telephone= this.employe.Tel; this.sexe= this.employe.Sexe;
       this.idDirection= this.employe.idDirection;this.direction= this.employe.Direction; this.service= this.employe.Service;
-      this.DATENAIS=this.employe.DATENAIS;this.SITUATION_FAMILLE=this.employe.SITUATION_FAMILLE;this.DateEmbauche=this.employe.DateEmbauche;
+      this.selectedDate=this.employe.DATENAIS;this.formattedString=this.employe.DATENAIS;this.SITUATION_FAMILLE=this.employe.SITUATION_FAMILLE;
+      this.selectedDate2=this.employe.DateEmbauche;this.formattedString2=this.employe.DateEmbauche;
       this.Salaire=this.employe.Salaire;this.SurSalaire=this.employe.SurSalaire;this.NbPerformance=this.employe.NbPerformance;
       this.PART_TRIMF=this.employe.PART_TRIMF;this.PART_IRPP=this.employe.PART_IRPP;
       this.IPRES_TAUX_PATRONAL=this.employe.IPRES_TAUX_PATRONAL;
@@ -59,12 +78,16 @@ export class CrudEmployePage implements OnInit {
         this.message= true;
         if(this.sexe=== 'M' || this.sexe=== 'm' ){
           this.message_txt_M= true;
+
         }else if(this.sexe=== 'F' || this.sexe=== 'f'){
           this.message_txt_F= true;
         }
-        else{
-          this.message_txt=true;
-        }
+      }
+      if(this.sexe=== 'M' || this.sexe=== 'm' ){
+        this.sexe= 'M';
+
+      }else if(this.sexe=== 'F' || this.sexe=== 'f'){
+        this.sexe= 'F';
       }
     }
   }
@@ -93,8 +116,8 @@ export class CrudEmployePage implements OnInit {
           TxService='&IdService='+this.idService;
         }
         const apiUrl=environment.endPoint+'employe_action.php?Action=SAVE_EMPLOYE'+TxId+'&Nom='+this.nom+'&Prenom='+this.prenom+
-        '&Fonction='+this.fonction+'&Sexe='+this.sexe+'&Adresse='+this.adresse+'&Tel='+this.telephone+'&DATENAIS='+ this.DATENAIS+
-        '&DateEmbauche='+this.DateEmbauche+'&Salaire='+this.Salaire+'&SurSalaire='+this.SurSalaire+'&PART_TRIMF='+this.PART_TRIMF+
+        '&Fonction='+this.fonction+'&Sexe='+this.sexe+'&Adresse='+this.adresse+'&Tel='+this.telephone+'&DATENAIS='+ this.selectedDate+
+        '&DateEmbauche='+this.selectedDate2+'&Salaire='+this.Salaire+'&SurSalaire='+this.SurSalaire+'&PART_TRIMF='+this.PART_TRIMF+
         '&PART_IRPP='+ this.PART_IRPP+'&IPRES_TAUX_PATRONAL='+this.IPRES_TAUX_PATRONAL+'&IPRES_TAUX_E='+this.IPRES_TAUX_E+
         '&CSS_TAUX_ALLOCFAMILLE_PATRONAL='+this.CSS_TAUX_ALLOCFAMILLE_PATRONAL+'&CSS_TAUX_ACCIDENT_PATRONAL='+this.CSS_TAUX_ACCIDENT_PATRONAL+
         '&CFCE_TAUX_PATRONAL='+this.CFCE_TAUX_PATRONAL+'&IPRES_TAUXCOMPLCADRE_E='+this.IPRES_TAUXCOMPLCADRE_E+
@@ -160,12 +183,8 @@ export class CrudEmployePage implements OnInit {
         console.log(data);
         console.log(data['0']);
         this.nom_Direction=this.direction['0'].Nom;
-
       });
-
-
     });
-
   }
 
   loadService(){
@@ -196,8 +215,36 @@ export class CrudEmployePage implements OnInit {
    /**
     * Prend une Photo et la Stock dans la Gallerie
     */
-    async addPhotoToGallery(Emp: any) {
-      await this.photoService.addNewToGallery(Emp);
-      const result = await this.photoService.transfertFile(Emp,this.photoService.photo.photoRawData);
+    async addPhotoToGallery(employeInfos: any) {
+      await this.photoService.addNewToGallery(employeInfos.ID);
+      this.photoService.transfertFile(employeInfos, this.photoService.photo.photoRawData);
     }
+   /**
+    * Show picture
+    */
+    showPicture(userDetail: any){
+      this.popupModalService.presentModalPhoto(userDetail);
+     }
+
+    //  Date time
+    dateChanged(value){
+      this.dateValue= value;
+      this.formattedString= format(parseISO(value),  'yyyy-MM-dd');
+      this.showPicker= false;
+      this.selectedDate=format(parseISO(value),'yyyy-MM-dd');
+      }
+      dateChangedFin(value){
+       this.dateValue= value;
+      this.formattedString2= format(parseISO(value),  'yyyy-MM-dd');
+      this.showPicker= false;
+      this.selectedDate2=format(parseISO(value),'yyyy-MM-dd');
+      }
+      close(){
+        this.datetime.cancel(true);
+      }
+      select(){
+        this.datetime.confirm(true);
+
+      }
+
 }
