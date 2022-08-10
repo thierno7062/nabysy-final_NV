@@ -127,7 +127,7 @@ export class PersonnelPage implements OnInit {
   }
 
   addEmploye(){
-    this.modalctrl.create({
+   /*  this.modalctrl.create({
       component: CrudEmployePage
     }).
     then(modal =>{
@@ -144,7 +144,8 @@ export class PersonnelPage implements OnInit {
             this.refreshPerson();
         });
       }
-    });
+    }); */
+    this.router.navigateByUrl('/crud-employe');
   }
 
   updateEmploye(employe: any){

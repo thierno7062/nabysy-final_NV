@@ -19,8 +19,9 @@
    <!-- page header -->
    <ion-header mode="ios">
     <ion-toolbar>
-      <ion-button slot="start" fill="solid" class="button-back"(click)="closeModal()">
-        <ion-icon name="chevron-back" routerLink="./"></ion-icon>
+      <!-- <ion-button slot="start" fill="solid" class="button-back"(click)="closeModal()"> -->
+        <ion-button slot="start" fill="solid" class="button-back" routerLink="/personnel">
+        <ion-icon name="chevron-back" ></ion-icon>
       </ion-button>
       <ion-button slot="end" fill="solid" class="button-edit" (click)="addPhotoToGallery(employe)">
         <ion-icon name="pencil"></ion-icon>
@@ -171,10 +172,6 @@
           <ion-label position="floating">Téléphone</ion-label>
           <ion-input [(ngModel)]='this.telephone' type="number" value="221775618816"></ion-input>
         </ion-item>
-        <!-- <ion-item>
-          <ion-label position="floating">Sexe</ion-label>
-          <ion-input [(ngModel)]='this.sexe'></ion-input>
-        </ion-item> -->
         <ion-item>
           <ion-label>Sexe</ion-label>
           <ion-select placeholder="Sélectionnez" [(ngModel)]="sexe">
@@ -183,12 +180,18 @@
           </ion-select>
         </ion-item>
         <ion-item>
-          <ion-label position="floating">Situation familiale</ion-label>
-          <ion-input [(ngModel)]='this.SITUATION_FAMILLE' ></ion-input>
+          <ion-label>Situation familiale</ion-label>
+          <ion-select placeholder="Sélectionnez" [(ngModel)]="SITUATION_FAMILLE">
+            <ion-select-option value="Marié(e)">Marié(e)</ion-select-option>
+            <ion-select-option value="Célibataire">Célibataire</ion-select-option>
+            <ion-select-option value="Divorcé(e)">Divorcé(e)</ion-select-option>
+            <ion-select-option value="Veuf(ve)">Veuf(ve)</ion-select-option>
+
+          </ion-select>
         </ion-item>
         <!-- <ion-item>
-          <ion-label position="floating">Date d'embauche</ion-label>
-          <ion-input [(ngModel)]='this.formattedString2'></ion-input>
+          <ion-label position="floating">Situation familiale</ion-label>
+          <ion-input [(ngModel)]='this.SITUATION_FAMILLE' ></ion-input>
         </ion-item> -->
         <ion-item id="open-modal2">
           <ion-label position="floating">Date d'embauche</ion-label>
@@ -243,7 +246,7 @@
         </ion-item>
         <ion-item>
           <ion-label position="floating">Nombre de Performance</ion-label>
-          <ion-input [(ngModel)]='this.NbPerformance' ></ion-input>
+          <ion-input [(ngModel)]='this.NbPerformance' [readonly]="true"></ion-input>
         </ion-item>
         <ion-item>
           <ion-label position="floating">PART_TRIMF</ion-label>
