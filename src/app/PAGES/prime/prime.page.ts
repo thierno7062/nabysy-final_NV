@@ -242,7 +242,8 @@ export class PrimePage implements OnInit {
   clear(){
     this.selectComponent.clear();
     this.selectComponent.close();
-
+    this.id=0;
+    console.log(this.id);
   }
   toggleItems(){
     this.selectComponent.toggleItems(this.toggle);
@@ -252,6 +253,7 @@ export class PrimePage implements OnInit {
   confirm(){
     this.selectComponent.confirm();
     this.selectComponent.close();
+    this.id=0;
     console.log(this.selected);
     if(this.selected){
       this.id=this.selected.ID;
