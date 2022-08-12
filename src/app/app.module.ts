@@ -18,13 +18,14 @@ import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
 
 import { registerLocaleData } from '@angular/common';
 import * as fr from '@angular/common/locales/fr';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 
 @NgModule({
   declarations: [AppComponent],
   imports: [BrowserModule,IonicModule.forRoot(),
-    HttpClientModule, AppRoutingModule, IonicSelectableModule],
+    HttpClientModule, AppRoutingModule, IonicSelectableModule,FormsModule,ReactiveFormsModule],
   providers: [
     ToastController,
     MenuController,

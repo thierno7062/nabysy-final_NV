@@ -89,8 +89,8 @@ export class AbsencePage implements OnInit {
     return this.http.get(url);
 
   }
-  absencedetails(){
-    this.popupModalService.presentModalAbsence();
+  absencedetails(absence: any){
+    this.popupModalService.presentModalAbsence(absence);
   }
 
   removeAbsence(absence: any){

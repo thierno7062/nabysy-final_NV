@@ -5,6 +5,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController, IonSlides, MenuController, ModalController } from '@ionic/angular';
 import { CrudEmployePage } from 'src/app/CRUD/crud-employe/crud-employe.page';
+import { DetailEmployePage } from 'src/app/DETAIL/detail-employe/detail-employe.page';
 import { EmployeService } from 'src/app/services/employe.service';
 import { LoadingService } from 'src/app/services/loading.service';
 import { PopupModalService } from 'src/app/services/popup-modal.service';
@@ -38,7 +39,7 @@ export class PersonnelPage implements OnInit {
     private menu: MenuController,
     private http: HttpClient, private alertctrl: AlertController,
     // eslint-disable-next-line max-len
-    private modalctrl: ModalController, private service: EmployeService, private loadingService: LoadingService) {
+    private modalctrl: ModalController, private service: EmployeService, private loadingService: LoadingService,private modalCtrl: ModalController) {
       this.selectedSegment = this.segmentList[0];
       this.refreshPerson();
       this.sort();
@@ -148,7 +149,7 @@ export class PersonnelPage implements OnInit {
     this.router.navigateByUrl('/crud-employe');
   }
 
-  updateEmploye(employe: any){
+ /*  updateEmploye(employe: any){
     console.log(employe);
     this.modalctrl.create({
       component: CrudEmployePage,
@@ -157,7 +158,7 @@ export class PersonnelPage implements OnInit {
     .then(modal => modal.present());
     this.refreshPerson();
 
-  }
+  } */
   _openSideNav(){
     this.menu.enable(true,'menu-content');
     this.menu.open('menu-content');
@@ -165,6 +166,8 @@ export class PersonnelPage implements OnInit {
   userdetails(userDetail: any){
     this.popupModalService.presentModalEmploye(userDetail);
   }
+
+
   doRefresh(event){
     this.refreshPerson();
     event.target.complete();
@@ -199,7 +202,7 @@ export class PersonnelPage implements OnInit {
     }
 
   }
-  userdetails2(userDetail){
+  updateEmploye(userDetail){
     this.router.navigate(['/crud-employe'],{
       queryParams:userDetail
     });

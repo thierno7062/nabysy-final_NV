@@ -89,7 +89,7 @@
             <!-- <ion-col   *ngFor="let direction of listeDirections" size="6" > -->
 
               <ion-card class="ion-text-center" tappable>
-                <ion-card-header  (click)="userdetails2(employe )">
+                <ion-card-header  (click)="userdetails(employe )">
                   <div align="center" size="6">
                     <ion-thumbnail [style.background]="'rgba(27, 150, 181, 0.1)'">
                       <img [src]="employe.PHOTO_URL" alt=""/>
@@ -103,7 +103,7 @@
                   <ion-button size="small" slot="start" (click)="removeEmploye(employe)">
                     <ion-icon slot="icon-only" name="trash"></ion-icon>
                   </ion-button>
-                  <ion-button size="small" slot="end" (click)="userdetails2(employe)">
+                  <ion-button size="small" slot="end" (click)="updateEmploye(employe)">
                       <ion-icon slot="icon-only" name="create"></ion-icon>
                   </ion-button>
                 </ion-card-content>

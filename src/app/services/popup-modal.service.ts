@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/dot-notation */
 import { Injectable } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { EmployePage } from '../CRUD/employe/employe.page';
@@ -49,6 +50,14 @@ export class PopupModalService {
       }
 
     });
+    /* modal.onDidDismiss()
+      .then((data) => {
+        const user = data['data']; // Here's your selected user!
+        const user2 = data; // Here's your selected user!
+        console.log(user);
+        console.log(user2);
+
+    }); */
     return await modal.present();
   }
 
@@ -58,9 +67,12 @@ export class PopupModalService {
       dismissed: true
     });
   }
-  async presentModalAbsence(){
+  async presentModalAbsence(absenceDetail: any){
     const modal = await this.modalCtrl.create({
       component: DetailAbsencePage,
+      componentProps:{
+        data: absenceDetail,
+      }
 
     });
     return await modal.present();

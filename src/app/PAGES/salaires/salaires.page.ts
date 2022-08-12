@@ -20,6 +20,7 @@ import { environment } from 'src/environments/environment';
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import { format } from 'date-fns';
+import { PopupModalService } from 'src/app/services/popup-modal.service';
 
 (<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
 
@@ -72,7 +73,7 @@ export class SalairesPage implements OnInit {
    formattedString= ''; showtof: boolean; tof: any;
 
   constructor(private router: Router,  private modalctrl: ModalController,private alertctrl: AlertController,
-    private menu: MenuController, private http: HttpClient,private printer: Printer,
+    private menu: MenuController, private http: HttpClient,private printer: Printer,private popupModalService: PopupModalService,
     private fb: FormBuilder, private plt: Platform, private fileOpener: FileOpener) {
       this.loadEmploye();
       this.loadSalary();
@@ -522,5 +523,8 @@ export class SalairesPage implements OnInit {
 
   }
 
-
+  // ***********************
+  userdetails(userDetail: any){
+    this.popupModalService.presentModalEmploye(userDetail);
+  }
 }
