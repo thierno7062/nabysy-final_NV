@@ -48,7 +48,7 @@
 
     </ionic-selectable> -->
     <ionic-selectable #selectComponent [(ngModel)]="selected" itemValueField="ID"
-    itemTextField="Prenom" [items]="users" headerColor="primary"
+    itemTextField="Prenom" [items]="users" headerColor="primary" [canSearch]="true"
     searchFailText=" Rien n'a été trouvé:("  [canClear]="true"
     >
     <!-- ****************************** -->
@@ -116,7 +116,7 @@
                   </ion-card-content>
                 </ion-card> -->
                 <ion-button  fill="clear" shape="round" (click)="userdetails(selected)"> Voir </ion-button>
-                <ion-button  fill="clear" shape="round"> Suivant </ion-button>
+                <ion-button  fill="clear" shape="round" (click)="suivant()" > Suivant </ion-button>
                 <ion-button  fill="clear" shape="round"> Modifier </ion-button>
                 <ion-button  fill="clear" shape="round"> Précédent </ion-button>
             </ion-col>

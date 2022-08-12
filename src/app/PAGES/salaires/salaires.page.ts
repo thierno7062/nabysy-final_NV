@@ -204,6 +204,12 @@ export class SalairesPage implements OnInit {
       queryParams:bulletin
     });
   }
+  suivant(){
+    // this.id= this.selected.id+1;
+    // this.loadSalary();
+    console.log(this.selected);
+
+  }
 
 
   //****************************** * Print bulletin ************************************************

@@ -85,7 +85,7 @@
               <ion-label>Selectionnez un employe</ion-label>
 
               <ionic-selectable #selectComponent [(ngModel)]="selected" itemValueField="ID"
-              itemTextField="Prenom" [items]="users" headerColor="primary"
+              itemTextField="Prenom" [items]="users" headerColor="primary" [canSearch]="true"
               searchFailText=" Rien n'a été trouvé:("  [canClear]="true"
               >
               <!-- ****************************** -->

@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar >
-    <ion-title>Formulaire-absence</ion-title>
+    <ion-title>Fiche-absence</ion-title>
     <ion-button slot="end" (click)="closeModal()"><ion-icon name="close-outline"></ion-icon></ion-button>
     <ion-button slot="start" fill="solid" class="button-back"(click)="closeModal()"><ion-icon name="chevron-back" ></ion-icon></ion-button>
   </ion-toolbar>
@@ -94,7 +94,9 @@
       <div *ngIf="userDetails.PourTous>0"class="pourTous">
         <ion-card>
           <ion-card-content>
-            ABSENCE POUR TOUS LES EMPLOYES
+            <ion-text color="dark">
+              <h1>ABSENCE POUR TOUS LES EMPLOYES</h1>
+            </ion-text>
           </ion-card-content>
         </ion-card>
       </div>
@@ -113,56 +115,56 @@
             <ion-list lines="full">
               <ion-item>
                 <ion-label>
-                  <ion-text >Prénom</ion-text>
-                  <p><ion-text color="dark">{{userDetails.Prenom}}</ion-text></p>
+                  <ion-text >Date de début</ion-text>
+                  <p><ion-text color="dark">{{userDetails.DateDebut}}</ion-text></p>
                 </ion-label>
               </ion-item>
               <ion-item>
                 <ion-label>
-                  <ion-text >Nom</ion-text>
-                  <p><ion-text color="dark">{{userDetails.Nom}}</ion-text></p>
+                  <ion-text >Heure de Début</ion-text>
+                  <p><ion-text color="dark">{{userDetails.HeureDebut}}</ion-text></p>
                 </ion-label>
               </ion-item>
               <ion-item>
                 <ion-label>
-                  <ion-text >Date de Naissance</ion-text>
-                  <p><ion-text color="dark">{{userDetails.DATENAIS}}</ion-text></p>
+                  <ion-text >Date de Fin</ion-text>
+                  <p><ion-text color="dark">{{userDetails.DateFin}}</ion-text></p>
                 </ion-label>
               </ion-item>
               <ion-item>
                 <ion-label>
-                  <ion-text >Fonction</ion-text>
-                  <p><ion-text color="dark">{{userDetails.Fonction}}</ion-text></p>
+                  <ion-text >Heure de Fin</ion-text>
+                  <p><ion-text color="dark">{{userDetails.HeureFin}}</ion-text></p>
                 </ion-label>
               </ion-item>
               <ion-item>
                 <ion-label>
-                  <ion-text >Adresse</ion-text>
-                  <p><ion-text color="dark">{{userDetails.Adresse}}</ion-text></p>
+                  <ion-text >Motif</ion-text>
+                  <p><ion-text color="dark">{{userDetails.TextMotif}}</ion-text></p>
                 </ion-label>
               </ion-item>
               <ion-item>
                 <ion-label>
-                  <ion-text >Téléphone</ion-text>
-                  <p><ion-text color="dark">{{userDetails.Tel}}</ion-text></p>
+                  <ion-text >Date d'enregistrement</ion-text>
+                  <p><ion-text color="dark">{{userDetails.DateEnreg}}</ion-text></p>
                 </ion-label>
               </ion-item>
               <ion-item>
                 <ion-label>
-                  <ion-text >Sexe</ion-text>
-                  <p><ion-text color="dark">{{sexeString}}</ion-text></p>
+                  <ion-text >Heure</ion-text>
+                  <p><ion-text color="dark">{{userDetails.HeureEnreg}}</ion-text></p>
                 </ion-label>
               </ion-item>
               <ion-item>
                 <ion-label>
-                  <ion-text >Situation Familiale</ion-text>
-                  <p><ion-text color="dark">{{userDetails.SITUATION_FAMILLE}}</ion-text></p>
+                  <ion-text >Payée</ion-text>
+                  <p><ion-text color="dark">{{userDetails.IsPaye}}</ion-text></p>
                 </ion-label>
               </ion-item>
               <ion-item>
                 <ion-label>
-                  <ion-text >Date d'embauche</ion-text>
-                  <p><ion-text color="dark">{{userDetails.DateEmbauche}}</ion-text></p>
+                  <ion-text >Année</ion-text>
+                  <p><ion-text color="dark">{{userDetails.Annee}}</ion-text></p>
                 </ion-label>
               </ion-item>
 
@@ -188,81 +190,69 @@
             <ion-list lines="full">
               <ion-item>
                 <ion-label>
-                  <ion-text >Salaire</ion-text>
-                  <p><ion-text color="dark">{{userDetails.Salaire}}</ion-text></p>
+                  <ion-text >Nombre de D'années</ion-text>
+                  <p><ion-text color="dark">{{userDetails.NBANNEE}}</ion-text></p>
                 </ion-label>
               </ion-item>
               <ion-item>
                 <ion-label>
-                  <ion-text >Sursalaire</ion-text>
-                  <p><ion-text color="dark">{{userDetails.SurSalaire}}</ion-text></p>
+                  <ion-text >Nombre de Trimestre</ion-text>
+                  <p><ion-text color="dark">{{userDetails.NBTRIMESTRE}}</ion-text></p>
                 </ion-label>
               </ion-item>
               <ion-item>
                 <ion-label>
-                  <ion-text >Nombre de Performance</ion-text>
-                  <p><ion-text color="dark">{{userDetails.NbPerformance}}</ion-text></p>
+                  <ion-text >Nombre de Mois</ion-text>
+                  <p><ion-text color="dark">{{userDetails.NBMOIS}}</ion-text></p>
                 </ion-label>
               </ion-item>
               <ion-item>
                 <ion-label>
-                  <ion-text >PART_TRIMF</ion-text>
-                  <p><ion-text color="dark">{{userDetails.PART_TRIMF}}</ion-text></p>
+                  <ion-text >Nombre de Semaines</ion-text>
+                  <p><ion-text color="dark">{{userDetails.NBSEMAINE}}</ion-text></p>
                 </ion-label>
               </ion-item>
               <ion-item>
                 <ion-label>
-                  <ion-text >PART_IRPP</ion-text>
-                  <p><ion-text color="dark">{{userDetails.PART_IRPP}}</ion-text></p>
+                  <ion-text >Nombre de Jours</ion-text>
+                  <p><ion-text color="dark">{{userDetails.NBJOUR}}</ion-text></p>
                 </ion-label>
               </ion-item>
               <ion-item>
                 <ion-label>
-                  <ion-text >IPRES_TAUX_PATRONAL</ion-text>
-                  <p><ion-text color="dark">{{userDetails.IPRES_TAUX_PATRONAL}}</ion-text></p>
+                  <ion-text >Nombre d'heure'</ion-text>
+                  <p><ion-text color="dark">{{userDetails.NBHEURE}}</ion-text></p>
                 </ion-label>
               </ion-item>
               <ion-item>
                 <ion-label>
-                  <ion-text >IPRES_TAUX_E</ion-text>
-                  <p><ion-text color="dark">{{userDetails.IPRES_TAUX_E}}</ion-text></p>
+                  <ion-text >Nombre de minutes</ion-text>
+                  <p><ion-text color="dark">{{userDetails.NBMINUTE}}</ion-text></p>
+                </ion-label>
+              </ion-item>
+
+              <ion-item>
+                <ion-label>
+                  <ion-text >Nombre d'heure</ion-text>
+                  <p><ion-text color="dark">{{userDetails.NbHeure}}</ion-text></p>
                 </ion-label>
               </ion-item>
               <ion-item>
                 <ion-label>
-                  <ion-text >CSS_TAUX_ALLOCFAMILLE_PATRONAL</ion-text>
-                  <p><ion-text color="dark">{{userDetails.CSS_TAUX_ALLOCFAMILLE_PATRONAL}}</ion-text></p>
+                  <ion-text >Nombre de minutes</ion-text>
+                  <p><ion-text color="dark">{{userDetails.NbMinute}}</ion-text></p>
                 </ion-label>
               </ion-item>
               <ion-item>
                 <ion-label>
-                  <ion-text >CSS_TAUX_ACCIDENT_PATRONAL</ion-text>
-                  <p><ion-text color="dark">{{userDetails.CSS_TAUX_ACCIDENT_PATRONAL}}</ion-text></p>
-                </ion-label>
-              </ion-item>
-              <ion-item>
-                <ion-label>
-                  <ion-text >CFCE_TAUX_PATRONAL</ion-text>
-                  <p><ion-text color="dark">{{userDetails.CFCE_TAUX_PATRONAL}}</ion-text></p>
-                </ion-label>
-              </ion-item>
-              <ion-item>
-                <ion-label>
-                  <ion-text >IPRES_TAUXCOMPLCADRE_E</ion-text>
-                  <p><ion-text color="dark">{{userDetails.IPRES_TAUXCOMPLCADRE_E}}</ion-text></p>
-                </ion-label>
-              </ion-item>
-              <ion-item>
-                <ion-label>
-                  <ion-text >IPRES_TAUXCOMPLCADRE_P</ion-text>
-                  <p><ion-text color="dark">{{userDetails.IPRES_TAUXCOMPLCADRE_P}}</ion-text></p>
+                  <ion-text >Enregistrée par</ion-text>
+                  <p><ion-text color="dark">{{userDetails.Utilisateur}}</ion-text></p>
                 </ion-label>
               </ion-item>
             </ion-list>
           </ion-col>
         </ion-row>
       </div>
-
 
     </div>
   </div>
