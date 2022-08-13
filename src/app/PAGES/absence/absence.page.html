@@ -60,7 +60,7 @@
 
 
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button (click)="addTask()">
+    <ion-fab-button (click)="addAbsence2()">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
@@ -74,10 +74,12 @@
       <ion-item >
         <ion-label>{{item.TextMotif}}</ion-label>
         <ion-label *ngIf="item.DateEnreg === today" >
-          <ion-text style="background-color: orange;">NOUVEAU</ion-text></ion-label>
+          <ion-text style="background-color: orange;">AUJOURD'HUI</ion-text></ion-label>
         <ion-label slot="end" *ngIf="item.PourTous>'0'">Absence pour tous</ion-label>
         <ion-label slot="end" *ngIf="item.PourTous==='0'">{{item.Prenom+' '+item.Nom}}</ion-label>
-        <ion-icon [style.color]="item.DateEnreg === today ? 'red' :(item.DateEnreg === yesterdayToString ?'orange': 'green')"
+       <!--  <ion-icon [style.color]="item.DateEnreg === today ? 'red' :(item.DateEnreg === yesterdayToString ?'orange': 'green')"
+        size="small" name="ellipse" slot="end"></ion-icon> -->
+        <ion-icon [style.color]="item.PourTous === '0' ? 'red' :'green'"
         size="small" name="ellipse" slot="end"></ion-icon>
 
       </ion-item>

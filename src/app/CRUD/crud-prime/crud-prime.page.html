@@ -12,9 +12,57 @@
 <ion-content>
 
   <ion-list >
+    <ion-item *ngIf="this.selected">
+     <!--  <ion-label position="floating">ID Employe</ion-label>
+      <ion-text *ngIf="this.selected">{{this.selected.Prenom+' '+this.selected.Nom}}</ion-text> -->
+      <ion-label>
+        <ion-text >Employe</ion-text>
+        <p><ion-text color="dark">{{this.selected.Prenom+' '+this.selected.Nom}}</ion-text></p>
+      </ion-label>
+    </ion-item>
+
+    <!-- Select Employe -->
     <ion-item>
-      <ion-label position="floating">ID Employe</ion-label>
-      <ion-input [(ngModel)]='this.ID'></ion-input>
+      <ion-label>Selectionnez un employe</ion-label>
+
+      <ionic-selectable #selectComponent [(ngModel)]="selected" itemValueField="ID"
+      itemTextField="Prenom" [items]="users" headerColor="primary" [canSearch]="true"
+      searchFailText=" Rien n'a été trouvé:("  [canClear]="true"
+      >
+      <!-- ****************************** -->
+      <ng-template ionicSelectableCloseButtonTemplate color="danger">
+        <ion-button fill="clear" color="danger">
+          <ion-icon  name="close-circle"></ion-icon>
+        </ion-button>
+
+      </ng-template>
+
+      <ng-template ionicSelectableItemTemplate let-user="item">
+        {{user.Prenom +' '+ user.Nom +'   ====> '+user.Fonction+' ===>Matricule: '+user.ID }}
+      </ng-template>
+      <!-- ******************************** -->
+      <ng-template ionicSelectableFooterTemplate>
+        <ion-toolbar>
+          <ion-row>
+            <ion-col size="4">
+              <ion-button expand="full" (click)="clear()">
+                Annuler
+              </ion-button>
+            </ion-col >
+            <ion-col  size="4">
+              <ion-button expand="full" (click)="toggleItems()" [disabled]="!selectComponent.itemsToConfirm.length">
+                Décocher
+              </ion-button>
+            </ion-col>
+            <ion-col size="4">
+              <ion-button expand="full" (click)="confirm()" [disabled]="!selectComponent.itemsToConfirm.length">
+                Confirmer
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-toolbar>
+      </ng-template>
+    </ionic-selectable>
     </ion-item>
     <ion-item>
       <ion-label position="floating">Nombre de point</ion-label>

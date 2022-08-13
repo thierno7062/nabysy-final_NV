@@ -146,9 +146,9 @@ export class AbsencePage implements OnInit {
     this.loadAbsence();
     event.target.complete();
   }
-  async addTask(){
+  async addAbsence2(){
     const modal = await this.modalctrl.create({
-      component: PrimePage
+      component: CrudAbsencePage
     });
     return await modal.present();
   }

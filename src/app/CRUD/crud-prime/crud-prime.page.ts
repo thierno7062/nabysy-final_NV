@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/dot-notation */
 /* eslint-disable @typescript-eslint/naming-convention */
 import { HttpClient } from '@angular/common/http';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { ModalController, ToastController } from '@ionic/angular';
+import { IonicSelectableComponent } from 'ionic-selectable';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -12,14 +13,25 @@ import { environment } from 'src/environments/environment';
 })
 export class CrudPrimePage implements OnInit {
   @Input() employe: any;
+  @ViewChild('selectComponent') selectComponent: IonicSelectableComponent;
   isUpdate= false;
   ID: string;
   point: string;
   motif: string;
 
+   // Employe
+   selected_user= null;
+   selected: any;
+   users: any;
+   listeEmploye: any;
+   toggle= true;
+   id: number;
+
   constructor(private modalctrl: ModalController,
     private http: HttpClient,
-    private toastctrl: ToastController) { }
+    private toastctrl: ToastController) {
+      this.loadEmploye();
+    }
 
   ngOnInit() {
     if (this.employe){
@@ -50,7 +62,7 @@ export class CrudPrimePage implements OnInit {
         }
 
         const apiUrl=environment.endPoint+'performance_action.php?Action=ADD_PERFORMANCE&NBPOINT='+this.point+'&MOTIF='+this.motif+
-        '&IDEMPLOYE='+this.ID+'&Token='+environment.tokenUser;
+        '&IDEMPLOYE='+this.id+'&Token='+environment.tokenUser;
         // ---------------
         console.log(apiUrl);
         this.http.get(apiUrl).subscribe(async data =>{
@@ -76,4 +88,42 @@ export class CrudPrimePage implements OnInit {
     this.modalctrl.dismiss(null, 'closed');
 
   }
+  // ionic selectable
+  loadEmploye(){
+    this.readAPI(environment.endPoint+'employe_action.php?Action=GET_EMPLOYE&Token='+environment.tokenUser)
+    .subscribe((listes) =>{
+      // console.log(Listes);
+      this.listeEmploye=listes ;
+      this.users=listes;
+      console.log(this.listeEmploye);
+    });
+  }
+  readAPI(url: string){
+    console.log(url);
+    return this.http.get(url);
+
+  }
+
+  clear(){
+    this.selectComponent.clear();
+    this.selectComponent.close();
+    this.id=0;
+    console.log(this.id);
+  }
+  toggleItems(){
+    this.selectComponent.toggleItems(this.toggle);
+    this.toggle= !this.toggle;
+
+  }
+  confirm(){
+    this.selectComponent.confirm();
+    this.selectComponent.close();
+    this.id=0;
+    console.log(this.selected);
+    if(this.selected){
+      this.id=this.selected.ID;
+
+    }
+  }
+
 }

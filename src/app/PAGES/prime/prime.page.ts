@@ -86,10 +86,11 @@ export class PrimePage implements OnInit {
      }
      close(){
        this.datetime.cancel(true);
+      this.loadPrime();
      }
      select(){
        this.datetime.confirm(true);
-
+      this.loadPrime();
      }
   loadPrime(){
     let IdEmploye='';
@@ -244,6 +245,7 @@ export class PrimePage implements OnInit {
     this.selectComponent.close();
     this.id=0;
     console.log(this.id);
+    this.loadPrime();
   }
   toggleItems(){
     this.selectComponent.toggleItems(this.toggle);
