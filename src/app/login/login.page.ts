@@ -41,23 +41,22 @@ export class LoginPage implements OnInit {
       headers.append('Content-Type', 'application/json' );
       const apiUrl=environment.endPoint+'auth.php?Login='+this.username+'&Password='+this.password;
       //console.log(apiUrl);
+      environment.userName=this.username ;
+      environment.passWord=this.password ;
       this.http.get(apiUrl).subscribe(async data => {
        console.log(data['Extra']);
        if (data['OK'] !== '0') {
          environment.tokenUser=data['Extra'] ;
+         console.log(environment);
          this.router.navigate(['/home']);
           const toast = await this.toastController.create({
           message: 'Welcome!',
           duration: 2000
          });
          toast.present();
-       } /* else {
-          const toast = await this.toastController.create({
-           message: 'Ok',
-           duration: 2000
-         });
-         toast.present();
-       } */ else{
+       }else{
+          environment.userName='' ;
+          environment.passWord='' ;
           const toast = await this.toastController.create({
             message: 'Username or password invalid',
             duration: 2000
