@@ -613,7 +613,7 @@ export class SalairesPage implements OnInit {
     this.popupModalService.presentModalEmploye(userDetail);
   }
 
-  // Reçu paiement Salaire
+  // Reçu paiement Salaire**
   pdfRecu(){
 
 
@@ -635,14 +635,14 @@ export class SalairesPage implements OnInit {
               alignment: 'right',margin: [ 5, 2, 0, 20 ]
             }
           ]
-        },
+        }, 
         {text: 'Reçu', style: 'header',alignment: 'center'},
         {text: 'Reçu de Thierno Abdourahmane Niang A '+this.prenom+' '+this.nom,margin: [ 0, 10, 0, 10 ] },
         'Je, soussigné(e) '+this.prenom+' '+this.nom+', reconnais avoir reçu la somme de  '
         +this.listeSalaire.BULLETIN_SALAIRE.SALAIRE_NET+' FCFA. Cette somme a été reçu pour le mois de: '+ this.periode,
         {text: 'Le paiement a été fait par______________.( espèce, chèque…). ',margin: [ 0, 20, 5, 10 ] },
         'Ce reçu confirme que le paiement a bien été fait.',
-        {text: 'Signature',margin: [ 0, 600, 0, 0 ],alignment: 'right' }
+        {text: 'Signature',margin: [ 0, 500, 0, 0 ],alignment: 'right' }  
         
       ],
       styles: {
