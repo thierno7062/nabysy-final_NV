@@ -257,29 +257,41 @@ export class SalairesPage implements OnInit {
 
   buildTableBody(data: any, columns: any): any {
     const body = [];
+    
     body.push(columns);
-
-    data.forEach((row: { Libelle: any; Base: any; Taux: any; Gain: any;Retenu: any; COTISATION_PATRONALE_TAUX: any; COTISATION_PATRONALE_MONTANT: any}) => {
-      const dataRow = [];
-      columns.forEach((column: { text: string }) => {
-        if (column.text === 'LIBELLE RUBRIQUE') {
-          dataRow.push(row.Libelle);
-        } else if (column.text === 'Base') {
-          dataRow.push(row.Base);
-        }else if (column.text === 'Taux') {
-          dataRow.push(row.Taux);
-        }else if (column.text === 'Gain') {
-          dataRow.push(row.Gain);
-        }else if (column.text === 'Retenu') {
-          dataRow.push(row.Retenu);
-        }else if (column.text === 'TAUX') {
-          dataRow.push(row.COTISATION_PATRONALE_TAUX);
-        }else if (column.text === 'MONTANT') {
-          dataRow.push(row.COTISATION_PATRONALE_MONTANT);
-        }
+    if (data){
+      data.forEach((row: { Libelle: any; Base: any; Taux: any; Gain: any;Retenu: any; COTISATION_PATRONALE_TAUX: any; COTISATION_PATRONALE_MONTANT: any}) => {
+        const dataRow = [];
+        columns.forEach((column: { text: string }) => {
+          if (column.text === 'LIBELLE RUBRIQUE') {
+            dataRow.push(row.Libelle);
+          } else if (column.text === 'Base') {
+            dataRow.push(row.Base);
+          }else if (column.text === 'Taux') {
+            dataRow.push(row.Taux);
+          }else if (column.text === 'Gain') {
+            dataRow.push(row.Gain);
+          }else if (column.text === 'Retenu') {
+            dataRow.push(row.Retenu);
+          }else if (column.text === 'TAUX') {
+            dataRow.push(row.COTISATION_PATRONALE_TAUX);
+          }else if (column.text === 'MONTANT') {
+            dataRow.push(row.COTISATION_PATRONALE_MONTANT);
+          }
+        });
+        body.push(dataRow);
       });
+    }else{
+      const dataRow = [];
+      dataRow.push('');
+      dataRow.push('');
+      dataRow.push('');
+      dataRow.push('');
+      dataRow.push('');
+      dataRow.push('');
       body.push(dataRow);
-    });
+    }
+    
     return body;
   }
 
