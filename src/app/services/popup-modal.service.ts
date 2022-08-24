@@ -10,6 +10,7 @@ import { DetailEmployePage } from '../DETAIL/detail-employe/detail-employe.page'
 import { PhotoService } from 'src/app/services/photo.service';
 import { PhotoViewer } from '@awesome-cordova-plugins/photo-viewer/ngx';
 import { PhotoviewerPage } from '../DETAIL/photoviewer/photoviewer.page';
+import { PrintBulletinPage } from '../PAGES/avance/print-bulletin.page';
 /* --------------------------------------------------------------------- */
 
 @Injectable({
@@ -72,6 +73,16 @@ export class PopupModalService {
       component: DetailAbsencePage,
       componentProps:{
         data: absenceDetail,
+      }
+
+    });
+    return await modal.present();
+  }
+  async avanceSalaire(avance: any){
+    const modal = await this.modalCtrl.create({
+      component: PrintBulletinPage,
+      componentProps:{
+        data: avance,
       }
 
     });

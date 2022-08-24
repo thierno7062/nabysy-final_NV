@@ -86,9 +86,10 @@ const routes: Routes = [
   {
     path: 'detail-employe',
     loadChildren: () => import('./DETAIL/detail-employe/detail-employe.module').then( m => m.DetailEmployePageModule)
-  },  {
+  },
+  {
     path: 'print-bulletin',
-    loadChildren: () => import('./pages/print-bulletin/print-bulletin.module').then( m => m.PrintBulletinPageModule)
+    loadChildren: () => import('./PAGES/avance/print-bulletin.module').then( m => m.PrintBulletinPageModule)
   },
   {
     path: 'print-bulletin2',

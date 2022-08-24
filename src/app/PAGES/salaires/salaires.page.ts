@@ -19,7 +19,7 @@ import { environment } from 'src/environments/environment';
 
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
-import { format } from 'date-fns';
+import { format, parseISO } from 'date-fns';
 import { PopupModalService } from 'src/app/services/popup-modal.service';
 
 (<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
@@ -40,7 +40,8 @@ export class SalairesPage implements OnInit {
   sexeInc: boolean;
   nom: ''; qualifiquation: ''; periode: '';  salaireBrut: ''; totalRetenue: ''; salaireNet: '';categorie: ''; situationFa: '';
   nbTotalJour: '';nbheureApayer: '';totalHeureApayer: ''; mois: ''; adresse: ''; partTrimf: ''; partIrpp: ''; periodePaie: '';
-  dateEmbauche: '';gainPrime: any; ligneCotisation: any; SALAIRE_BRUT: '';
+  dateEmbauche: '';gainPrime: any; ligneCotisation: any; SALAIRE_BRUT: ''; entreprise: '';adressEntr: '';contactEntre: '';
+  emailEntre: '';phoneEntre: '';nomEmp: '';
 
   // ionic selectable************
   searchTerm: string;
@@ -49,9 +50,6 @@ export class SalairesPage implements OnInit {
   users: any;
   toggle= true;
   @ViewChild('selectComponent') selectComponent: IonicSelectableComponent;
- /*  employeForm: FormGroup;
-  portNameControl: FormControl;
-  portCountryControl: FormControl; */
 
   listeEmploye: any;
   bulkEdit= false;
@@ -64,13 +62,15 @@ export class SalairesPage implements OnInit {
   @ViewChild(IonDatetime) datetime: IonDatetime;
   today: any;
   /* age =0; */
-   selectedDate= format(new Date(),'yyyy-MM-dd');
-   modes = ['date', 'date-time', 'month', 'month-year','time', 'time-date','year'];
+  //  selectedDate= format(new Date(),'yyyy-MM-dd');
+   selectedDate= format(new Date(),'yyyy');
+   selectedMonth= format(new Date(),'MM');
+   Month=format(new Date(),'MMMM');
    selectedMode= 'date';
    showPicker = false;
    // // dateValue= format(new Date(),'yyyy-MM-dd');
-   dateValue= format(new Date(),'yyyy-MM-dd')+ 'T09:00:00.000Z';
-   formattedString= ''; showtof: boolean; tof: any;
+   dateValue= format(new Date(),'yyyy-MM-dd');
+   formattedString= format(new Date(),'MMMM, yyyy'); showtof: boolean; tof: any;
 
   constructor(private router: Router,  private modalctrl: ModalController,private alertctrl: AlertController,
     private menu: MenuController, private http: HttpClient,private printer: Printer,private popupModalService: PopupModalService,
@@ -108,10 +108,11 @@ export class SalairesPage implements OnInit {
       this.users=listes;
       console.log(this.listeEmploye);
     });
+
   }
   loadSalary(){
     this.readAPI(environment.endPoint+'salaire_action.php?Action=GET_BULLETIN&IdEmploye='+this.id+
-    '&ANNEE=2022&Token='+environment.tokenUser)
+    '&ANNEE='+this.selectedDate+'&MOIS='+this.selectedMonth+'&Token='+environment.tokenUser)
     .subscribe((listes) =>{
       console.log(listes);
       //  this.dt1=Listes['0'];
@@ -132,6 +133,9 @@ export class SalairesPage implements OnInit {
         this.gainPrime=this.listeSalaire.BULLETIN_SALAIRE.LIGNE_GAIN_PRIME;
         this.SALAIRE_BRUT=this.listeSalaire.BULLETIN_SALAIRE.SALAIRE_BRUT;
         this.ligneCotisation=this.listeSalaire.BULLETIN_SALAIRE.LIGNE_COTISATION;
+        this.entreprise= this.listeSalaire.BULLETIN_SALAIRE.NOM_ENTREPRISE;this.adressEntr= this.listeSalaire.BULLETIN_SALAIRE.ADR_ENTREPRISE;
+        this.contactEntre= this.listeSalaire.BULLETIN_SALAIRE.CONTACT_ENTREPRISE;this.emailEntre= this.listeSalaire.BULLETIN_SALAIRE.EMAIL_ENTREPRISE;
+        this.phoneEntre= this.listeSalaire.BULLETIN_SALAIRE.TEL_ENTREPRISE;
 
     }
   }
@@ -176,11 +180,12 @@ export class SalairesPage implements OnInit {
   clear(){
     this.selectComponent.clear();
     this.selectComponent.close();
-
+    this.id=== 0;
   }
   toggleItems(){
     this.selectComponent.toggleItems(this.toggle);
     this.toggle= !this.toggle;
+    this.id=== 0;
 
   }
   confirm(){
@@ -195,8 +200,13 @@ export class SalairesPage implements OnInit {
 
   }
   bulletinBulkEdit(){
-    this.bulkEdit = !this.bulkEdit;
-    this.loadSalary();
+    if(this.selected){
+      this.bulkEdit = true;
+      this.loadSalary();
+    }else{
+      this.bulkEdit = false;
+      this.loadSalary();
+    }
   }
 
   goToPrint(bulletin=this.loadSalary){
@@ -210,6 +220,30 @@ export class SalairesPage implements OnInit {
     console.log(this.selected);
 
   }
+
+  // Date
+  dateChanged(value){
+    this.dateValue= value;
+   this.formattedString= format(parseISO(value),  'MMMM, yyyy');
+   this.showPicker= false;
+  //  this.selectedDate=value;
+   this.selectedDate=format(parseISO(value),  'yyyy');
+   this.selectedMonth=format(parseISO(value),  'MM');
+   this.Month=format(parseISO(value),  'MMMM');
+   }
+   close(){
+    this.datetime.cancel(true);
+   this.loadSalary();
+  }
+  select(){
+    this.datetime.confirm(true);
+   this.loadSalary();
+  }
+  // ***************************AVANCE SUR SALAIRE**************************************************
+  avanceSalaire(avance: any){
+    this.popupModalService.avanceSalaire(avance);
+  }
+
 
 
   //****************************** * Print bulletin ************************************************
@@ -362,12 +396,12 @@ export class SalairesPage implements OnInit {
             widths: [100,58, 200, 125],
             heights: ['auto','auto','auto','auto','auto','auto', 10],
             body: [
-              [{text: '', style: 'header',  alignment: 'center',border: [true, true,true,false]},{text: 'Adresse: ',border: [true, true, false, true]}, {text:'Zone Industrielle Pikine Icotaf ',style: 'tableHeader',alignment: 'left',border: [false, true, true, true]},{text: '', style: 'header', alignment: 'center',border: [true, true, true, false]}],
-              [{text: 'CAFINE SARL', style: 'header',  alignment: 'center',rowSpan: 3,border: [true, false,true,true]},{text: 'Téléphone: ',border: [true, true, false, true]}, {text: '00221 77 883 45 00',style: 'tableHeader',alignment: 'left',border: [false, true, true, true]},{text: 'BULLETIN DE PAIE', style: 'header', alignment: 'center',rowSpan: 3,border: [true, false, true, true]}],
-              [{text: '', style: 'tableHeader'},{text: 'Fax: ',border: [true, true, false, true]}, {text: '00221 33 834 75 10', style: 'tableHeader',alignment: 'left',border: [false, true, true, true]}, {text: '', style: 'tableHeader'}],
-              [{text: '', style: 'tableHeader',  alignment: 'center'},{text: ' Email: ',border: [true, true, false, true]}, {text: 'cafine@orange.sn', style: 'tableHeader',border: [false, true, true, true]},{text: '', style: 'tableHeader'}],
+              [{text: '', style: 'header',  alignment: 'center',border: [true, true,true,false]},{text: 'Adresse: ',border: [true, true, false, true]}, {text:this.adressEntr,style: 'tableHeader',alignment: 'left',border: [false, true, true, true]},{text: '', style: 'header', alignment: 'center',border: [true, true, true, false]}],
+              [{text: this.entreprise, style: 'header',  alignment: 'center',rowSpan: 3,border: [true, false,true,true]},{text: 'Téléphone: ',border: [true, true, false, true]}, {text: this.phoneEntre,style: 'tableHeader',alignment: 'left',border: [false, true, true, true]},{text: 'BULLETIN DE PAIE', style: 'header', alignment: 'center',rowSpan: 3,border: [true, false, true, true]}],
+              [{text: '', style: 'tableHeader'},{text: 'Fax: ',border: [true, true, false, true]}, {text: this.contactEntre, style: 'tableHeader',alignment: 'left',border: [false, true, true, true]}, {text: '', style: 'tableHeader'}],
+              [{text: '', style: 'tableHeader',  alignment: 'center'},{text: ' Email: ',border: [true, true, false, true]}, {text: this.emailEntre, style: 'tableHeader',border: [false, true, true, true]},{text: '', style: 'tableHeader'}],
               [{text:'CONVENTION\n COLLECTIVE',  alignment: 'center'},{text:'NOM & PRENOM',  alignment: 'center', bold:true, colSpan: 2}, {}, {text:'ADRESSE',  alignment: 'center'}],
-              [{text:this.qualifiquation,  alignment: 'center'},{text:this.nom,  alignment: 'center', bold:true, colSpan: 2}, {}, {text:this.adresse,  alignment: 'center'}],
+              [{text:this.qualifiquation,  alignment: 'center'},{text:this.nom+' '+ this.selected.Nom,  alignment: 'center', bold:true, colSpan: 2}, {}, {text:this.adresse,  alignment: 'center'}],
               [{text:'',  style: 'header', fontsize: 40, colSpan: 4,border: [true, true, true, false]}],
 
             ]
