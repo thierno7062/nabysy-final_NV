@@ -107,11 +107,11 @@ ion-content{
     &.ion-row7{
       border-bottom: 0;
       ion-col{
-        height: 25px;
+        height: 50px;
         ion-text{
           p{
             text-align: center;
-            margin-top: 0;
+            // margin-top: 0;
             font-weight: bold;
             font-size: large;
           }
@@ -120,6 +120,7 @@ ion-content{
           border-bottom: 5px solid #000;
           border-top: 0;
           border-left: 0;
+          border-right: 0;
 
          }
          &.rubrique{
@@ -127,8 +128,11 @@ ion-content{
           border-right: 0;
          }
          &.rubrique2{
+          text-align: center;
+          font-weight: bold;
           border-bottom: 5px solid #000;
           border-right: 0;
+          border-left: 0;
          }
       }
     }
@@ -282,6 +286,38 @@ ion-content{
          }
       }
     }
+    &.ion-row14{
+      border-top: 0;
+  // width: 1px;
+  border-bottom: 0;
+  ion-col{
+    ion-text{
+      h3{
+        font-weight: bold;
+        text-align: center;
+      }
+      p{
+        text-align: center;
+      }
+    }
+    &.separation{
+      border-bottom: 0;
+      border-top: 0;
+      background-color: rgb(66, 64, 64);
+     }
+     &.rubrique2{
+      border-bottom: 0;
+      border-top: 5px solid #000;
+     }
+     &.rubrique3{
+      border-bottom: 0;
+      border-top: 5px solid #000;
+     }
+     &.rubrique{
+      border-top: 5px solid #000;
+     }
+  }
+}
     &.ion-row-user{
       border: 0;
       ion-col{

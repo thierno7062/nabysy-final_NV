@@ -41,7 +41,7 @@ export class SalairesPage implements OnInit {
   nom: ''; qualifiquation: ''; periode: '';  salaireBrut: ''; totalRetenue: ''; salaireNet: '';categorie: ''; situationFa: '';
   nbTotalJour: '';nbheureApayer: '';totalHeureApayer: ''; mois: ''; adresse: ''; partTrimf: ''; partIrpp: ''; periodePaie: '';
   dateEmbauche: '';gainPrime: any; ligneCotisation: any; SALAIRE_BRUT: ''; entreprise: '';adressEntr: '';contactEntre: '';
-  emailEntre: '';phoneEntre: '';nomEmp: '';
+  emailEntre: '';phoneEntre: '';prenom: '';
 
   // ionic selectable************
   searchTerm: string;
@@ -135,7 +135,7 @@ export class SalairesPage implements OnInit {
         this.ligneCotisation=this.listeSalaire.BULLETIN_SALAIRE.LIGNE_COTISATION;
         this.entreprise= this.listeSalaire.BULLETIN_SALAIRE.NOM_ENTREPRISE;this.adressEntr= this.listeSalaire.BULLETIN_SALAIRE.ADR_ENTREPRISE;
         this.contactEntre= this.listeSalaire.BULLETIN_SALAIRE.CONTACT_ENTREPRISE;this.emailEntre= this.listeSalaire.BULLETIN_SALAIRE.EMAIL_ENTREPRISE;
-        this.phoneEntre= this.listeSalaire.BULLETIN_SALAIRE.TEL_ENTREPRISE;
+        this.phoneEntre= this.listeSalaire.BULLETIN_SALAIRE.TEL_ENTREPRISE;this.prenom= this.listeSalaire.BULLETIN_SALAIRE.PRENOMEMPLOYE;
 
     }
   }
@@ -304,7 +304,7 @@ export class SalairesPage implements OnInit {
       },
       layout: {
         hLineWidth(i: number, node: { table: { body: string | any[] } }) {
-          return (i === 0 || i === node.table.body.length) ? 1 : 1;
+          return (i === 0 || i === node.table.body.length) ? 0 : 1;
         },
         vLineWidth(i: number, node: { table: { widths: string | any[] } }) {
           return (i === 0 || i === node.table.widths.length) ? 2 : 1;
@@ -390,15 +390,19 @@ export class SalairesPage implements OnInit {
       content: [
             {
               columns: [
-
                 {
+                  text: new Date().toString(),
+                  alignment: 'right',
+                },
+
+                /* {
                   text: new Date().toTimeString(),
                   alignment: 'right',
-                }
+                } */
               ]
             },
 
-            {text: 'BULLETIN DE SALAIRE \n', style: 'header', alignment: 'center'},
+            {text: 'BULLETIN DE SALAIRE \n', style: 'header', alignment: 'center',fontSize: 20,bold: true},
             {text: '                    ', style: 'header'},
         {
           style: 'tableExample',alignment: 'justify',
@@ -412,8 +416,8 @@ export class SalairesPage implements OnInit {
               [{text: this.entreprise, style: 'header',  alignment: 'center',rowSpan: 3,border: [true, false,true,true]},{text: 'Téléphone: ',border: [true, true, false, true]}, {text: this.phoneEntre,style: 'tableHeader',alignment: 'left',border: [false, true, true, true]},{text: 'BULLETIN DE PAIE', style: 'header', alignment: 'center',rowSpan: 3,border: [true, false, true, true]}],
               [{text: '', style: 'tableHeader'},{text: 'Fax: ',border: [true, true, false, true]}, {text: this.contactEntre, style: 'tableHeader',alignment: 'left',border: [false, true, true, true]}, {text: '', style: 'tableHeader'}],
               [{text: '', style: 'tableHeader',  alignment: 'center'},{text: ' Email: ',border: [true, true, false, true]}, {text: this.emailEntre, style: 'tableHeader',border: [false, true, true, true]},{text: '', style: 'tableHeader'}],
-              [{text:'CONVENTION\n COLLECTIVE',  alignment: 'center'},{text:'NOM & PRENOM',  alignment: 'center', bold:true, colSpan: 2}, {}, {text:'ADRESSE',  alignment: 'center'}],
-              [{text:this.qualifiquation,  alignment: 'center'},{text:this.nom+' '+ this.selected.Nom,  alignment: 'center', bold:true, colSpan: 2}, {}, {text:this.adresse,  alignment: 'center'}],
+              [{text:'CONVENTION\n COLLECTIVE',  alignment: 'center'},{text:'PRENOM & NOM',  alignment: 'center', bold:true, colSpan: 2}, {}, {text:'ADRESSE',  alignment: 'center'}],
+              [{text:this.qualifiquation,  alignment: 'center'},{text:this.prenom+' '+ this.nom,  alignment: 'center', bold:true, colSpan: 2}, {}, {text:this.adresse,  alignment: 'center'}],
               [{text:'',  style: 'header', fontsize: 40, colSpan: 4,border: [true, true, true, false]}],
 
             ]
@@ -450,7 +454,8 @@ export class SalairesPage implements OnInit {
               {text:this.situationFa,  alignment: 'center',fontSize: 10},{text:this.partTrimf,  alignment: 'center',fontSize: 10},{text:this.partIrpp,  alignment: 'center',fontSize: 10},
               {text:this.periodePaie,  alignment: 'center',fontSize: 10},{text:this.dateEmbauche,  alignment: 'center',fontSize: 10}
               ],
-              [{text:'',  style: 'header', fontsize: 40, colSpan: 8,border: [true, true, true, false]}],
+              [{text:'',  style: 'header', fontsize: 40, colSpan: 6,border: [true, true, false, true]},{},{},{},{},{},
+              {text:'COTISATIONS PATRONALES',  style: 'header',bold: true,alignment: 'right', fontsize: 40, colSpan: 2,border: [false, true, true, true]},{}],
 
             ]
           },
@@ -482,9 +487,8 @@ export class SalairesPage implements OnInit {
             widths: [150, 60, 40,60,50,40,56],
             headerRows: 1,
             body:[
-              [{text:'**Salaire Brut** (1)',  alignment: 'center',style:'header', margin: [0, 5]},  {},  {},
-              {text: this.SALAIRE_BRUT,  alignment: 'center', margin: [0, 5]},{},{},{}
-              ],
+              [{text:'**Salaire Brut** (1)',  alignment: 'center',style:'header', margin: [0, 5]}, {},  {},
+              {text: this.SALAIRE_BRUT,  alignment: 'center', margin: [0, 5]},{},{},{}],
             ]
           },
           layout: {
@@ -513,8 +517,37 @@ export class SalairesPage implements OnInit {
             widths: [150, 60, 40,60,50,40,56],
             headerRows: 1,
             body:[
+              [{text:'**TOTAL_COTISATION_PATRONALE**',  alignment: 'center',style:'header', margin: [0, 5],border: [true, true, true, false]},
+                {text: '',border: [true, true, true, false]},  {text: '',border: [true, true, true, false]},
+              {text: '',  alignment: 'center', margin: [0, 5],border: [true, true, true, false]},{text:'',border: [true, true, true, false]},
+              {text:'',border: [true, true, true, false]},
+              {text:this.listeSalaire.BULLETIN_SALAIRE.TOTAL_COTISATION_PATRONALE,border: [false, true, true, false]}
+              ],
+            ]
+          },
+          layout: {
+            hLineWidth(i: number, node: { table: { body: string | any[] } }) {
+              return (i === 0 || i === node.table.body.length) ? 2 : 0;
+            },
+            vLineWidth(i: number, node: { table: { widths: string | any[] } }) {
+              return (i === 0 || i === node.table.widths.length) ? 2 : 1;
+            },
+            hLineColor(i: number, node: { table: { body: string | any[] } }) {
+              return (i === 0 || i === node.table.body.length) ? 'black' : 'black';
+            },
+            vLineColor(i: number, node: { table: { widths: string | any[] } }) {
+              return (i === 0 || i === node.table.widths.length) ? 'black' : 'black';
+            },
+          }
+        },
+        {
+          style: 'tableExample',
+          table:{
+            widths: [150, 60, 40,60,50,40,56],
+            headerRows: 1,
+            body:[
               [{text:'**Total des retenues** (2)',  alignment: 'center',style:'header', margin: [0, 5]},  {},  {},
-              {text: '',  alignment: 'center', margin: [0, 5]},{},{text:'',border: [true, false, true, false]},{text:'',border: [false, false, true, false]}
+              {text: '',  alignment: 'center', margin: [0, 5]},{},{text:'',border: [true, false, true, false]},{text:this.listeSalaire.BULLETIN_SALAIRE.TOTAL_RETENU,border: [false, false, true, false]}
               ],
             ]
           },
@@ -540,7 +573,7 @@ export class SalairesPage implements OnInit {
             headerRows: 1,
             body:[
               [{text:'**Salaire Net** (3) = (1) - (2)',  alignment: 'center',style:'header', margin: [0, 5],border: [true, false, true, true]},  {text:'',border: [true, false, true, true]},  {text:'',border: [true, false, true, true]},
-              {text: '',  alignment: 'center', margin: [0, 5],border: [true, false, true, true]},{text:'',border: [true, false, true, true]},{text:'',border: [true, false, true, true]},{text:'',border: [true, false, true, true]}
+              {text: '',  alignment: 'center', margin: [0, 5],border: [true, false, true, true]},{text:'',border: [true, false, true, true]},{text:'',border: [true, false, true, true]},{text:this.listeSalaire.BULLETIN_SALAIRE.SALAIRE_NET,border: [true, false, true, true]}
               ],
             ]
           },
@@ -578,5 +611,69 @@ export class SalairesPage implements OnInit {
   // ***********************
   userdetails(userDetail: any){
     this.popupModalService.presentModalEmploye(userDetail);
+  }
+
+  // Reçu paiement Salaire
+  pdfRecu(){
+
+
+    const docDef = {
+      watermark: { text: 'Ionic THIERNO', color: 'blue', opacity: 0.2, bold: true},
+      // a string or { width: number, height: number }
+      pageSize: 'A4',
+
+      pageOrientation: 'portrait',
+
+      pageMargins: [ 20, 10, 40, 60 ],
+      
+      content: [
+        {
+          columns: [
+
+            {
+              text: new Date().toString(),
+              alignment: 'right',margin: [ 5, 2, 0, 20 ]
+            }
+          ]
+        },
+        {text: 'Reçu', style: 'header',alignment: 'center'},
+        {text: 'Reçu de Thierno Abdourahmane Niang A '+this.prenom+' '+this.nom,margin: [ 0, 10, 0, 10 ] },
+        'Je, soussigné(e) '+this.prenom+' '+this.nom+', reconnais avoir reçu la somme de  '
+        +this.listeSalaire.BULLETIN_SALAIRE.SALAIRE_NET+' FCFA. Cette somme a été reçu pour le mois de: '+ this.periode,
+        {text: 'Le paiement a été fait par______________.( espèce, chèque…). ',margin: [ 0, 20, 5, 10 ] },
+        'Ce reçu confirme que le paiement a bien été fait.',
+        {text: 'Signature',margin: [ 0, 600, 0, 0 ],alignment: 'right' }
+        
+      ],
+      styles: {
+        header: {
+          fontSize: 18,
+          bold: true,
+          margin: [0, 0, 0, 10]
+        },
+        subheader: {
+          fontSize: 16,
+          bold: true,
+          margin: [0, 10, 0, 5]
+        },
+        tableExample: {
+          margin: [0, 5, 0, 15]
+        },
+        tableHeader: {
+          bold: true,
+          fontSize: 13,
+          color: 'black'
+        }
+      },
+      defaultStyle: {
+        // alignment: 'justify'
+      }
+    };
+
+    this.pdfObj = pdfMake.createPdf(docDef).download();
+    
+
+
+
   }
 }

@@ -1,3 +1,4 @@
+/* eslint-disable no-cond-assign */
 /* eslint-disable @typescript-eslint/dot-notation */
 /* eslint-disable no-trailing-spaces */
 /* eslint-disable prefer-arrow/prefer-arrow-functions */
@@ -30,9 +31,8 @@ export class PrintBulletinPage implements OnInit {
     private navParams: NavParams,private modalctrl: ModalController,private toastctrl: ToastController)
   {
     this.infoSalaire();
-    console.log(this.avance);
     this.loadEmploye();
-    console.log(this.id);
+    this.montant=0;
 
   }
 
@@ -79,8 +79,8 @@ export class PrintBulletinPage implements OnInit {
     
       }
       onSubmit(){
-        if(this.montant<0){
-          this.presentToast('Veillez mettre le montant b SVP!!!!');
+        if(this.montant===0||this.montant<0){
+          this.presentToast('Veillez mettre le montant SVP!!!!');
         }else{
           return new Promise (() =>{
             const headers = new Headers();
