@@ -100,13 +100,14 @@ export class PrintBulletinPage implements OnInit {
               console.log(data['TxErreur']);
               
               
-              if(data['OK']!== '0'){
+              if(data['OK']=== '0'){
                 // this.router.navigate(['/personnel']);
-                this.modalctrl.dismiss(data,'create');
-                this.presentToast('Opération réussit');
-              }else{
-                this.presentToast('Opération échouée'+data['TxErreur']);
+                this.modalctrl.dismiss();
+                this.presentToast('Opération échouée: '+data['TxErreur']);
                 console.log(data['TxErreur']);
+              }else{
+                this.presentToast('Opération réussit');
+                this.modalctrl.dismiss(data,'create');
               }
     
             });
@@ -116,9 +117,10 @@ export class PrintBulletinPage implements OnInit {
       async presentToast(a){
         const toast = await this.toastctrl.create({
           message:a,
-          duration: 1500,
+          duration: 3000,
           position: 'middle'
         });
         toast.present();
       }
+   
 }
