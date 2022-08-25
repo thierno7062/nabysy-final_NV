@@ -50,10 +50,12 @@ export class DetailEmployePage implements OnInit {
     }
     if(this.userDetails.IdDirection>0 ){
       this.hideMe = true;
-    }else if(this.userDetails.IdService>0){
+    }
+    if(this.userDetails.IdService>0){
       this.hideMe2 = true;
     }
-    else {
+
+    if (this.hideMe===false && this.hideMe2===false) {
       this.hideMe = false;
       this.message= true;
       if(this.sexe=== 'M' || this.sexe=== 'm' ){
