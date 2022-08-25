@@ -52,5 +52,16 @@ ion-modal{
     // position:absolute;
     // display: block;
   }
+  &.detail-affectation{
+     width: 100%;
+      height: 100%;
+      // top: 80%;
+      position:relative;
+      // display: block;
+      &::part(content){
+        width: 40%;
+        height: 95%;
+      }
+  }
 }
 

@@ -1,38 +1,45 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>detail-affectation</ion-title>
+    <ion-title>Affectation</ion-title>
     <ion-button slot="end" (click)="closeModal()"><ion-icon name="close-outline"></ion-icon></ion-button>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <!-- <img src="{{userDetails.picture}}" class="center"> -->
-  <img src="../assets/man.png" class="center" alt="">
-  <h3 class="ion-text-center">{{userDetails.Prenom}} {{userDetails.Nom}}</h3>
+  
+  <img [src]="this.photo" class="center" alt="">
+  <h3 class="ion-text-center">{{prenom}} {{nom}}</h3>
   <h4 class="ion-text-center"*ngIf="sexeMx">{{'Sexe: Masculin'}}</h4>
   <h4 class="ion-text-center"*ngIf="sexeFn">{{'Sexe: Feminin'}}</h4>
   <h4 class="ion-text-center"*ngIf="sexeInc">{{'Sexe: ?'}}</h4>
-  <small>{{userDetails.email}}</small>
   <ion-list>
     <ion-item>
       <ion-label slot="start">Fonction</ion-label>
-      <p slot="end">{{userDetails?.Fonction}}</p>
+      <p slot="end">{{fonction}}</p>
     </ion-item>
     <ion-item>
       <ion-label slot="start">Adresse</ion-label>
-      <p slot="end">{{userDetails?.Adresse}}</p>
+      <p slot="end">{{adresse}}</p>
     </ion-item>
     <ion-item>
       <ion-label slot="start">Telephone</ion-label>
-      <p slot="end">{{userDetails?.Tel}}</p>
+      <p slot="end">{{telephone}}</p>
     </ion-item>
     <ion-item>
       <ion-label slot="start">Direction</ion-label>
-      <p slot="end">{{userDetails?.Direction}}</p>
+      <p slot="end">{{userDetails?.DIRECTION}}</p>
+    </ion-item>
+    <ion-item *ngIf="userDetails.IdService>0">
+      <ion-label slot="start">Service</ion-label>
+      <p slot="end">{{userDetails?.NOMSERVICE}}</p>
     </ion-item>
     <ion-item>
-      <ion-label slot="start">Service</ion-label>
-      <p slot="end">{{userDetails?.Service}}</p>
+      <ion-label slot="start">Date d'affectation</ion-label>
+      <p slot="end">{{userDetails?.DateAffectation}}</p>
+    </ion-item>
+    <ion-item>
+      <ion-label slot="start">Heure d'affectation</ion-label>
+      <p slot="end">{{userDetails?.HeureAffectation}}</p>
     </ion-item>
   </ion-list>
 </ion-content>

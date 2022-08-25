@@ -16,6 +16,15 @@
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
+  <div class="nom">
+    <ion-card>
+      <ion-card-content>
+        <ion-text color="dark">
+          <h1>{{detailService.Nom}}</h1>
+        </ion-text>
+      </ion-card-content>
+    </ion-card>
+  </div>
   
   <ion-list *ngFor="let employe of listeEmploye">
     <ion-item-sliding>
@@ -43,10 +52,10 @@
   </ion-list>
 
 
-  <ion-button (click)="addaffectation()"   class="addaffect1"  expand="block">
+ <!--  <ion-button (click)="addaffectation()"   class="addaffect1"  expand="block">
     <ion-icon name="add"></ion-icon>
     <ion-label>AFFECTER EMPLOYE</ion-label>
-  </ion-button>
+  </ion-button> -->
   <!--[routerLink]= "['/routePath']"-->
 
 </ion-content>

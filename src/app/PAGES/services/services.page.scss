@@ -26,11 +26,22 @@
   background-color: burlywood;
 
 }
-.addaffect1{
-  justify-content: end;
-  padding-right: 100px;
-  padding-left: 100px;
-  position: absolute;
-  color: black;
 
+ //Nom service
+ .nom{
+  text-align: center;
+  ion-card{
+    margin-left: 10%;
+    margin-right: 10%;
+    ion-card-content{
+      ion-text{
+        h1{
+          font-weight: bold ;
+          font-family: Georgia, 'Times New Roman', Times, serif;
+          text-decoration: #000;
+        }
+      }
+    }
+    background-color: #2dd36f;
+  }
 }

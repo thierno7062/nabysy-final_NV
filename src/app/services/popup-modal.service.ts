@@ -23,6 +23,7 @@ export class PopupModalService {
   async presentAffectationModal(userDetail: any){
     const modal = await this.modalCtrl.create({
       component: DetailAffectationPage,
+      cssClass: 'detail-affectation',
       componentProps:{
         data: userDetail,
       }
