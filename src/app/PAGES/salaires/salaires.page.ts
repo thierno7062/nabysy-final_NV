@@ -197,6 +197,7 @@ export class SalairesPage implements OnInit {
 
     }
     this.loadSalary();
+    this.bulkEdit = false;
 
   }
   bulletinBulkEdit(){
@@ -547,7 +548,7 @@ export class SalairesPage implements OnInit {
             headerRows: 1,
             body:[
               [{text:'**Total des retenues** (2)',  alignment: 'center',style:'header', margin: [0, 5]},  {},  {},
-              {text: '',  alignment: 'center', margin: [0, 5]},{},{text:'',border: [true, false, true, false]},{text:this.listeSalaire.BULLETIN_SALAIRE.TOTAL_RETENU,border: [false, false, true, false]}
+              {text: '',  alignment: 'center', margin: [0, 5]},{text:this.listeSalaire.BULLETIN_SALAIRE.TOTAL_RETENU},{text: '',border: [true, false, true, false]},{text: '',border: [false, false, true, false]}
               ],
             ]
           },
@@ -572,8 +573,10 @@ export class SalairesPage implements OnInit {
             widths: [150, 60, 40,60,50,40,56],
             headerRows: 1,
             body:[
-              [{text:'**Salaire Net** (3) = (1) - (2)',  alignment: 'center',style:'header', margin: [0, 5],border: [true, false, true, true]},  {text:'',border: [true, false, true, true]},  {text:'',border: [true, false, true, true]},
-              {text: '',  alignment: 'center', margin: [0, 5],border: [true, false, true, true]},{text:'',border: [true, false, true, true]},{text:'',border: [true, false, true, true]},{text:this.listeSalaire.BULLETIN_SALAIRE.SALAIRE_NET,border: [true, false, true, true]}
+              [{text:'**Salaire Net** (3) = (1) - (2)',  alignment: 'center',style:'header', margin: [0, 5],border: [true, false, true, true]}, 
+               {text:this.listeSalaire.BULLETIN_SALAIRE.SALAIRE_NET,border: [true, false, true, true]}, 
+               {text:'',border: [true, false, true, true]}, {text: '',  alignment: 'center', margin: [0, 5],border: [true, false, true, true]},
+               {text:'',border: [true, false, true, true]},{text:'',border: [true, false, true, true]},{text: '',border: [true, false, true, true]}
               ],
             ]
           },
