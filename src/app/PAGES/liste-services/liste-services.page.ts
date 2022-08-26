@@ -103,7 +103,12 @@ export class ListeServicesPage implements OnInit {
       this.readAPI(this.url)
       .subscribe((data) =>{
         this.listeSousDirections=data ;
-        console.log(data);
+        console.log(data);        
+        if (this.listeSousDirections.length >0){
+          console.log('Il y a '+this.listeSousDirections.length+' sous-direction pour la direction '+this.direction.Nom);
+        }else{
+          console.log('Il y a aucune sous-direction pour la direction '+this.direction.Nom);
+        }
       });
     });
   }
