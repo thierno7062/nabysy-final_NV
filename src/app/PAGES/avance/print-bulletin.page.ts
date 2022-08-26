@@ -97,16 +97,16 @@ export class PrintBulletinPage implements OnInit {
             console.log(apiUrl);
             this.http.get(apiUrl).subscribe(async data =>{
               console.log(data);
-              console.log(data['TxErreur']);
-              
-              
-              if(data['OK']=== '0'){
+              console.log(data['OK']); 
+              console.log(data['TxErreur']);              
+              if(data['OK']=== 0){
                 // this.router.navigate(['/personnel']);
                 this.modalctrl.dismiss();
                 this.presentToast('Opération échouée: '+data['TxErreur']);
                 console.log(data['TxErreur']);
               }else{
                 this.presentToast('Opération réussit');
+                console.log('Opération OK');
                 this.modalctrl.dismiss(data,'create');
               }
     
