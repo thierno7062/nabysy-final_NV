@@ -74,8 +74,8 @@ export class AbsencePage implements OnInit {
       console.log(data);
       console.log(role);
       if(role === 'create'){
-        const newIdEmploye=data.Extra;
-        this.service.get(newIdEmploye).subscribe(async newdata =>{
+        const newIdAbsence=data.Extra;
+        this.service.get(newIdAbsence).subscribe(async newdata =>{
             this.listeAbsence.push(newdata[0]);
             //console.log(this.listeEmploye);
             this.loadAbsence();

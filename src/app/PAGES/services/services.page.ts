@@ -7,6 +7,7 @@ import { AlertController, MenuController, ModalController } from '@ionic/angular
 import { CrudAffectationPage } from 'src/app/CRUD/crud-affectation/crud-affectation.page';
 import { CrudEmployePage } from 'src/app/CRUD/crud-employe/crud-employe.page';
 import { EmployeService } from 'src/app/services/employe.service';
+import { LoadingService } from 'src/app/services/loading.service';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -35,7 +36,7 @@ export class ServicesPage implements OnInit {
 
 
   constructor(private router: Router,private route: ActivatedRoute,
-    private menu: MenuController,
+    private menu: MenuController,private loadingService: LoadingService,
     private http: HttpClient, private alertctrl: AlertController,
     private modalctrl: ModalController, private service: EmployeService) {
       this.refreshServices();
@@ -52,6 +53,7 @@ export class ServicesPage implements OnInit {
   }
 
 refreshServices(){
+  this.loadingService.presentLoading();
   this.route.queryParams.subscribe(res =>{
     console.log(res);
     this.detailService=res;
@@ -93,14 +95,16 @@ refreshServices(){
       console.log(role);
       if(role === 'create'){
         // eslint-disable-next-line no-var
-        var newIdEmploye=data['Extra'];
+        const newIdEmploye=data['Extra'];
         this.service.get(newIdEmploye).subscribe(async newdata =>{
             this.listeEmploye.push(newdata[0]);
             console.log(this.listeEmploye);
-            this.refreshServices();
-        });
+          });
+          this.refreshServices();
       }
+      this.refreshServices();
     });
+    // this.refreshServices();
   }
   removeEmploye(employe: any){
     this.alertctrl.create({
@@ -112,8 +116,8 @@ refreshServices(){
             const headers = new Headers();
             headers.append('Accept', 'application/json');
             headers.append('Content-Type', 'application/json' );
-            const apiUrl=environment.endPoint+'employe_action.php?Action=SUPPRIME_EMPLOYE&IdEmploye='+
-            employe.ID+'&Token='+environment.tokenUser;
+            const apiUrl=environment.endPoint+'employe_action.php?Action=SAVE_EMPLOYE&IdEmploye='+
+            employe.ID+'&IdDirection=0&IdService=0&Token='+environment.tokenUser;
             console.log(apiUrl);
             this.http.get(apiUrl).subscribe(async data =>{
               console.log(data);

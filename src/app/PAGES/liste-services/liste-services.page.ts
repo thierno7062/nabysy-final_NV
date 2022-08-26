@@ -1,14 +1,16 @@
+/* eslint-disable no-trailing-spaces */
 /* eslint-disable @typescript-eslint/member-ordering */
 /* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable @typescript-eslint/dot-notation */
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AlertController, MenuController, ModalController } from '@ionic/angular';
+import { AlertController, IonSlides, MenuController, ModalController } from '@ionic/angular';
 import { IonicSelectableComponent } from 'ionic-selectable';
 import { Observable } from 'rxjs';
 import { CrudServicePage } from 'src/app/CRUD/crud-service/crud-service.page';
 import { EmployeService } from 'src/app/services/employe.service';
+import { PopupModalService } from 'src/app/services/popup-modal.service';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -17,16 +19,18 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./liste-services.page.scss'],
 })
 export class ListeServicesPage implements OnInit {
-  // products: Observable<any>;
+  segmentList: Array<string> = ['Sous-direction', 'Services', 'Employés'];
+  selectedSegment: string;
+  slideList: Array<string> = [
+    'Slide Segment 1',
+    'Slide Segment 2',
+    'Slide Segment 3',
+  ];
+
+  @ViewChild('slide') slide: IonSlides;
   direction: any;
   listeService: any;
   url: string ;
-  nabyData={
-    id:'',
-    nom:'',
-    adresse:'',
-    telephone:'',
-  };
 
    // ionic selectable************
    searchTerm: string;
@@ -38,13 +42,16 @@ export class ListeServicesPage implements OnInit {
    @ViewChild('selectComponent') selectComponent: IonicSelectableComponent;
    listeEmploye: any;
    listeDirections: any;
+  listeSousDirections: any;
 
   constructor(private router: Router,private route: ActivatedRoute, private modalctrl: ModalController,
     private menu: MenuController,private service: EmployeService,private alertctrl: AlertController,
-    private http: HttpClient) {
+    private http: HttpClient,private popupModalService: PopupModalService){
      this.refreshServices();
      this.loadEmploye();
      this.refreshDirection();
+     this.refreshSousDirection();
+     this.selectedSegment = this.segmentList[0];
     }
 
   ngOnInit() {
@@ -54,11 +61,24 @@ export class ListeServicesPage implements OnInit {
 
   }
   loadEmploye(){
-    this.readAPI(environment.endPoint+'employe_action.php?Action=GET_EMPLOYE&Token='+environment.tokenUser)
+   /*  this.readAPI(environment.endPoint+'employe_action.php?Action=GET_EMPLOYE&Token='+environment.tokenUser)
     .subscribe((listes) =>{
       // console.log(Listes);
       this.listeEmploye=listes ;
       console.log(this.listeEmploye);
+    }); */
+
+    this.route.queryParams.subscribe(res =>{
+      console.log(res);
+      this.direction=res;
+      this.id=this.direction.ID;
+      this.url=environment.endPoint+'employe_action.php?Action=GET_EMPLOYE&IdDirection='+this.id+'&Token='+environment.tokenUser;
+
+      this.readAPI(this.url)
+      .subscribe((data) =>{
+        this.listeEmploye=data ;
+        console.log(data);
+      });
     });
   }
   refreshDirection(){
@@ -72,24 +92,32 @@ export class ListeServicesPage implements OnInit {
       console.log(this.listeDirections);
     });
   }
+  refreshSousDirection(){
+
+    this.route.queryParams.subscribe(res =>{
+      console.log(res);
+      this.direction=res;
+      this.id=this.direction.ID;
+      this.url=environment.endPoint+'direction_action.php?Action=GET_DIRECTION&IdDirectionParent='+this.id;
+
+      this.readAPI(this.url)
+      .subscribe((data) =>{
+        this.listeSousDirections=data ;
+        console.log(data);
+      });
+    });
+  }
   refreshServices(){
     this.route.queryParams.subscribe(res =>{
       console.log(res);
       this.direction=res;
-      //console.log(this.direction);
       this.id=this.direction.ID;
       this.url=environment.endPoint+'service_action.php?Action=GET_SERVICE&IdDirection='+this.id;
 
       this.readAPI(this.url)
       .subscribe((data) =>{
         this.listeService=data ;
-        // this.products=data;
         console.log(data);
-        console.log(data['0']);
-        this.nabyData.id=data['"Id"'];
-        this.nabyData.nom=data['"Nom"'];
-        this.nabyData.adresse=data['"Adresse"'];
-        this.nabyData.telephone=data['"Tel"'];
       });
     });
   }
@@ -106,6 +134,9 @@ export class ListeServicesPage implements OnInit {
     this.router.navigate(['/liste-services'],{
       queryParams:ficheService
     });
+  }
+  userdetails(userDetail: any){
+    this.popupModalService.presentModalEmploye(userDetail);
   }
   _openSideNav(){
     this.menu.enable(true,'menu-content');
@@ -225,5 +256,14 @@ export class ListeServicesPage implements OnInit {
     console.log(this.selected);
     this.goToListeServices(this.selected);
 
+  }
+  _segmentSelected(item: string, index: number) {
+    this.slide.slideTo(index);
+  }
+
+  _ionSlideDidChange(event: any) {
+    this.slide.getActiveIndex().then((index) => {
+      this.selectedSegment = this.segmentList[index];
+    });
   }
 }

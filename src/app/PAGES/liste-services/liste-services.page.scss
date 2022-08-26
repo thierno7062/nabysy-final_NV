@@ -34,6 +34,7 @@ ion-content{
     left: 0;
     transform: translateY(10vh);
     padding-bottom: 8vh;
+
     ion-row{
       ion-col {
         &.col1{
@@ -96,6 +97,10 @@ ion-content{
           }
         }
       }
+    }
+     ion-slide {
+      height: 100%;
+      width: 100%;
     }
     ion-list{
       background: transparent;

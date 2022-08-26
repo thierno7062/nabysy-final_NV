@@ -33,8 +33,9 @@ export class DirectionPage implements OnInit {
 
   ngOnInit() {
   }
+  // &IDDirectionParent=0
   refreshDirection(){
-    this.readAPI(environment.endPoint+'direction_action.php?Action=GET_DIRECTION')
+    this.readAPI(environment.endPoint+'direction_action.php?Action=GET_DIRECTION&Token='+environment.tokenUser)
     .subscribe((Listes) =>{
       console.log(Listes);
       //  this.dt1=Listes['0'];

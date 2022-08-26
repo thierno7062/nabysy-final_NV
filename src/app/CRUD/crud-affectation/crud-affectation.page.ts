@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/dot-notation */
 import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -131,11 +132,12 @@ export class CrudAffectationPage implements OnInit {
       this.readAPI(apiUrl)
       .subscribe((reponseApi) =>{
         console.log(reponseApi);
-        if(reponseApi['"OK"']!== '0'){
+        console.log(reponseApi['OK']);
+        if(reponseApi['OK']!== '0'){
           console.log('Affectation IdEmploye '+idPersonne+' ...OK');
           // this.modalctrl.dismiss(data,'create');
           if (afficherTost){
-      this.presentToast('Affectation IdEmploye '+idPersonne+' ...OK');
+        this.presentToast('Affectation IdEmploye '+idPersonne+' ...OK');
           }
           return true;
         }else{

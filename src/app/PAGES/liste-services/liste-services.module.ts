@@ -8,6 +8,7 @@ import { ListeServicesPageRoutingModule } from './liste-services-routing.module'
 
 import { ListeServicesPage } from './liste-services.page';
 import { IonicSelectableModule } from 'ionic-selectable';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 @NgModule({
   imports: [
@@ -16,7 +17,8 @@ import { IonicSelectableModule } from 'ionic-selectable';
     IonicModule,
     ListeServicesPageRoutingModule,
     IonicSelectableModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    Ng2SearchPipeModule
   ],
   declarations: [ListeServicesPage]
 })
