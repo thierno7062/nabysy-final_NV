@@ -117,7 +117,7 @@ export class CrudAffectationPage implements OnInit {
       return false;
   }
 
-  affecterUnePersonne(idPersonne,afficherTost=false){
+  affecterUnePersonne(idPersonne,afficherTost=true){
     let apiUrl=environment.endPoint+
     'employe_action.php?Action=AFFECTER_EMPLOYE&IdEmploye='+
     idPersonne+'&IdDirection='+this.idDirection+'&Token='+
@@ -133,15 +133,19 @@ export class CrudAffectationPage implements OnInit {
       .subscribe((reponseApi) =>{
         console.log(reponseApi);
         console.log(reponseApi['OK']);
+        let txToast='Employé(es) affecté correctement !' ;
         if(reponseApi['OK']!== '0'){
           console.log('Affectation IdEmploye '+idPersonne+' ...OK');
-          // this.modalctrl.dismiss(data,'create');
           if (afficherTost){
-        this.presentToast('Affectation IdEmploye '+idPersonne+' ...OK');
+            this.presentToast(txToast);
           }
           return true;
         }else{
-          console.log('Affectation IdEmploye '+idPersonne+' ...Erreur');
+          txToast='Erreur d\'affectation : '+reponseApi['TxErreur'] ;
+          console.error(txToast);
+          if (afficherTost){
+            this.presentToast(txToast);
+          }
           return false ;
         }
       });
