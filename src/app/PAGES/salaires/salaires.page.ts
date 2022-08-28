@@ -258,7 +258,7 @@ export class SalairesPage implements OnInit {
 
   buildTableBody(data: any, columns: any): any {
     const body = [];
-    
+
     body.push(columns);
     if (data){
       data.forEach((row: { Libelle: any; Base: any; Taux: any; Gain: any;Retenu: any; COTISATION_PATRONALE_TAUX: any; COTISATION_PATRONALE_MONTANT: any}) => {
@@ -292,7 +292,7 @@ export class SalairesPage implements OnInit {
       dataRow.push('');
       body.push(dataRow);
     }
-    
+
     return body;
   }
 
@@ -380,6 +380,9 @@ export class SalairesPage implements OnInit {
 
 
   downloadPdf(){
+
+    this.loadSalary();
+
     this.getItems();
 
     this.getItems2();
@@ -451,7 +454,7 @@ export class SalairesPage implements OnInit {
               {text:'Période de Paie',  alignment: 'center',fontSize: 10},{text:'DATE D\'embauche',  alignment: 'center',fontSize: 10}
 
               ],
-              [{text:this.qualifiquation,  alignment: 'center',style:'header'},  {text:'1',  alignment: 'center',fontSize: 10},  {text:'34',  alignment: 'center',fontSize: 10},
+              [{text:this.qualifiquation,  alignment: 'center',style:'header'},  {text:'1',  alignment: 'center',fontSize: 10},  {text:this.categorie,  alignment: 'center',fontSize: 10},
               {text:this.situationFa,  alignment: 'center',fontSize: 10},{text:this.partTrimf,  alignment: 'center',fontSize: 10},{text:this.partIrpp,  alignment: 'center',fontSize: 10},
               {text:this.periodePaie,  alignment: 'center',fontSize: 10},{text:this.dateEmbauche,  alignment: 'center',fontSize: 10}
               ],
@@ -518,7 +521,7 @@ export class SalairesPage implements OnInit {
             widths: [150, 60, 40,60,50,40,56],
             headerRows: 1,
             body:[
-              [{text:'**TOTAL_COTISATION_PATRONALE**',  alignment: 'center',style:'header', margin: [0, 5],border: [true, true, true, false]},
+              [{text:'Total Cotisation Patronale',  alignment: 'center',style:'header', margin: [0, 5],border: [true, true, true, false]},
                 {text: '',border: [true, true, true, false]},  {text: '',border: [true, true, true, false]},
               {text: '',  alignment: 'center', margin: [0, 5],border: [true, true, true, false]},{text:'',border: [true, true, true, false]},
               {text:'',border: [true, true, true, false]},
@@ -573,8 +576,8 @@ export class SalairesPage implements OnInit {
             widths: [150, 60, 40,60,50,40,56],
             headerRows: 1,
             body:[
-              [{text:'**Salaire Net** (3) = (1) - (2)',  alignment: 'center',style:'header', margin: [0, 5],border: [true, false, true, true]}, 
-               {text:this.listeSalaire.BULLETIN_SALAIRE.SALAIRE_NET,border: [true, false, true, true]}, 
+              [{text:'**Salaire Net** (3) = (1) - (2)',  alignment: 'center',style:'header', margin: [0, 5],border: [true, false, true, true]},
+               {text:this.listeSalaire.BULLETIN_SALAIRE.SALAIRE_NET,border: [true, false, true, true]},
                {text:'',border: [true, false, true, true]}, {text: '',  alignment: 'center', margin: [0, 5],border: [true, false, true, true]},
                {text:'',border: [true, false, true, true]},{text:'',border: [true, false, true, true]},{text: '',border: [true, false, true, true]}
               ],
@@ -628,7 +631,7 @@ export class SalairesPage implements OnInit {
       pageOrientation: 'portrait',
 
       pageMargins: [ 20, 10, 40, 60 ],
-      
+
       content: [
         {
           columns: [
@@ -638,15 +641,15 @@ export class SalairesPage implements OnInit {
               alignment: 'right',margin: [ 5, 2, 0, 20 ]
             }
           ]
-        }, 
+        },
         {text: 'Reçu', style: 'header',alignment: 'center'},
         {text: 'Reçu de Thierno Abdourahmane Niang A '+this.prenom+' '+this.nom,margin: [ 0, 10, 0, 10 ] },
         'Je, soussigné(e) '+this.prenom+' '+this.nom+', reconnais avoir reçu la somme de  '
         +this.listeSalaire.BULLETIN_SALAIRE.SALAIRE_NET+' FCFA. Cette somme a été reçu pour le mois de: '+ this.periode,
         {text: 'Le paiement a été fait par______________.( espèce, chèque…). ',margin: [ 0, 20, 5, 10 ] },
         'Ce reçu confirme que le paiement a bien été fait.',
-        {text: 'Signature',margin: [ 0, 500, 0, 0 ],alignment: 'right' }  
-        
+        {text: 'Signature',margin: [ 0, 500, 0, 0 ],alignment: 'right' }
+
       ],
       styles: {
         header: {
@@ -674,7 +677,7 @@ export class SalairesPage implements OnInit {
     };
 
     this.pdfObj = pdfMake.createPdf(docDef).download();
-    
+
 
 
 

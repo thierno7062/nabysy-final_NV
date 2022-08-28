@@ -35,7 +35,7 @@ export class DirectionPage implements OnInit {
   }
   // &IDDirectionParent=0
   refreshDirection(){
-    this.readAPI(environment.endPoint+'direction_action.php?Action=GET_DIRECTION&Token='+environment.tokenUser)
+    this.readAPI(environment.endPoint+'direction_action.php?Action=GET_DIRECTION&IdDirectionParent=0&Token='+environment.tokenUser)
     .subscribe((Listes) =>{
       console.log(Listes);
       //  this.dt1=Listes['0'];

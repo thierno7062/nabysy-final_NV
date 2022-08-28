@@ -5,11 +5,26 @@
         Fermer
       </ion-button>
     </ion-buttons>
-    <ion-title>crud-affectation</ion-title>
+    <ion-title>Affectation</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <ion-row>
+
+    <ion-col size="12" class="ion-searchbar">
+      <ion-label color="light" >
+        <ion-searchbar
+        placeholder="Rechercher un Employe ici..."
+        [(ngModel)]="searchTerm"
+        showCancelButton="focus"
+        cancelButtonText="center"
+        cancelButtonIcon="none"
+        animated></ion-searchbar>
+      </ion-label>
+    </ion-col>
+
+  </ion-row>
   <ion-button (click)="toggleBulkEdit()" expand="full">
     Cocher plusieurs cases
   </ion-button>
@@ -18,16 +33,16 @@
   </ion-button>
 
 <ion-row class="header-row">
-  <ion-col size="2" *ngIf="bulkEdit">
+  <ion-col size="1" *ngIf="bulkEdit">
     <!-- <ion-col size="2"> -->
     Select
   </ion-col>
-  <ion-col size="2" size-md="2" size-lg="2" tappable (click)="sortBy('Nom')">
+  <ion-col size="1"  tappable (click)="sortBy('Nom')">
     Nom
     <ion-icon name="arrow-down" *ngIf="sortDirection === 1"></ion-icon>
     <ion-icon name="arrow-up" *ngIf="sortDirection === 2"></ion-icon>
   </ion-col>
-  <ion-col size="4" size-md="4" size-lg="2">
+  <ion-col size="2" >
     Prénom
   </ion-col>
   <ion-col size="2" class="ion-hide-md-down">
@@ -37,22 +52,25 @@
     Adresse
   </ion-col>
   <ion-col size="2" class="ion-hide-lg-down">
-    Télephone
+    Direction
   </ion-col>
-  <ion-col size="2" *ngIf="!bulkEdit">
+  <ion-col size="2" class="ion-hide-lg-down">
+    Service
+  </ion-col>
+  <ion-col size="1" *ngIf="!bulkEdit">
     Action
   </ion-col>
 </ion-row>
 
-<ion-row *ngFor="let row of data; let i = index;" class="data-row" >
+<ion-row *ngFor="let row of data | filter:searchTerm; let i = index;" class="data-row" >
 
-  <ion-col size="2" *ngIf="bulkEdit">
-    <ion-checkbox [(ngModel)]="edit[i]"></ion-checkbox>
+  <ion-col size="1" *ngIf="bulkEdit">
+    <ion-checkbox [(ngModel)]="edit[i]" style="margin-left: 20px;"></ion-checkbox>
       </ion-col>
-      <ion-col size="2" size-md="2" size-lg="2" >
+      <ion-col size="1"  >
         {{ row.Nom}}
       </ion-col>
-      <ion-col  size="4" size-md="4" size-lg="2">
+      <ion-col  size="2" >
         {{ row.Prenom}}
       </ion-col>
       <ion-col size="2" class="ion-hide-md-down">
@@ -62,9 +80,12 @@
         {{ row.Adresse}}
       </ion-col>
       <ion-col size="2" class="ion-hide-lg-down">
-        {{ row.Tel}}
+        {{ row.DIRECTION}}
       </ion-col>
-  <ion-col size="2" *ngIf="!bulkEdit">
+      <ion-col size="2" class="ion-hide-lg-down">
+        {{ row.SERVICE}}
+      </ion-col>
+  <ion-col size="1" *ngIf="!bulkEdit">
     <ion-button size="small" (click)="affecterUnePersonne(row.ID)"  fill="clear">
       <ion-icon name="send" slot="icon-only"></ion-icon>
     </ion-button>
@@ -73,44 +94,6 @@
 
 </ion-row>
 
-<ion-row>
-  <ion-col size="12" class="ion-text-center">
-    {{page + 1}} of {{ totalPages}}
-  </ion-col>
-</ion-row>
 
-<ion-row>
-  <ion-col size="2">
-    <ion-button fill="clear" (click)="goFirst()">
-      <ion-icon name="play-back" slot="icon-only"></ion-icon>
-    </ion-button>
-  </ion-col>
-  <ion-col size="2">
-    <ion-button fill="clear" (click)="prevPage()">
-      <ion-icon name="chevron-back" slot="icon-only"></ion-icon>
-    </ion-button>
-  </ion-col>
-
-  <ion-col size="4" class="ion-text-center">
-    <ion-select interface="popover" [(ngModel)]="resultsCount" (ionChange)="loadData()">
-      <ion-select-option [value]="5">5</ion-select-option>
-      <ion-select-option [value]="10">10</ion-select-option>
-      <ion-select-option [value]="25">25</ion-select-option>
-      <ion-select-option [value]="50">50</ion-select-option>
-    </ion-select>
-  </ion-col>
-
-  <ion-col size="2">
-    <ion-button fill="clear" (click)="nextPage()">
-      <ion-icon name="chevron-forward" slot="icon-only"></ion-icon>
-    </ion-button>
-  </ion-col>
-  <ion-col size="2">
-    <ion-button fill="clear" (click)="goLast()">
-      <ion-icon name="play-forward" slot="icon-only"></ion-icon>
-    </ion-button>
-  </ion-col>
-
-</ion-row>
 
 </ion-content>

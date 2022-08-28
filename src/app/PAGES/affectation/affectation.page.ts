@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable @typescript-eslint/dot-notation */
 import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
@@ -18,6 +19,7 @@ export class AffectationPage implements OnInit {
   listeEmploye: any;
   historique: any;
   url: string ;
+  searchTerm: string;
 
   page = 0;
   resultsCount = 10;
@@ -36,6 +38,7 @@ export class AffectationPage implements OnInit {
   listeAffectation: any;
   sortDirection= 0;
   sortKey= null;
+  Employeaffecte: any;
 
   constructor(private http: HttpClient, private modalctrl: ModalController, private popupModalService: PopupModalService,
     private router: Router,
@@ -133,7 +136,7 @@ affectationMethode(){
 
   }
 
-  affecterUnePersonne(idPersonne,afficherTost=false){
+  affecterUnePersonne(idPersonne,afficherTost=true){
     let apiUrl=environment.endPoint+'employe_action.php?Action=AFFECTER_EMPLOYE&IdEmploye='+
     idPersonne+'&IdDirection='+this.idDirection+'&Token='+environment.tokenUser;
     if (this.idService > 0){
@@ -149,8 +152,10 @@ affectationMethode(){
         if(reponseApi['OK']!== '0'){
           console.log('Affectation IdEmploye '+idPersonne+' ...OK');
           // this.modalctrl.dismiss(data,'create');
+
           if (afficherTost){
       this.presentToast('Affectation IdEmploye '+idPersonne+' ...OK');
+      // Extra
           }
           return true;
         }else{
@@ -162,7 +167,7 @@ affectationMethode(){
     const toast = await this.toastctrl.create({
       message:a,
       duration: 1500,
-      position: 'top'
+      position: 'middle'
     });
     toast.present();
   }

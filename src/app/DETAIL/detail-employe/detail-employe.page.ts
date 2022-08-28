@@ -8,7 +8,7 @@ import { PopupModalService } from 'src/app/services/popup-modal.service';
 import { PhotoService } from 'src/app/services/photo.service';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
-/* --------------------------------------------------------------------- */
+/* ---------------------------------------------------------------------- */
 
 @Component({
   selector: 'app-detail-employe',

@@ -1,22 +1,233 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>
-      Ionic HTML to PDF
-    </ion-title>
-    <ion-buttons slot="primary">
-      <ion-button color="danger" fill="outline">
-        View PDF
-      </ion-button>
-    </ion-buttons>
+    <ion-title>Prime</ion-title>
+    <ion-button slot="end" (click)="closeModal()"><ion-icon name="close-outline"></ion-icon></ion-button>
   </ion-toolbar>
 </ion-header>
-<ion-content padding>
-  <div class="ion-padding">
-    <div id="printer">
-    The world is your oyster.
+
+<ion-content [fullscreen]="true">
+  <!-- page header -->
+  <ion-header mode="ios">
+    <ion-toolbar>
+      <!-- Test Prise de Photo-->
+      <!-- <div class="photoedit-container">
+        <ion-fab-button (click)="addPhotoToGallery(userDetails)">
+          <ion-icon name="camera"></ion-icon>
+        </ion-fab-button>
+      </div> -->
+      <ion-button slot="start" fill="solid" class="button-back"(click)="closeModal()">
+        <ion-icon name="chevron-back" ></ion-icon>
+      </ion-button>
+      <!-- <ion-button slot="end" fill="solid" class="button-edit" routerLink="/employe">
+        <ion-icon name="pencil"></ion-icon>
+      </ion-button> -->
+    </ion-toolbar>
+  </ion-header>
+  <div class="page-container">
+    <!-- hero -->
+    <div class="hero-container">
+      <ion-img src={{userDetails.PHOTO_URL}}></ion-img>
+      <ion-chip>
+        <ion-icon name="star"></ion-icon>
+        <ion-label>{{userDetails.NbPerformance}}</ion-label>
+      </ion-chip>
     </div>
+
+    <!-- content -->
+    <div class="content-container">
+      <!-- user info -->
+      <div class="name-container">
+        <ion-text algin="center">
+          <h1>{{userDetails.PrenomEmploye +' '}} {{userDetails.NomEmploye}}</h1>
+        </ion-text>
+
+        <ion-button (click)="CallUserdetails()">
+          <ion-label>OUVRIR</ion-label>
+          <ion-icon slot="end" name="ellipsis-horizontal" ></ion-icon>
+        </ion-button>
+      </div>
+
+      <!-- location -->
+      <div class="location">
+        <ion-text> Motif: <span class="emphasis">{{' '+userDetails.Motif}}</span> </ion-text>
+      </div>
+
+      <!-- talent scout -->
+      <div class="talent-scout-container">
+        <ion-item class="ion-no-padding" lines="none">
+          <div class="inner-container">
+            <div class="info-container">
+              <ion-avatar>
+                <ion-img src={{photo}}></ion-img>
+              </ion-avatar>
+              <div class="text-container">
+                <ion-text><span class="name">{{userDetails.PrenomEmploye+' '}} {{userDetails.NomEmploye}}</span></ion-text>
+                <ion-text><span class="description">{{userDetails?.FonctionEmploye}}</span></ion-text>
+              </div>
+            </div>
+            <ion-button>
+              <ion-icon name="chatbubble"></ion-icon>
+            </ion-button>
+          </div>
+        </ion-item>
+      </div>
+
+      <!-- stats -->
+      <!-- <div class="stats-container">
+        <div class="stat-container">
+          <ion-text><span class="stat">{{userDetails.Salaire}}</span></ion-text>
+          <ion-text><span class="description">Salaire</span></ion-text>
+        </div>
+        <div class="stat-container">
+          <ion-text><span class="stat">{{userDetails.SurSalaire}}</span></ion-text>
+          <ion-text><span class="description">SurSalaire</span></ion-text>
+        </div>
+        <div class="stat-container">
+          <ion-text><span class="stat">{{userDetails.ANCIENNETE}}</span></ion-text>
+          <ion-text><span class="description">Ancienneté</span></ion-text>
+        </div>
+        <div class="stat-container">
+          <ion-text><span class="stat">{{userDetails.NbPerformance}}</span></ion-text>
+          <ion-text><span class="description">Performance</span></ion-text>
+        </div>
+      </div> -->
+
+      <!-- tags -->
+      <div class="tags-container">
+        <ion-chip color="primary">{{this.userDetails.FonctionEmploye}}</ion-chip>
+        <ion-chip color="secondary" *ngIf="hideMe">{{this.nom_Direction}}</ion-chip>
+        <ion-chip color="success" *ngIf="hideMe2">{{this.nom_Service}}</ion-chip>
+      </div>
+
+      <!-- about -->
+      <div class="about-container">
+        <ion-row>
+          <ion-col size="12" size-sm="6" size-md="6" size-lg="6" size-xl="6" >
+            <ion-list lines="full">
+              <ion-item>
+                <ion-label>
+                  <ion-text >Prénom</ion-text>
+                  <p><ion-text color="dark">{{userDetails.PrenomEmploye}}</ion-text></p>
+                </ion-label>
+              </ion-item>
+              <ion-item>
+                <ion-label>
+                  <ion-text >Nom</ion-text>
+                  <p><ion-text color="dark">{{userDetails.NomEmploye}}</ion-text></p>
+                </ion-label>
+              </ion-item>
+              <ion-item>
+                <ion-label>
+                  <ion-text >Fonction</ion-text>
+                  <p><ion-text color="dark">{{userDetails.FonctionEmploye}}</ion-text></p>
+                </ion-label>
+              </ion-item>
+              <ion-item>
+                <ion-label>
+                  <ion-text >Date D'enregistrement</ion-text>
+                  <p><ion-text color="dark">{{userDetails.DateEnreg}}</ion-text></p>
+                </ion-label>
+              </ion-item>
+              <ion-item>
+                <ion-label>
+                  <ion-text >Heure</ion-text>
+                  <p><ion-text color="dark">{{userDetails.HeureEnreg}}</ion-text></p>
+                </ion-label>
+              </ion-item>
+              <ion-item>
+                <ion-label>
+                  <ion-text >Motif</ion-text>
+                  <p><ion-text color="dark">{{userDetails.Motif}}</ion-text></p>
+                </ion-label>
+              </ion-item>
+              <ion-item>
+                <ion-label>
+                  <ion-text >Sexe</ion-text>
+                  <p><ion-text color="dark">{{sexeString}}</ion-text></p>
+                </ion-label>
+              </ion-item>
+              <ion-item>
+                <ion-label>
+                  <ion-text >Performance Précédente</ion-text>
+                  <p><ion-text color="dark">{{userDetails.NbPerformancePrec}}</ion-text></p>
+                </ion-label>
+              </ion-item>
+              <ion-item>
+                <ion-label>
+                  <ion-text >Performance Suivante</ion-text>
+                  <p><ion-text color="dark">{{userDetails.NbPerformanceSuiv}}</ion-text></p>
+                </ion-label>
+              </ion-item>
+
+
+            </ion-list>
+          </ion-col>
+
+          <ion-col size="12" size-sm="6" size-md="6" size-lg="6" size-xl="6" >
+            <ion-list lines="full">
+              <ion-item>
+                <ion-label>
+                  <ion-text >Nombre de point Ajoutés</ion-text>
+                  <p><ion-text color="dark">{{userDetails.NbPointAjoute}}</ion-text></p>
+                </ion-label>
+              </ion-item>
+              <ion-item>
+                <ion-label>
+                  <ion-text >Commentaires</ion-text>
+                  <p><ion-text color="dark">{{userDetails.Commentaires}}</ion-text></p>
+                </ion-label>
+              </ion-item>
+              <ion-item>
+                <ion-label>
+                  <ion-text >Origine Table</ion-text>
+                  <p><ion-text color="dark">{{userDetails.OrigTable}}</ion-text></p>
+                </ion-label>
+              </ion-item>
+              <ion-item>
+                <ion-label>
+                  <ion-text >Nombre de Performance</ion-text>
+                  <p><ion-text color="dark">{{NbPerformance}}</ion-text></p>
+                </ion-label>
+              </ion-item>
+              <ion-item>
+                <ion-label>
+                  <ion-text >Auteur</ion-text>
+                  <p><ion-text color="dark">{{userDetails.Auteur}}</ion-text></p>
+                </ion-label>
+              </ion-item>
+              <ion-item>
+                <ion-label>
+                  <ion-text >Salaire</ion-text>
+                  <p><ion-text color="dark">{{Salaire}}</ion-text></p>
+                </ion-label>
+              </ion-item>
+              <ion-item>
+                <ion-label>
+                  <ion-text >SurSalaire</ion-text>
+                  <p><ion-text color="dark">{{SurSalaire}}</ion-text></p>
+                </ion-label>
+              </ion-item>
+              <ion-item  *ngIf="hideMe">
+                <ion-label position="floating" >Direction</ion-label>
+                <ion-input [(ngModel)]='this.nom_Direction' [readonly]="true" class="iddirection"type="text"></ion-input>
+              </ion-item>
+              <ion-item *ngIf="hideMe2">
+                <ion-label position="floating">Service</ion-label>
+                <ion-input [(ngModel)]='this.nom_Service' [readonly]="true" class="idservice"type="text"></ion-input>
+              </ion-item>
+              <ion-row *ngIf="message">
+                <ion-col size="12" size-sm="12" size-md="12" size-lg="12" size-xl="12" class="affectation">
+                 <h1 class="title" *ngIf="message_txt_M">Non Affecté</h1>
+                 <h1 class="title" *ngIf="message_txt_F">Non Affectée</h1>
+                 <h1 class="title" *ngIf="message_txt">Non Affecté(e)</h1>
+                </ion-col>
+              </ion-row>
+            </ion-list>
+          </ion-col>
+        </ion-row>
+      </div>
+
+
     </div>
-    <ion-button (click)="pdfDownload()" fill="outline" color="primary">
-      DOWNLOAD PDF
-    </ion-button>
+  </div>
 </ion-content>

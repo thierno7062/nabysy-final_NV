@@ -2,15 +2,19 @@
 /* eslint-disable prefer-arrow/prefer-arrow-functions */
 /* eslint-disable max-len */
 /* eslint-disable @typescript-eslint/consistent-type-assertions */
+/* eslint-disable @typescript-eslint/naming-convention */
 import { Component, OnInit } from '@angular/core';
-import { FileOpener } from '@awesome-cordova-plugins/file-opener/ngx';
-import { Printer, PrintOptions } from '@awesome-cordova-plugins/printer/ngx';
-import { File, IWriteOptions } from '@ionic-native/file/ngx';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ModalController, NavParams } from '@ionic/angular';
+import { PopupModalService } from 'src/app/services/popup-modal.service';
 
-import * as pdfMake from 'pdfmake/build/pdfmake';
-import * as pdfFonts from 'pdfmake/build/vfs_fonts';
+/* Prise en charge des Photos */
+import { PhotoService } from 'src/app/services/photo.service';
+import { environment } from 'src/environments/environment';
+import { HttpClient } from '@angular/common/http';
+/* --------------------------------------------------------------------- */
 
-(<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
+
 
 
 @Component({
@@ -19,74 +23,133 @@ import * as pdfFonts from 'pdfmake/build/vfs_fonts';
   styleUrls: ['./print-bulletin2.page.scss'],
 })
 export class PrintBulletin2Page implements OnInit {
-  pdfObj = null;
+  userDetails: any;  idDirection: number;  idService: number;
+  direction: any;  service: any;  nom_Direction: '';  nom_Service: '';
+  url: string;  sexeString: string;
+  situationString: '';  sexe: any;
+  hideMe2: boolean;  hideMe: boolean;message: boolean;
+  message_txt_M: boolean;  message_txt_F: boolean;
+  idEmploye: number;  employe: any;  nom: '';  prenom: '';  fonction: '';  adresse: '';  telephone: '';
+  photo: '';  nbPerformance: '';
+  Salaire: ''; SurSalaire: '';
 
-  constructor( private file: File,private printer: Printer,
-    private fileOpener: FileOpener) {
+  // eslint-disable-next-line max-len
+
+  constructor( private router: Router,private popupModalService: PopupModalService, private navParams: NavParams,
+    public photoService: PhotoService,private route: ActivatedRoute,private http: HttpClient,private modalCtrl: ModalController) {
+      this.loadDirection();
+      this.loadService();
+      this.loadEmploye();
 
   }
 
   ngOnInit() {
+    this.userDetails= this.navParams.get('data');
+    console.log(this.userDetails);
+    this.sexe= this.userDetails.SexeEmploye;
+    if(this.sexe==='M'||this.sexe==='m' ){
+      this.sexeString='Masculin';
+    }else if(this.sexe==='F'||this.sexe==='f' ){
+      this.sexeString='Féminin';
+    }
+    if(this.userDetails.IdDirection>0 ){
+      this.hideMe = true;
+    }
+    if(this.userDetails.IdService>0){
+      this.hideMe2 = true;
+    }
+
+    if (this.hideMe===false && this.hideMe2===false) {
+      this.hideMe = false;
+      this.message= true;
+      if(this.sexe=== 'M' || this.sexe=== 'm' ){
+        this.message_txt_M= true;
+
+      }else if(this.sexe=== 'F' || this.sexe=== 'f'){
+        this.message_txt_F= true;
+      }
+    }
 
   }
-  pdfDownload(){
+  closeModal(){
+    this.popupModalService.dismiss();
+  }
+  CallUserdetails(){
+    this.router.navigate(['/crud-employe'],{
+      queryParams:this.userDetails
+    });
+    this.popupModalService.dismiss();
+    // const user = data['data'];
 
+  }
+  /**
+   * Prend une Photo et la Stock dans la Gallerie
+   */
+   async addPhotoToGallery(employeInfos: any) {
+    await this.photoService.addNewToGallery(employeInfos.ID);
+    this.photoService.transfertFile(employeInfos, this.photoService.photo.photoRawData);
+  }
 
-    const docDef = {
-      watermark: { text: 'Ionic THIERNO', color: 'blue', opacity: 0.2, bold: true},
-      // a string or { width: number, height: number }
-      pageSize: 'A4',
+  loadDirection(){
+    this.userDetails= this.navParams.get('data');
+    this.idDirection=this.userDetails.IdDirection;
+      console.log('idDirection: '+this.idDirection);
+      this.url=environment.endPoint+'direction_action.php?Action=GET_DIRECTION&IdDirection='+this.idDirection+
+      '&Token='+environment.tokenUser;
+      this.readAPI(this.url)
+      .subscribe((data) =>{
+        this.direction=data ;
+        // this.products=data;
+        console.log(data);
+        console.log(data['0']);
+        this.nom_Direction=this.direction['0'].Nom;
+        console.log(this.nom_Direction);
 
-      pageOrientation: 'portrait',
+      });
+  }
 
-      pageMargins: [ 20, 10, 40, 60 ],
-      
-      content: [
-        {
-          columns: [
+  loadService(){
+    this.userDetails= this.navParams.get('data');
+    this.idService=this.userDetails.IdService;
+      console.log('idService: '+this.idService);
+      this.url=environment.endPoint+'service_action.php?Action=GET_SERVICE&IdService='+this.idService+
+      '&Token='+environment.tokenUser;
+      this.readAPI(this.url)
+      .subscribe((data) =>{
+        this.service=data ;
+        // this.products=data;
+        console.log(data);
+        console.log(data['0']);
+        this.nom_Service=this.service['0'].Nom;
+      });
+  }
 
-            {
-              text: new Date().toString(),
-              alignment: 'right',margin: [ 5, 2, 0, 20 ]
-            }
-          ]
-        },
-        {text: 'Reçu', style: 'header',alignment: 'center'},
-        {text: 'Reçu de Thierno Abdourahmane Niang A__________________',margin: [ 0, 10, 0, 10 ] },
-        'Je, soussigné(e) Nom Employé, reconnais avoir reçu la somme de________$. Cette somme a été reçu pour le mois de :',
-        {text: 'Le paiement a été fait par______________.( espèce, chèque…). ',margin: [ 0, 20, 5, 10 ] },
-        'Ce reçu confirme que le paiement a bien été fait.',
-        {text: 'Signature',margin: [ 0, 400, 0, 0 ],alignment: 'right' }
-        
-      ],
-      styles: {
-        header: {
-          fontSize: 18,
-          bold: true,
-          margin: [0, 0, 0, 10]
-        },
-        subheader: {
-          fontSize: 16,
-          bold: true,
-          margin: [0, 10, 0, 5]
-        },
-        tableExample: {
-          margin: [0, 5, 0, 15]
-        },
-        tableHeader: {
-          bold: true,
-          fontSize: 13,
-          color: 'black'
-        }
-      },
-      defaultStyle: {
-        // alignment: 'justify'
-      }
-    };
+  readAPI(url: string){
+    return this.http.get(url);
 
-    this.pdfObj = pdfMake.createPdf(docDef).download();
-
-
+  }
+  loadEmploye(){
+    this.userDetails= this.navParams.get('data');
+    this.idEmploye=this.userDetails.IdEmploye;
+      console.log('idEmploye: '+this.idEmploye);
+      this.url=environment.endPoint+'employe_action.php?Action=GET_EMPLOYE&IdEmploye='+this.idEmploye+
+      '&Token='+environment.tokenUser;
+      this.readAPI(this.url)
+      .subscribe((data) =>{
+        this.employe=data ;
+        // this.products=data;
+        console.log(data);
+        console.log(data['0']);
+        this.nom=this.employe['0'].Nom;
+        this.prenom=this.employe['0'].Prenom;
+        this.fonction=this.employe['0'].Fonction;
+        this.adresse=this.employe['0'].Adresse;
+        this.telephone=this.employe['0'].Tel;
+        this.photo=this.employe['0'].PHOTO_URL;
+        this.nbPerformance=this.employe['0'].NbPerformance;
+        this.Salaire=this.employe['0'].Salaire;
+        this.SurSalaire=this.employe['0'].SurSalaire;
+      });
 
   }
 }

@@ -88,7 +88,7 @@
       </ion-col>
 
       <ion-col size="6" class="ion-text-end">
-        <ion-button color="light" size="small">
+        <ion-button color="light" size="small" (click)="addaffectation()">
           <ion-text color="primary" > Affecter Employe</ion-text>
           <ion-icon name="send" color="primary" slot="end"></ion-icon>
         </ion-button>
@@ -128,7 +128,7 @@
       <div style="height:100%; width:100%;">
         <ion-row>
           <ion-col size="4"></ion-col>
-          <ion-col size="4">
+          <ion-col size="4" class="ion-searchbar">
             <ion-label color="light" >
               <ion-searchbar
               placeholder="Rechercher une Sous direction ici..."
@@ -145,10 +145,10 @@
             <ion-row >
               <ion-col   *ngFor="let service of listeSousDirections | filter:searchTerm"  size="12" size-sm="6" size-md="4" size-lg="3" size-xl="2" >
                 <ion-card class="ion-text-center" >
-                  <ion-card-header (click)="goToFicheServices(service)">
+                  <ion-card-header (click)="goToListeServices(service)">
                     <div align="center" size="6" >
                       <ion-thumbnail [style.background]="'rgba(27, 150, 181, 0.1)'">
-                        <img [src]="'assets/workplace.png'" alt=""/>
+                        <img [src]="'assets/office (1).png'" alt=""/>
                       </ion-thumbnail>
                     </div>
                   </ion-card-header>
@@ -178,7 +178,7 @@
             <!-- <ion-label>2nd Segment</ion-label> -->
             <ion-row>
               <ion-col size="4"></ion-col>
-              <ion-col size="4">
+              <ion-col size="4" class="ion-searchbar">
                 <ion-label color="light" >
                   <ion-searchbar
                   placeholder="Rechercher un Service ici..."
@@ -226,7 +226,7 @@
             <!-- <ion-label>3rd Segment</ion-label> -->
             <ion-row>
               <ion-col size="4"></ion-col>
-              <ion-col size="4">
+              <ion-col size="4" class="ion-searchbar">
                 <ion-label color="light" >
                   <ion-searchbar
                   placeholder="Rechercher un Employe ici..."
@@ -240,24 +240,24 @@
               <ion-col size="4"></ion-col>
             </ion-row>
             <ion-row >
-              <ion-col   *ngFor="let service of listeEmploye | filter:searchTerm"  size="12" size-sm="6" size-md="4" size-lg="3" size-xl="2" >
+              <ion-col   *ngFor="let employe of listeEmploye | filter:searchTerm"  size="12" size-sm="6" size-md="4" size-lg="3" size-xl="2" >
                 <ion-card class="ion-text-center" >
-                  <ion-card-header (click)="userdetails(service)">
+                  <ion-card-header (click)="userdetails(employe)">
                     <div align="center" size="6">
                       <ion-thumbnail [style.background]="'rgba(27, 150, 181, 0.1)'">
-                        <img [src]="service.PHOTO_URL" alt=""/>
+                        <img [src]="employe.PHOTO_URL" alt=""/>
                       </ion-thumbnail>
                     </div>
                   </ion-card-header>
                   <ion-card-content>
-                    <ion-label color="dark">{{service.Prenom}} {{service.Nom }}</ion-label><br>
-                    <ion-label color="dark">{{service.Fonction}}</ion-label>
+                    <ion-label color="dark">{{employe.Prenom}} {{employe.Nom }}</ion-label><br>
+                    <ion-label color="dark">{{employe.Fonction}}</ion-label>
                   </ion-card-content>
                   <ion-card-content>
-                    <ion-button size="small" slot="start" (click)="removeService(service)">
+                    <ion-button size="small" slot="start" (click)="removeService(employe)">
                       <ion-icon slot="icon-only" name="trash"></ion-icon>
                     </ion-button>
-                    <ion-button size="small" slot="end" (click)="updateService(service)">
+                    <ion-button size="small" slot="end" (click)="updateService(employe)">
                         <ion-icon slot="icon-only" name="create"></ion-icon>
                     </ion-button>
                   </ion-card-content>

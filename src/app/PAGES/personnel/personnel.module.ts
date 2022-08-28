@@ -7,13 +7,15 @@ import { IonicModule } from '@ionic/angular';
 import { PersonnelPageRoutingModule } from './personnel-routing.module';
 
 import { PersonnelPage } from './personnel.page';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    PersonnelPageRoutingModule
+    PersonnelPageRoutingModule,
+    Ng2SearchPipeModule
   ],
   declarations: [PersonnelPage]
 })

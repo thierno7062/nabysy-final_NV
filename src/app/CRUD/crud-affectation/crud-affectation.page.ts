@@ -1,3 +1,5 @@
+/* eslint-disable no-trailing-spaces */
+/* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable @typescript-eslint/dot-notation */
 import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
@@ -16,10 +18,9 @@ export class CrudAffectationPage implements OnInit {
   affectation: any;
   listeEmploye: any;
   url: string ;
+  searchTerm: string;
 
-  page = 0;
   resultsCount = 10;
-  totalPages = 10;
   idDirection: 0;
   idService: 0;
 
@@ -28,9 +29,12 @@ export class CrudAffectationPage implements OnInit {
   bulkEdit= false;
   edit: any[];
 
+  apiUrl: string;
+
 
   sortDirection= 0;
   sortKey= null;
+  Employeaffecte: any;
 
   constructor(private http: HttpClient,private modalctrl: ModalController,private router: Router,private route: ActivatedRoute,
     private toastctrl: ToastController) {
@@ -45,9 +49,15 @@ export class CrudAffectationPage implements OnInit {
       this.infoService=res ;
       //console.log(this.infoService);
       if (this.infoService){
-        this.idDirection= this.infoService.IdDirection;
-        this.idService= this.infoService.ID;
-        //console.log(this.infoService);
+        if(this.infoService.IdDirection){
+
+          this.idDirection= this.infoService.IdDirection;
+          this.idService= this.infoService.ID;
+        }else{
+          this.idDirection= this.infoService.ID;
+          console.log(this.idDirection);
+        }
+        console.log(this.infoService);
       }
     });
     // this.http.get(`https://randomuser.me/api/?page=${this.page}&results=${this.resultsCount}`).subscribe(res => {
@@ -118,24 +128,36 @@ export class CrudAffectationPage implements OnInit {
   }
 
   affecterUnePersonne(idPersonne,afficherTost=true){
-    let apiUrl=environment.endPoint+
-    'employe_action.php?Action=AFFECTER_EMPLOYE&IdEmploye='+
-    idPersonne+'&IdDirection='+this.idDirection+'&Token='+
-    environment.tokenUser;
-    if (this.idService > 0){
-      apiUrl=environment.endPoint+'employe_action.php?Action=AFFECTER_EMPLOYE&IdEmploye='+
+    console.log(this.idDirection);
+    console.log(this.idService);
+
+
+    if (this.idService){
+       this.apiUrl=environment.endPoint+'employe_action.php?Action=AFFECTER_EMPLOYE&IdEmploye='+
       idPersonne+'&IdService='+this.idService+'&Token='+environment.tokenUser;
+    }else{
+      this.apiUrl=environment.endPoint+
+    'employe_action.php?Action=AFFECTER_EMPLOYE&IdEmploye='+
+    idPersonne+'&IdDirection='+this.idDirection+'&IdService=0'+'&Token='+
+    environment.tokenUser;
     }
 
     // this.url=environment.endPoint+'service_action.php?Action=GET_SERVICE&IdDirection='+this.direction.ID;
-      console.log(apiUrl);
-      this.readAPI(apiUrl)
+      console.log(this.apiUrl);
+      this.readAPI(this.apiUrl)
       .subscribe((reponseApi) =>{
         console.log(reponseApi);
-        console.log(reponseApi['OK']);
-        let txToast='Employé(es) affecté correctement !' ;
+        console.log(reponseApi['OK']);//Extra
+        console.log(reponseApi['Extra']);//Extra
+        let txToast='Employé(es) affecté correctement ! -- '+idPersonne+' -- '+reponseApi['Extra'];
+        this.loadData();
         if(reponseApi['OK']!== '0'){
-          console.log('Affectation IdEmploye '+idPersonne+' ...OK');
+          this.readAPI(environment.endPoint+'employe_action.php?Action=GET_EMPLOYE&IdEmploye='+idPersonne+'&Token='+environment.tokenUser)
+          .subscribe((listes) =>{
+            this.Employeaffecte=listes ;
+            console.log(this.Employeaffecte);
+          });
+          console.log('Affectation IdEmploye '+idPersonne+'...OK');
           if (afficherTost){
             this.presentToast(txToast);
           }
@@ -173,23 +195,7 @@ export class CrudAffectationPage implements OnInit {
     })
     .then(modal => modal.present());
   }
-  nextPage(){
-    this.page++;
-    this.loadData();
-  }
 
-  prevPage(){
-    this.page--;
-    this.loadData();
-  }
-  goFirst(){
-    this.page= 0;
-    this.loadData();
-  }
-  goLast(){
-    this.page = this.totalPages - 1;
-    this.loadData();
-  }
   closeModal(){
     this.modalctrl.dismiss(null, 'closed');
 

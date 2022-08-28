@@ -145,7 +145,7 @@
                     <p><ion-text color="dark" style="font-weight: bold;">{{this.listeSalaire.BULLETIN_SALAIRE.SALAIRE_NET+'  FCFA'}} </ion-text></p>
                   </ion-label>
                 </ion-item>
-                <ion-button expand="block" (click)="pdfRecu()">Payer salaire</ion-button>     
+                <ion-button expand="block" (click)="pdfRecu()">Payer salaire</ion-button>
               </div>
             </ion-col>
             <ion-col size="12" size-sm="6" size-md="4" size-lg="3" size-xl="2" class="ion-justify-content-center"*ngIf="selected">
@@ -284,7 +284,7 @@
         <ion-col size="2.1"><ion-text><P>{{bulletin.COTISATION_PATRONALE_MONTANT}}</P></ion-text></ion-col>
       </ion-row>
       <ion-row class="ion-row14">
-        <ion-col size="3" class="rubrique"><ion-text><h3>**TOTAL_COTISATION_PATRONALE** (2)</h3></ion-text> </ion-col>
+        <ion-col size="3" class="rubrique"><ion-text><h3>Total Cotisation Patronale</h3></ion-text> </ion-col>
         <ion-col size="1.9"class="rubrique"><ion-text><P></P></ion-text></ion-col>
         <ion-col size="1"class="rubrique"><ion-text><P></P></ion-text></ion-col>
         <ion-col size="1.5"class="rubrique"><ion-text><P></P></ion-text></ion-col>
@@ -303,7 +303,7 @@
         <ion-col size="1" class="rubrique2"><div><ion-text><P></P></ion-text></div></ion-col>
         <ion-col size="2.1"class="rubrique3"><ion-text><h3></h3></ion-text></ion-col>
       </ion-row>
-      <ion-row class="ion-row13"> 
+      <ion-row class="ion-row13">
         <ion-col size="3" class="rubrique"><ion-text><h3>**Salaire Net** (3) = (1) - (2)</h3></ion-text> </ion-col>
         <ion-col size="1.9"class="rubrique"><ion-text><h3>{{this.listeSalaire.BULLETIN_SALAIRE.SALAIRE_NET}}</h3></ion-text></ion-col>
         <ion-col size="1"class="rubrique"><ion-text><P></P></ion-text></ion-col>
@@ -316,11 +316,5 @@
     </div>
   </div>
 
-  <!-- Fonction print -->
-  <div class="ion-padding">
-    <div id="printer">
-    The world is your oyster.
-    </div>
-    </div>
-    <!-- <button class="button" (click)="print()">Print</button> -->
+
 </ion-content>

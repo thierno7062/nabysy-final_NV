@@ -60,6 +60,7 @@ export class PrimePage implements OnInit {
       this.setToday();
       this.today = new Date().getDate();
       this.loadEmploye();
+      this.loadPrime();
 
   }
 
@@ -199,7 +200,7 @@ export class PrimePage implements OnInit {
     this.menu.open('menu-content');
   }
   primedetails(userDetail: any){
-    this.popupModalService.presentModalEmploye(userDetail);
+    this.popupModalService.presentModalPrime(userDetail);
   }
   doRefresh(event){
      this.loadPrime();

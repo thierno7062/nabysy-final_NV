@@ -8,6 +8,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController, IonSlides, MenuController, ModalController } from '@ionic/angular';
 import { IonicSelectableComponent } from 'ionic-selectable';
 import { Observable } from 'rxjs';
+import { CrudAffectationPage } from 'src/app/CRUD/crud-affectation/crud-affectation.page';
 import { CrudServicePage } from 'src/app/CRUD/crud-service/crud-service.page';
 import { EmployeService } from 'src/app/services/employe.service';
 import { PopupModalService } from 'src/app/services/popup-modal.service';
@@ -103,7 +104,7 @@ export class ListeServicesPage implements OnInit {
       this.readAPI(this.url)
       .subscribe((data) =>{
         this.listeSousDirections=data ;
-        console.log(data);        
+        console.log(data);
         if (this.listeSousDirections.length >0){
           console.log('Il y a '+this.listeSousDirections.length+' sous-direction pour la direction '+this.direction.Nom);
         }else{
@@ -270,5 +271,36 @@ export class ListeServicesPage implements OnInit {
     this.slide.getActiveIndex().then((index) => {
       this.selectedSegment = this.segmentList[index];
     });
+  }
+
+  addaffectation(){
+    this.modalctrl.create({
+      component: CrudAffectationPage,
+      cssClass: 'crud-affectation',
+    }).
+    then(modal =>{
+      modal.present();
+      return modal.onDidDismiss();
+    }).then(({data, role})=> {
+      console.log(data);
+      console.log(role);
+      if(role === 'create'){
+        // eslint-disable-next-line no-var
+        const newIdEmploye=data['Extra'];
+        this.service.get(newIdEmploye).subscribe(async newdata =>{
+            this.listeEmploye.push(newdata[0]);
+            console.log(this.listeEmploye);
+          });
+          this.refreshServices();
+           this.loadEmploye();
+          this.refreshDirection();
+          this.refreshSousDirection();
+      }
+          this.refreshServices();
+          this.loadEmploye();
+          this.refreshDirection();
+          this.refreshSousDirection();
+    });
+    // this.refreshServices();
   }
 }

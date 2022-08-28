@@ -63,5 +63,12 @@ ion-modal{
         height: 95%;
       }
   }
+  &.crud-affectation{
+
+    &::part(content){
+      width: 60%;
+      height: 95%;
+    }
+  }
 }
 

@@ -85,7 +85,8 @@ refreshServices(){
 
   addaffectation(){
     this.modalctrl.create({
-      component: CrudAffectationPage
+      component: CrudAffectationPage,
+      cssClass: 'crud-affectation',
     }).
     then(modal =>{
       modal.present();

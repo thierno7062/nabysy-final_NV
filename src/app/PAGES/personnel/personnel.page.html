@@ -7,11 +7,11 @@
       <ion-button color="primary" (click)="addEmploye()">
         Ajouter
       </ion-button>
-      <ion-button color="primary" (click)=" removeVarious()" *ngIf="!bulkEdit">
-        Editer
+      <ion-button color="primary" (click)=" removeVarious()" *ngIf="!bulkEdit" style="font-size: 25px;">
+        <ion-icon slot="end" name="create"></ion-icon>
       </ion-button>
       <ion-button color="primary" (click)=" save()" *ngIf="bulkEdit">
-        Enregistrer
+        ANNULER
       </ion-button>
     </ion-buttons>
     <ion-title>personnel</ion-title>
@@ -37,11 +37,26 @@
   <ion-slides #slide (ionSlideDidChange)="_ionSlideDidChange($event)">
 
     <ion-slide value="0">
-      <div class="stats-container" >
+      <div class="stats-container" style="height:100%; width:100%;">
+        <ion-row>
+          <ion-col size="4"></ion-col>
+          <ion-col size="4" class="ion-searchbar">
+            <ion-label color="light" >
+              <ion-searchbar
+              placeholder="Rechercher un Employe ici..."
+              [(ngModel)]="searchTerm"
+              showCancelButton="focus"
+              cancelButtonText="center"
+              cancelButtonIcon="none"
+              animated></ion-searchbar>
+            </ion-label>
+          </ion-col>
+          <ion-col size="4"></ion-col>
+        </ion-row>
         <!-- tableaux -->
         <div id="div1" class="stat-container">
           <!-- <table style="width: 100%;position:absolute;top: 100px;;bottom:0;left:0;right:0;" border="1"> -->
-            <table  border="1" style="width: auto;">
+          <table  [border]="1" style="width: 100%; ">
             <thead style="background-color: #222; color: #fff">
               <th style="text-align: center;">Action</th>
               <th style="text-align: center;">Matricule</th>
@@ -52,11 +67,12 @@
               <th style="text-align: center;">Fonction</th>
               <th style="text-align: center;">Adresse</th>
               <th style="text-align: center;">Téléphone</th>
-              <th style="text-align: center;">Affectation</th>
               <th style="text-align: center;">né(e) le</th>
+              <th style="text-align: center;">Direction</th>
+              <th style="text-align: center;">Service</th>
             </thead>
             <tbody>
-              <tr *ngFor="let d of listeEmploye" class="data-row">
+              <tr *ngFor="let d of listeEmploye | filter:searchTerm" class="data-row" style="font-size: 20px;">
                 <td style="text-align: center;" *ngIf="bulkEdit">
                 <ion-icon slot="start" name="eye-outline"  color="primary" tappable (click)="userdetails(d)"></ion-icon>
                 <ion-icon slot="start" name="create-outline" color="success" tappable (click)="updateEmploye(d)" ></ion-icon>
@@ -64,14 +80,15 @@
                 <td style="text-align: center;" *ngIf="!bulkEdit">
                   <ion-icon slot="start" name="eye-outline"  color="primary" tappable (click)="userdetails(d)"></ion-icon></td>
                   <td style="text-align: center;">{{' '+d.ID}}</td>
-                <td style="text-align: center;">{{d.Prenom}}</td>
+                <td style="text-align: center;font-size: 1000;">{{d.Prenom}}</td>
                 <td style="text-align: center;">{{d.Nom}}</td>
                 <td style="text-align: center;">{{d.Sexe}}</td>
                 <td style="text-align: center;">{{d.Fonction}}</td>
                 <td style="text-align: center;">{{d.Adresse}}</td>
                 <td style="text-align: center;">{{d.Tel}}</td>
-                <td style="text-align: center;">{{d.LieuxAffectationType}}</td>
                 <td style="text-align: center;">{{d.DATENAIS}}</td>
+                <td style="text-align: center;" >{{d.DIRECTION}}</td>
+                <td style="text-align: center;" >{{d.SERVICE}}</td>
               </tr>
             </tbody>
           </table>
@@ -83,9 +100,24 @@
 
 
     <ion-slide value="1">
-        <div>
+        <div style="height:100%; width:100%;">
+          <ion-row>
+            <ion-col size="4"></ion-col>
+            <ion-col size="4" class="ion-searchbar">
+              <ion-label color="light" >
+                <ion-searchbar
+                placeholder="Rechercher un Employe ici..."
+                [(ngModel)]="searchTerm"
+                showCancelButton="focus"
+                cancelButtonText="center"
+                cancelButtonIcon="none"
+                animated></ion-searchbar>
+              </ion-label>
+            </ion-col>
+            <ion-col size="4"></ion-col>
+          </ion-row>
           <ion-row class="ion-margin-vertical">
-            <ion-col   *ngFor="let employe of listeEmploye" size="12" size-sm="6" size-md="4" size-lg="3" size-xl="2">
+            <ion-col   *ngFor="let employe of listeEmploye | filter:searchTerm" size="12" size-sm="6" size-md="4" size-lg="3" size-xl="2">
             <!-- <ion-col   *ngFor="let direction of listeDirections" size="6" > -->
 
               <ion-card class="ion-text-center" tappable>
