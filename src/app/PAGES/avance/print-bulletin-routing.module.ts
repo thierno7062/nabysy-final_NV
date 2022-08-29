@@ -7,7 +7,11 @@ const routes: Routes = [
   {
     path: '',
     component: PrintBulletinPage
+  },  {
+    path: 'avance',
+    loadChildren: () => import('./avance.module').then( m => m.AvancePageModule)
   }
+
 ];
 
 @NgModule({

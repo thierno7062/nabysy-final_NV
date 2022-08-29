@@ -106,7 +106,11 @@ const routes: Routes = [
   {
     path: 'photoviewer',
     loadChildren: () => import('./DETAIL/photoviewer/photoviewer.module').then( m => m.PhotoviewerPageModule)
+  },  {
+    path: 'crud-sous-direction',
+    loadChildren: () => import('./CRUD/crud-sous-direction/crud-sous-direction.module').then( m => m.CrudSousDirectionPageModule)
   },
+
 
 ];
 
