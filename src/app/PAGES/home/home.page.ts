@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuController } from '@ionic/angular';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-home',
@@ -46,5 +47,14 @@ export class HomePage {
     _openSideNav(){
       this.menu.enable(true,'menu-content');
       this.menu.open('menu-content');
+    }
+
+    ionViewWillEnter() {
+      console.log('Je charge les infos ici...');
+      console.log(this);
+    }
+    ionViewCanEnter() {
+      console.log('Peut visiter la page ici...');
+      return true;
     }
 }
