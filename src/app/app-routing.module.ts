@@ -89,7 +89,7 @@ const routes: Routes = [
   },
   {
     path: 'print-bulletin',
-    loadChildren: () => import('./PAGES/avance/print-bulletin.module').then( m => m.PrintBulletinPageModule)
+    loadChildren: () => import('./PAGES/avance1/print-bulletin.module').then( m => m.PrintBulletinPageModule)
   },
   {
     path: 'print-bulletin2',
