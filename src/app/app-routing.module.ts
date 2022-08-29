@@ -110,6 +110,10 @@ const routes: Routes = [
     path: 'crud-sous-direction',
     loadChildren: () => import('./CRUD/crud-sous-direction/crud-sous-direction.module').then( m => m.CrudSousDirectionPageModule)
   },
+  {
+    path: 'detail-prime',
+    loadChildren: () => import('./DETAIL/detail-prime/detail-prime.module').then( m => m.DetailPrimePageModule)
+  },
 
 
 ];
