@@ -10,7 +10,7 @@ import { DetailEmployePage } from '../DETAIL/detail-employe/detail-employe.page'
 import { PhotoService } from 'src/app/services/photo.service';
 import { PhotoViewer } from '@awesome-cordova-plugins/photo-viewer/ngx';
 import { PhotoviewerPage } from '../DETAIL/photoviewer/photoviewer.page';
-import { PrintBulletinPage } from '../PAGES/avance/print-bulletin.page';
+import { PrintBulletinPage } from '../PAGES/avance1/print-bulletin.page';
 import { PrintBulletin2Page } from '../pages/print-bulletin2/print-bulletin2.page';
 /* --------------------------------------------------------------------- */
 
