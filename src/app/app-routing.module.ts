@@ -111,7 +111,11 @@ const routes: Routes = [
   {
     path: 'detail-prime',
     loadChildren: () => import('./DETAIL/detail-prime/detail-prime.module').then( m => m.DetailPrimePageModule)
+  },  {
+    path: 'photoviewer',
+    loadChildren: () => import('./DETAIL/photoviewer/photoviewer.module').then( m => m.PhotoviewerPageModule)
   },
+
 
 
 ];

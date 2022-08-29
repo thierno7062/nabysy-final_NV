@@ -26,7 +26,8 @@ export class AppComponent {
       this.prenomEmploye='Prenom Employe' ;
       this.photoUrl='Url de ma Photo' ;
     }
-    console.log(this);
+    this.loadUserInfos();
+    console.log(this.userInfo);
   }
 
   loadUserInfos(){
@@ -50,7 +51,7 @@ export class AppComponent {
       this.prenomEmploye=environment.employeConnecte.Prenom ;
       this.photoUrl=environment.employeConnecte.PHOTO_URL ;
       this.userInfo=environment.employeConnecte ;
-      console.log(this);
+      console.log(this.userInfo);
     }
     console.log(this);
     this.menu.close('menu-content');
