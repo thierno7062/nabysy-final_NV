@@ -8,6 +8,7 @@ import { CrudAffectationPage } from 'src/app/CRUD/crud-affectation/crud-affectat
 import { CrudEmployePage } from 'src/app/CRUD/crud-employe/crud-employe.page';
 import { EmployeService } from 'src/app/services/employe.service';
 import { LoadingService } from 'src/app/services/loading.service';
+import { PopupModalService } from 'src/app/services/popup-modal.service';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -37,7 +38,7 @@ export class ServicesPage implements OnInit {
 
   constructor(private router: Router,private route: ActivatedRoute,
     private menu: MenuController,private loadingService: LoadingService,
-    private http: HttpClient, private alertctrl: AlertController,
+    private http: HttpClient, private alertctrl: AlertController,private popupModalService: PopupModalService,
     private modalctrl: ModalController, private service: EmployeService) {
       this.refreshServices();
 
@@ -110,7 +111,7 @@ refreshServices(){
   removeEmploye(employe: any){
     this.alertctrl.create({
       header:'Suppresion',
-      message:'voulez vous supprimer ?',
+      message:'voulez vous supprimer '+employe.Prenom+' '+employe.Nom+' du '+this.detailService.Nom+' ?',
       buttons:[{
         text:'oui',
         handler:()=>new Promise (() =>{
@@ -142,15 +143,15 @@ refreshServices(){
 
 
   }
+  userdetails(userDetail: any){
+    this.popupModalService.presentModalEmploye(userDetail);
+  }
 
 
-  updateEmploye(employe: any){
-    console.log(employe);
-    this.modalctrl.create({
-      component: CrudEmployePage,
-      componentProps:{ employe }
-    })
-    .then(modal => modal.present());
+  updateEmploye(employe){
+    this.router.navigate(['/crud-employe'],{
+      queryParams:employe
+    });
 
   }
   _openSideNav(){

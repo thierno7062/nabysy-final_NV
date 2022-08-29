@@ -1,3 +1,4 @@
+/* eslint-disable prefer-const */
 /* eslint-disable @typescript-eslint/dot-notation */
 /* eslint-disable @typescript-eslint/naming-convention */
 import { HttpClient } from '@angular/common/http';
@@ -15,7 +16,7 @@ export class CrudPrimePage implements OnInit {
   @Input() employe: any;
   @ViewChild('selectComponent') selectComponent: IonicSelectableComponent;
   isUpdate= false;
-  ID: string;
+  IDEmp: string; ID: '';
   point: string;
   motif: string;
 
@@ -26,6 +27,8 @@ export class CrudPrimePage implements OnInit {
    listeEmploye: any;
    toggle= true;
    id: number;
+  commentaire: '';
+  origineTable: '';
 
   constructor(private modalctrl: ModalController,
     private http: HttpClient,
@@ -35,17 +38,20 @@ export class CrudPrimePage implements OnInit {
 
   ngOnInit() {
     if (this.employe){
-      this.ID=this.employe.IdEmploye;
+      this.IDEmp=this.employe.IdEmploye;
+      this.ID=this.employe.ID;
       this.point= this.employe.NbPointAjoute;
       this.motif= this.employe.Motif;
+      this.commentaire=this.employe.commentaire;
+      this.origineTable=this.employe.origineTable;
       this.isUpdate = true;
+      // PrenomEmploye
+      // NomEmploye
     }
   }
 
   onSubmit(){
-    if(this.ID===''){
-      this.presentToast('Veillez mettre le nom SVP!!!!');
-    }else if(this.point===''){
+    if (this.point===''){
       this.presentToast('Veillez mettre votre prénom SVP!!!!!!');
     }else if(this.motif===''){
       this.presentToast('Veillez mettre l\'adresse SVP!!!!');
@@ -56,13 +62,17 @@ export class CrudPrimePage implements OnInit {
         const headers = new Headers();
         headers.append('Accept', 'application/json');
         headers.append('Content-Type', 'application/json' );
+        let txIdEmp= '';
         let txId= '';
         if (this.employe){
-          txId='&IdEmploye='+this.employe.ID ;
+          txIdEmp='&IdEmploye='+this.IDEmp ;
+          txId='&ID='+this.ID ;
+        }if(this.selected){
+          txIdEmp='&IDEMPLOYE='+this.id;
         }
 
         const apiUrl=environment.endPoint+'performance_action.php?Action=ADD_PERFORMANCE&NBPOINT='+this.point+'&MOTIF='+this.motif+
-        '&IDEMPLOYE='+this.id+'&Token='+environment.tokenUser;
+        '&commentaire='+this.commentaire+txIdEmp+txId+'&origineTable='+this.origineTable+'&Token='+environment.tokenUser;
         // ---------------
         console.log(apiUrl);
         this.http.get(apiUrl).subscribe(async data =>{

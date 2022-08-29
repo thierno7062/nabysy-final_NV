@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/naming-convention */
+/* eslint-disable no-trailing-spaces */
 /* eslint-disable @typescript-eslint/dot-notation */
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 import { HttpClient } from '@angular/common/http';
@@ -15,6 +17,7 @@ export class LoginPage implements OnInit {
   username: '';
   password: '';
   toastController: any;
+  IdEmploye: '';
 
 
   constructor(
@@ -45,34 +48,58 @@ export class LoginPage implements OnInit {
       environment.passWord=this.password ;
       this.http.get(apiUrl).subscribe(async data => {
        console.log(data['Extra']);
-       if (data['OK'] !== '0') {
+       if (data['OK'] !== 0) {
          environment.tokenUser=data['Extra'] ;
          console.log(environment);
          this.router.navigate(['/home']);
           const toast = await this.toastController.create({
           message: 'Welcome!',
-          duration: 2000
+          duration: 2000,
+          position: 'middle'
          });
          toast.present();
+        
+        
        }else{
           environment.userName='' ;
           environment.passWord='' ;
           const toast = await this.toastController.create({
             message: 'Username or password invalid',
-            duration: 2000
+            duration: 2000,
+            position: 'middle'
           });
           toast.present();
        }
      });
+        const headers2 = new Headers();
+        headers2.append('Accept', 'application/json');
+        headers2.append('Content-Type', 'application/json' );
+        const apiUrl2=environment.endPoint+'nabysy_action.php?Action=OPEN_SESSION&User='+this.username+'&Password='+this.password;
+        //console.log(apiUrl);
+        environment.userName=this.username ;
+        environment.passWord=this.password ;
+        this.http.get(apiUrl2).subscribe(async data2 => {
+          console.log(data2);
+         console.log(data2['Extra']);
+        
+        });
     } else {
       const toast = await this.toastController.create({
         message: 'Vérifier votre connexion svp.',
-        duration: 2000
+        duration: 2000,
+        position: 'middle'
       });
       toast.present();
     }
 
     this.username = '';
     this.password = '';
+
+    // Info Utilisateur
+   
+      return new Promise (() =>{
+        
+        
+      });
   };
 }

@@ -147,6 +147,7 @@ export class PrimePage implements OnInit {
         });
       }
     });
+    this.loadPrime();
   }
   removePrime(employe: any){
     this.alertctrl.create({

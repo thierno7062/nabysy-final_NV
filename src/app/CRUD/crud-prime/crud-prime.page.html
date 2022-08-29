@@ -13,16 +13,20 @@
 
   <ion-list >
     <ion-item *ngIf="this.selected">
-     <!--  <ion-label position="floating">ID Employe</ion-label>
-      <ion-text *ngIf="this.selected">{{this.selected.Prenom+' '+this.selected.Nom}}</ion-text> -->
       <ion-label>
         <ion-text >Employe</ion-text>
         <p><ion-text color="dark">{{this.selected.Prenom+' '+this.selected.Nom}}</ion-text></p>
       </ion-label>
     </ion-item>
+    <ion-item *ngIf="isUpdate">
+      <ion-label>
+        <ion-text >Employe</ion-text>
+        <p><ion-text color="dark">{{this.IDEmp+' '+this.employe.PrenomEmploye+' '+this.employe.NomEmploye}}</ion-text></p>
+      </ion-label>
+    </ion-item>
 
     <!-- Select Employe -->
-    <ion-item>
+    <ion-item *ngIf="!isUpdate">
       <ion-label>Selectionnez un employe</ion-label>
 
       <ionic-selectable #selectComponent [(ngModel)]="selected" itemValueField="ID"
@@ -71,6 +75,14 @@
     <ion-item>
       <ion-label position="floating">Motif</ion-label>
       <ion-input [(ngModel)]='this.motif'></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">commentaire</ion-label>
+      <ion-input [(ngModel)]='this.commentaire'></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Origine Table</ion-label>
+      <ion-input [(ngModel)]='this.origineTable'></ion-input>
     </ion-item>
   </ion-list>
   <ion-button fill="outline"expand="block"color="primary"type="submit"(click)="onSubmit()">

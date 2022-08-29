@@ -303,4 +303,44 @@ export class ListeServicesPage implements OnInit {
     });
     // this.refreshServices();
   }
+  updateEmploye(userDetail){
+    this.router.navigate(['/crud-employe'],{
+      queryParams:userDetail
+    });
+  }
+  removeEmploye(employe: any){
+    this.alertctrl.create({
+      header:'Suppresion',
+      message:'voulez vous supprimer '+employe.Prenom+' '+employe.Nom+' du '+this.direction.Nom+' ?',
+      buttons:[{
+        text:'oui',
+        handler:()=>new Promise (() =>{
+            const headers = new Headers();
+            headers.append('Accept', 'application/json');
+            headers.append('Content-Type', 'application/json' );
+            const apiUrl=environment.endPoint+'employe_action.php?Action=SAVE_EMPLOYE&IdEmploye='+
+            employe.ID+'&IdDirection=0&IdService=0&Token='+environment.tokenUser;
+            console.log(apiUrl);
+            this.http.get(apiUrl).subscribe(async data =>{
+              console.log(data);
+              if(data['OK'] >0){
+                 //this.router.navigate(['personnel']);
+                 const pos=this.listeEmploye.indexOf(employe);
+                 console.log(pos);
+                 if (pos>-1){
+                  this.listeEmploye.splice(pos,1);
+                 }
+              }else{
+                console.log(data['OK']);
+              }
+            });
+          })
+      },
+       {text:'No'}
+    ]
+    }).then(alertE1 =>alertE1.present()) ;
+
+
+
+  }
 }

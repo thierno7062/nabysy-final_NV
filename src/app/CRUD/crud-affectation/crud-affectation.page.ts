@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalController, ToastController } from '@ionic/angular';
+import { LoadingService } from 'src/app/services/loading.service';
 import { environment } from 'src/environments/environment';
 import { CrudEmployePage } from '../crud-employe/crud-employe.page';
 
@@ -36,7 +37,8 @@ export class CrudAffectationPage implements OnInit {
   sortKey= null;
   Employeaffecte: any;
 
-  constructor(private http: HttpClient,private modalctrl: ModalController,private router: Router,private route: ActivatedRoute,
+  constructor(private http: HttpClient,private modalctrl: ModalController,private router: Router,private loadingService: LoadingService,
+    private route: ActivatedRoute,
     private toastctrl: ToastController) {
       this.loadData();
     }
@@ -60,7 +62,7 @@ export class CrudAffectationPage implements OnInit {
         console.log(this.infoService);
       }
     });
-    // this.http.get(`https://randomuser.me/api/?page=${this.page}&results=${this.resultsCount}`).subscribe(res => {
+    this.loadingService.presentLoading();
       this.http.get(environment.endPoint+'employe_action.php?Action=GET_EMPLOYE&Token='+environment.tokenUser).subscribe(res => {
       this.listeEmploye = res;
       console.log('listeEmploye =',this.listeEmploye);

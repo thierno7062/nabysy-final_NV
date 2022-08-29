@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/dot-notation */
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 /* eslint-disable @typescript-eslint/no-shadow */
 /* eslint-disable @typescript-eslint/prefer-for-of */
@@ -13,7 +14,7 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { FileOpener } from '@awesome-cordova-plugins/file-opener/ngx';
 import { Printer } from '@awesome-cordova-plugins/printer/ngx';
-import { AlertController, IonDatetime, MenuController, ModalController, Platform } from '@ionic/angular';
+import { AlertController, IonDatetime, MenuController, ModalController, Platform, ToastController } from '@ionic/angular';
 import { IonicSelectableComponent } from 'ionic-selectable';
 import { environment } from 'src/environments/environment';
 
@@ -39,8 +40,8 @@ export class SalairesPage implements OnInit {
   sexeFn: boolean;
   sexeInc: boolean;
   nom: ''; qualifiquation: ''; periode: '';  salaireBrut: ''; totalRetenue: ''; salaireNet: '';categorie: ''; situationFa: '';
-  nbTotalJour: '';nbheureApayer: '';totalHeureApayer: ''; mois: ''; adresse: ''; partTrimf: ''; partIrpp: ''; periodePaie: '';
-  dateEmbauche: '';gainPrime: any; ligneCotisation: any; SALAIRE_BRUT: ''; entreprise: '';adressEntr: '';contactEntre: '';
+  nbTotalJour: '';nbheureApayer: '';totalHeureApayer: ''; mois: ''; adresse: ''; partTrimf: '0'; partIrpp: '0'; periodePaie: '';
+  dateEmbauche: '';gainPrime: any; ligneCotisation: any; SALAIRE_BRUT: '0'; entreprise: '';adressEntr: '';contactEntre: '';
   emailEntre: '';phoneEntre: '';prenom: '';
 
   // ionic selectable************
@@ -72,9 +73,8 @@ export class SalairesPage implements OnInit {
    dateValue= format(new Date(),'yyyy-MM-dd');
    formattedString= format(new Date(),'MMMM, yyyy'); showtof: boolean; tof: any;
 
-  constructor(private router: Router,  private modalctrl: ModalController,private alertctrl: AlertController,
-    private menu: MenuController, private http: HttpClient,private printer: Printer,private popupModalService: PopupModalService,
-    private fb: FormBuilder, private plt: Platform, private fileOpener: FileOpener) {
+  constructor(private router: Router,  private modalctrl: ModalController,private menu: MenuController, 
+    private http: HttpClient,private popupModalService: PopupModalService,private toastctrl: ToastController) {
       this.loadEmploye();
       this.loadSalary();
       /* this.loadInfoMensuel(); */
@@ -609,14 +609,23 @@ export class SalairesPage implements OnInit {
 
 
     // download the PDF
-    pdfMake.createPdf(docDefinition).download();
+    pdfMake.createPdf(docDefinition).download();  
     console.log(this.items);
+    
 
   }
 
   // ***********************
   userdetails(userDetail: any){
     this.popupModalService.presentModalEmploye(userDetail);
+  }
+  async presentToast(a){
+    const toast = await this.toastctrl.create({
+      message:a,
+      duration: 3000,
+      position: 'middle'
+    });
+    toast.present();
   }
 
   // Reçu paiement Salaire**

@@ -1,3 +1,4 @@
+/* eslint-disable no-trailing-spaces */
 /* eslint-disable @typescript-eslint/member-ordering */
 /* eslint-disable @typescript-eslint/dot-notation */
 import { HttpClient } from '@angular/common/http';
@@ -46,12 +47,7 @@ export class PersonnelPage implements OnInit {
      }
 
   ngOnInit() {
-    this.refreshPerson();
-   /*  for(let i= 0;i<100;i++){
-      const obj ={id:'id'+i.toString(), name:'name'+i.toString(),
-    salary:'salary'+i.toString()};
-    this.listeEmploye.push(obj);
-    }*/
+    // this.refreshPerson();
     this.sort();
   }
 
@@ -68,6 +64,7 @@ export class PersonnelPage implements OnInit {
 
   //load API
   refreshPerson(){
+    this.loadingService.presentLoading();
     this.readAPI(environment.endPoint+'employe_action.php?Action=GET_EMPLOYE&Token='+environment.tokenUser)
     .subscribe((listes) =>{
       this.loadingService.dismiss();
@@ -149,16 +146,7 @@ export class PersonnelPage implements OnInit {
     this.router.navigateByUrl('/crud-employe');
   }
 
- /*  updateEmploye(employe: any){
-    console.log(employe);
-    this.modalctrl.create({
-      component: CrudEmployePage,
-      componentProps:{ employe }
-    })
-    .then(modal => modal.present());
-    this.refreshPerson();
-
-  } */
+ 
   _openSideNav(){
     this.menu.enable(true,'menu-content');
     this.menu.open('menu-content');
