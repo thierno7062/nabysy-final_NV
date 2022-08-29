@@ -49,17 +49,17 @@ export class LoginPage implements OnInit {
       this.http.get(apiUrl).subscribe(async data => {
        console.log(data['Extra']);
        if (data['OK'] !== 0) {
-         environment.tokenUser=data['Extra'] ;
-         console.log(environment);
-         this.router.navigate(['/home']);
+          environment.tokenUser=data['Extra'] ;
+          //Recup info de l'utilisateur connecté
+          await this.getInfosUtilisateur();
+          console.log(environment);
+          this.router.navigate(['/home']);
           const toast = await this.toastController.create({
           message: 'Welcome!',
           duration: 2000,
           position: 'middle'
-         });
-         toast.present();
-        
-        
+          });
+          toast.present();
        }else{
           environment.userName='' ;
           environment.passWord='' ;
@@ -71,21 +71,9 @@ export class LoginPage implements OnInit {
           toast.present();
        }
      });
-        const headers2 = new Headers();
-        headers2.append('Accept', 'application/json');
-        headers2.append('Content-Type', 'application/json' );
-        const apiUrl2=environment.endPoint+'nabysy_action.php?Action=OPEN_SESSION&User='+this.username+'&Password='+this.password;
-        //console.log(apiUrl);
-        environment.userName=this.username ;
-        environment.passWord=this.password ;
-        this.http.get(apiUrl2).subscribe(async data2 => {
-          console.log(data2);
-         console.log(data2['Extra']);
-        
-        });
     } else {
       const toast = await this.toastController.create({
-        message: 'Vérifier votre connexion svp.',
+        message: 'Vérifiez votre connexion svp.',
         duration: 2000,
         position: 'middle'
       });
@@ -102,4 +90,37 @@ export class LoginPage implements OnInit {
         
       });
   };
+
+  async getInfosUtilisateur(){
+    const headers = new Headers();
+    headers.append('Accept', 'application/json');
+    headers.append('Content-Type', 'application/json' );
+    // eslint-disable-next-line max-len
+    const apiUrl=environment.endPoint+'nabysy_action.php?Action=GET_INFOS_USER&User='+environment.userName+'&Password='+environment.passWord;
+    console.log(apiUrl);
+
+    this.http.get(apiUrl).subscribe(async data => {
+      console.log(data);
+      if (data) {
+        environment.employeConnecte =data ;
+        /* const toast = await this.toastController.create({
+        message: 'Bienvenue '+environment.employeConnecte.Prenom+' '+environment.employeConnecte.Nom+'!',
+        duration: 2000,
+        position: 'middle'
+      }); */
+      console.log(environment);
+      //toast.present();       
+       
+      }else{
+        environment.employeConnecte=null;
+        /* const toast = await this.toastController.create({
+           message: 'Information utilisateur invalide',
+           duration: 2000,
+           position: 'middle'
+         });
+         toast.present(); */
+      }
+    });
+
+  }
 }

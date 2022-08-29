@@ -89,7 +89,7 @@ const routes: Routes = [
   },
   {
     path: 'print-bulletin',
-    loadChildren: () => import('./PAGES/avance1/print-bulletin.module').then( m => m.PrintBulletinPageModule)
+    loadChildren: () => import('./PAGES/avance/print-bulletin.module').then( m => m.PrintBulletinPageModule)
   },
   {
     path: 'print-bulletin2',
@@ -106,7 +106,11 @@ const routes: Routes = [
   {
     path: 'photoviewer',
     loadChildren: () => import('./DETAIL/photoviewer/photoviewer.module').then( m => m.PhotoviewerPageModule)
+  },  {
+    path: 'crud-sous-direction',
+    loadChildren: () => import('./CRUD/crud-sous-direction/crud-sous-direction.module').then( m => m.CrudSousDirectionPageModule)
   },
+
 
 ];
 
