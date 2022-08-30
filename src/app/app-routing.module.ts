@@ -115,6 +115,10 @@ const routes: Routes = [
     path: 'photoviewer',
     loadChildren: () => import('./DETAIL/photoviewer/photoviewer.module').then( m => m.PhotoviewerPageModule)
   },
+  {
+    path: 'avance',
+    loadChildren: () => import('./CRUD/avance/avance.module').then( m => m.AvancePageModule)
+  },
 
 
 

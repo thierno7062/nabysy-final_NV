@@ -39,12 +39,14 @@
           </ion-list>
         </ion-label>
       </ion-col>
-      <ion-col size="3" class="col2" >
+      <ion-col size="6" class="col2" >
         <ion-label color="light"  >
           <b>NABY SY SA</b>
         </ion-label>
-        <ion-item style="margin-left: 20px;">
-          <ion-label>Selectionnez une Direction</ion-label>
+        <ion-item style="margin-left: 50px; margin-right: 50px;">
+          <ion-label>Selectionnez une direction
+            <b slot="end" *ngIf="selected" style="margin-left: 300px; color: blue; background-color: aquamarine;">{{selected.Nom}}</b>
+          </ion-label>
           <ionic-selectable #selectComponent [(ngModel)]="selected" itemValueField="ID"
           itemTextField="Prenom" [items]="users" headerColor="primary"
           searchFailText=" Rien n'a été trouvé:("  [canClear]="true"
@@ -87,37 +89,16 @@
         </ion-item>
       </ion-col>
 
-      <ion-col size="6" class="ion-text-end">
-        <ion-button color="light" size="small" (click)="addaffectation()">
-          <ion-text color="primary" > Affecter Employe</ion-text>
-          <ion-icon name="send" color="primary" slot="end"></ion-icon>
-        </ion-button>
+      <ion-col size="3" class="ion-text-end">
+
       </ion-col>
     </ion-row>
 
-    <ion-row class="ion-margin-horizontal ion-margin-top">
-      <ion-col size="6"></ion-col>
-      <ion-col size="6" class="ion-text-end">
-        <ion-button color="light" size="small" (click)="addService()">
-          <ion-text color="primary" > Ajouter Sous-Direction</ion-text>
-          <ion-icon name="add" color="primary" slot="end"></ion-icon>
-        </ion-button>
-      </ion-col>
-    </ion-row>
-    <ion-row class="ion-margin-horizontal ion-margin-top">
-      <ion-col size="6"></ion-col>
-      <ion-col size="6" class="ion-text-end">
-        <ion-button color="light" size="small" (click)="addService()">
-          <ion-text color="primary" > Ajouter Service</ion-text>
-          <ion-icon name="add" color="primary" slot="end"></ion-icon>
-        </ion-button>
-      </ion-col>
-    </ion-row>
     <ion-toolbar color="success">
-      <ion-segment [(ngModel)]="selectedSegment">
+      <ion-segment [(ngModel)]="selectedSegment" color="danger" >
           <ion-segment-button [value]="item" *ngFor="let item of segmentList;let i = index"
-              (click)="_segmentSelected(item,i)">
-              <ion-label class="segment-text">{{item}}</ion-label>
+              (click)="_segmentSelected(item,i)" >
+              <ion-label class="segment-text" ><h1>{{item}}</h1></ion-label>
           </ion-segment-button>
       </ion-segment>
   </ion-toolbar>
@@ -126,7 +107,7 @@
 
     <ion-slide value="0">
       <div style="height:100%; width:100%;">
-        <ion-row>
+        <ion-row class="ion-margin-horizontal ion-margin-top">
           <ion-col size="4"></ion-col>
           <ion-col size="4" class="ion-searchbar">
             <ion-label color="light" >
@@ -139,12 +120,23 @@
               animated></ion-searchbar>
             </ion-label>
           </ion-col>
-          <ion-col size="4"></ion-col>
+          <ion-col size="4">
+             <ion-buttons>
+              <ion-button color="dark" (click)="toggleActiveEdit()"shape="round" style="background-color: white; margin-right: 20px;">
+                <ion-text color="dark" style="font-weight:bold ">{{activeEditsousDirection ? 'Fermer' :'Editer'}} </ion-text>
+              </ion-button>
+
+              <ion-button color="dark" size="small" (click)="addService()" style="background-color: white;">
+                <ion-text color="dark" style="font-weight:bold "> Ajouter Sous-Direction</ion-text>
+                <ion-icon name="add" color="primary" slot="end"></ion-icon>
+              </ion-button>
+            </ion-buttons>
+          </ion-col>
         </ion-row>
             <!-- <ion-label>1st Segment</ion-label> -->
             <ion-row >
               <ion-col   *ngFor="let service of listeSousDirections | filter:searchTerm"  size="12" size-sm="6" size-md="4" size-lg="3" size-xl="2" >
-                <ion-card class="ion-text-center" >
+                <ion-card class="ion-text-center" tappable>
                   <ion-card-header (click)="goToListeServices(service)">
                     <div align="center" size="6" >
                       <ion-thumbnail [style.background]="'rgba(27, 150, 181, 0.1)'">
@@ -155,7 +147,7 @@
                   <ion-card-content>
                     <ion-label color="dark">{{service.ID}} : {{service.Nom }}</ion-label>
                   </ion-card-content>
-                  <ion-card-content>
+                  <ion-card-content *ngIf="activeEditsousDirection">
                     <ion-button size="small" slot="start" (click)="removeService(service)">
                       <ion-icon slot="icon-only" name="trash"></ion-icon>
                     </ion-button>
@@ -176,7 +168,7 @@
     <ion-slide value="1">
         <div style="height:100%; width:100%;">
             <!-- <ion-label>2nd Segment</ion-label> -->
-            <ion-row>
+            <ion-row class="ion-margin-horizontal ion-margin-top">
               <ion-col size="4"></ion-col>
               <ion-col size="4" class="ion-searchbar">
                 <ion-label color="light" >
@@ -189,11 +181,24 @@
                   animated></ion-searchbar>
                 </ion-label>
               </ion-col>
-              <ion-col size="4"></ion-col>
+              <ion-col size="4">
+                <ion-buttons>
+                  <ion-button color="dark" (click)="toggleActiveEdit2()"shape="round" style="background-color: white; margin-right: 20px;">
+                    <ion-text color="dark" style="font-weight:bold "> {{activeEditService ? 'Fermer' :'Editer'}}</ion-text>
+                  </ion-button>
+
+                  <ion-button color="dark" size="small" (click)="addService()" style="background-color: white;">
+                    <ion-text color="dark" style="font-weight:bold "> Ajouter Service</ion-text>
+                    <ion-icon name="add" color="primary" slot="end"></ion-icon>
+                  </ion-button>
+                </ion-buttons>
+
+
+              </ion-col>
             </ion-row>
             <ion-row >
               <ion-col   *ngFor="let service of listeService | filter:searchTerm"  size="12" size-sm="6" size-md="4" size-lg="3" size-xl="2" >
-                <ion-card class="ion-text-center" >
+                <ion-card class="ion-text-center" tappable>
                   <ion-card-header (click)="goToFicheServices(service)">
                     <div align="center" size="6">
                       <ion-thumbnail [style.background]="'rgba(27, 150, 181, 0.1)'">
@@ -204,7 +209,7 @@
                   <ion-card-content>
                     <ion-label color="dark">{{service.ID}} : {{service.Nom }}</ion-label>
                   </ion-card-content>
-                  <ion-card-content>
+                  <ion-card-content *ngIf="activeEditService">
                     <ion-button size="small" slot="start" (click)="removeService(service)">
                       <ion-icon slot="icon-only" name="trash"></ion-icon>
                     </ion-button>
@@ -224,7 +229,7 @@
     <ion-slide value="2">
         <div style="height:100%; width:100%;">
             <!-- <ion-label>3rd Segment</ion-label> -->
-            <ion-row>
+            <ion-row class="ion-margin-horizontal ion-margin-top">
               <ion-col size="4"></ion-col>
               <ion-col size="4" class="ion-searchbar">
                 <ion-label color="light" >
@@ -237,11 +242,24 @@
                   animated></ion-searchbar>
                 </ion-label>
               </ion-col>
-              <ion-col size="4"></ion-col>
+              <ion-col size="4">
+                <ion-buttons>
+                  <ion-button color="dark" (click)="toggleActiveEdit3()" shape="round" style="background-color: white; margin-right: 20px;">
+                    <ion-text color="dark" style="font-weight:bold "> {{activeEditEmploye ? 'Fermer' :'Editer'}}</ion-text>
+                  </ion-button>
+
+                  <ion-button color="dark" size="small" (click)="addaffectation()" style="background-color: white;">
+                    <ion-text color="dark" style="font-weight:bold "> Affecter Employe</ion-text>
+                    <ion-icon name="send" color="primary" slot="end"></ion-icon>
+                  </ion-button>
+
+                </ion-buttons>
+
+              </ion-col>
             </ion-row>
             <ion-row >
               <ion-col   *ngFor="let employe of listeEmploye | filter:searchTerm"  size="12" size-sm="6" size-md="4" size-lg="3" size-xl="2" >
-                <ion-card class="ion-text-center" >
+                <ion-card class="ion-text-center" tappable>
                   <ion-card-header (click)="userdetails(employe)">
                     <div align="center" size="6">
                       <ion-thumbnail [style.background]="'rgba(27, 150, 181, 0.1)'">
@@ -253,7 +271,7 @@
                     <ion-label color="dark">{{employe.Prenom}} {{employe.Nom }}</ion-label><br>
                     <ion-label color="dark">{{employe.Fonction}}</ion-label>
                   </ion-card-content>
-                  <ion-card-content>
+                  <ion-card-content *ngIf="activeEditEmploye">
                     <ion-button size="small" slot="start" (click)="removeEmploye(employe)">
                       <ion-icon slot="icon-only" name="trash"></ion-icon>
                     </ion-button>

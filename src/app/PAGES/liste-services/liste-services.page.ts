@@ -11,6 +11,7 @@ import { Observable } from 'rxjs';
 import { CrudAffectationPage } from 'src/app/CRUD/crud-affectation/crud-affectation.page';
 import { CrudServicePage } from 'src/app/CRUD/crud-service/crud-service.page';
 import { EmployeService } from 'src/app/services/employe.service';
+import { LoadingService } from 'src/app/services/loading.service';
 import { PopupModalService } from 'src/app/services/popup-modal.service';
 import { environment } from 'src/environments/environment';
 
@@ -27,6 +28,9 @@ export class ListeServicesPage implements OnInit {
     'Slide Segment 2',
     'Slide Segment 3',
   ];
+  activeEditsousDirection= false;
+  activeEditService= false;
+  activeEditEmploye= false;
 
   @ViewChild('slide') slide: IonSlides;
   direction: any;
@@ -46,7 +50,7 @@ export class ListeServicesPage implements OnInit {
   listeSousDirections: any;
 
   constructor(private router: Router,private route: ActivatedRoute, private modalctrl: ModalController,
-    private menu: MenuController,private service: EmployeService,private alertctrl: AlertController,
+    private menu: MenuController,private service: EmployeService,private alertctrl: AlertController,private loadingService: LoadingService,
     private http: HttpClient,private popupModalService: PopupModalService){
      this.refreshServices();
      this.loadEmploye();
@@ -68,7 +72,7 @@ export class ListeServicesPage implements OnInit {
       this.listeEmploye=listes ;
       console.log(this.listeEmploye);
     }); */
-
+    this.loadingService.presentLoading();
     this.route.queryParams.subscribe(res =>{
       console.log(res);
       this.direction=res;
@@ -83,6 +87,7 @@ export class ListeServicesPage implements OnInit {
     });
   }
   refreshDirection(){
+    this.loadingService.presentLoading();
     this.readAPI(environment.endPoint+'direction_action.php?Action=GET_DIRECTION')
     .subscribe((Listes) =>{
       console.log(Listes);
@@ -94,7 +99,7 @@ export class ListeServicesPage implements OnInit {
     });
   }
   refreshSousDirection(){
-
+    this.loadingService.presentLoading();
     this.route.queryParams.subscribe(res =>{
       console.log(res);
       this.direction=res;
@@ -114,6 +119,7 @@ export class ListeServicesPage implements OnInit {
     });
   }
   refreshServices(){
+    this.loadingService.presentLoading();
     this.route.queryParams.subscribe(res =>{
       console.log(res);
       this.direction=res;
@@ -342,5 +348,14 @@ export class ListeServicesPage implements OnInit {
 
 
 
+  }
+  toggleActiveEdit(){
+    this.activeEditsousDirection = !this.activeEditsousDirection;
+  }
+  toggleActiveEdit2(){
+    this.activeEditService = !this.activeEditService;
+  }
+  toggleActiveEdit3(){
+    this.activeEditEmploye = !this.activeEditEmploye;
   }
 }

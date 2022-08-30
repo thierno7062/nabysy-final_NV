@@ -9,7 +9,7 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent {
-  userInfo: any ;
+  userInfo: any ; fonction: '';
   userName: string ;
   nomEmploye: string;
   prenomEmploye: string;
