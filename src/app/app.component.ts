@@ -9,7 +9,7 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent {
-  userInfo: any ;
+  userInfo: any ; fonction: '';
   userName: string ;
   nomEmploye: string;
   prenomEmploye: string;
@@ -21,6 +21,7 @@ export class AppComponent {
       this.nomEmploye=environment.employeConnecte.Nom ;
       this.prenomEmploye=environment.employeConnecte.Prenom ;
       this.photoUrl=environment.employeConnecte.PHOTO_URL ;
+      this.fonction=environment.employeConnecte.Fonction ;
     }else{
       this.nomEmploye='Nom Employe' ;
       this.prenomEmploye='Prenom Employe' ;
@@ -28,6 +29,7 @@ export class AppComponent {
     }
     this.loadUserInfos();
     console.log(this.userInfo);
+
   }
 
   loadUserInfos(){
@@ -37,6 +39,7 @@ export class AppComponent {
       this.nomEmploye=environment.employeConnecte.Nom ;
       this.prenomEmploye=environment.employeConnecte.Prenom ;
       this.photoUrl=environment.employeConnecte.PHOTO_URL ;
+      this.fonction=environment.employeConnecte.Fonction ;
     }else{
       this.nomEmploye='Nom Employe' ;
       this.prenomEmploye='Prenom Employe' ;
@@ -50,6 +53,7 @@ export class AppComponent {
       this.nomEmploye=environment.employeConnecte.Nom ;
       this.prenomEmploye=environment.employeConnecte.Prenom ;
       this.photoUrl=environment.employeConnecte.PHOTO_URL ;
+      this.fonction=environment.employeConnecte.Fonction ;
       this.userInfo=environment.employeConnecte ;
       console.log(this.userInfo);
     }

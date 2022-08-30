@@ -10,7 +10,7 @@ import { PhotoService } from 'src/app/services/photo.service';
 import { PhotoviewerPage } from '../DETAIL/photoviewer/photoviewer.page';
 // **************************
 import { PrintBulletin2Page } from '../pages/print-bulletin2/print-bulletin2.page';
-import { AvancePage } from '../PAGES/avance1/avance.page';
+import { AvancePage } from '../CRUD/avance/avance.page';
 /* --------------------------------------------------------------------- */
 
 @Injectable({

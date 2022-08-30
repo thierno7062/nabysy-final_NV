@@ -37,11 +37,11 @@
   </ion-item>
   <ion-item>
     <ion-label position="floating">Mois</ion-label>
-    <ion-input [(ngModel)]='this.mois' [readonly]="true"></ion-input>
+    <ion-input [(ngModel)]='this.avance.BULLETIN_SALAIRE.MOIS' [readonly]="true"></ion-input>
   </ion-item>
   <ion-item>
     <ion-label position="floating">Année</ion-label>
-    <ion-input [(ngModel)]='this.annee' [readonly]="true"></ion-input>
+    <ion-input [(ngModel)]='this.avance.BULLETIN_SALAIRE.ANNEE' [readonly]="true"></ion-input>
   </ion-item>
 </ion-list>
 <ion-button fill="outline"expand="block"color="primary"type="submit"(click)="onSubmit()">

@@ -1,14 +1,9 @@
-/* eslint-disable no-cond-assign */
-/* eslint-disable @typescript-eslint/dot-notation */
-/* eslint-disable no-trailing-spaces */
-/* eslint-disable prefer-arrow/prefer-arrow-functions */
-/* eslint-disable max-len */
 /* eslint-disable prefer-const */
-/* eslint-disable @typescript-eslint/naming-convention */
-import { Component, OnInit } from '@angular/core';
+/* eslint-disable @typescript-eslint/dot-notation */
 import { HttpClient } from '@angular/common/http';
-import { ModalController, NavParams, ToastController } from '@ionic/angular';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ModalController, NavParams, ToastController } from '@ionic/angular';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -21,8 +16,7 @@ export class AvancePage implements OnInit {
   infoEmploye: any;
   id: ''; nom: '';prenom: ''; mois: ''; annee: ''; montant: number;
   constructor(private http: HttpClient,private route: ActivatedRoute,private router: Router,
-    private navParams: NavParams,private modalctrl: ModalController,private toastctrl: ToastController)
-    {
+    private navParams: NavParams,private modalctrl: ModalController,private toastctrl: ToastController) {
       this.infoSalaire();
       this.loadEmploye();
       this.montant=0;
@@ -45,6 +39,8 @@ export class AvancePage implements OnInit {
       this.mois=this.avance.BULLETIN_SALAIRE.MOIS;
       this.annee=this.avance.BULLETIN_SALAIRE.ANNEE;
       console.log(this.id);
+      console.log(this.mois);
+      console.log(this.annee);
   }
 
   loadEmploye(){
@@ -112,6 +108,5 @@ export class AvancePage implements OnInit {
     });
     toast.present();
   }
-
 
 }
