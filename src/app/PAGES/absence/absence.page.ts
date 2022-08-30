@@ -1,3 +1,4 @@
+/* eslint-disable no-trailing-spaces */
 /* eslint-disable @typescript-eslint/member-ordering */
 /* eslint-disable @typescript-eslint/dot-notation */
 import { HttpClient } from '@angular/common/http';
@@ -9,6 +10,7 @@ import { format, parseISO } from 'date-fns';
 // import { Key } from 'protractor';
 import { CrudAbsencePage } from 'src/app/CRUD/crud-absence/crud-absence.page';
 import { EmployeService } from 'src/app/services/employe.service';
+import { LoadingService } from 'src/app/services/loading.service';
 import { PopupModalService } from 'src/app/services/popup-modal.service';
 import { environment } from 'src/environments/environment';
 import { PrimePage } from '../prime/prime.page';
@@ -31,7 +33,7 @@ export class AbsencePage implements OnInit {
 
 
   constructor(private router: Router,private popupModalService: PopupModalService,
-    private menu: MenuController,
+    private menu: MenuController,private loadingService: LoadingService,
     private http: HttpClient, private alertctrl: AlertController,
     private modalctrl: ModalController, private service: EmployeService) {
     this.loadAbsence();
@@ -51,11 +53,13 @@ export class AbsencePage implements OnInit {
 
   loadAbsence(){
      //console.log(environment.endPoint);
+     this.loadingService.presentLoading();
      this.readAPI(environment.endPoint+'calendrier_action.php?Action=GET_ABSENCE&Token='+environment.tokenUser)
      .subscribe((listes) =>{
        // console.log(Listes);
        this.listeAbsence=listes ;
        console.log(this.listeAbsence);
+       this.loadingService.dismiss();
      });
 
   }
@@ -67,20 +71,20 @@ export class AbsencePage implements OnInit {
     this.modalctrl.create({
       component: CrudAbsencePage
     }).
-    then(modal =>{
-      modal.present();
-      return modal.onDidDismiss();
-    }).then(({data, role})=> {
-      console.log(data);
-      console.log(role);
-      if(role === 'create'){
-        const newIdAbsence=data.Extra;
-        this.service.get(newIdAbsence).subscribe(async newdata =>{
-            this.listeAbsence.push(newdata[0]);
-            //console.log(this.listeEmploye);
-            this.loadAbsence();
-        });
-      }
+      then(modal =>{
+        modal.present();
+        return modal.onDidDismiss();
+      }).then(({data, role})=> {
+        console.log(data);
+        console.log(role);
+        if(role === 'create'){
+          const newIdAbsence=data.Extra;
+          this.service.get(newIdAbsence).subscribe(async newdata =>{
+              this.listeAbsence.push(newdata[0]);
+              //console.log(this.listeEmploye);
+              this.loadAbsence();
+          });
+        }
     });
   }
 
@@ -119,7 +123,7 @@ export class AbsencePage implements OnInit {
                  console.log(pos);
                  if (pos>-1){
                   this.listeAbsence.splice(pos,1);
-                  this.loadAbsence();
+                  // this.loadAbsence();
                  }
               }else{
                 console.log(data['OK']);
@@ -138,9 +142,19 @@ export class AbsencePage implements OnInit {
     this.modalctrl.create({
       component: CrudAbsencePage,
       componentProps:{ absence }
-    })
-    .then(modal => modal.present());
-
+      /* .then(modal => modal.present());
+      this.loadAbsence(); */
+    }).then(modal =>{
+      modal.present();
+      return modal.onDidDismiss();
+    }).then(({data, role})=> {
+      console.log(data);
+      console.log(role);
+      if(role === 'create'){
+          this.doRefresh(event);
+          this.loadAbsence();
+      }
+    });
   }
   doRefresh(event){
     this.loadAbsence();

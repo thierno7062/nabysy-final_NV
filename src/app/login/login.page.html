@@ -6,26 +6,38 @@
 
 <ion-content>
   <div class="flex-center">
+    <ion-row class="ion-content-center" style="margin-top: 40px;">
+      <ion-col size="3"></ion-col>
+      <ion-col size="12" size-sm="6" size-md="6" size-lg="6" size-xl="6">
+        <ion-card>
+          <ion-card-header>
 
-    <ion-card>
-      <ion-card-header>
+            <ion-card-title style="text-align: center;"> <ion-text color="success" >
+              <h1>AUTHENTIFICATION</h1>
+             </ion-text> </ion-card-title>
+          </ion-card-header>
 
-        <ion-card-title color="success">AUTHENTIFICATION</ion-card-title>
-      </ion-card-header>
+          <ion-card-content>
+            <ion-item>
+              <ion-label position="floating">Email</ion-label>
+              <ion-input type="email" [(ngModel)]="username"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">mot de passe</ion-label>
+              <ion-input type="password" [(ngModel)]="password"></ion-input>
+            </ion-item>
+            <ion-card-content style="text-align: center; margin-top: 40px;">
+              <!-- <ion-button color="dark" fill="clear" size="full">email/mot de passe oublé</ion-button> -->
+              <ion-button color="success"  (click) ="proseslogin()">
+                Connexion
+              </ion-button>
+              <!-- <ion-button color="success" fill="clear" size="full">Inscription</ion-button> -->
 
-      <ion-card-content>
-        <ion-item>
-          <ion-label position="floating">Email</ion-label>
-          <ion-input type="email" [(ngModel)]="username"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label position="floating">mot de passe</ion-label>
-          <ion-input type="password" [(ngModel)]="password"></ion-input>
-        </ion-item>
-        <ion-button color="dark" fill="clear" size="full">email/mot de passe oublé</ion-button>
-        <ion-button color="success" size="full" (click) ="proseslogin()" >Connexion</ion-button>
-        <ion-button color="success" fill="clear" size="full">Inscription</ion-button>
-      </ion-card-content>
-    </ion-card>
+            </ion-card-content>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col size="3"></ion-col>
+    </ion-row>
   </div>
 </ion-content>

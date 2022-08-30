@@ -5,6 +5,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MenuController, ModalController, ToastController } from '@ionic/angular';
 import { CrudEmployePage } from 'src/app/CRUD/crud-employe/crud-employe.page';
+import { LoadingService } from 'src/app/services/loading.service';
 import { PopupModalService } from 'src/app/services/popup-modal.service';
 import { environment } from 'src/environments/environment';
 
@@ -41,33 +42,17 @@ export class AffectationPage implements OnInit {
   Employeaffecte: any;
 
   constructor(private http: HttpClient, private modalctrl: ModalController, private popupModalService: PopupModalService,
-    private router: Router,
-    private route: ActivatedRoute,private menu: MenuController,private toastctrl: ToastController) {
+    private router: Router, private route: ActivatedRoute,private menu: MenuController,private toastctrl: ToastController,
+    private loadingService: LoadingService) {
       // this.loadData(); //EMPLOYE
       this.loadAffectation(); //AFFECTATIONS
      }
 
   ngOnInit() {
   }
- /*  loadData(){
-    this.route.queryParams.subscribe(res =>{
-      this.infoService=res ;
-      //console.log(this.infoService);
-      if (this.infoService){
-        this.idDirection= this.infoService.IdDirection;
-        this.idService= this.infoService.ID;
-        //console.log(this.infoService);
-      }
-    });
-      this.http.get(environment.endPoint+'employe_action.php?Action=GET_EMPLOYE&&Token='+environment.tokenUser).subscribe(res => {
-      this.listeEmploye = res;
-      console.log('listeEmploye =',this.listeEmploye);
-      this.data=res ;
-      this.sort();
-    });
-  } */
 
   loadAffectation(){
+    // this.loadingService.presentLoading();
     this.route.queryParams.subscribe(res =>{
       this.infoService=res ;
       //console.log(this.infoService);
@@ -77,6 +62,7 @@ export class AffectationPage implements OnInit {
         //console.log(this.infoService);
       }
     });
+    this.loadingService.presentLoading();
       this.http.get(environment.endPoint+'affectation_action.php?Action=GET_AFFECTATION&&Token='+environment.tokenUser).subscribe(res => {
       this.listeAffectation = res;
       console.log('listeAffectation =',this.listeAffectation);

@@ -99,7 +99,7 @@ export class PrimePage implements OnInit {
       IdEmploye ='&IDEMPLOYE='+this.id ;
       console.log(IdEmploye);
     }
-
+    this.loadingService.presentLoading();
     this.readAPI(environment.endPoint+'performance_action.php?Action=GET_PERFORMANCE&ORDRE=TOTAL_PERFORMANCE&DATEDEPART='+
     this.selectedDate+'&DATEFIN='+this.selectedDate2+IdEmploye+'&Token='+environment.tokenUser)
     .subscribe((listes) =>{

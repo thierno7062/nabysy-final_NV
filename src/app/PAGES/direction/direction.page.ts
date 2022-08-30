@@ -9,6 +9,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController, MenuController, ModalController } from '@ionic/angular';
 import { CrudDirectionPage } from 'src/app/CRUD/crud-direction/crud-direction.page';
+import { LoadingService } from 'src/app/services/loading.service';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -26,7 +27,7 @@ export class DirectionPage implements OnInit {
  activeEdit= false;
 
   constructor(private router: Router,  private modalctrl: ModalController,private alertctrl: AlertController,
-    private menu: MenuController, private http: HttpClient) {
+    private menu: MenuController, private http: HttpClient,private loadingService: LoadingService,) {
       this.refreshDirection();
 
      }
@@ -35,6 +36,7 @@ export class DirectionPage implements OnInit {
   }
   // &IDDirectionParent=0
   refreshDirection(){
+    this.loadingService.presentLoading();
     this.readAPI(environment.endPoint+'direction_action.php?Action=GET_DIRECTION&IdDirectionParent=0&Token='+environment.tokenUser)
     .subscribe((Listes) =>{
       console.log(Listes);
@@ -42,6 +44,7 @@ export class DirectionPage implements OnInit {
 
       this.listeDirections=Listes ;
       console.log(this.listeDirections);
+      this.loadingService.dismiss();
     });
   }
   readAPI(url: string){

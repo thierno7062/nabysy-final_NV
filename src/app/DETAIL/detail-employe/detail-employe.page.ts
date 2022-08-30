@@ -8,6 +8,7 @@ import { PopupModalService } from 'src/app/services/popup-modal.service';
 import { PhotoService } from 'src/app/services/photo.service';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
+import { LoadingService } from 'src/app/services/loading.service';
 /* ---------------------------------------------------------------------- */
 
 @Component({
@@ -16,30 +17,29 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./detail-employe.page.scss'],
 })
 export class DetailEmployePage implements OnInit {
-  userDetails: any;
-  idDirection: number;
-  idService: number;
-  direction: any;
-  service: any;
-  nom_Direction: '';
-  nom_Service: '';
-  url: string;
-  sexeString: string;
-  situationString: '';
-  sexe: any;
-  hideMe2: boolean;
-  hideMe: boolean;message: boolean;
+  userDetails: any; idDirection: number;idService: number;
+  direction: any;service: any; nom_Direction: ''; nom_Service: '';
+  url: string; sexeString: string; situationString: ''; sexe: any;
+  hideMe2: boolean;hideMe: boolean;message: boolean;
   message_txt_M: boolean;  message_txt_F: boolean;
 
   // eslint-disable-next-line max-len
   constructor(private router: Router,private popupModalService: PopupModalService, private navParams: NavParams,
-     public photoService: PhotoService,private route: ActivatedRoute,private http: HttpClient,private modalCtrl: ModalController)
+     public photoService: PhotoService,private route: ActivatedRoute,private http: HttpClient,
+     private modalCtrl: ModalController,private loadingService: LoadingService)
   {
     this.loadDirection();
     this.loadService();
   }
 
   ngOnInit() {
+    this.loadEmploye();
+  }
+  closeModal(){
+    this.popupModalService.dismiss();
+  }
+  loadEmploye(){
+    this.loadingService.presentLoading();
     this.userDetails= this.navParams.get('data');
     console.log(this.userDetails);
     this.sexe= this.userDetails.Sexe;
@@ -65,9 +65,6 @@ export class DetailEmployePage implements OnInit {
         this.message_txt_F= true;
       }
     }
-  }
-  closeModal(){
-    this.popupModalService.dismiss();
   }
   CallUserdetails(){
     this.router.navigate(['/crud-employe'],{

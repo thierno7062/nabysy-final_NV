@@ -40,7 +40,7 @@ export class PersonnelPage implements OnInit {
     private menu: MenuController,
     private http: HttpClient, private alertctrl: AlertController,
     // eslint-disable-next-line max-len
-    private modalctrl: ModalController, private service: EmployeService, private loadingService: LoadingService,private modalCtrl: ModalController) {
+    private modalctrl: ModalController, private loadingService: LoadingService,private modalCtrl: ModalController) {
       this.selectedSegment = this.segmentList[0];
       this.refreshPerson();
       this.sort();
@@ -71,6 +71,7 @@ export class PersonnelPage implements OnInit {
       // console.log(Listes);
       this.listeEmploye=listes ;
       console.log(this.listeEmploye);
+      this.loadingService.dismiss();
     });
     this.sort();
   }
@@ -103,12 +104,13 @@ export class PersonnelPage implements OnInit {
             this.http.get(apiUrl).subscribe(async data =>{
               console.log(data);
               if(data['OK']>0){
-                 //this.router.navigate(['personnel']);
-                 const pos=this.listeEmploye.indexOf(employe);
-                 console.log(pos);
-                 if (pos>-1){
+                //this.router.navigate(['personnel']);
+                const pos=this.listeEmploye.indexOf(employe);
+                console.log(pos);
+                if (pos>-1){
                   this.listeEmploye.splice(pos,1);
                   this.refreshPerson();
+
                  }
               }else{
                 console.log(data['OK']);
@@ -146,7 +148,7 @@ export class PersonnelPage implements OnInit {
     this.router.navigateByUrl('/crud-employe');
   }
 
- 
+
   _openSideNav(){
     this.menu.enable(true,'menu-content');
     this.menu.open('menu-content');

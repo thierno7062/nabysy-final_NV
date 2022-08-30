@@ -83,6 +83,7 @@ export class ListeServicesPage implements OnInit {
       .subscribe((data) =>{
         this.listeEmploye=data ;
         console.log(data);
+        this.loadingService.dismiss();
       });
     });
   }
@@ -110,6 +111,7 @@ export class ListeServicesPage implements OnInit {
       .subscribe((data) =>{
         this.listeSousDirections=data ;
         console.log(data);
+        this.loadingService.dismiss();
         if (this.listeSousDirections.length >0){
           console.log('Il y a '+this.listeSousDirections.length+' sous-direction pour la direction '+this.direction.Nom);
         }else{
@@ -130,6 +132,7 @@ export class ListeServicesPage implements OnInit {
       .subscribe((data) =>{
         this.listeService=data ;
         console.log(data);
+        this.loadingService.dismiss();
       });
     });
   }
@@ -173,9 +176,10 @@ export class ListeServicesPage implements OnInit {
       if(role === 'create'){
         const newIdService=data.Extra;
         this.getService(newIdService).subscribe(async newdata =>{
-            this.listeService.push(newdata[0]);
+          this.listeService.push(newdata[0]);
+          this.refreshServices();
             console.log(this.listeService);
-            this.refreshServices();
+
         });
       }
     });
@@ -197,12 +201,13 @@ export class ListeServicesPage implements OnInit {
             this.http.get(apiUrl).subscribe(async data =>{
               console.log(data);
               if(data['OK'] >0){
+                this.refreshServices();
                  //this.router.navigate(['personnel']);
                  const pos=this.listeService.indexOf(serviceInfo);
                  console.log(pos);
                  if (pos>-1){
                   this.listeService.splice(pos,1);
-                  this.refreshServices();
+
                  }
               }else{
                 console.log(data['OK']);
@@ -330,6 +335,7 @@ export class ListeServicesPage implements OnInit {
             this.http.get(apiUrl).subscribe(async data =>{
               console.log(data);
               if(data['OK'] >0){
+                this.loadEmploye();
                  //this.router.navigate(['personnel']);
                  const pos=this.listeEmploye.indexOf(employe);
                  console.log(pos);
