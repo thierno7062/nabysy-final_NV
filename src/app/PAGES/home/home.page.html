@@ -4,7 +4,7 @@
       <ion-icon slot="icon-only" name="menu"> </ion-icon>
     </ion-button>
     <ion-avatar slot="end">
-      <img src="assets/man.png" alt=""/>
+      <img src={{this.photoUrl}} alt=""/>
     </ion-avatar>
   </ion-item>
 </ion-header>
@@ -18,12 +18,12 @@
       <ion-col size="6" >
         <ion-label>
           <ion-note color="light" class="ion-margin-center">
-            THIERNO ABDOURAHMANE NIANG
+            {{this.prenomEmploye}} {{this.nomEmploye}}
           </ion-note>
           <p>
             <ion-chip color="dark" size="full">
               <ion-label class="ion-text-wrap" >
-                COMPTABLE
+                {{this.employeFonction}}
               </ion-label>
             </ion-chip>
           </p>
