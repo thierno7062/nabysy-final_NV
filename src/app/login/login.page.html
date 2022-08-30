@@ -13,7 +13,7 @@
           <ion-card-header>
 
             <ion-card-title style="text-align: center;"> <ion-text color="success" >
-              <h1>AUTHENTIFICATION</h1>
+              <h1 style="font-weight: bold;">AUTHENTIFICATION</h1>
              </ion-text> </ion-card-title>
           </ion-card-header>
 
@@ -26,10 +26,10 @@
               <ion-label position="floating">mot de passe</ion-label>
               <ion-input type="password" [(ngModel)]="password"></ion-input>
             </ion-item>
-            <ion-card-content style="text-align: center; margin-top: 40px;">
+            <ion-card-content style="text-align: center; margin-top: 40px;margin-bottom: 40px;">
               <!-- <ion-button color="dark" fill="clear" size="full">email/mot de passe oublé</ion-button> -->
-              <ion-button color="success"  (click) ="proseslogin()">
-                Connexion
+              <ion-button color="success"  (click) ="proseslogin()" style="width: 300px; height: 50px; font-weight: bold;">
+                <h1>Connexion</h1>
               </ion-button>
               <!-- <ion-button color="success" fill="clear" size="full">Inscription</ion-button> -->
 
