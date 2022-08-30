@@ -3,8 +3,8 @@
     <ion-button fill="clear" slot="start" color="light" (click)="_openSideNav()">
       <ion-icon slot="icon-only" name="menu"> </ion-icon>
     </ion-button>
-    <ion-avatar slot="end">
-      <img src="assets/man.png" alt=""/>
+    <ion-avatar slot="end" *ngIf="this.photoUrl">
+      <img [src]="this.photoUrl" alt=""/>
     </ion-avatar>
   </ion-item>
 </ion-header>
@@ -54,6 +54,7 @@
             <div align="center" size="6">
               <ion-thumbnail [style.background]="item?.background">
                 <img [src]="item?.src" alt=""/>
+                <!-- <img *ngIf="this.photoUrl" [src]="this.photoUrl" alt=""/> -->
               </ion-thumbnail>
             </div>
           </ion-card-header>

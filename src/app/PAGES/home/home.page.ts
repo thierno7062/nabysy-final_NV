@@ -36,9 +36,12 @@ export class HomePage {
     {id: 8, vendor: 'Rapport du 30 Octobre........', image: '', amount: 'Service comptable',time: 'le 02/11/2021 4:00PM'},
     {id: 9, vendor: 'Rapport du 02 Novembre........', image: '', amount: 'Service comptable',time: 'le 11/11/2021 4:00PM'},
   ];
+  photoUrl: '';
 
   constructor( private router: Router,
-    private menu: MenuController,) {}
+    private menu: MenuController,) {
+      this.photoUrl=environment.employeConnecte.PHOTO_URL ;
+    }
 
     admin(){
       this.router.navigateByUrl('/administration');
