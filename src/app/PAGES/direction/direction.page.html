@@ -100,7 +100,7 @@
             </div>
           </ion-card-header>
           <ion-card-content>
-            <ion-label color="dark">{{direction.ID}} : {{direction.Nom }}</ion-label>
+            <ion-label color="dark"> {{direction.Nom }}</ion-label>
           </ion-card-content>
           <ion-card-content *ngIf="activeEdit">
             <ion-button size="small" slot="start" (click)="removeDirection(direction)">
@@ -118,21 +118,4 @@
 
   </ion-grid>
 
-
-
- <!--  <ion-card *ngFor="let direction of listeDirections" (click)="goToServices(direction)">
-    <ion-img [src]="direcion.urlToImage"></ion-img>
-    <ion-card-header>
-      <ion-card-subtitle>{{direction.Nom }}</ion-card-subtitle>
-      <ion-card-title>{{direction.Adresse}}</ion-card-title>
-    </ion-card-header>
-
-    <ion-card-content>{{direction.Tel}}</ion-card-content>
-
-  </ion-card> -->
-<!--   <ion-fab vertical="bottom" horizontal="end" slot="fixed" (click)="add_direction()">
-    <ion-fab-button color="success">
-      <ion-icon name="add"></ion-icon>
-    </ion-fab-button>
-  </ion-fab> -->
 </ion-content>

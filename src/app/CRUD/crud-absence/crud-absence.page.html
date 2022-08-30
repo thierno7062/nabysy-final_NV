@@ -89,11 +89,8 @@
     </ion-list>
 
     <ion-row  >
-      <ion-col size="4" class="prev" *ngIf="!choix">
-        <ion-button>
-          <ion-icon name="arrow-back">
-          </ion-icon>
-        </ion-button>
+      <ion-col size="4" class="prev" >
+
       </ion-col>
 
 
@@ -114,11 +111,8 @@
       {{isUpdate ? 'Modifier' :'Enregistrer'}}</ion-button>
       </ion-col>
 
-      <ion-col size="4" *ngIf="!choix">
-        <ion-button class="next">
-          <ion-icon name="arrow-forward">
-          </ion-icon>
-        </ion-button>
+      <ion-col size="4" >
+
       </ion-col>
       <ion-list>
         <ion-label color="primary">{{this.selectedDate}}</ion-label><br>
@@ -236,10 +230,7 @@
     <!-- ***********************Submit************************** -->
     <ion-row>
       <ion-col size="4" class="prev">
-        <ion-button>
-          <ion-icon name="arrow-back">
-          </ion-icon>
-        </ion-button>
+
       </ion-col>
 
 
@@ -261,50 +252,34 @@
       </ion-col>
 
       <ion-col size="4" >
-        <ion-button class="next">
-          <ion-icon name="arrow-forward">
-          </ion-icon>
-        </ion-button>
+
       </ion-col>
     </ion-row>
     <!-- ***************************** -->
 
     <ion-row>
       <ion-col size="12" class="ion-text-center">
-        {{page + 1}} of {{ totalPages}}
+
       </ion-col>
     </ion-row>
 
     <ion-row>
       <ion-col size="2">
-        <ion-button fill="clear" (click)="goFirst()">
-          <ion-icon name="play-back" slot="icon-only"></ion-icon>
-        </ion-button>
+
       </ion-col>
       <ion-col size="2">
-        <ion-button fill="clear" (click)="prevPage()">
-          <ion-icon name="chevron-back" slot="icon-only"></ion-icon>
-        </ion-button>
+
       </ion-col>
 
       <ion-col size="4" class="ion-text-center">
-        <ion-select interface="popover" [(ngModel)]="resultsCount" (ionChange)="loadEmploye()">
-          <ion-select-option [value]="5">5</ion-select-option>
-          <ion-select-option [value]="10">10</ion-select-option>
-          <ion-select-option [value]="25">25</ion-select-option>
-          <ion-select-option [value]="50">50</ion-select-option>
-        </ion-select>
+
       </ion-col>
 
       <ion-col size="2">
-        <ion-button fill="clear" (click)="nextPage()">
-          <ion-icon name="chevron-forward" slot="icon-only"></ion-icon>
-        </ion-button>
+
       </ion-col>
       <ion-col size="2">
-        <ion-button fill="clear" (click)="goLast()">
-          <ion-icon name="play-forward" slot="icon-only"></ion-icon>
-        </ion-button>
+
       </ion-col>
     </ion-row>
   </ion-card-content>

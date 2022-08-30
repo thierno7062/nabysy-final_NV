@@ -336,23 +336,10 @@ export class CrudAbsencePage implements OnInit {
     }
 
   }
-  nextPage(){
-    this.page++;
-    this.loadEmploye();
-  }
 
-  prevPage(){
-    this.page--;
-    this.loadEmploye();
-  }
-  goFirst(){
-    this.page= 0;
-    this.loadEmploye();
-  }
-  goLast(){
-    this.page = this.totalPages - 1;
-    this.loadEmploye();
-  }
+
+
+
 
   absencePourTous(afficherTost=false){
     if(this.isPaid===true){
