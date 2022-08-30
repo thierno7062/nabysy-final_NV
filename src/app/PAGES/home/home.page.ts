@@ -69,7 +69,7 @@ export class HomePage implements OnInit {
     }
   }
 
-    admin(){
+  admin(){
       this.router.navigateByUrl('/administration');
     }
 

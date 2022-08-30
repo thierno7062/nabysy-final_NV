@@ -3,8 +3,8 @@
     <ion-button fill="clear" slot="start" color="light" (click)="_openSideNav()">
       <ion-icon slot="icon-only" name="menu"> </ion-icon>
     </ion-button>
-    <ion-avatar slot="end">
-      <img src={{this.photoUrl}} alt=""/>
+    <ion-avatar slot="end" *ngIf="this.photoUrl">
+      <img [src]="this.photoUrl" alt=""/>
     </ion-avatar>
   </ion-item>
 </ion-header>
@@ -32,7 +32,7 @@
       </ion-col>
       <ion-col size="6" class="ion-text-end">
         <ion-button color="light" size="small">
-          <ion-text color="primary" > Rapport d'activité</ion-text>
+          <ion-text color="primary" >Rapport d'activité</ion-text>
           <ion-icon name="add" color="primary" slot="end"></ion-icon>
         </ion-button>
       </ion-col>
@@ -54,6 +54,7 @@
             <div align="center" size="6">
               <ion-thumbnail [style.background]="item?.background">
                 <img [src]="item?.src" alt=""/>
+                <!-- <img *ngIf="this.photoUrl" [src]="this.photoUrl" alt=""/> -->
               </ion-thumbnail>
             </div>
           </ion-card-header>
