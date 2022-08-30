@@ -1,14 +1,19 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuController } from '@ionic/angular';
 import { environment } from 'src/environments/environment';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
-export class HomePage {
+export class HomePage implements OnInit {
+  nomEmploye: string;
+  prenomEmploye: string;
+  employeFonction: string;
+  photoUrl: string;
 
   features: any[]=[
     {id: 1, name: 'ADMINISTRATION', src: 'assets/office (1).png', background: 'rgba(27, 150, 181, 0.1)', page: '/administration'},
@@ -36,14 +41,35 @@ export class HomePage {
     {id: 8, vendor: 'Rapport du 30 Octobre........', image: '', amount: 'Service comptable',time: 'le 02/11/2021 4:00PM'},
     {id: 9, vendor: 'Rapport du 02 Novembre........', image: '', amount: 'Service comptable',time: 'le 11/11/2021 4:00PM'},
   ];
-  photoUrl: '';
 
   constructor( private router: Router,
-    private menu: MenuController,) {
-      this.photoUrl=environment.employeConnecte.PHOTO_URL ;
+    private menu: MenuController,
+    private http: HttpClient,) {
+      this.nomEmploye='';
+      this.prenomEmploye='';
+      this.employeFonction='';
+      console.log('Construtor du HomePage');
+      this.getInfosUtilisateur();
+      if (environment.employeConnecte){
+        this.nomEmploye=environment.employeConnecte.Nom;
+        this.prenomEmploye=environment.employeConnecte.Prenom;
+        this.employeFonction=environment.employeConnecte.Fonction ;
+        this.photoUrl=environment.employeConnecte.PHOTO_URL ;
+        console.log(environment.employeConnecte);
+      }else{
+        this.getInfosUtilisateur();
+        console.log(environment.employeConnecte);
+      }
     }
+  ngOnInit(): void {
+    console.log('nbOnInit pour HomePage');
+    console.log(this.nomEmploye);
+    if (!environment.employeConnecte){
+      this.getInfosUtilisateur();
+    }
+  }
 
-    admin(){
+  admin(){
       this.router.navigateByUrl('/administration');
     }
 
@@ -52,12 +78,35 @@ export class HomePage {
       this.menu.open('menu-content');
     }
 
-    ionViewWillEnter() {
+    /* ionViewWillEnter() {
       console.log('Je charge les infos ici...');
-      console.log(this);
+      //this.getInfosUtilisateur();
+      //console.log(this);
+    } */
+
+    getInfosUtilisateur(){
+      console.log('getInfosUtilisateur du HomePage');
+      const headers = new Headers();
+      headers.append('Accept', 'application/json');
+      headers.append('Content-Type', 'application/json' );
+      // eslint-disable-next-line max-len
+      const apiUrl=environment.endPoint+'nabysy_action.php?Action=GET_INFOS_USER&User='+environment.userName+'&Password='+environment.passWord;
+      console.log(apiUrl);
+      this.http.get(apiUrl).subscribe( data => {
+        //console.log(data);
+        if (data) {
+          environment.employeConnecte =data ;
+        }else{
+          environment.employeConnecte=null;
+        }
+        if (environment.employeConnecte){
+          console.log(environment.employeConnecte);
+          this.nomEmploye=environment.employeConnecte.Nom;
+          this.prenomEmploye=environment.employeConnecte.Prenom;
+          this.employeFonction=environment.employeConnecte.Fonction ;
+          this.photoUrl=environment.employeConnecte.PHOTO_URL ;
+        }
+      });
     }
-    ionViewCanEnter() {
-      console.log('Peut visiter la page ici...');
-      return true;
-    }
+
 }

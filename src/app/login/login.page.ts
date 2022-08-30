@@ -51,15 +51,8 @@ export class LoginPage implements OnInit {
        if (data['OK'] !== 0) {
           environment.tokenUser=data['Extra'] ;
           //Recup info de l'utilisateur connecté
-          await this.getInfosUtilisateur();
-          console.log(environment);
-          this.router.navigate(['/home']);
-          const toast = await this.toastController.create({
-          message: 'Welcome!',
-          duration: 2000,
-          position: 'middle'
-          });
-          toast.present();
+          await this.getInfosUtilisateur();                    
+          
        }else{
           environment.userName='' ;
           environment.passWord='' ;
@@ -91,7 +84,7 @@ export class LoginPage implements OnInit {
       });
   };
 
-  async getInfosUtilisateur(){
+  getInfosUtilisateur(){
     const headers = new Headers();
     headers.append('Accept', 'application/json');
     headers.append('Content-Type', 'application/json' );
@@ -99,26 +92,16 @@ export class LoginPage implements OnInit {
     const apiUrl=environment.endPoint+'nabysy_action.php?Action=GET_INFOS_USER&User='+environment.userName+'&Password='+environment.passWord;
     console.log(apiUrl);
 
-    this.http.get(apiUrl).subscribe(async data => {
-      console.log(data);
+    this.http.get(apiUrl).subscribe( data => {
+      //console.log(data);
       if (data) {
         environment.employeConnecte =data ;
-        /* const toast = await this.toastController.create({
-        message: 'Bienvenue '+environment.employeConnecte.Prenom+' '+environment.employeConnecte.Nom+'!',
-        duration: 2000,
-        position: 'middle'
-      }); */
-      console.log(environment);
-      //toast.present();       
-       
+        console.log(environment);
+        console.log('Ouverture du Menu Principal');
+        this.router.navigate(['/home']);
+      //toast.present();
       }else{
         environment.employeConnecte=null;
-        /* const toast = await this.toastController.create({
-           message: 'Information utilisateur invalide',
-           duration: 2000,
-           position: 'middle'
-         });
-         toast.present(); */
       }
     });
 
