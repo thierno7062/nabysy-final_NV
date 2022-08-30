@@ -1,17 +1,16 @@
 /* eslint-disable @typescript-eslint/dot-notation */
 import { Injectable } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { EmployePage } from '../CRUD/employe/employe.page';
 import { DetailAbsencePage } from '../DETAIL/detail-absence/detail-absence.page';
 import { DetailAffectationPage } from '../DETAIL/detail-affectation/detail-affectation.page';
 import { DetailEmployePage } from '../DETAIL/detail-employe/detail-employe.page';
 
 /* Prise en charge des Photos */
 import { PhotoService } from 'src/app/services/photo.service';
-import { PhotoViewer } from '@awesome-cordova-plugins/photo-viewer/ngx';
 import { PhotoviewerPage } from '../DETAIL/photoviewer/photoviewer.page';
-import { PrintBulletinPage } from '../PAGES/avance/print-bulletin.page';
+// **************************
 import { PrintBulletin2Page } from '../pages/print-bulletin2/print-bulletin2.page';
+import { AvancePage } from '../PAGES/avance1/avance.page';
 /* --------------------------------------------------------------------- */
 
 @Injectable({
@@ -93,7 +92,7 @@ export class PopupModalService {
   }
   async avanceSalaire(avance: any){
     const modal = await this.modalCtrl.create({
-      component: PrintBulletinPage,
+      component: AvancePage,
       componentProps:{
         data: avance,
       }

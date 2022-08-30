@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { PrintBulletinPage } from './print-bulletin.page';
+import { CrudSousDirectionPage } from './crud-sous-direction.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: PrintBulletinPage
+    component: CrudSousDirectionPage
   }
 ];
 
@@ -14,4 +14,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class PrintBulletinPageRoutingModule {}
+export class CrudSousDirectionPageRoutingModule {}

@@ -87,10 +87,7 @@ const routes: Routes = [
     path: 'detail-employe',
     loadChildren: () => import('./DETAIL/detail-employe/detail-employe.module').then( m => m.DetailEmployePageModule)
   },
-  {
-    path: 'print-bulletin',
-    loadChildren: () => import('./PAGES/avance/print-bulletin.module').then( m => m.PrintBulletinPageModule)
-  },
+
   {
     path: 'print-bulletin2',
     loadChildren: () => import('./pages/print-bulletin2/print-bulletin2.module').then( m => m.PrintBulletin2PageModule)
@@ -103,10 +100,23 @@ const routes: Routes = [
     path: 'employe',
     loadChildren: () => import('./CRUD/employe/employe.module').then( m => m.EmployePageModule)
   },
+  /* {
+    path: 'photoviewer',
+    loadChildren: () => import('./DETAIL/photoviewer/photoviewer.module').then( m => m.PhotoviewerPageModule)
+  }, */
   {
+    path: 'crud-sous-direction',
+    loadChildren: () => import('./CRUD/crud-sous-direction/crud-sous-direction.module').then( m => m.CrudSousDirectionPageModule)
+  },
+  {
+    path: 'detail-prime',
+    loadChildren: () => import('./DETAIL/detail-prime/detail-prime.module').then( m => m.DetailPrimePageModule)
+  },  {
     path: 'photoviewer',
     loadChildren: () => import('./DETAIL/photoviewer/photoviewer.module').then( m => m.PhotoviewerPageModule)
   },
+
+
 
 ];
 

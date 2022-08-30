@@ -29,7 +29,6 @@ export class AppComponent {
       this.photoUrl='' ;
       this.employeFonction='';
     }
-    //console.log(this);
   }
 
   loadUserInfos(){
@@ -68,7 +67,6 @@ export class AppComponent {
       this.photoUrl=environment.employeConnecte.PHOTO_URL ;
       this.employeFonction=environment.employeConnecte.Fonction ;
       this.userInfo=environment.employeConnecte ;
-      //console.log(this.userInfo);
     }
     this.menu.close('menu-content');
   }
