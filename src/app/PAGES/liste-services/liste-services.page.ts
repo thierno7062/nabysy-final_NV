@@ -10,6 +10,7 @@ import { IonicSelectableComponent } from 'ionic-selectable';
 import { Observable } from 'rxjs';
 import { CrudAffectationPage } from 'src/app/CRUD/crud-affectation/crud-affectation.page';
 import { CrudServicePage } from 'src/app/CRUD/crud-service/crud-service.page';
+import { CrudSousDirectionPage } from 'src/app/CRUD/crud-sous-direction/crud-sous-direction.page';
 import { EmployeService } from 'src/app/services/employe.service';
 import { LoadingService } from 'src/app/services/loading.service';
 import { PopupModalService } from 'src/app/services/popup-modal.service';
@@ -184,6 +185,28 @@ export class ListeServicesPage implements OnInit {
       }
     });
   }
+  addSousDirection(){
+    this.modalctrl.create({
+      component: CrudSousDirectionPage,
+      componentProps: {serviceInfo: [], directionInfo: this.direction }
+    }).
+    then(modal =>{
+      modal.present();
+      return modal.onDidDismiss();
+    }).then(({data, role})=> {
+      console.log(data);
+      console.log(role);
+      if(role === 'create'){
+        const newIdService=data.Extra;
+        this.getService(newIdService).subscribe(async newdata =>{
+          this.listeService.push(newdata[0]);
+          this.refreshServices();
+            console.log(this.listeService);
+
+        });
+      }
+    });
+  }
 
   removeService(serviceInfo: any){
     this.alertctrl.create({
@@ -225,6 +248,28 @@ export class ListeServicesPage implements OnInit {
     this.modalctrl.create({
       component: CrudServicePage,
       componentProps:{ serviceInfo: service , directionInfo: this.direction }
+    }).
+    then(modal  =>{
+      modal.present();
+      return modal.onDidDismiss();
+    }).then(({data, role})=> {
+        console.log(data);
+        console.log(role);
+        if(role === 'create'){
+          const idEdit=data.Extra;
+          this.getService(idEdit).subscribe(async newdata =>{
+              // this.listeService.push(newdata[0]);
+              console.log(this.listeService);
+              this.refreshServices();
+          });
+        }
+      });
+  }
+  updateSousDirection(service: any){
+    console.log(service);
+    this.modalctrl.create({
+      component: CrudSousDirectionPage,
+      componentProps:{ sousdirectionInfo: service , directionInfo: this.direction }
     }).
     then(modal  =>{
       modal.present();

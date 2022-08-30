@@ -126,7 +126,7 @@
                 <ion-text color="dark" style="font-weight:bold ">{{activeEditsousDirection ? 'Fermer' :'Editer'}} </ion-text>
               </ion-button>
 
-              <ion-button color="dark" size="small" (click)="addService()" style="background-color: white;">
+              <ion-button color="dark" size="small" (click)="addSousDirection()" style="background-color: white;">
                 <ion-text color="dark" style="font-weight:bold "> Ajouter Sous-Direction</ion-text>
                 <ion-icon name="add" color="primary" slot="end"></ion-icon>
               </ion-button>
@@ -151,7 +151,7 @@
                     <ion-button size="small" slot="start" (click)="removeService(service)">
                       <ion-icon slot="icon-only" name="trash"></ion-icon>
                     </ion-button>
-                    <ion-button size="small" slot="end" (click)="updateService(service)">
+                    <ion-button size="small" slot="end" (click)="updateSousDirection(service)">
                         <ion-icon slot="icon-only" name="create"></ion-icon>
                     </ion-button>
                   </ion-card-content>

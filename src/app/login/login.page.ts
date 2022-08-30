@@ -16,7 +16,6 @@ import { environment } from 'src/environments/environment';
 export class LoginPage implements OnInit {
   username: '';
   password: '';
-  toastController: any;
   IdEmploye: '';
 
 
@@ -51,24 +50,24 @@ export class LoginPage implements OnInit {
        if (data['OK'] !== 0) {
           environment.tokenUser=data['Extra'] ;
           //Recup info de l'utilisateur connecté
-          await this.getInfosUtilisateur();                    
-          
+          await this.getInfosUtilisateur();
+
        }else{
           environment.userName='' ;
           environment.passWord='' ;
-          const toast = await this.toastController.create({
+          const toast = await this.toasctrl.create({
             message: 'Username or password invalid',
             duration: 2000,
-            position: 'middle'
+            position: 'top'
           });
           toast.present();
        }
      });
     } else {
-      const toast = await this.toastController.create({
+      const toast = await this.toasctrl.create({
         message: 'Vérifiez votre connexion svp.',
         duration: 2000,
-        position: 'middle'
+        position: 'top'
       });
       toast.present();
     }
@@ -77,10 +76,10 @@ export class LoginPage implements OnInit {
     this.password = '';
 
     // Info Utilisateur
-   
+
       return new Promise (() =>{
-        
-        
+
+
       });
   };
 
