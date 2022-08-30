@@ -70,8 +70,7 @@ export class CrudSousDirectionPage implements OnInit {
           txId='&IdDirection='+this.idSousDirection ;
         }
         const apiUrl=environment.endPoint+'direction_action.php?Action=SAVE_DIRECTION'+txId+'&Nom='+
-        this.nom+'&Adresse='+this.adresse+'&Tel='+this.telephone+
-        '&IdDirectionParent='+this.IdDirectionParent+'&Token='+environment.tokenUser;
+        this.nom+'&Adresse='+this.adresse+'&Tel='+this.telephone+'&IdDirectionParent='+this.idDirection+'&Token='+environment.tokenUser;
         // ---------------
         console.log(apiUrl);
         this.http.get(apiUrl).subscribe(async data =>{
