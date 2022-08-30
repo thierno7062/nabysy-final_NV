@@ -14,6 +14,7 @@ export class AppComponent {
   nomEmploye: string;
   prenomEmploye: string;
   photoUrl: string;
+  employeFonction: string;
   constructor(private router: Router,private menu: MenuController) {
     this.userName=environment.userName ;
     if (environment.employeConnecte){
@@ -21,12 +22,14 @@ export class AppComponent {
       this.nomEmploye=environment.employeConnecte.Nom ;
       this.prenomEmploye=environment.employeConnecte.Prenom ;
       this.photoUrl=environment.employeConnecte.PHOTO_URL ;
+      this.employeFonction=environment.employeConnecte.Fonction ;
     }else{
-      this.nomEmploye='Nom Employe' ;
-      this.prenomEmploye='Prenom Employe' ;
-      this.photoUrl='Url de ma Photo' ;
+      this.nomEmploye='' ;
+      this.prenomEmploye='' ;
+      this.photoUrl='' ;
+      this.employeFonction='';
     }
-    console.log(this);
+    //console.log(this);
   }
 
   loadUserInfos(){
@@ -36,12 +39,26 @@ export class AppComponent {
       this.nomEmploye=environment.employeConnecte.Nom ;
       this.prenomEmploye=environment.employeConnecte.Prenom ;
       this.photoUrl=environment.employeConnecte.PHOTO_URL ;
+      this.employeFonction=environment.employeConnecte.Fonction ;
     }else{
-      this.nomEmploye='Nom Employe' ;
-      this.prenomEmploye='Prenom Employe' ;
-      this.photoUrl='Url de ma Photo' ;
+      this.nomEmploye='' ;
+      this.prenomEmploye='' ;
+      this.photoUrl='' ;
+      this.employeFonction='';
     }
-    //console.log(this);
+    //console.log(this.userInfo);
+  }
+
+  menuOpened() {
+    //code to execute when menu ha opened
+    if (environment.employeConnecte){
+      this.nomEmploye=environment.employeConnecte.Nom ;
+      this.prenomEmploye=environment.employeConnecte.Prenom ;
+      this.photoUrl=environment.employeConnecte.PHOTO_URL ;
+      this.employeFonction=environment.employeConnecte.Fonction ;
+      this.userInfo=environment.employeConnecte ;
+    }
+    //console.log(this.userInfo);
   }
 
   closeMenu(){
@@ -49,22 +66,11 @@ export class AppComponent {
       this.nomEmploye=environment.employeConnecte.Nom ;
       this.prenomEmploye=environment.employeConnecte.Prenom ;
       this.photoUrl=environment.employeConnecte.PHOTO_URL ;
+      this.employeFonction=environment.employeConnecte.Fonction ;
       this.userInfo=environment.employeConnecte ;
-      console.log(this);
+      //console.log(this.userInfo);
     }
-    console.log(this);
     this.menu.close('menu-content');
-  }
-
-  ionViewWillEnter() {
-    console.log('Je charge les infos de connexion ici...');
-    this.loadUserInfos();
-    console.log(this);
-  }
-  ionViewCanEnter() {
-    console.log('Je recharge ici');
-    this.loadUserInfos();
-    return true;
   }
 
 }

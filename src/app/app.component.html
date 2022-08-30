@@ -1,6 +1,6 @@
 <ion-app>
   <!-- Menu Profil -->
-  <ion-menu contentId="menu-content" menuId="menu-content" side="start" type="overlay">
+  <ion-menu contentId="menu-content" menuId="menu-content" side="start" type="overlay" (ionWillOpen)="menuOpened()">
     <ion-header>
       <ion-toolbar>
         <ion-title>NAbySY RH</ion-title>
@@ -15,10 +15,10 @@
       </ion-list> -->
       <div class="menu-header-bg"></div>
       <div class="header-content">
-        <img src="../assets/QF653f.jpg" alt="">
+        <img src={{this.photoUrl}} alt="">
         <ion-label>
-          <h2>Thierno ABDOURAHMANE NIANG</h2>
-          <P>Comptable</P>
+          <h2>{{this.prenomEmploye}} {{this.nomEmploye}}</h2>
+          <P>{{this.employeFonction}}</P>
         </ion-label>
       </div>
       <div class="action-button">
