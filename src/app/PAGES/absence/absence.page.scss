@@ -61,12 +61,38 @@ ion-content{
     margin: 0;
   }
 
-.trie{
-   width: 65px;
-  // padding: 0%;
-  .icon_trie{
-    margin-right:-25px;
+  .trie{
+    width: 65px;
+    // padding: 0%;
+    .icon_trie{
+      margin-right:-25px;
 
+    }
   }
-}
+  div {
+  /*   height: 85vh;
+    padding-top: 250px; */
+    // margin-bottom: 3%;
+    &#div1{
+      ion-grid{
+        ion-row{
+          ion-col{
+            &#col1{
+              border: 2px solid #3880ff;
+              .recherche{
+                margin-bottom: 20px;
+                text-align: center;
+                text-decoration: underline solid;
+                font-weight: bolder;
+              }
+              &.depart{
+                text-align: center;
+                font-weight: 50;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 }
