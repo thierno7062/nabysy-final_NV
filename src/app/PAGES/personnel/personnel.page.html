@@ -17,15 +17,15 @@
     <ion-title>personnel</ion-title>
   </ion-toolbar>
 
-  <!-- Segment -->
-  <ion-toolbar color="tertiary">
-    <ion-segment [(ngModel)]="selectedSegment">
-        <ion-segment-button [value]="item" *ngFor="let item of segmentList;let i = index"
-            (click)="_segmentSelected(item,i)">
-            <ion-label class="segment-text">{{item}}</ion-label>
-        </ion-segment-button>
-    </ion-segment>
-</ion-toolbar>
+    <!-- Segment -->
+    <ion-toolbar color="tertiary">
+      <ion-segment [(ngModel)]="selectedSegment">
+          <ion-segment-button [value]="item" *ngFor="let item of segmentList;let i = index"
+              (click)="_segmentSelected(item,i)">
+              <ion-label class="segment-text">{{item}}</ion-label>
+          </ion-segment-button>
+      </ion-segment>
+  </ion-toolbar>
 
 </ion-header>
 

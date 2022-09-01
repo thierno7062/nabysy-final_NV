@@ -14,7 +14,7 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { FileOpener } from '@awesome-cordova-plugins/file-opener/ngx';
 import { Printer } from '@awesome-cordova-plugins/printer/ngx';
-import { AlertController, IonDatetime, MenuController, ModalController, Platform, ToastController } from '@ionic/angular';
+import { AlertController, IonDatetime, IonSlides, MenuController, ModalController, Platform, ToastController } from '@ionic/angular';
 import { IonicSelectableComponent } from 'ionic-selectable';
 import { environment } from 'src/environments/environment';
 
@@ -73,7 +73,17 @@ export class SalairesPage implements OnInit {
    dateValue= format(new Date(),'yyyy-MM-dd');
    formattedString= format(new Date(),'MMMM, yyyy'); showtof: boolean; tof: any;
 
-  constructor(private router: Router,  private modalctrl: ModalController,private menu: MenuController, 
+
+   // Segments
+  segmentList: Array<string> = ['LISTE DES SALAIRES', 'RECHERCHE'];
+  selectedSegment: string;
+  slideList: Array<string> = [
+    'Slide Segment 1',
+    'Slide Segment 2',
+  ];
+  @ViewChild('slide') slide: IonSlides;
+
+  constructor(private router: Router,  private modalctrl: ModalController,private menu: MenuController,
     private http: HttpClient,private popupModalService: PopupModalService,private toastctrl: ToastController) {
       this.loadEmploye();
       this.loadSalary();
@@ -100,6 +110,18 @@ export class SalairesPage implements OnInit {
     this.loadSalary();
 
   }
+
+    //Segment
+    _segmentSelected(item: string, index: number) {
+      this.slide.slideTo(index);
+    }
+
+    _ionSlideDidChange(event: any) {
+      this.slide.getActiveIndex().then((index) => {
+        this.selectedSegment = this.segmentList[index];
+      });
+    }
+
   loadEmploye(){
     this.readAPI(environment.endPoint+'employe_action.php?Action=GET_EMPLOYE&Token='+environment.tokenUser)
     .subscribe((listes) =>{
@@ -609,9 +631,9 @@ export class SalairesPage implements OnInit {
 
 
     // download the PDF
-    pdfMake.createPdf(docDefinition).download();  
+    pdfMake.createPdf(docDefinition).download();
     console.log(this.items);
-    
+
 
   }
 
