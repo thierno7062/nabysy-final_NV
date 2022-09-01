@@ -54,17 +54,21 @@ export class AbsencePage implements OnInit {
   today= format(new Date(),'yyyy-MM-dd');
   yesterday: any ; yesterdayToString: any; hier: any;
 
-  isPaid: boolean; paye: any;
-  choix: boolean; pourtous: any=1;
+  isPaid: any; paye: any;
+  TypeAbsence: any; pourtous: any=-1;
   isnotPaid: boolean; choixforOne: boolean;
 
+  nbElement: any;
 
   constructor(private router: Router,private popupModalService: PopupModalService,
     private menu: MenuController,private loadingService: LoadingService,
     private http: HttpClient, private alertctrl: AlertController,
     private modalctrl: ModalController, private service: EmployeService) {
     // this.loadAbsence();
-    this.loadPrime();
+    this.TypeAbsence='0';
+    this.isPaid='0';
+    this.nbElement=0;
+    this.loadAbsence();
     this.loadEmploye();
     // this.today =format(new Date(), 'yyyy-MM-dd');
     this.yesterday = new Date(this.today);
@@ -93,7 +97,7 @@ export class AbsencePage implements OnInit {
 
   } */
   // **************************
-  loadPrime(){
+  loadAbsence(){
     let IdEmploye=''; let datedebut= '';let absencepaye= '';
     let datefin= '';let dateEnregistrement= ''; let absencepourtous= '';
     if(this.id){
@@ -106,29 +110,32 @@ export class AbsencePage implements OnInit {
     if(this.selectedDate2){
       datefin='&DATEFIN='+this.selectedDate2;
     }
-    // DateEnreg
-    if(this.selectedDate3){
-      dateEnregistrement='&DateEnreg='+this.selectedDate3;
-    }
-    if(this.isPaid===true){
-      this.paye= '1';
-      absencepaye='&IsPaye=1';
+
+    console.log('Absence Payé = '+this.isPaid);
+    if(this.isPaid==='-1'){
+      absencepaye='';
     }else{
-      this.paye= '0';
-      absencepaye='&IsPaye=0';
+      absencepaye='&PAYE='+this.isPaid;
     }
-    if(this.choix===true){
-      this.pourtous= '0';
-    }else{
-      this.pourtous= '1';
+
+    console.log('Absence PourTous = '+this.TypeAbsence);
+    if(this.TypeAbsence === '1'){
+      this.pourtous= '&POURTOUS=1';
+    }else if(this.TypeAbsence === '0'){
+      this.pourtous= '&POURTOUS=0';
+    }
+    else{
+      this.pourtous= '';
     }
     this.loadingService.presentLoading();
-    this.readAPI(environment.endPoint+'calendrier_action.php?Action=GET_ABSENCE'+datedebut+datefin+absencepaye+
-    +dateEnregistrement+IdEmploye+'&Token='+environment.tokenUser)
+    this.readAPI(environment.endPoint+'calendrier_action.php?Action=GET_ABSENCE'+datedebut+datefin+absencepaye+this.pourtous
+    +IdEmploye+'&Token='+environment.tokenUser)
     .subscribe((listes) =>{
       this.loadingService.dismiss();
       // console.log(Listes);
       this.listeAbsence=listes ;
+      this.nbElement=this.listeAbsence.length  ;
+      console.log(this.listeAbsence.length);
       console.log(this.listeAbsence);
     });
     this.sort(this.id);
@@ -228,7 +235,7 @@ export class AbsencePage implements OnInit {
     });
   }
   doRefresh(event){
-    this.loadPrime();
+    this.loadAbsence();
     event.target.complete();
   }
   async addAbsence2(){
@@ -254,7 +261,7 @@ export class AbsencePage implements OnInit {
       this.id=this.selected.ID;
 
     }
-    this.loadPrime();
+    this.loadAbsence();
 
   }
   clear(){
@@ -262,7 +269,7 @@ export class AbsencePage implements OnInit {
     this.selectComponent.close();
     this.id=0;
     console.log(this.id);
-    this.loadPrime();
+    this.loadAbsence();
   }
   toggleItems(){
     this.selectComponent.toggleItems(this.toggle);
@@ -273,50 +280,37 @@ export class AbsencePage implements OnInit {
   // Date
   dateChanged(value){
     this.dateValue= value;
-   this.formattedString= format(parseISO(value),  ' MMM d, yyyy');
-   this.showPicker= false;
-   this.selectedDate=value;
+    this.formattedString= format(parseISO(value),  ' MMM d, yyyy');
+    this.showPicker= false;
+    this.selectedDate=value;
    }
    dateChangedFin(value){
     this.dateValue= value;
-   this.formattedString2= format(parseISO(value),  ' MMM d, yyyy');
-   this.showPicker= false;
-   this.selectedDate2=value;
+    this.formattedString2= format(parseISO(value),  ' MMM d, yyyy');
+    this.showPicker= false;
+    this.selectedDate2=value;
    }
 
-
-   dateChangedEnre(value){
-    this.dateValue= value;
-   this.formattedString3= format(parseISO(value),  ' MMM d, yyyy');
-   this.showPicker= false;
-   this.selectedDate3=value;
-   }
    close(){
-     this.datetime.cancel(true);
-    this.loadPrime();
+    this.datetime.cancel(true);
+    this.loadAbsence();
    }
    select(){
     this.datetime.confirm(true);
-   this.loadPrime();
+   this.loadAbsence();
   }
 
-   effacedateEnre(){
-    this.datetime.cancel(true);
-    this.selectedDate3= '';
-    this.formattedString3= '';
-   this.loadPrime();
-  }
   effacedateDebut(){
     this.datetime.cancel(true);
     this.selectedDate= '';
     this.formattedString= '';
-   this.loadPrime();
+    this.loadAbsence();
   }
   effacedateFin(){
     this.datetime.cancel(true);
     this.selectedDate2= '';
     this.formattedString2= '';
-   this.loadPrime();
+    this.loadAbsence();
   }
 
   //  Employe
@@ -326,18 +320,11 @@ export class AbsencePage implements OnInit {
       // console.log(Listes);
       this.listeEmploye=listes ;
       this.users=listes;
-      /* this.users.ID=listes['"ID"'];
-          this.users.Nom=listes['"Nom"'];
-          this.users.Adresse=listes['"Adresse"'];
-          this.users.Telephone=listes['"Tel"']; */
-      console.log(this.listeEmploye);
     });
   }
 
   // Methode pour tous
   togglepaspourTous(){
-    /* this.bulkIndividuel = !this.bulkIndividuel;
-    this.choixAbscencePourTous=!this.choixAbscencePourTous;
-    console.log('choixAbscencePourTous =',this.choixAbscencePourTous); */
+    console.log(this.TypeAbsence);
   }
 }
