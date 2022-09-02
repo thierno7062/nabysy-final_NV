@@ -34,7 +34,7 @@ export class SalairesPage implements OnInit {
   listeSalaire: any;
   historySalaire: any;
   url: string ;
-  infoMensuel: any; id: number;
+  infoMensuel: any; id: number; id_H: number;
   afficheBulletin: boolean;
   sexe: any;
   sexeMx: boolean;
@@ -49,9 +49,11 @@ export class SalairesPage implements OnInit {
   searchTerm: string;
   selected_user= null;
   selected: any;
+  selected_H: any;
   users: any;
   toggle= true;
   @ViewChild('selectComponent') selectComponent: IonicSelectableComponent;
+  @ViewChild('selectComponent2') selectComponent2: IonicSelectableComponent;
 
   listeEmploye: any;
   bulkEdit= false;
@@ -66,6 +68,8 @@ export class SalairesPage implements OnInit {
   /* age =0; */
   //  selectedDate= format(new Date(),'yyyy-MM-dd');
    selectedDate= format(new Date(),'yyyy');
+   selectedDate2= '';
+   selectedDate3= format(new Date(),'yyyy-MM-dd');
    selectedMonth= format(new Date(),'MM');
    Month=format(new Date(),'MMMM');
    selectedMode= 'date';
@@ -73,6 +77,8 @@ export class SalairesPage implements OnInit {
    // // dateValue= format(new Date(),'yyyy-MM-dd');
    dateValue= format(new Date(),'yyyy-MM-dd');
    formattedString= format(new Date(),'MMMM, yyyy'); showtof: boolean; tof: any;
+   formattedString2= '';
+   formattedString3= format(new Date(),'MMMM, yyyy');
 
 
    // Segments
@@ -170,18 +176,18 @@ export class SalairesPage implements OnInit {
 
   loadHistorySalary(){
     let txEmploye='';
-    if (this.id>0){
-      txEmploye='&IDEMPLOYE='+this.id;
+    if (this.id_H>0){
+      txEmploye='&IDEMPLOYE='+this.id_H;
     }
     this.readAPI(environment.endPoint+'salaire_action.php?Action=GET_SALAIRE'+txEmploye+
-    '&ANNEE='+this.selectedDate+'&MOIS='+this.selectedMonth+'&Token='+environment.tokenUser)
+    '&DATEDEBUT='+this.selectedDate2+'&DATEFIN='+this.selectedDate3+'&Token='+environment.tokenUser)
     .subscribe((listes) =>{
       console.log(listes);
       //  this.dt1=Listes['0'];
 
       this.historySalaire=listes ;
-      //console.log(this.listeSalaire);
-      // console.log(this.listeSalaire.BULLETIN_SALAIRE.LIGNE_GAIN_PRIME);
+
+
     });
     /* if(this.listeSalaire){
       this.nom=this.listeSalaire.BULLETIN_SALAIRE.NOMEMPLOYE; this.qualifiquation= this.listeSalaire.BULLETIN_SALAIRE.QUALIFICATION;
@@ -760,8 +766,67 @@ export class SalairesPage implements OnInit {
 
     this.pdfObj = pdfMake.createPdf(docDef).download();
 
+  }
 
+  // Historique salaire
+  dateChangedHistory(value){
+    this.dateValue= value;
+   this.formattedString2= format(parseISO(value),  'MMMM, yyyy');
+   console.log(format(parseISO(value),  'yyyy-MM-dd'));
+   this.showPicker= false;
+  //  this.selectedDate=value;
+   this.selectedDate2=value;
+   }
+   dateChangedHistoryEnd(value){
+    this.dateValue= value;
+   this.formattedString3= format(parseISO(value),  'MMMM, yyyy');
+   console.log(format(parseISO(value),  'yyyy-MM-dd'));
+   this.showPicker= false;
+  //  this.selectedDate=value;
+   this.selectedDate3=value;
+   }
+   effacedateDebut(){
+    this.datetime.cancel(true);
+    this.selectedDate2= '';
+    this.formattedString2= '';
+    this.loadHistorySalary();
+  }
+  effacedateFin(){
+    this.datetime.cancel(true);
+    this.selectedDate3= '';
+    this.formattedString3= '';
+    this.loadHistorySalary();
+  }
+  close_H(){
+    this.datetime.cancel(true);
+    this.loadHistorySalary();
+   }
+   select_H(){
+    this.datetime.confirm(true);
+   this.loadHistorySalary();
+  }
 
+  // Select employe
+  clear_H(){
+    this.selectComponent2.clear();
+    this.selectComponent2.close();
+    this.id_H=== 0;
+  }
+  toggleItems_H(){
+    this.selectComponent2.toggleItems(this.toggle);
+    this.toggle= !this.toggle;
+    this.id_H=== 0;
+
+  }
+  confirm_H(){
+    this.selectComponent2.confirm();
+    this.selectComponent2.close();
+    console.log(this.selected_H);
+    if(this.selected_H){
+      this.id_H=this.selected_H.ID;
+
+    }
+    this.loadHistorySalary();
 
   }
 }
