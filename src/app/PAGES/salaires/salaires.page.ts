@@ -137,7 +137,7 @@ export class SalairesPage implements OnInit {
     if (this.id>0){
       txEmploye='&IDEMPLOYE='+this.id;
     }
-    this.readAPI(environment.endPoint+'salaire_action.php?Action=GET_SALAIRE'+txEmploye+
+    this.readAPI(environment.endPoint+'salaire_action.php?Action=GET_EMPLOYE'+txEmploye+
     '&ANNEE='+this.selectedDate+'&MOIS='+this.selectedMonth+'&Token='+environment.tokenUser)
     .subscribe((listes) =>{
       console.log(listes);
