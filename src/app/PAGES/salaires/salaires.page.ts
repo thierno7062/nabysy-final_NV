@@ -271,7 +271,16 @@ export class SalairesPage implements OnInit {
   avanceSalaire(avance: any){
     this.popupModalService.avanceSalaire(avance);
   }
+  salairedetails(salaire: any){
+    this.popupModalService.presentModalsalaire(salaire);
+  }
+  // filter
+  reverse= false;
+  sort(key){
 
+   this.id = key;
+   this.reverse = !this.reverse;
+  }
 
 
   //****************************** * Print bulletin ************************************************

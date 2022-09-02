@@ -296,7 +296,106 @@
 
     <!-- Historique -->
     <ion-slide value="1">
-      <div style="height:100%; width:100%;">
+      <div class="stats-container" style="height:100%; width:100%;">
+
+        <ion-card *ngFor="let item of listeSalaire " class="ion-margin">
+          <ion-card-header>
+            <ion-card-subtitle >
+              <strong>{{item.nom}}</strong>
+            </ion-card-subtitle>
+            <ion-item >
+              <ion-label>{{item.prenom}}</ion-label>
+              <ion-label >
+                <ion-text style="background-color: orange;">AUJOURD'HUI</ion-text></ion-label>
+              <ion-label slot="end" >{{item.  BULLETIN_SALAIRE.PRENOMEMPLOYE+' '+item.BULLETIN_SALAIRE.NOM_ENTREPRISE}}</ion-label>
+             <!--  <ion-icon [style.color]="item.DateEnreg === today ? 'red' :(item.DateEnreg === yesterdayToString ?'orange': 'green')"
+              size="small" name="ellipse" slot="end"></ion-icon> -->
+              <ion-icon color="danger"
+              size="small" name="ellipse" slot="end"></ion-icon>
+
+            </ion-item>
+          </ion-card-header>
+          <ion-card-content>
+            <!-- <ion-label>Due {{item.heureEnreg | date:'fullDate'}}</ion-label> -->
+            <ion-accordion-group expand="">
+                <ion-accordion value="infos">
+                <ion-item slot="header">
+                  <!-- <ion-label>Date {{item.DateEnreg | date:'fullDate' }}</ion-label> -->
+                  <!-- <ion-label>Enregistrée le  {{item.DateEnreg | date:'fullDate'}} {{'à '+item.HeureEnreg}}</ion-label> -->
+                  <!-- <ion-label>Enregistrée  {{item.DateEnreg===today ?"Aujourd\'hui" : (item.DateEnreg=== '2022/09/01' ? 'Hier': 'le '+item.DateEnreg | date:'fullDate')}} {{'à '+item.HeureEnreg}}</ion-label> -->
+                  <ion-label slot="end">N°  {{item.BULLETIN_SALAIRE.IDEMPLOYE }}</ion-label>
+
+                </ion-item>
+                <ion-list slot="content">
+                  <ion-row>
+                    <ion-col size="12" style="border: 1px solid #000;">
+                      <ion-item >
+                        <ion-label>{{'Nom: '+item.BULLETIN_SALAIRE.NOM_ENTREPRISE}}</ion-label>
+                      </ion-item>
+                      <ion-item >
+                        <ion-label>{{'Prénom: '+item.BULLETIN_SALAIRE.PRENOMEMPLOYE}}</ion-label>
+                      </ion-item>
+                      <ion-item>
+                        <ion-label>{{'Date de début: '+item.BULLETIN_SALAIRE.DATEDEBUT}}</ion-label>
+                      </ion-item>
+                      <ion-item>
+                        <ion-label>{{'Date de Fin: '+item.BULLETIN_SALAIRE.DATEFIN}}</ion-label>
+                      </ion-item>
+                      <ion-item>
+                        <ion-label>{{'DATE EMBAUCHE: '+item.BULLETIN_SALAIRE.DATE_EMBAUCHE}}</ion-label>
+                      </ion-item>
+                    </ion-col>
+                    <!-- <ion-col size="12" size-sm="6" size-md="6" size-lg="6" size-xl="6" style="border: 1px solid #000;">
+                      <ion-item *ngIf="item.PourTous==='0'">
+                        <ion-label>{{'Matricule: '+item.IdEmploye}}</ion-label>
+                      </ion-item>
+                      <ion-item *ngIf="item.IsPaye==='1'">
+                        <ion-label>{{'Absence Payée'}}</ion-label>
+                      </ion-item>
+                      <ion-item *ngIf="item.IsPaye==='0'">
+                        <ion-label>{{'Absence non Payée'}}</ion-label>
+                      </ion-item>
+                      <ion-item>
+                        <ion-label>{{'Annee: '+item.Annee}}</ion-label>
+                      </ion-item>
+                      <ion-item *ngIf="item.NBMOIS !=='0'">
+                        <ion-label>{{'Nombre de mois: '+item.NBMOIS}}</ion-label>
+                      </ion-item>
+                      <ion-item *ngIf="item.NBJOUR !=='0'">
+                        <ion-label>{{'Nombre de jours: '+item.NBJOUR}}</ion-label>
+                      </ion-item>
+                      <ion-item *ngIf="item.NBHEURE !=='0'">
+                        <ion-label>{{'Nombre d\'heures: '+item.NBHEURE}}</ion-label>
+                      </ion-item>
+                      <ion-item>
+
+                        <ion-label>
+                          Enregistrée par:
+                          <strong [style.color]="item.Utilisateur === 'thierno' ? 'red' : (item.Utilisateur === 'adama' ? 'green' : 'orange')">
+                            {{item.Utilisateur}}
+                          </strong>
+                        </ion-label>
+
+                      </ion-item>
+                    </ion-col> -->
+                  </ion-row>
+                </ion-list>
+              </ion-accordion>
+            </ion-accordion-group>
+          </ion-card-content>
+
+          <ion-row>
+            <ion-item>
+              <ion-button size="small" (click)="salairedetails(item)" color="dark" fill="clear">
+              <ion-icon name="eye-outline" slot="start"></ion-icon>
+              <p>Voir</p>
+            </ion-button>
+
+            </ion-item>
+
+
+          </ion-row>
+        </ion-card>
 
       </div>
     </ion-slide>

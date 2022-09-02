@@ -11,6 +11,7 @@ import { PhotoviewerPage } from '../DETAIL/photoviewer/photoviewer.page';
 // **************************
 import { PrintBulletin2Page } from '../pages/print-bulletin2/print-bulletin2.page';
 import { AvancePage } from '../CRUD/avance/avance.page';
+import { DetailSalairePage } from '../DETAIL/detail-salaire/detail-salaire.page';
 /* --------------------------------------------------------------------- */
 
 @Injectable({
@@ -101,4 +102,14 @@ export class PopupModalService {
     return await modal.present();
   }
 
+  async presentModalsalaire(salaire: any){
+    const modal = await this.modalCtrl.create({
+      component: DetailSalairePage,
+      componentProps:{
+        data: salaire,
+      }
+
+    });
+    return await modal.present();
+  }
 }
