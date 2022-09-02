@@ -75,7 +75,7 @@ export class SalairesPage implements OnInit {
 
 
    // Segments
-  segmentList: Array<string> = ['LISTE DES SALAIRES', 'RECHERCHE'];
+  segmentList: Array<string> = ['PAIEMENT OU AVANCE SALAIRE', 'HISTORIQUE DES SALAIRES'];
   selectedSegment: string;
   slideList: Array<string> = [
     'Slide Segment 1',
@@ -133,7 +133,11 @@ export class SalairesPage implements OnInit {
 
   }
   loadSalary(){
-    this.readAPI(environment.endPoint+'salaire_action.php?Action=GET_BULLETIN&IdEmploye='+this.id+
+    let txEmploye='';
+    if (this.id>0){
+      txEmploye='&IDEMPLOYE='+this.id;
+    }
+    this.readAPI(environment.endPoint+'salaire_action.php?Action=GET_SALAIRE'+txEmploye+
     '&ANNEE='+this.selectedDate+'&MOIS='+this.selectedMonth+'&Token='+environment.tokenUser)
     .subscribe((listes) =>{
       console.log(listes);
@@ -248,6 +252,7 @@ export class SalairesPage implements OnInit {
   dateChanged(value){
     this.dateValue= value;
    this.formattedString= format(parseISO(value),  'MMMM, yyyy');
+   console.log(format(parseISO(value),  'yyyy-MM-dd'));
    this.showPicker= false;
   //  this.selectedDate=value;
    this.selectedDate=format(parseISO(value),  'yyyy');
