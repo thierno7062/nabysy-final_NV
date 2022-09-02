@@ -119,6 +119,10 @@ const routes: Routes = [
     path: 'avance',
     loadChildren: () => import('./CRUD/avance/avance.module').then( m => m.AvancePageModule)
   },
+  {
+    path: 'detail-salaire',
+    loadChildren: () => import('./DETAIL/detail-salaire/detail-salaire.module').then( m => m.DetailSalairePageModule)
+  },
 
 
 
