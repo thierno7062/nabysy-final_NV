@@ -27,6 +27,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   imports: [BrowserModule,IonicModule.forRoot(),
     HttpClientModule, AppRoutingModule, IonicSelectableModule,FormsModule,ReactiveFormsModule],
   providers: [
+    { provide: LOCALE_ID, useValue: 'fr-FR'},
     ToastController,
     MenuController,
     Printer,

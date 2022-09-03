@@ -74,11 +74,12 @@ export class SalairesPage implements OnInit {
    Month=format(new Date(),'MMMM');
    selectedMode= 'date';
    showPicker = false;
-   // // dateValue= format(new Date(),'yyyy-MM-dd');
+   dateValue3= format(new Date(),'yyyy-MM-dd');
+   dateValue2= format(new Date(),'yyyy-MM-dd');
    dateValue= format(new Date(),'yyyy-MM-dd');
    formattedString= format(new Date(),'MMMM, yyyy'); showtof: boolean; tof: any;
    formattedString2= '';
-   formattedString3= format(new Date(),'MMMM, yyyy');
+   formattedString3= format(new Date(),'dd MMMM yyyy');
 
 
    // Segments
@@ -750,16 +751,16 @@ export class SalairesPage implements OnInit {
 
   // Historique salaire
   dateChangedHistory(value){
-    this.dateValue= value;
-   this.formattedString2= format(parseISO(value),  'MMMM, yyyy');
+    this.dateValue2= value;
+   this.formattedString2= format(parseISO(value),  'dd MMMM yyyy');
    console.log(format(parseISO(value),  'yyyy-MM-dd'));
    this.showPicker= false;
   //  this.selectedDate=value;
    this.selectedDate2=value;
    }
    dateChangedHistoryEnd(value){
-    this.dateValue= value;
-   this.formattedString3= format(parseISO(value),  'MMMM, yyyy');
+    this.dateValue3= value;
+   this.formattedString3= format(parseISO(value),  'dd MMMM yyyy');
    console.log(format(parseISO(value),  'yyyy-MM-dd'));
    this.showPicker= false;
   //  this.selectedDate=value;
