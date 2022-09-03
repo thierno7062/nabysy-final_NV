@@ -60,13 +60,15 @@ export class AbsencePage implements OnInit {
 
   nbElement: any;
 
+  voirPlus= true;
+
   constructor(private router: Router,private popupModalService: PopupModalService,
     private menu: MenuController,private loadingService: LoadingService,
     private http: HttpClient, private alertctrl: AlertController,
     private modalctrl: ModalController, private service: EmployeService) {
     // this.loadAbsence();
-    this.TypeAbsence='0';
-    this.isPaid='0';
+    this.TypeAbsence='-1';
+    this.isPaid='-1';
     this.nbElement=0;
     this.loadAbsence();
     this.loadEmploye();
@@ -326,5 +328,8 @@ export class AbsencePage implements OnInit {
   // Methode pour tous
   togglepaspourTous(){
     console.log(this.TypeAbsence);
+  }
+  btnvoirPlus(){
+    this.voirPlus = !this.voirPlus;
   }
 }

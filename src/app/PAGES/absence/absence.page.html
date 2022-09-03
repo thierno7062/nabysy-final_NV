@@ -19,14 +19,14 @@
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
-  
+
   <div class="ion-justify-content-center" id="div1" >
 
     <ion-grid  class="ion-grid-user">
+      <ion-title class="recherche">CRITERE DE RECHERCHE</ion-title>
       <ion-row class="ion-justify-content-center" class="ion-row-user">
-        <ion-col  class="ion-justify-content-center" id="col1">
-          <ion-title class="recherche">CRITERE DE RECHERCHE</ion-title>
-          <!-- Date de départ -->
+        <ion-col size="4"  class="ion-justify-content-center" id="col1">
+            <!-- Date de départ -->
           <!-- <ion-title class="depart">Date de départ <br><ion-icon name="arrow-down-outline" ></ion-icon></ion-title> -->
           <ion-item id="open-modal">
             <!-- <ion-icon icon="calendar-outline" slot="start" color="primary"></ion-icon> -->
@@ -52,8 +52,10 @@
               </ion-content>
             </ng-template>
           </ion-modal>
-          <!-- Date de fin -->
-          <ion-item id="open-modal2">
+        </ion-col>
+        <ion-col size="4"  class="ion-justify-content-center" id="col1">
+           <!-- Date de fin -->
+           <ion-item id="open-modal2">
             <!-- <ion-icon icon="calendar-outline" slot="start" color="primary"></ion-icon> -->
             <ion-label>Date de Fin </ion-label>
             <ion-text tappable slot="end">{{ formattedString2 }}</ion-text>
@@ -77,7 +79,8 @@
               </ion-content>
             </ng-template>
           </ion-modal>
-
+        </ion-col>
+        <ion-col size="4" class="ion-justify-content-center" id="col1">
           <!-- Select Employe -->
             <ion-item>
               <ion-label>Selectionnez un employe</ion-label>
@@ -121,72 +124,120 @@
               </ng-template>
             </ionic-selectable>
             </ion-item>
+        </ion-col>
+      </ion-row>
+      <!-- *************************** -->
+     <ion-row>
+      <ion-col size="10.5"></ion-col>
+      <ion-col size="1.5" >
+        <ion-label >
+          <ion-text  >
+            <button tappable (click)="btnvoirPlus()" *ngIf="voirPlus" fill="clear" color="primary">
+              <ion-text color="primary">
+                Plus de recherche
+              </ion-text>
+              <ion-icon  name="caret-down-outline" slot="end"></ion-icon></button>
+          </ion-text>
+        </ion-label>
+      </ion-col>
+     </ion-row>
 
-            <ion-card>
-              <ion-radio-group value="TypeAbsence"  mode="ios" [(ngModel)]="isPaid" color="primary" >
-                <ion-list-header>
-                  <ion-label>Payée ou Chômée</ion-label>
-                </ion-list-header>
-                <ion-item>
-                  <ion-label>Tous les Deux</ion-label>
-                  <ion-radio slot="start" value="-1"></ion-radio>
-                </ion-item>
-                <ion-item>
-                  <ion-label>Payée</ion-label>
-                  <ion-radio slot="start" value="1"></ion-radio>
-                </ion-item>
-                <ion-item>
-                  <ion-label>Chômées</ion-label>
-                  <ion-radio slot="start" value="0"></ion-radio>
-                </ion-item>
-              </ion-radio-group>
-            </ion-card>
-
-            <ion-item>
-              <ion-list>
-                <ion-radio-group value="TypeAbsence"  mode="ios" [(ngModel)]="TypeAbsence" color="dark" (ionBlur)="togglepaspourTous()">
-                  <ion-list-header>
-                    <ion-label>Type d'Absence</ion-label>
-                  </ion-list-header>
-              
-                  <ion-item>
-                    <ion-label>Toutes Absences</ion-label>
-                    <ion-radio slot="start" value="-1"></ion-radio>
-                  </ion-item>
-              
-                  <ion-item>
-                    <ion-label>Absences Individuelles</ion-label>
-                    <ion-radio slot="start" value="0"></ion-radio>
-                  </ion-item>
-              
-                  <ion-item>
-                    <ion-label>Jours Fériés et/ou Congés</ion-label>
-                    <ion-radio slot="start" value="1"></ion-radio>
-                  </ion-item>
+      <ion-row *ngIf="!voirPlus">
+        <ion-col size="6" class="title"> <ion-label>Payée ou Chômée</ion-label> </ion-col>
+        <ion-col size="6" class="title"> <ion-label>Type d'Absence</ion-label> </ion-col>
+      </ion-row>
+      <ion-row *ngIf="!voirPlus" >
+        <ion-col size="5.8" id="col1" style="height: 80px;">
+                <ion-radio-group value="TypeAbsence"  mode="ios" [(ngModel)]="isPaid" color="primary" >
+                  <ion-row>
+                    <ion-col size="4"><ion-item>
+                      <small>Tous les Deux</small>
+                      <ion-radio slot="start" value="-1"></ion-radio>
+                    </ion-item></ion-col>
+                    <ion-col size="4"><ion-item>
+                      <small>Payée</small>
+                      <ion-radio slot="start" value="1"></ion-radio>
+                    </ion-item></ion-col>
+                    <ion-col size="4"><ion-item>
+                      <small>Chômées</small>
+                      <ion-radio slot="start" value="0"></ion-radio>
+                    </ion-item></ion-col>
+                  </ion-row>
                 </ion-radio-group>
-              </ion-list>
-            </ion-item>
+        </ion-col>
+        <ion-col size="0.2" style="height: 80px;"></ion-col>
+        <ion-col size="6" id="col1" style="height: 80px;">
+          <ion-item >
+            <ion-list >
+              <ion-radio-group value="TypeAbsence"  mode="ios" [(ngModel)]="TypeAbsence" color="dark" (ionBlur)="togglepaspourTous()">
+                <ion-row>
+                  <ion-col size="4" class="ion-text-left">
+                    <ion-item >
+                    <small class="ion-text-left">Toutes Absences</small>
+                    <ion-radio slot="start" value="-1" color="primary"></ion-radio>
+                  </ion-item>
+                  </ion-col>
+                  <ion-col size="4">
+                    <ion-item>
+                      <small>Absences Individuelles</small>
+                      <ion-radio slot="start" value="0"></ion-radio>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col size="4">
+                    <ion-item>
+                      <small>Jours Fériés et/ou Congés</small>
+                      <ion-radio slot="start" value="1"></ion-radio>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+              </ion-radio-group>
+            </ion-list>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
 
+          <ion-col size="11"></ion-col>
+          <ion-col size="1" >
+            <ion-label >
+              <ion-text color="primary" >
+                <button tappable (click)="btnvoirPlus()" *ngIf="!voirPlus" fill="clear">
+                  <ion-text color="primary">
+                    Réduire
+                  </ion-text>
+                  <ion-icon name="caret-up-outline" slot="end"></ion-icon></button>
+              </ion-text>
+            </ion-label>
+          </ion-col>
+
+      </ion-row>
+        <!-- ********************************** -->
+      <ion-row>
+        <ion-col size="4">
+          <ion-label *ngIf="this.nbElement>0">{{this.nbElement}} absence(s) trouvée(s)</ion-label>
+        </ion-col>
+        <ion-col size="4">
           <ion-button (click)="loadAbsence()" expand="block" shape="round" color="success">Rechercher</ion-button>
-          <ion-col size="12" size-sm="6" size-md="4" size-lg="3" size-xl="2" class="ion-justify-content-center">
-            <ion-label *ngIf="this.nbElement>0">{{this.nbElement}} absence(s) trouvée(s)</ion-label>
-          </ion-col>
-
-          <ion-col size="12" size-sm="6" size-md="4" size-lg="3" size-xl="2" class="ion-justify-content-center">
-            <div class="ion-searchbar">
-              <ion-label color="light">
-                <ion-searchbar
-                placeholder="Rechercher une absence ici..."
-                [(ngModel)]="searchTerm"
-                showCancelButton="focus"
-                cancelButtonText="center"
-                cancelButtonIcon="none"
-                animated></ion-searchbar>
-              </ion-label>
-            </div>
-          </ion-col>
-
-        </ion-col>        
+        </ion-col>
+        <ion-col size="4"> </ion-col>
+      </ion-row>
+        <!-- ************************************** -->
+      <ion-row>
+        <ion-col size="4"></ion-col>
+        <ion-col size="4" size-sm="6" size-md="4" size-lg="3" size-xl="2" class="ion-justify-content-center">
+          <div class="ion-searchbar">
+            <ion-label color="light">
+              <ion-searchbar
+              placeholder="Rechercher une absence ici..."
+              [(ngModel)]="searchTerm"
+              showCancelButton="focus"
+              cancelButtonText="center"
+              cancelButtonIcon="none"
+              animated></ion-searchbar>
+            </ion-label>
+          </div>
+        </ion-col>
+        <ion-col size="4"></ion-col>
       </ion-row>
     </ion-grid>
 
