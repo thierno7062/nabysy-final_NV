@@ -184,29 +184,9 @@ export class SalairesPage implements OnInit {
     '&DATEDEBUT='+this.selectedDate2+'&DATEFIN='+this.selectedDate3+'&Token='+environment.tokenUser)
     .subscribe((listes) =>{
       console.log(listes);
-      //  this.dt1=Listes['0'];
-
       this.historySalaire=listes ;
-
-
     });
-    /* if(this.listeSalaire){
-      this.nom=this.listeSalaire.BULLETIN_SALAIRE.NOMEMPLOYE; this.qualifiquation= this.listeSalaire.BULLETIN_SALAIRE.QUALIFICATION;
-      this.periode=this.listeSalaire.BULLETIN_SALAIRE.PERIODE_DE_PAIE; this.adresse=this.listeSalaire.BULLETIN_SALAIRE.ADRESSEEMPLOYE;
-        this.salaireBrut=this.listeSalaire.BULLETIN_SALAIRE.SALAIRE_BRUT;
-        this.totalRetenue=this.listeSalaire.BULLETIN_SALAIRE.LIGNE_GAIN_PRIME.TOTAL_RETENU;
-        this.salaireNet=this.listeSalaire.BULLETIN_SALAIRE.SALAIRE_NET; this.categorie=this.listeSalaire.BULLETIN_SALAIRE.CATEGORIE;
-        this.situationFa=this.listeSalaire.BULLETIN_SALAIRE.SITUATION_FAMILLE;this.partTrimf=this.listeSalaire.BULLETIN_SALAIRE.PART_TRIMF;
-        this.partIrpp=this.listeSalaire.BULLETIN_SALAIRE.PART_IRPP;this.periodePaie=this.listeSalaire.BULLETIN_SALAIRE.PERIODE_DE_PAIE;
-        this.dateEmbauche=this.listeSalaire.BULLETIN_SALAIRE.DATE_EMBAUCHE;
-        this.gainPrime=this.listeSalaire.BULLETIN_SALAIRE.LIGNE_GAIN_PRIME;
-        this.SALAIRE_BRUT=this.listeSalaire.BULLETIN_SALAIRE.SALAIRE_BRUT;
-        this.ligneCotisation=this.listeSalaire.BULLETIN_SALAIRE.LIGNE_COTISATION;
-        this.entreprise= this.listeSalaire.BULLETIN_SALAIRE.NOM_ENTREPRISE;this.adressEntr= this.listeSalaire.BULLETIN_SALAIRE.ADR_ENTREPRISE;
-        this.contactEntre= this.listeSalaire.BULLETIN_SALAIRE.CONTACT_ENTREPRISE;this.emailEntre= this.listeSalaire.BULLETIN_SALAIRE.EMAIL_ENTREPRISE;
-        this.phoneEntre= this.listeSalaire.BULLETIN_SALAIRE.TEL_ENTREPRISE;this.prenom= this.listeSalaire.BULLETIN_SALAIRE.PRENOMEMPLOYE;
-
-    } */
+    
   }
 
   loadInfoMensuel(){
