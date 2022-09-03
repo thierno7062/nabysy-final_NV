@@ -42,12 +42,13 @@ export class PrimePage implements OnInit {
   // Pick Date
    today: any;
  /* age =0; */
-  selectedDate= format(new Date(),'yyyy-MM-dd');
+  selectedDate= '';
   selectedDate2= format(new Date(),'yyyy-MM-dd');
   modes = ['date', 'month', 'month-year','year'];
   selectedMode= 'date';
   showPicker = false;
   dateValue= format(new Date(),'yyyy-MM-dd');
+  dateValue2= format(new Date(),'yyyy-MM-dd');
   formattedString= '';
   formattedString2= '';
 
@@ -70,18 +71,18 @@ export class PrimePage implements OnInit {
 
   setToday(){
     // this.formattedString= format(parseISO(format(new Date(), 'yyyy-MM-dd')+ 'T09:00:00.000Z'), 'HH:mm, MMM d, yyyy');
-    this.formattedString= format(parseISO(format(new Date(), 'yyyy-MM-dd')+ 'T09:00:00.000Z'), ' yyyy-MM-d ');
-    this.formattedString2= format(parseISO(format(new Date(), 'yyyy-MM-dd')+ 'T09:00:00.000Z'), ' yyyy-MM-d ');
+    // this.formattedString= format(parseISO(format(new Date(), 'yyyy-MM-dd')+ 'T09:00:00.000Z'), ' yyyy-MM-d ');
+    this.formattedString2= format(parseISO(format(new Date(), 'yyyy-MM-dd')+ 'T09:00:00.000Z'), ' yyyy-MM-dd ');
     }
     dateChanged(value){
       this.dateValue= value;
-     this.formattedString= format(parseISO(value),  ' MMM d, yyyy');
+     this.formattedString= value;
      this.showPicker= false;
      this.selectedDate=value;
      }
      dateChangedFin(value){
-      this.dateValue= value;
-     this.formattedString2= format(parseISO(value),  ' MMM d, yyyy');
+      this.dateValue2= value;
+     this.formattedString2=value ;
      this.showPicker= false;
      this.selectedDate2=value;
      }
@@ -93,6 +94,18 @@ export class PrimePage implements OnInit {
        this.datetime.confirm(true);
       this.loadPrime();
      }
+     effacedateDebut(){
+      this.datetime.cancel(true);
+      this.selectedDate= '';
+      this.formattedString= '';
+      this.loadPrime();
+    }
+    effacedateFin(){
+      this.datetime.cancel(true);
+      this.selectedDate2= '';
+      this.formattedString2= '';
+      this.loadPrime();
+    }
   loadPrime(){
     let IdEmploye='';
     if(this.id){

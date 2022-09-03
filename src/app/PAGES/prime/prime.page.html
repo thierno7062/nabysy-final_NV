@@ -28,16 +28,15 @@
   <div class="ion-justify-content-center" id="div1" >
 
     <ion-grid  class="ion-grid-user">
+      <ion-title class="recherche">RECHERCHE</ion-title>
       <ion-row class="ion-justify-content-center" class="ion-row-user">
-        <ion-col size="12" size-sm="6" size-md="4" size-lg="3" size-xl="3" class="ion-justify-content-center"
-          id="col1">
-          <ion-title class="recherche">RECHERCHE</ion-title>
-          <!-- Date de départ -->
+        <ion-col size="4"  class="ion-justify-content-center" id="col1">
+           <!-- Date de départ -->
           <!-- <ion-title class="depart">Date de départ <br><ion-icon name="arrow-down-outline" ></ion-icon></ion-title> -->
           <ion-item id="open-modal">
             <!-- <ion-icon icon="calendar-outline" slot="start" color="primary"></ion-icon> -->
             <ion-label>Date de départ</ion-label>
-            <ion-text tappable slot="end">{{ formattedString }}</ion-text>
+            <ion-text tappable slot="end">{{ formattedString| date:'dd MMMM yyy' }}</ion-text>
             <ion-icon icon="calendar-outline" slot="end" color="primary" tappable></ion-icon>
           </ion-item>
 
@@ -50,18 +49,22 @@
                   (ionChange)="dateChanged(datetime.value)"
                   (ionCancel)="showPicker=false;">
                 </ion-datetime >
-
-                  <ion-button (click)="close()" color="danger" class="dismiss">Dismiss</ion-button>
-                  <ion-button (click)="select()" color="primary" >Select</ion-button>
-
+                  <ion-row>
+                    <ion-col size="4"><ion-button (click)="close()" color="danger" class="dismiss">Dismiss</ion-button></ion-col>
+                    <ion-col size="4"><ion-button (click)="effacedateDebut()" color="warning" class="dismiss">Effacer</ion-button></ion-col>
+                    <ion-col size="4"><ion-button (click)="select()" color="primary" expand="block">Select</ion-button></ion-col>
+                  </ion-row>
               </ion-content>
             </ng-template>
           </ion-modal>
-          <!-- Date de fin -->
-          <ion-item id="open-modal2">
+        </ion-col>
+
+        <ion-col size="4"  class="ion-justify-content-center" id="col1">
+           <!-- Date de fin -->
+           <ion-item id="open-modal2">
             <!-- <ion-icon icon="calendar-outline" slot="start" color="primary"></ion-icon> -->
             <ion-label>Date de Fin </ion-label>
-            <ion-text tappable slot="end">{{ formattedString2 }}</ion-text>
+            <ion-text tappable slot="end">{{ formattedString2| date:'dd MMMM yyy' }}</ion-text>
             <ion-icon icon="calendar-outline" slot="end" color="primary" tappable></ion-icon>
           </ion-item>
 
@@ -70,18 +73,20 @@
               <ion-content>
                 <ion-datetime
                   #datetime
-                  [value]="dateValue" size="cover"
+                  [value]="dateValue2" size="cover"
                   (ionChange)="dateChangedFin(datetime.value)"
                   (ionCancel)="showPicker=false;">
                 </ion-datetime >
-
-                  <ion-button (click)="close()" color="danger" class="dismiss">Dismiss</ion-button>
-                  <ion-button (click)="select()" color="primary" >Select</ion-button>
-
+                  <ion-row>
+                    <ion-col size="4"><ion-button (click)="close()" color="danger" class="dismiss">Dismiss</ion-button></ion-col>
+                    <ion-col size="4"><ion-button (click)="effacedateFin()" color="warning" class="dismiss">Effacer</ion-button></ion-col>
+                    <ion-col size="4"> <ion-button (click)="select()" color="primary" expand="block">Select</ion-button></ion-col>
+                  </ion-row>
               </ion-content>
             </ng-template>
           </ion-modal>
-
+        </ion-col>
+        <ion-col size="4" class="ion-justify-content-center" id="col1">
           <!-- Select Employe -->
             <ion-item>
               <ion-label>Selectionnez un employe</ion-label>
@@ -125,19 +130,16 @@
               </ng-template>
             </ionic-selectable>
             </ion-item>
-          <ion-button (click)="loadPrime()" expand="block" shape="round" color="success"> VALIDER</ion-button>
-        </ion-col>
+          </ion-col>
+        </ion-row>
 
-        <ion-col size="12" size-sm="6" size-md="4" size-lg="3" size-xl="2" class="ion-justify-content-center">
+        <ion-row class="ion-justify-content-center">
+          <ion-col size="4"></ion-col>
+          <ion-col size="4" ><ion-button (click)="loadPrime()" style="width: 300px;" shape="round" color="success" > VALIDER</ion-button></ion-col>
+          <ion-col size="4"></ion-col>
+        </ion-row>
 
-        </ion-col>
 
-        <ion-col size="12" size-sm="6" size-md="4" size-lg="3" size-xl="2" class="ion-justify-content-center">
-
-
-
-        </ion-col>
-      </ion-row>
     </ion-grid>
 
   </div>
