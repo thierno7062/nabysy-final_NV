@@ -38,6 +38,7 @@ export class LoginPage implements OnInit {
         password: this.password,
         aksi: 'Login'
       };
+      console.log('Connexion en cour .. vers '+environment.endPoint);
       const headers = new Headers();
       headers.append('Accept', 'application/json');
       headers.append('Content-Type', 'application/json' );

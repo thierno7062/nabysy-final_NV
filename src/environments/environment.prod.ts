@@ -1,3 +1,8 @@
 export const environment = {
-  production: true
+  production: true,
+  userName: '',
+  passWord: '',
+  endPoint:'https://technopharm.homeip.net/',
+  employeConnecte: null,
+  tokenUser:''
 };
