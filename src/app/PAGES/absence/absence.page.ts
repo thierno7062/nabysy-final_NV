@@ -40,14 +40,15 @@ export class AbsencePage implements OnInit {
 
   // Pick Date
    selectedDate= '';
-   selectedDate2= '';
+   selectedDate2= format(new Date(),'yyyy-MM-dd');
   selectedDate3: '';
    modes = ['date', 'month', 'month-year','year'];
    selectedMode= 'date';
    showPicker = false;
    dateValue= format(new Date(),'yyyy-MM-dd');
+   dateValue2= format(new Date(),'yyyy-MM-dd');
    formattedString= '';
-   formattedString2= '';
+   formattedString2= format(new Date(),'yyyy-MM-dd');
    formattedString3= '';
 
 
@@ -287,7 +288,7 @@ export class AbsencePage implements OnInit {
     this.selectedDate=value;
    }
    dateChangedFin(value){
-    this.dateValue= value;
+    this.dateValue2= value;
     this.formattedString2= format(parseISO(value),  ' MMM d, yyyy');
     this.showPicker= false;
     this.selectedDate2=value;

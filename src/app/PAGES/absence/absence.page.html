@@ -31,7 +31,7 @@
           <ion-item id="open-modal">
             <!-- <ion-icon icon="calendar-outline" slot="start" color="primary"></ion-icon> -->
             <ion-label>Date de départ</ion-label>
-            <ion-text tappable slot="end">{{ formattedString }}</ion-text>
+            <ion-text tappable slot="end">{{ formattedString|date: 'dd MMMM YYYY'  }}</ion-text>
             <ion-icon icon="calendar-outline" slot="end" color="primary" tappable></ion-icon>
           </ion-item>
 
@@ -58,7 +58,7 @@
            <ion-item id="open-modal2">
             <!-- <ion-icon icon="calendar-outline" slot="start" color="primary"></ion-icon> -->
             <ion-label>Date de Fin </ion-label>
-            <ion-text tappable slot="end">{{ formattedString2 }}</ion-text>
+            <ion-text tappable slot="end">{{ formattedString2|date: 'dd MMMM YYYY' }}</ion-text>
             <ion-icon icon="calendar-outline" slot="end" color="primary" tappable></ion-icon>
           </ion-item>
 
@@ -67,7 +67,7 @@
               <ion-content>
                 <ion-datetime
                   #datetime
-                  [value]="dateValue" size="cover"
+                  [value]="dateValue2" size="cover"
                   (ionChange)="dateChangedFin(datetime.value)"
                   (ionCancel)="showPicker=false;">
                 </ion-datetime >
