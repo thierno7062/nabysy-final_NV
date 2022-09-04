@@ -71,7 +71,6 @@ export class SalairesPage implements OnInit {
    selectedDate2= '';
    selectedDate3= format(new Date(),'yyyy-MM-dd');
    selectedMonth= format(new Date(),'MM');
-   Month=format(new Date(),'MMMM');
    selectedMode= 'date';
    showPicker = false;
    dateValue3= format(new Date(),'yyyy-MM-dd');
@@ -186,7 +185,7 @@ export class SalairesPage implements OnInit {
       console.log(listes);
       this.historySalaire=listes ;
     });
-    
+
   }
 
   loadInfoMensuel(){
@@ -281,7 +280,6 @@ export class SalairesPage implements OnInit {
   //  this.selectedDate=value;
    this.selectedDate=format(parseISO(value),  'yyyy');
    this.selectedMonth=format(parseISO(value),  'MM');
-   this.Month=format(parseISO(value),  'MMMM');
    }
    close(){
     this.datetime.cancel(true);
@@ -291,6 +289,7 @@ export class SalairesPage implements OnInit {
     this.datetime.confirm(true);
    this.loadSalary();
   }
+
   // ***************************AVANCE SUR SALAIRE**************************************************
   avanceSalaire(avance: any){
     this.popupModalService.avanceSalaire(avance);
