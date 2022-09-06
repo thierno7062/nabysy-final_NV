@@ -46,7 +46,7 @@ export class UploadfileService {
 						'Content-Type': file.type
 					},
 					params: {
-						clientFilename: 'NomDuFichier',
+						clientFilename: 'Fichier',
 						mimeType: file.type
 					}
 				}
