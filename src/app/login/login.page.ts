@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController, LoadingController, NavController, ToastController } from '@ionic/angular';
 import { environment } from 'src/environments/environment';
+import { UserInfosServiceService } from '../user-infos-service.service';
 
 @Component({
   selector: 'app-login',
@@ -25,7 +26,8 @@ export class LoginPage implements OnInit {
     private alertctrl: AlertController,
     private loadingctrl: LoadingController,
    private http: HttpClient,
-    private navctrl: NavController
+    private navctrl: NavController,
+    private infosUserSrv: UserInfosServiceService,
   ) { }
 
   ngOnInit() {
@@ -97,8 +99,13 @@ export class LoginPage implements OnInit {
       if (data) {
         environment.employeConnecte =data ;
         console.log(environment);
-        console.log('Ouverture du Menu Principal');
-        this.router.navigate(['/home']);
+        this.infosUserSrv.getUserProfile().subscribe(userData => {
+          environment.userProfile=userData;
+          delete environment.userProfile.PASSWORD ;
+          console.log(environment.userProfile);
+          console.log('Ouverture du Menu Principal');
+          this.router.navigate(['/home']);
+        });        
       //toast.present();
       }else{
         environment.employeConnecte=null;
