@@ -24,15 +24,23 @@ export class UploadfileService {
   constructor(httpClient: HttpClient) {
     this.httpClient = httpClient;
   }
-  public async uploadFile( file: Blob , apiUrl: string): Promise<UploadResult> {
+
+  /**
+   * Envoie un fichier vers l'API
+   *
+   * @param file : le contenue du fichier au format binaire
+   * @param apiUrl  : l'url vers l'API qui recevra le fichier
+   * @param fileName : Nom du fichier tel qu'il sera stocké sur le serveur
+   * @returns : Promise de UploadResult
+   */
+  public async uploadFile(file: Blob , apiUrl: string, fileName: string ='Fichier'): Promise<UploadResult> {
     //console.log(apiUrl);
     //console.log(file);
     this.InfoUpload=new UploadResult();
-    this.InfoUpload.name='FichierEnvoyé';
+    this.InfoUpload.name=fileName;
     this.InfoUpload.reponse='' ;
     this.InfoUpload.size=file.size ;
     this.InfoUpload.url=apiUrl ;
-
 		const result = await this.httpClient
 			.post<ApiUploadResult>(
 				apiUrl,
@@ -46,7 +54,7 @@ export class UploadfileService {
 						'Content-Type': file.type
 					},
 					params: {
-						clientFilename: 'Fichier',
+						clientFilename: fileName,
 						mimeType: file.type
 					}
 				}
