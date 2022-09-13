@@ -3,7 +3,7 @@ export const environment = {
   userName: '',
   passWord: '',
   userProfile: null,
-  endPoint:'https://technopharm.homeip.net/',
+  endPoint:'https://cloud-549579568.onetsolutions.network/nabysyrhrs/',
   employeConnecte: null,
   tokenUser:''
 };
