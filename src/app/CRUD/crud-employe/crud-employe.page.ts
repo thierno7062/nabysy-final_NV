@@ -60,6 +60,7 @@ export class CrudEmployePage implements OnInit {
 
   ngOnInit() {
     if (this.employe.ID>0){
+      console.log(this.employe.Tel);
       this.isUpdate = true;
       this.nom=this.employe.Nom; this.prenom= this.employe.Prenom; this.fonction= this.employe.Fonction;
       this.adresse= this.employe.Adresse; this.telephone= this.employe.Tel; this.sexe= this.employe.Sexe;
@@ -109,7 +110,7 @@ export class CrudEmployePage implements OnInit {
     }else if(this.adresse===''){
       this.presentToast('Veillez mettre l\'adresse SVP!!!!');
     }else if (this.telephone===''){
-      this.presentToast('Veillez mettre le numéro SVP!!!!');
+      this.presentToast('Veillez indiquer le numéro SVP!!!!');
     }else{
       return new Promise (resolve =>{
         const headers = new Headers();
@@ -126,7 +127,7 @@ export class CrudEmployePage implements OnInit {
           TxService='&IdService='+this.idService;
         } */
         const apiUrl=environment.endPoint+'employe_action.php?Action=SAVE_EMPLOYE'+TxId+'&Nom='+this.nom+'&Prenom='+this.prenom+
-        '&Fonction='+this.fonction+'&Sexe='+this.sexe+'&Adresse='+this.adresse+'&Tel='+this.telephone+'&DATENAIS='+ this.selectedDate+
+        '&Fonction='+this.fonction+'&Sexe='+this.sexe+'&Adresse='+this.adresse+'&Tel='+this.telephone.trim()+'&DATENAIS='+ this.selectedDate+
         '&DateEmbauche='+this.selectedDate2+'&Salaire='+this.Salaire+'&SurSalaire='+this.SurSalaire+'&PART_TRIMF='+this.PART_TRIMF+
         '&PART_IRPP='+ this.PART_IRPP+'&IPRES_TAUX_PATRONAL='+this.IPRES_TAUX_PATRONAL+'&IPRES_TAUX_E='+this.IPRES_TAUX_E+
         '&CSS_TAUX_ALLOCFAMILLE_PATRONAL='+this.CSS_TAUX_ALLOCFAMILLE_PATRONAL+'&CSS_TAUX_ACCIDENT_PATRONAL='+this.CSS_TAUX_ACCIDENT_PATRONAL+
@@ -187,16 +188,20 @@ export class CrudEmployePage implements OnInit {
       console.log(this.employe);
       this.idDirection=this.employe.IdDirection;
       console.log(this.idDirection);
-      this.url=environment.endPoint+'direction_action.php?Action=GET_DIRECTION&IdDirection='+this.idDirection+
-      '&Token='+environment.tokenUser;
-      this.readAPI(this.url)
-      .subscribe((data) =>{
-        this.direction=data ;
-        // this.products=data;
-        console.log(data);
-        console.log(data['0']);
-        this.nom_Direction=this.direction['0'].Nom;
-      });
+      if (this.idDirection>0){
+        this.url=environment.endPoint+'direction_action.php?Action=GET_DIRECTION&IdDirection='+this.idDirection+
+        '&Token='+environment.tokenUser;
+        this.readAPI(this.url)
+        .subscribe((data) =>{
+          this.direction=data ;
+          // this.products=data;
+          console.log(data);
+          if (this.direction){
+            console.log(data['0']);
+            this.nom_Direction=this.direction['0'].Nom;
+          }
+        });
+      }
     });
   }
 
@@ -213,8 +218,10 @@ export class CrudEmployePage implements OnInit {
         this.service=data ;
         // this.products=data;
         console.log(data);
-        console.log(data['0']);
-        this.nom_Service=this.service['0'].Nom;
+        if (this.service.lengh>0){
+          console.log(data['0']);
+          this.nom_Service=this.service['0'].Nom;
+        }
       });
     });
   }

@@ -8,7 +8,7 @@
         Fermer
       </ion-button>
     </ion-buttons>
-    <ion-title>{{isUpdate ? 'Modifiert' : 'Ajouter'}} Personnel</ion-title>
+    <ion-title>{{isUpdate ? 'Fiche' : 'Ajouter un'}} Employé</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -75,7 +75,7 @@
                   </ion-fab-button> -->
 
               <div class="text-container">
-                <ion-text><span class="name">{{employe.Prenom+' '}} {{employe.Nom}}</span></ion-text>
+                <ion-text><span class="name">{{employe.DateEmbauche}}</span></ion-text>
                 <ion-text><span class="description">{{employe?.Fonction}}</span></ion-text>
               </div>
             </div>
@@ -97,20 +97,8 @@
           <ion-text><span class="description">SurSalaire</span></ion-text>
         </div>
         <div class="stat-container">
-          <ion-text><span class="stat">10 ans</span></ion-text>
-          <ion-text><span class="description">Année d'expérience</span></ion-text>
-        </div>
-        <div class="stat-container">
-          <ion-text><span class="stat">10 ans</span></ion-text>
-          <ion-text><span class="description">Année d'expérience</span></ion-text>
-        </div>
-        <div class="stat-container">
-          <ion-text><span class="stat">10 ans</span></ion-text>
-          <ion-text><span class="description">Année d'expérience</span></ion-text>
-        </div>
-        <div class="stat-container">
-          <ion-text><span class="stat">10 ans</span></ion-text>
-          <ion-text><span class="description">Année d'expérience</span></ion-text>
+          <ion-text><span class="stat">{{employe.ANCIENNETE}}</span></ion-text>
+          <ion-text><span class="description">Ancienneté</span></ion-text>
         </div>
       </div>
 
@@ -176,7 +164,7 @@
         </ion-item>
         <ion-item>
           <ion-label position="floating">Téléphone</ion-label>
-          <ion-input [(ngModel)]='this.telephone' type="number" value="0" required></ion-input>
+          <ion-input [(ngModel)]='this.telephone' value="+221" required></ion-input>
         </ion-item>
         <ion-item>
           <ion-label>Sexe</ion-label>
