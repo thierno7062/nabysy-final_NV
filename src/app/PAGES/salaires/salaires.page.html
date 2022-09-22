@@ -410,12 +410,12 @@
         <ion-card *ngFor="let item of historySalaire " class="ion-margin" style="border: 0px #fff; ">
           <ion-card-header>
             <ion-card-subtitle >
-              <strong>{{item.Nom}}</strong>
+              <strong>{{item.DatePaie}}</strong>
             </ion-card-subtitle>
             <ion-item >
               <!-- <ion-label>{{item.Prenom}}</ion-label> -->
               <ion-label >
-                <ion-text style="background-color: orange;">Période: </ion-text></ion-label>
+                <ion-text style="background-color: orange;">Montant Versé: {{item.TotalVers}}</ion-text></ion-label>
               <ion-label slot="end" >{{item.Prenom+' '+item.Nom}}</ion-label>
              <!--  <ion-icon [style.color]="item.DateEnreg === today ? 'red' :(item.DateEnreg === yesterdayToString ?'orange': 'green')"
               size="small" name="ellipse" slot="end"></ion-icon> -->
