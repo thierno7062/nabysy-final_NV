@@ -96,10 +96,7 @@ const routes: Routes = [
     path: 'crud-prime',
     loadChildren: () => import('./CRUD/crud-prime/crud-prime.module').then( m => m.CrudPrimePageModule)
   },
-  {
-    path: 'employe',
-    loadChildren: () => import('./CRUD/employe/employe.module').then( m => m.EmployePageModule)
-  },
+
   /* {
     path: 'photoviewer',
     loadChildren: () => import('./DETAIL/photoviewer/photoviewer.module').then( m => m.PhotoviewerPageModule)
@@ -111,7 +108,8 @@ const routes: Routes = [
   {
     path: 'detail-prime',
     loadChildren: () => import('./DETAIL/detail-prime/detail-prime.module').then( m => m.DetailPrimePageModule)
-  },  {
+  },
+  {
     path: 'photoviewer',
     loadChildren: () => import('./DETAIL/photoviewer/photoviewer.module').then( m => m.PhotoviewerPageModule)
   },
