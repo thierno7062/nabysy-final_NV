@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { MenuController } from '@ionic/angular';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
+import { LoadingService } from 'src/app/services/loading.service';
 
 @Component({
   selector: 'app-home',
@@ -41,8 +42,9 @@ export class HomePage implements OnInit {
     {id: 8, vendor: 'Rapport du 30 Octobre........', image: '', amount: 'Service comptable',time: 'le 02/11/2021 4:00PM'},
     {id: 9, vendor: 'Rapport du 02 Novembre........', image: '', amount: 'Service comptable',time: 'le 11/11/2021 4:00PM'},
   ];
+  listeRapports: any;
 
-  constructor( private router: Router,
+  constructor( private router: Router,private loadingService: LoadingService,
     private menu: MenuController,
     private http: HttpClient,) {
       this.nomEmploye='';
@@ -60,6 +62,7 @@ export class HomePage implements OnInit {
         this.getInfosUtilisateur();
         console.log(environment.employeConnecte);
       }
+      this.rapportRecent();
     }
   ngOnInit(): void {
     console.log('nbOnInit pour HomePage');
@@ -108,5 +111,18 @@ export class HomePage implements OnInit {
         }
       });
     }
+    rapportRecent(){
+        this.loadingService.presentLoading();
+        this.readAPI(environment.endPoint+'rs_action.php?Action=GET_RAPPORT_RS&Token='+environment.tokenUser)
+        .subscribe((listes) =>{
+          // console.log(Listes);
+          this.listeRapports=listes ;
+          console.log(this.listeRapports);
+        });
+    }
+    readAPI(url: string){
+      console.log(url);
+      return this.http.get(url);
 
+    }
 }

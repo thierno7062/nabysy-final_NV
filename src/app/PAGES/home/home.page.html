@@ -73,17 +73,17 @@
       <ion-list-header>
         <ion-label>RAPPORTS RECENTS</ion-label>
       </ion-list-header>
-      <ion-item lines="none" *ngFor="let item of transaction">
+      <ion-item lines="none" *ngFor="let item of listeRapports">
         <ion-icon slot="start" name="checkbox-outline" color="primary"></ion-icon>
         <!-- <ion-avatar>
         </ion-avatar> -->
         <ion-label size="large" class="ion-text-wrap">
-          <b>{{item.vendor}}</b>
+          <b>{{'Rapport de '+item.PRENOM_AUTEUR+' '+item.NOM_AUTEUR}}</b>
           <p>
-            {{item?.time}}
+            le {{item.DateEnreg | date: 'dd MMMM yyyy'+' à '+item?.HeureEnreg}}
           </p>
         </ion-label>
-        <ion-text slot="end" [color]="item?.amount > 0 ?'success' : 'danger'">{{item?.amount}}</ion-text>
+        <ion-text slot="end" [color]="item?.amount > 0 ?'success' : 'danger'">Service comptable</ion-text>
       </ion-item>
     </ion-list>
   </ion-grid>
