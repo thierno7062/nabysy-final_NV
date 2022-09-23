@@ -120,7 +120,11 @@ const routes: Routes = [
   {
     path: 'detail-salaire',
     loadChildren: () => import('./DETAIL/detail-salaire/detail-salaire.module').then( m => m.DetailSalairePageModule)
+  },  {
+    path: 'contrat',
+    loadChildren: () => import('./DETAIL/contrat/contrat.module').then( m => m.ContratPageModule)
   },
+
 
 
 

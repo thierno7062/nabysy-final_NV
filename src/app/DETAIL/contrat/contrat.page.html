@@ -1,0 +1,225 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-button fill="clear" slot="start" color="dark" (click)="_openSideNav()">
+      <ion-icon slot="icon-only" name="menu"> </ion-icon>
+    </ion-button>
+    <ion-title>PROFIL</ion-title>
+    <!-- <ion-button slot="end" (click)="closeModal()"><ion-icon name="close-outline"></ion-icon></ion-button> -->
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <!-- page header -->
+  <ion-header mode="ios">
+    <ion-toolbar>
+
+    </ion-toolbar>
+  </ion-header>
+  <div class="page-container">
+    <!-- hero -->
+    <div class="hero-container" >
+      <ion-row>
+        <ion-col size="4" >
+          <!-- (click)="addPhotoToGallery(employe)" -->
+          <ion-img [src]='this.userDetails.PHOTO_URL' ></ion-img></ion-col>
+          <ion-col size="4">
+        </ion-col>
+        <ion-col size="4"></ion-col>
+      </ion-row>
+    </div>
+
+    <!-- content -->
+    <div class="content-container">
+      <!-- user info -->
+      <div class="name-container">
+        <ion-text algin="center">
+          <h1>{{this.userDetails.Prenom+' '}} {{this.userDetails.Nom}}</h1>
+        </ion-text>
+
+        <!-- <ion-button (click)="CallUserdetails()"> -->
+         <!--  <ion-button>
+          <ion-label>OUVRIR</ion-label>
+          <ion-icon slot="end" name="ellipsis-horizontal" ></ion-icon>
+        </ion-button> -->
+      </div>
+
+      <!-- location -->
+      <div class="location">
+        <ion-text> Adresse: <span class="emphasis">{{' '+this.userDetails.Adresse}}</span> </ion-text>
+      </div>
+
+      <!-- talent scout -->
+      <div class="talent-scout-container">
+        <ion-item class="ion-no-padding" lines="none">
+          <div class="inner-container">
+            <div class="info-container">
+              <ion-avatar>
+                <ion-img src={{this.userDetails.PHOTO_URL}}></ion-img>
+              </ion-avatar>
+              <div class="text-container">
+                <ion-text><span class="name">{{this.userDetails.Prenom+' '}} {{this.userDetails.Nom}}</span></ion-text>
+                <ion-text><span class="description">{{this.userDetails.Fonction}}</span></ion-text>
+              </div>
+            </div>
+            <div>
+              <ion-button>
+                <ion-icon name="document"></ion-icon>
+              </ion-button>
+              <ion-label>
+                <ion-text color="dark">Contrat </ion-text>
+              </ion-label>
+            </div>
+          </div>
+        </ion-item>
+      </div>
+
+      <!-- stats -->
+      <div class="stats-container">
+        <div class="stat-container">
+          <ion-text><span class="stat">{{this.userDetails.Salaire}}</span></ion-text>
+          <ion-text><span class="description">Salaire</span></ion-text>
+        </div>
+        <div class="stat-container">
+          <ion-text><span class="stat">{{this.userDetails.SurSalaire}}</span></ion-text>
+          <ion-text><span class="description">SurSalaire</span></ion-text>
+        </div>
+        <div class="stat-container">
+          <ion-text><span class="stat">{{this.ANCIENNETE}}</span></ion-text>
+          <ion-text><span class="description">Ancienneté</span></ion-text>
+        </div>
+        <div class="stat-container">
+          <ion-text><span class="stat">{{this.userDetails.NbPerformance}}</span></ion-text>
+          <ion-text><span class="description">Performance</span></ion-text>
+        </div>
+      </div>
+
+      <!-- tags -->
+      <div class="tags-container">
+        <ion-chip color="primary">{{this.userDetails.Fonction}}</ion-chip>
+        <ion-chip color="secondary" *ngIf="hideMe">{{this.DIRECTION}}</ion-chip>
+        <ion-chip color="success" *ngIf="hideMe2">{{this.SERVICE}}</ion-chip>
+      </div>
+
+      <!-- about -->
+      <div class="about-container">
+        <ion-row>
+          <ion-col size="12" size-sm="6" size-md="6" size-lg="6" size-xl="6" >
+            <ion-list lines="full">
+              <ion-item>
+                <ion-label>
+                  <ion-text >Prénom</ion-text>
+                  <p><ion-text color="dark">{{this.userDetails.Prenom}}</ion-text></p>
+                </ion-label>
+              </ion-item>
+              <ion-item>
+                <ion-label>
+                  <ion-text >Nom</ion-text>
+                  <p><ion-text color="dark">{{this.userDetails.Nom}}</ion-text></p>
+                </ion-label>
+              </ion-item>
+              <ion-item>
+                <ion-label>
+                  <ion-text >Date de Naissance</ion-text>
+                  <p><ion-text color="dark">{{this.userDetails.DATENAIS}}</ion-text></p>
+                </ion-label>
+              </ion-item>
+              <ion-item>
+                <ion-label>
+                  <ion-text >Adresse</ion-text>
+                  <p><ion-text color="dark">{{this.userDetails.Adresse}}</ion-text></p>
+                </ion-label>
+              </ion-item>
+              <ion-item>
+                <ion-label>
+                  <ion-text >Téléphone</ion-text>
+                  <p><ion-text color="dark">{{this.userDetails.Tel}}</ion-text></p>
+                </ion-label>
+              </ion-item>
+              <ion-item>
+                <ion-label>
+                  <ion-text >Sexe</ion-text>
+                  <p><ion-text color="dark">{{sexeString}}</ion-text></p>
+                </ion-label>
+              </ion-item>
+              <ion-item>
+                <ion-label>
+                  <ion-text >Situation Familiale</ion-text>
+                  <p><ion-text color="dark">{{this.userDetails.SITUATION_FAMILLE}}</ion-text></p>
+                </ion-label>
+              </ion-item>
+            </ion-list>
+            <ion-item>
+              <ion-label>
+                <ion-text >Ancienneté</ion-text>
+                <p><ion-text color="dark">{{this.ANCIENNETE}}</ion-text></p>
+              </ion-label>
+            </ion-item>
+          </ion-col>
+
+          <ion-col size="12" size-sm="6" size-md="6" size-lg="6" size-xl="6" >
+            <ion-list lines="full">
+              <ion-item>
+                <ion-label>
+                  <ion-text >Fonction</ion-text>
+                  <p><ion-text color="dark">{{this.userDetails.Fonction}}</ion-text></p>
+                </ion-label>
+              </ion-item>
+              <ion-item  *ngIf="hideMe">
+                <ion-label>
+                <ion-text >Direction</ion-text>
+                <p><ion-text color="dark">{{nom_Direction}}</ion-text></p>
+              </ion-label>
+              </ion-item>
+              <ion-item *ngIf="hideMe2">
+                <ion-label>
+                  <ion-text >Service</ion-text>
+                  <p><ion-text color="dark">{{nom_Service}}</ion-text></p>
+                </ion-label>
+              </ion-item>
+              <ion-row *ngIf="message">
+                <ion-col size="12" size-sm="12" size-md="12" size-lg="12" size-xl="12" class="affectation">
+                 <h1 class="title" *ngIf="message_txt_M">Non Affecté</h1>
+                 <h1 class="title" *ngIf="message_txt_F">Non Affectée</h1>
+                 <!-- <h1 class="title" *ngIf="message_txt">Non Affecté(e)</h1> -->
+                </ion-col>
+              </ion-row>
+              <ion-item>
+                <ion-label>
+                  <ion-text >Date d'embauche</ion-text>
+                  <p><ion-text color="dark">{{this.DateEmbauche}}</ion-text></p>
+                </ion-label>
+              </ion-item>
+              <ion-item>
+                <ion-label>
+                  <ion-text >Date de Début</ion-text>
+                  <p><ion-text color="dark">{{this.DateDebut}}</ion-text></p>
+                </ion-label>
+              </ion-item>
+              <ion-item>
+                <ion-label>
+                  <ion-text >Date de Fin</ion-text>
+                  <p><ion-text color="dark">{{this.DateFin}}</ion-text></p>
+                </ion-label>
+              </ion-item>
+              <ion-item>
+                <ion-label>
+                  <ion-text >Contrat</ion-text>
+                  <p><ion-text color="dark">{{this.TitreContrat}}</ion-text></p>
+                </ion-label>
+              </ion-item>
+              <ion-item>
+                <ion-label>
+                  <ion-text >Type de Contrat</ion-text>
+                  <p><ion-text color="dark">{{this.TypeContrat}}</ion-text></p>
+                </ion-label>
+              </ion-item>
+            </ion-list>
+          </ion-col>
+        </ion-row>
+      </div>
+
+
+    </div>
+  </div>
+</ion-content>
+

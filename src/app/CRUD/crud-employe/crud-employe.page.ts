@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/member-ordering */
 /* eslint-disable @typescript-eslint/no-shadow */
 /* eslint-disable max-len */
 /* eslint-disable @typescript-eslint/dot-notation */
@@ -269,5 +270,10 @@ export class CrudEmployePage implements OnInit {
 
       private createForm(){
         // this.registerForm= new RegisterPageForm(this.formBuilder);
+      }
+  openContrat(employe){
+    this.router.navigate(['/contrat'],{
+    queryParams:employe
+        });
       }
 }

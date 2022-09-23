@@ -65,9 +65,15 @@
                 <ion-text><span class="description">{{userDetails?.Fonction}}</span></ion-text>
               </div>
             </div>
-            <ion-button>
-              <ion-icon name="chatbubble"></ion-icon>
-            </ion-button>
+            <div>
+              <ion-button (click)="CallUserContrat()">
+                <!-- <ion-icon name="chatbubble"></ion-icon> -->
+                <ion-icon name="document-text" style="font-size: 100px;"></ion-icon>
+              </ion-button>
+              <ion-label>
+                <ion-text color="dark">Contrat </ion-text>
+              </ion-label>
+            </div>
           </div>
         </ion-item>
       </div>

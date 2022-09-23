@@ -72,6 +72,13 @@ export class DetailEmployePage implements OnInit {
     });
     this.popupModalService.dismiss();
     // const user = data['data'];
+  }
+  CallUserContrat(){
+    this.router.navigate(['/contrat'],{
+      queryParams:this.userDetails
+    });
+    this.popupModalService.dismiss();
+    // const user = data['data'];
 
   }
   /**
