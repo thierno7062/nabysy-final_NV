@@ -188,6 +188,39 @@ ion-content {
             }
           }
         }
+        // stats file
+      .stats-container {
+        display: flex;
+        flex-direction: row;
+        padding: 10px 0;
+        overflow-x: auto;
+        .stat-container {
+          flex-shrink: 0;
+          border-right: 0.5px solid #999;
+          padding-left: 20px;
+          padding-right: 20px;
+          &:first-child {
+            padding-left: 0;
+          }
+          &:last-child {
+            border-right: 0.5px solid transparent; // to keep the size of each column uniform
+          }
+          display: flex;
+          flex-direction: column;
+          ion-text {
+            .stat {
+              font-size: 1rem;
+              font-weight: 100;
+              color: #000;
+            }
+            .description {
+              font-size: 0.8rem;
+              color: #555;
+              margin-top: 10px;
+            }
+          }
+        }
+      }
       }
 
       // stats

@@ -62,15 +62,36 @@
               </div>
             </div>
             <div>
-              <ion-button>
-                <ion-icon name="document"></ion-icon>
+              <ion-button >
+                <ion-icon name="create"></ion-icon>
               </ion-button>
               <ion-label>
-                <ion-text color="dark">Contrat </ion-text>
+                <ion-text color="dark">Modifier </ion-text>
               </ion-label>
             </div>
           </div>
         </ion-item>
+        <div class="stats-container">
+          <div class="stat-container">
+            <ion-item>
+              <!-- <ion-label>Awesome Label</ion-label> -->
+              <input type="file" [(ngModel)]="fichier" (change)="selectedFile($event)">
+              <ion-button (click)="joindreFichier()"  shape="round">
+                Envoyer
+              </ion-button>
+            </ion-item>
+          </div>
+          <div class="stat-container" >
+            <ion-button >
+              <ion-icon name="document"></ion-icon>
+            </ion-button>
+            <ion-label>
+              <ion-text color="dark">Contrat </ion-text>
+            </ion-label>
+          </div>
+
+        </div>
+
       </div>
 
       <!-- stats -->
@@ -160,6 +181,18 @@
             <ion-list lines="full">
               <ion-item>
                 <ion-label>
+                  <ion-text >Contrat</ion-text>
+                  <p><ion-text color="dark">{{this.TitreContrat}}</ion-text></p>
+                </ion-label>
+              </ion-item>
+              <ion-item>
+                <ion-label>
+                  <ion-text >Type de Contrat</ion-text>
+                  <p><ion-text color="dark">{{this.TypeContrat}}</ion-text></p>
+                </ion-label>
+              </ion-item>
+              <ion-item>
+                <ion-label>
                   <ion-text >Fonction</ion-text>
                   <p><ion-text color="dark">{{this.userDetails.Fonction}}</ion-text></p>
                 </ion-label>
@@ -201,24 +234,10 @@
                   <p><ion-text color="dark">{{this.DateFin}}</ion-text></p>
                 </ion-label>
               </ion-item>
-              <ion-item>
-                <ion-label>
-                  <ion-text >Contrat</ion-text>
-                  <p><ion-text color="dark">{{this.TitreContrat}}</ion-text></p>
-                </ion-label>
-              </ion-item>
-              <ion-item>
-                <ion-label>
-                  <ion-text >Type de Contrat</ion-text>
-                  <p><ion-text color="dark">{{this.TypeContrat}}</ion-text></p>
-                </ion-label>
-              </ion-item>
             </ion-list>
           </ion-col>
         </ion-row>
       </div>
-
-
     </div>
   </div>
 </ion-content>

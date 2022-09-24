@@ -124,6 +124,18 @@ const routes: Routes = [
     path: 'contrat',
     loadChildren: () => import('./DETAIL/contrat/contrat.module').then( m => m.ContratPageModule)
   },
+  {
+    path: 'credit',
+    loadChildren: () => import('./PAGES/credit/credit.module').then( m => m.CreditPageModule)
+  },
+  {
+    path: 'crud-credit',
+    loadChildren: () => import('./CRUD/crud-credit/crud-credit.module').then( m => m.CrudCreditPageModule)
+  },
+  {
+    path: 'detail-credit',
+    loadChildren: () => import('./DETAIL/detail-credit/detail-credit.module').then( m => m.DetailCreditPageModule)
+  },
 
 
 

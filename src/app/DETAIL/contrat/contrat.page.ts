@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MenuController, ModalController, NavParams } from '@ionic/angular';
+import { MenuController, ModalController, NavParams, ToastController } from '@ionic/angular';
 import { PopupModalService } from 'src/app/services/popup-modal.service';
 
 /* Prise en charge des Photos */
@@ -28,14 +28,17 @@ export class ContratPage implements OnInit {
   message_txt_M: boolean;  message_txt_F: boolean;DateFin: ''; DateDebut: '';
   userContrat: any; usercontrat2: any; TypeContrat: '';TitreContrat: '';DateEmbauche: '';
   ANCIENNETE: '';DIRECTION: '';SERVICE: '';
+  listeFichiers: any;
+  nbElement: any;
+  fichier: any;
 
   constructor(private router: Router,private popupModalService: PopupModalService,
     private route: ActivatedRoute,private http: HttpClient,private menu: MenuController,
-    private loadingService: LoadingService)
+    private loadingService: LoadingService,private toastctrl: ToastController)
      {
       this.loadDirection();
     this.loadService();
-    // this.loadEmploye();
+    this.getfichier();
     }
 
   ngOnInit() {
@@ -137,4 +140,50 @@ export class ContratPage implements OnInit {
     this.menu.enable(true,'menu-content');
     this.menu.open('menu-content');
   }
+  getfichier(){
+    this.route.queryParams.subscribe(res =>{
+      console.log(res);
+      this.userDetails=res;
+    this.readAPI(environment.endPoint+'rs_action.php?Action=LISTE_FICHIER_CONTRAT&IDEMPLOYE='+this.userDetails.ID+'&Token='+environment.tokenUser)
+    .subscribe((listes) =>{
+      this.listeFichiers=listes ;
+      console.log(this.listeFichiers);
+      this.nbElement=this.listeFichiers.length  ;
+
+    });
+  });
+  }
+  selectedFile(event){
+    this.fichier= event.target.files[0];
+  }
+
+  joindreFichier(){
+    const formData= new FormData();
+    formData.append('fichier', this.fichier);
+    //console.log(this.fichier);
+    this.http.post(environment.endPoint+'rs_action.php?Action=LISTE_FICHIER_CONTRAT&CHAMPFICHIER=fichier&IDEMPLOYE='+this.userDetails.ID+'&NOMFICHIER='+
+    this.fichier.name+'&Token='+environment.tokenUser,formData).
+    subscribe((response: any)=>{
+      console.log(response);
+      this.presentToast('Fichier envoyé correctement.');
+      /**
+       * //On devrait alimenter une liste des fichiers joint et permettre d'en ajouter de nouveau
+       */
+      this.loadEmploye();
+      this.getfichier();
+      formData.append('fichier', '');
+
+      //console.log(this.fichier);
+      //console.log(formData);
+    });
+  }
+  async presentToast(a){
+    const toast = await this.toastctrl.create({
+      message:a,
+      duration: 1500,
+      position: 'top'
+    });
+    toast.present();
+  }
+
 }

@@ -12,6 +12,7 @@ import { PhotoviewerPage } from '../DETAIL/photoviewer/photoviewer.page';
 import { PrintBulletin2Page } from '../pages/print-bulletin2/print-bulletin2.page';
 import { AvancePage } from '../CRUD/avance/avance.page';
 import { DetailSalairePage } from '../DETAIL/detail-salaire/detail-salaire.page';
+import { DetailPrimePage } from '../DETAIL/detail-prime/detail-prime.page';
 /* --------------------------------------------------------------------- */
 
 @Injectable({
@@ -65,7 +66,7 @@ export class PopupModalService {
   }
   async presentModalPrime(userDetail: any){
     const modal = await this.modalCtrl.create({
-      component: PrintBulletin2Page,
+      component: DetailPrimePage,
       componentProps:{
         data: userDetail,
       }
