@@ -161,10 +161,12 @@ export class ContratPage implements OnInit {
     const formData= new FormData();
     formData.append('fichier', this.fichier);
     //console.log(this.fichier);
-    this.http.post(environment.endPoint+'rs_action.php?Action=LISTE_FICHIER_CONTRAT&CHAMPFICHIER=fichier&IDEMPLOYE='+this.userDetails.ID+'&NOMFICHIER='+
+    this.http.post(environment.endPoint+'employe_action.php?Action=JOINDRE_FICHIER_CONTRAT&CHAMPFICHIER=fichier&IDEMPLOYE='+this.userDetails.ID+'&NOMFICHIER='+
     this.fichier.name+'&Token='+environment.tokenUser,formData).
     subscribe((response: any)=>{
       console.log(response);
+      console.log(formData);
+
       this.presentToast('Fichier envoyé correctement.');
       /**
        * //On devrait alimenter une liste des fichiers joint et permettre d'en ajouter de nouveau
