@@ -144,7 +144,7 @@ export class ContratPage implements OnInit {
     this.route.queryParams.subscribe(res =>{
       console.log(res);
       this.userDetails=res;
-    this.readAPI(environment.endPoint+'rs_action.php?Action=LISTE_FICHIER_CONTRAT&IDEMPLOYE='+this.userDetails.ID+'&Token='+environment.tokenUser)
+    this.readAPI(environment.endPoint+'rs_action.php?Action=LISTE_FICHIER_CONTRAT&IDEMPLOYE='+this.usercontrat2.ID+'&Token='+environment.tokenUser)
     .subscribe((listes) =>{
       this.listeFichiers=listes ;
       console.log(this.listeFichiers);
@@ -161,7 +161,7 @@ export class ContratPage implements OnInit {
     const formData= new FormData();
     formData.append('fichier', this.fichier);
     //console.log(this.fichier);
-    this.http.post(environment.endPoint+'employe_action.php?Action=JOINDRE_FICHIER_CONTRAT&CHAMPFICHIER=fichier&IDEMPLOYE='+this.userDetails.ID+'&NOMFICHIER='+
+    this.http.post(environment.endPoint+'employe_action.php?Action=JOINDRE_FICHIER_CONTRAT&CHAMPFICHIER=fichier&IDCONTRAT='+this.usercontrat2.ID+'&NOMFICHIER='+
     this.fichier.name+'&Token='+environment.tokenUser,formData).
     subscribe((response: any)=>{
       console.log(response);
