@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-button (click)="closeModal()" expand="block" fill="clear" color="danger">
+        Fermer
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Fiche prime</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-list >
+    <ion-item *ngIf="isUpdate">
+      <ion-label>
+        <ion-text >Employe</ion-text>
+        <p><ion-text color="dark">{{this.idEmp+' '+this.contrat.PRENOM_EMPLOYE+' '+this.contrat.NOM_EMPLOYE}}</ion-text></p>
+      </ion-label>
+    </ion-item>
+
+
+    <ion-item>
+      <ion-label position="floating">Nombre de point</ion-label>
+      <ion-input [(ngModel)]='this.idContrat'  ></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Motif</ion-label>
+      <ion-input [(ngModel)]='this.idContrat'></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">commentaire</ion-label>
+      <ion-input [(ngModel)]='this.idEmp'></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Origine Table</ion-label>
+      <ion-input [(ngModel)]='this.idEmp'></ion-input>
+    </ion-item>
+  </ion-list>
+  <ion-button fill="outline"expand="block"color="primary"type="submit"(click)="onSubmit()">
+    {{isUpdate ? 'Modifier' :'Enregistrer'}}
+  </ion-button>
+</ion-content>

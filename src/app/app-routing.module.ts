@@ -136,6 +136,10 @@ const routes: Routes = [
     path: 'detail-credit',
     loadChildren: () => import('./DETAIL/detail-credit/detail-credit.module').then( m => m.DetailCreditPageModule)
   },
+  {
+    path: 'crud-contrat',
+    loadChildren: () => import('./CRUD/crud-contrat/crud-contrat.module').then( m => m.CrudContratPageModule)
+  },
 
 
 
