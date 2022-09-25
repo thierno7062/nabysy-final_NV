@@ -1,3 +1,4 @@
+/* eslint-disable no-trailing-spaces */
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -11,5 +12,7 @@ export class CrudCreditPage implements OnInit {
 
   ngOnInit() {
   }
+
+
 
 }

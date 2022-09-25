@@ -11,6 +11,7 @@ import { PhotoService } from 'src/app/services/photo.service';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { LoadingService } from 'src/app/services/loading.service';
+import { CrudContratPage } from 'src/app/CRUD/crud-contrat/crud-contrat.page';
 /* ---------------------------------------------------------------------- */
 
 
@@ -32,7 +33,7 @@ export class ContratPage implements OnInit {
   nbElement: any;
   fichier: any;
 
-  constructor(private router: Router,private popupModalService: PopupModalService,
+  constructor(private router: Router,private popupModalService: PopupModalService,private modalctrl: ModalController,
     private route: ActivatedRoute,private http: HttpClient,private menu: MenuController,
     private loadingService: LoadingService,private toastctrl: ToastController)
      {
@@ -144,7 +145,7 @@ export class ContratPage implements OnInit {
     this.route.queryParams.subscribe(res =>{
       console.log(res);
       this.userDetails=res;
-    this.readAPI(environment.endPoint+'rs_action.php?Action=LISTE_FICHIER_CONTRAT&IDEMPLOYE='+this.usercontrat2.ID+'&Token='+environment.tokenUser)
+    this.readAPI(environment.endPoint+'employe_action.php?Action=LISTE_FICHIER_CONTRAT&IDCONTRAT='+this.usercontrat2.ID+'&Token='+environment.tokenUser)
     .subscribe((listes) =>{
       this.listeFichiers=listes ;
       console.log(this.listeFichiers);
@@ -187,5 +188,14 @@ export class ContratPage implements OnInit {
     });
     toast.present();
   }
+  updatePrime(contrat: any){
+    console.log(contrat);
+    this.modalctrl.create({
+      component: CrudContratPage,
+      componentProps:{ contrat }
+    })
+    .then(modal => modal.present());
+    // this.loadEmploye();
 
+  }
 }
