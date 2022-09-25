@@ -30,3 +30,6 @@ npm-debug.log*
 /platforms
 /plugins
 /www
+src/environments/environment.groupepam.ts
+src/environments/environment.kssv.ts
+src/environments/environment.ts
