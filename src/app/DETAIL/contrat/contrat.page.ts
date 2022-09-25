@@ -28,10 +28,9 @@ export class ContratPage implements OnInit {
   hideMe2: boolean;hideMe: boolean;message: boolean;
   message_txt_M: boolean;  message_txt_F: boolean;DateFin: ''; DateDebut: '';
   userContrat: any; usercontrat2: any; TypeContrat: '';TitreContrat: '';DateEmbauche: '';
-  ANCIENNETE: '';DIRECTION: '';SERVICE: '';
-  listeFichiers: any;
-  nbElement: any;
-  fichier: any;
+  ANCIENNETE: '';DIRECTION: '';SERVICE: ''; listeFichiers: any;
+  nbElement: any; fichier: any;
+  PHOTO_URL: '';
 
   constructor(private router: Router,private popupModalService: PopupModalService,private modalctrl: ModalController,
     private route: ActivatedRoute,private http: HttpClient,private menu: MenuController,
@@ -90,8 +89,9 @@ export class ContratPage implements OnInit {
         this.DateFin=this.usercontrat2.DateFin;  this.DateDebut=this.usercontrat2.DateDebut;
         this.TypeContrat=this.usercontrat2.TypeContrat;  this.TitreContrat=this.usercontrat2.TitreContrat;
         this.DateEmbauche=this.usercontrat2.DateEmbauche; this.ANCIENNETE=this.usercontrat2.ANCIENNETE;
-        this.DIRECTION=this.usercontrat2.DIRECTION;
-        this.SERVICE=this.usercontrat2.SERVICE;
+        this.DIRECTION=this.usercontrat2.DIRECTION; this.SERVICE=this.usercontrat2.SERVICE;
+        this.PHOTO_URL=this.userDetails.PHOTO_URL;
+
       });
       });
   }
@@ -188,7 +188,7 @@ export class ContratPage implements OnInit {
     });
     toast.present();
   }
-  updatePrime(contrat: any){
+ /*  updateContrat(contrat: any){
     console.log(contrat);
     this.modalctrl.create({
       component: CrudContratPage,
@@ -197,5 +197,59 @@ export class ContratPage implements OnInit {
     .then(modal => modal.present());
     // this.loadEmploye();
 
+  } */
+ /*  addContrat(employe: any){
+    console.log(employe);
+    this.modalctrl.create({
+      component: CrudContratPage,
+      componentProps:{ employe }
+    }).
+      then(modal =>{
+        modal.present();
+        return modal.onDidDismiss();
+      }).then(({data, role})=> {
+        console.log(data);
+        console.log(role);
+        if(role === 'create'){
+            console.log(this.usercontrat2);
+            this.loadEmploye();
+        }
+    });
+  } */
+  addContrat(){
+    this.modalctrl.create({
+      component: CrudContratPage,
+      componentProps: {contratInfo: [], employeInfo: this.userDetails }
+    }).
+    then(modal =>{
+      modal.present();
+      return modal.onDidDismiss();
+    }).then(({data, role})=> {
+      console.log(data);
+      console.log(role);
+      if(role === 'create'){
+
+        this.loadEmploye();
+          console.log(this.usercontrat2);
+      }
+    });
+  }
+  updateContrat(contrat: any){
+    console.log(contrat);
+    this.modalctrl.create({
+      component: CrudContratPage,
+      componentProps:{ contratInfo: contrat , employeInfo: this.userDetails }
+    }).
+    then(modal  =>{
+      modal.present();
+      return modal.onDidDismiss();
+    }).then(({data, role})=> {
+        console.log(data);
+        console.log(role);
+        if(role === 'create'){
+          console.log(this.usercontrat2);
+          this.loadEmploye();
+        }
+      });
   }
 }

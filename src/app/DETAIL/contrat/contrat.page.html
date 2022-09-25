@@ -21,7 +21,7 @@
       <ion-row>
         <ion-col size="4" >
           <!-- (click)="addPhotoToGallery(employe)" -->
-          <ion-img [src]='this.userDetails.PHOTO_URL' ></ion-img></ion-col>
+          <ion-img [src]='this.PHOTO_URL' ></ion-img></ion-col>
           <ion-col size="4">
         </ion-col>
         <ion-col size="4"></ion-col>
@@ -54,24 +54,37 @@
           <div class="inner-container">
             <div class="info-container">
               <ion-avatar>
-                <ion-img src={{this.userDetails.PHOTO_URL}}></ion-img>
+                <ion-img [src]='this.PHOTO_URL'></ion-img>
               </ion-avatar>
               <div class="text-container">
                 <ion-text><span class="name">{{this.userDetails.Prenom+' '}} {{this.userDetails.Nom}}</span></ion-text>
                 <ion-text><span class="description">{{this.userDetails.Fonction}}</span></ion-text>
               </div>
             </div>
-            <div>
-              <ion-button (click)="updatePrime(usercontrat2)" >
+            <div *ngIf="usercontrat2">
+              <ion-button (click)="updateContrat(usercontrat2)" >
                 <ion-icon name="create"></ion-icon>
               </ion-button>
               <ion-label>
                 <ion-text color="dark">Modifier </ion-text>
               </ion-label>
             </div>
+            <div *ngIf="!usercontrat2">
+              <ion-text color="primary">
+                <h1>Aucun contrat(s) enregistré(s)</h1>
+              </ion-text>
+            </div>
+            <div *ngIf="!usercontrat2">
+              <ion-button (click)="addContrat()" slot="end">
+                <ion-icon name="add"></ion-icon>
+              </ion-button>
+              <ion-label>
+                <ion-text color="dark">Nouveau Contrat </ion-text>
+              </ion-label>
+            </div>
           </div>
         </ion-item>
-        <div class="stats-container">
+        <div class="stats-container" *ngIf="usercontrat2">
           <div class="stat-container">
             <ion-item>
               <!-- <ion-label>Awesome Label</ion-label> -->
@@ -81,12 +94,12 @@
               </ion-button>
             </ion-item>
           </div>
-          <div class="stat-container" >
+          <div class="stat-container" *ngFor="let item of listeFichiers" >
             <ion-button >
               <ion-icon name="document"></ion-icon>
             </ion-button>
             <ion-label>
-              <ion-text color="dark">Contrat </ion-text>
+              <ion-text color="dark">Contrat</ion-text>
             </ion-label>
           </div>
 
@@ -105,7 +118,7 @@
           <ion-text><span class="description">SurSalaire</span></ion-text>
         </div>
         <div class="stat-container">
-          <ion-text><span class="stat">{{this.ANCIENNETE}}</span></ion-text>
+          <ion-text><span class="stat">{{this.userDetails.ANCIENNETE}}</span></ion-text>
           <ion-text><span class="description">Ancienneté</span></ion-text>
         </div>
         <div class="stat-container">
@@ -117,8 +130,8 @@
       <!-- tags -->
       <div class="tags-container">
         <ion-chip color="primary">{{this.userDetails.Fonction}}</ion-chip>
-        <ion-chip color="secondary" *ngIf="hideMe">{{this.DIRECTION}}</ion-chip>
-        <ion-chip color="success" *ngIf="hideMe2">{{this.SERVICE}}</ion-chip>
+        <ion-chip color="secondary" *ngIf="hideMe">{{this.userDetails.DIRECTION}}</ion-chip>
+        <ion-chip color="success" *ngIf="hideMe2">{{this.userDetails.SERVICE}}</ion-chip>
       </div>
 
       <!-- about -->
@@ -172,7 +185,7 @@
             <ion-item>
               <ion-label>
                 <ion-text >Ancienneté</ion-text>
-                <p><ion-text color="dark">{{this.ANCIENNETE}}</ion-text></p>
+                <p><ion-text color="dark">{{this.userDetails.ANCIENNETE}}</ion-text></p>
               </ion-label>
             </ion-item>
           </ion-col>

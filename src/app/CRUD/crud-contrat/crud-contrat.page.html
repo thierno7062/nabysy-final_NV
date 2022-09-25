@@ -5,35 +5,122 @@
         Fermer
       </ion-button>
     </ion-buttons>
-    <ion-title>Fiche prime</ion-title>
+    <ion-title>{{isUpdate?'Modifier Contrat':'Nouveau Contrat'}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
 
-  <ion-list >
-    <ion-item *ngIf="isUpdate">
+  <ion-list>
+    <ion-item>
       <ion-label>
-        <ion-text >Employe</ion-text>
-        <p><ion-text color="dark">{{this.idEmp+' '+this.contrat.PRENOM_EMPLOYE+' '+this.contrat.NOM_EMPLOYE}}</ion-text></p>
+        <ion-text>Employe</ion-text>
+        <p *ngIf="isUpdate"><ion-text color="dark">{{this.contratInfo.PRENOM_EMPLOYE+' '+this.contratInfo.NOM_EMPLOYE}}</ion-text></p>
+        <p *ngIf="!isUpdate"><ion-text color="dark">{{this.employeInfo.Prenom+' '+this.employeInfo.Nom}}</ion-text></p>
       </ion-label>
     </ion-item>
-
-
     <ion-item>
-      <ion-label position="floating">Nombre de point</ion-label>
-      <ion-input [(ngModel)]='this.idContrat'  ></ion-input>
+      <ion-label>
+        <ion-text >Direction</ion-text>
+        <p><ion-text color="dark">{{isUpdate? this.contratInfo.DIRECTION :this.employeInfo.DIRECTION }}</ion-text></p>
+      </ion-label>
+    </ion-item>
+    <ion-item *ngIf="this.SERVICE">
+      <ion-label >
+        <ion-text >Service</ion-text>
+        <p><ion-text color="dark">{{isUpdate? this.contratInfo.SERVICE :this.employeInfo.SERVICE }}</ion-text></p>
+      </ion-label>
     </ion-item>
     <ion-item>
-      <ion-label position="floating">Motif</ion-label>
+      <ion-label >
+        <ion-text >Ancienneté</ion-text>
+        <p><ion-text color="dark">{{isUpdate? this.contratInfo.ANCIENNETE : this.employeInfo.ANCIENNETE }}</ion-text></p>
+      </ion-label>
+    </ion-item>
+    <ion-item id="open-modal" >
+
+      <ion-label>Date de départ</ion-label>
+      <ion-text tappable slot="end">{{ formattedString }}</ion-text>
+      <ion-icon icon="calendar-outline" slot="end" color="primary" tappable></ion-icon>
+    </ion-item>
+    <ion-modal trigger="open-modal" mode="md" class="open-modal">
+      <ng-template>
+        <ion-content>
+          <ion-datetime
+            #datetime
+            [value]="dateValue" size="cover"
+            (ionChange)="dateChanged(datetime.value)"
+            (ionCancel)="showPicker=false;">
+          </ion-datetime >
+            <ion-button (click)="close()" color="danger" class="dismiss">Dismiss</ion-button>
+            <ion-button (click)="select()" color="primary" >Select</ion-button>
+        </ion-content>
+      </ng-template>
+    </ion-modal>
+
+    <!-- Date de fin -->
+    <ion-item id="open-modal2">
+      <ion-label>Date de Fin </ion-label>
+      <ion-text tappable slot="end">{{ formattedString2 }}</ion-text>
+      <ion-icon icon="calendar-outline" slot="end" color="primary" tappable></ion-icon>
+    </ion-item>
+
+    <ion-modal trigger="open-modal2" mode="md">
+      <ng-template>
+        <ion-content>
+          <ion-datetime
+            #datetime
+            [value]="dateValue2" size="cover"
+            (ionChange)="dateChangedFin(datetime.value)"
+            (ionCancel)="showPicker=false;">
+          </ion-datetime >
+
+            <ion-button (click)="close()" color="danger" class="dismiss">Dismiss</ion-button>
+            <ion-button (click)="select()" color="primary" >Select</ion-button>
+
+        </ion-content>
+      </ng-template>
+    </ion-modal>
+
+     <!-- Date d'embauche -->
+     <ion-item id="open-modal3">
+      <ion-label>Date de Fin </ion-label>
+      <ion-text tappable slot="end">{{ formattedString3 }}</ion-text>
+      <ion-icon icon="calendar-outline" slot="end" color="primary" tappable></ion-icon>
+    </ion-item>
+
+    <ion-modal trigger="open-modal3" mode="md">
+      <ng-template>
+        <ion-content>
+          <ion-datetime
+            #datetime
+            [value]="dateValue3" size="cover"
+            (ionChange)="dateChangedAmbauche(datetime.value)"
+            (ionCancel)="showPicker=false;">
+          </ion-datetime >
+
+            <ion-button (click)="close()" color="danger" class="dismiss">Dismiss</ion-button>
+            <ion-button (click)="select()" color="primary" >Select</ion-button>
+
+        </ion-content>
+      </ng-template>
+    </ion-modal>
+
+
+    <ion-item *ngIf="isUpdate">
+      <ion-label position="floating">idContrat</ion-label>
+      <ion-input [(ngModel)]='this.idContrat'  ></ion-input>
+    </ion-item>
+    <ion-item *ngIf="isUpdate">
+      <ion-label position="floating">idContrat</ion-label>
       <ion-input [(ngModel)]='this.idContrat'></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label position="floating">commentaire</ion-label>
+      <ion-label position="floating">idEmp</ion-label>
       <ion-input [(ngModel)]='this.idEmp'></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label position="floating">Origine Table</ion-label>
+      <ion-label position="floating">idEmp</ion-label>
       <ion-input [(ngModel)]='this.idEmp'></ion-input>
     </ion-item>
   </ion-list>
