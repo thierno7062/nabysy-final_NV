@@ -144,7 +144,7 @@ export class ContratPage implements OnInit {
     this.route.queryParams.subscribe(res =>{
       console.log(res);
       this.userDetails=res;
-    this.readAPI(environment.endPoint+'rs_action.php?Action=LISTE_FICHIER_CONTRAT&IDEMPLOYE='+this.usercontrat2.ID+'&Token='+environment.tokenUser)
+    this.readAPI(environment.endPoint+'employe_action.php?Action=LISTE_FICHIER_CONTRAT&IDEMPLOYE='+this.userDetails.ID+'&Token='+environment.tokenUser)
     .subscribe((listes) =>{
       this.listeFichiers=listes ;
       console.log(this.listeFichiers);
