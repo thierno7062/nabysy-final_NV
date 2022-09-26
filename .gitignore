@@ -33,3 +33,5 @@ npm-debug.log*
 src/environments/environment.groupepam.ts
 src/environments/environment.kssv.ts
 src/environments/environment.ts
+src/environments/environment.pam.ts
+src/environments/environment.ts
