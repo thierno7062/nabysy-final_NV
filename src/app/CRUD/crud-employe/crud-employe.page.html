@@ -122,7 +122,9 @@
     </div>
     <div>
       <ion-button  shape="round" (click)="ajouterAcces(this.employe)">Accés</ion-button>
-      <ion-button  shape="round" (click)="niveauAcces()">Niveau d'accés</ion-button>
+      <ion-button  shape="round" (click)="niveauAcces(this.employe)" *ngIf="this.employe.NIVEAUACCES">
+        Niveau d'accés
+      </ion-button>
     </div>
   </div>
   <form >

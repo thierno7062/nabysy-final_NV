@@ -300,10 +300,10 @@ export class CrudEmployePage implements OnInit {
       }
    });
   }
-  niveauAcces(){
+  niveauAcces(acces: any){
     this.modalctrl.create({
       component: NiveauAccesPage,
-      componentProps: {accesInfo: [], employeInfo: this.employe }
+      componentProps: {accesInfo: acces, employeInfo: this.employe }
     }).then(modal =>{
           modal.present();
           return modal.onDidDismiss();

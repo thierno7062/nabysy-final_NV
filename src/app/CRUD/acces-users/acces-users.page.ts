@@ -28,7 +28,7 @@ export class AccesUsersPage implements OnInit {
 
   }
   loadContrat(){
-    if (this.accesInfo.ACCES_RESEAU == 1){
+    if (this.accesInfo.LOGIN){
       this.isUpdate = true;
       this.idEmp=this.accesInfo.IdEmploye;
       this.SERVICE=this.accesInfo.SERVICE;
@@ -36,20 +36,19 @@ export class AccesUsersPage implements OnInit {
       this.password=this.accesInfo.PASSOWRD;
       this.accesReseau=this.accesInfo.ACCES_RESEAU;
       this.profile=this.accesInfo.USER_PROFILE;
-
+      console.log('Update= '+this.isUpdate);
       console.log(this.accesInfo);
       console.log(this.idEmp);
-      // console.log(this.isUpdate);
-
-
     }
+
     if (this.employeInfo){
       this.idEmp=this.employeInfo.ID;
+      this.SERVICE=this.employeInfo.SERVICE;
       console.log(this.employeInfo);
       console.log(this.idEmp);
-      this.SERVICE=this.employeInfo.SERVICE;
-
-
+    }
+    if(this.isUpdate===false){
+      console.log('Pas d\'accés pour '+this.employeInfo.Prenom+' '+this.employeInfo.Nom);
     }
   }
   closeModal(){

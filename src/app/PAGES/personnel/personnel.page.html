@@ -63,30 +63,32 @@
               <th style="text-align: center;" tappable (click)="sortBy('Prenom')">Prénom  <ion-icon name="arrow-down" *ngIf="sortDirection === 1"></ion-icon>
                 <ion-icon name="arrow-up" *ngIf="sortDirection === 2"></ion-icon></th>
               <th style="text-align: center;">Nom</th>
-              <th style="text-align: center;">Sexe</th>
+              <th style="text-align: center;" *ngIf="!bulkEdit">Sexe</th>
               <th style="text-align: center;">Fonction</th>
-              <th style="text-align: center;">Adresse</th>
-              <th style="text-align: center;">Téléphone</th>
-              <th style="text-align: center;">né(e) le</th>
+              <th style="text-align: center;" *ngIf="!bulkEdit">Adresse</th>
+              <th style="text-align: center;" *ngIf="!bulkEdit">Téléphone</th>
+              <!-- <th style="text-align: center;">né(e) le</th> -->
               <th style="text-align: center;">Direction</th>
               <th style="text-align: center;">Service</th>
             </thead>
             <tbody>
               <tr *ngFor="let d of listeEmploye | filter:searchTerm" class="data-row" style="font-size: 20px;">
                 <td style="text-align: center;" *ngIf="bulkEdit">
-                <ion-icon slot="start" name="eye-outline"  color="primary" tappable (click)="userdetails(d)"></ion-icon>
-                <ion-icon slot="start" name="create-outline" color="success" tappable (click)="updateEmploye(d)" ></ion-icon>
-                <ion-icon slot="start" name="trash-outline" color="danger" tappable (click)="removeEmploye(d)"></ion-icon></td>
+                <!-- <ion-icon slot="start" name="eye-outline"  color="primary" style="font-size: 30px;"tappable (click)="userdetails(d)"></ion-icon> -->
+                <ion-icon slot="start" name="create-outline" color="success" style="font-size: 30px;"tappable (click)="updateEmploye(d)"></ion-icon>
+                <ion-icon slot="start" name="trash-outline" color="danger" style="font-size: 30px;"tappable (click)="removeEmploye(d)"></ion-icon>
+                </td>
                 <td style="text-align: center;" *ngIf="!bulkEdit">
-                  <ion-icon slot="start" name="eye-outline"  color="primary" tappable (click)="userdetails(d)"></ion-icon></td>
+                  <ion-icon slot="start" name="eye-outline"  color="primary" style="font-size: 30px;"tappable (click)="userdetails(d)"></ion-icon>
+                </td>
                   <td style="text-align: center;">{{' '+d.ID}}</td>
                 <td style="text-align: center;font-size: 1000;">{{d.Prenom}}</td>
                 <td style="text-align: center;">{{d.Nom}}</td>
-                <td style="text-align: center;">{{d.Sexe}}</td>
+                <td style="text-align: center;" *ngIf="!bulkEdit">{{d.Sexe}}</td>
                 <td style="text-align: center;">{{d.Fonction}}</td>
-                <td style="text-align: center;">{{d.Adresse}}</td>
-                <td style="text-align: center;">{{d.Tel}}</td>
-                <td style="text-align: center;">{{d.DATENAIS}}</td>
+                <td style="text-align: center;" *ngIf="!bulkEdit">{{d.Adresse}}</td>
+                <td style="text-align: center;" *ngIf="!bulkEdit">{{d.Tel}}</td>
+                <!-- <td style="text-align: ceIS}}</td> -->
                 <td style="text-align: center;" >{{d.DIRECTION}}</td>
                 <td style="text-align: center;" >{{d.SERVICE}}</td>
               </tr>

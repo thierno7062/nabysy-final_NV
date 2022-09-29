@@ -15,7 +15,7 @@ export class NiveauAccesPage implements OnInit {
   @Input() employeInfo: any;
   isUpdate= false;
   idEmp: string;  SERVICE: '';
-  profile: ''; niveauAcces: ''; login: ''; password: '';
+  profile: ''; niveauAcces: '';
 
   constructor(private modalctrl: ModalController,private toastctrl: ToastController,private http: HttpClient) { }
 
@@ -24,12 +24,13 @@ export class NiveauAccesPage implements OnInit {
 
   }
   loadContrat(){
-    if (this.accesInfo.ACCES_RESEAU>0){
+    if (this.accesInfo.NIVEAUACCES){
       this.isUpdate = true;
+      this.SERVICE=this.accesInfo.SERVICE;
+      this.niveauAcces=this.accesInfo.NIVEAUACCES;
       this.idEmp=this.accesInfo.ID;
       console.log(this.accesInfo);
       console.log(this.idEmp);
-      this.SERVICE=this.accesInfo.SERVICE;
       console.log('Update= '+this.isUpdate);
 
 
@@ -39,7 +40,6 @@ export class NiveauAccesPage implements OnInit {
       console.log(this.employeInfo);
       console.log(this.idEmp);
       this.SERVICE=this.employeInfo.SERVICE;
-
 
     }
   }
