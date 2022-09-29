@@ -216,6 +216,7 @@ export class ContratPage implements OnInit {
         }
     });
   } */
+
   addContrat(){
     this.modalctrl.create({
       component: CrudContratPage,

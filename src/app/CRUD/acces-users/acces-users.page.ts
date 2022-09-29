@@ -28,7 +28,7 @@ export class AccesUsersPage implements OnInit {
 
   }
   loadContrat(){
-    if (this.accesInfo.LOGIN){
+    if (this.accesInfo.ACCES_RESEAU>0){
       this.isUpdate = true;
       this.idEmp=this.accesInfo.IdEmploye;
       this.SERVICE=this.accesInfo.SERVICE;
