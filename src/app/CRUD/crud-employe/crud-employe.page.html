@@ -120,9 +120,12 @@
         <ion-chip color="success" *ngIf="hideMe2">{{this.nom_Service}}</ion-chip>
       </div>
     </div>
+    <div>
+      <ion-button  shape="round" (click)="ajouterAcces(this.employe)">Accés</ion-button>
+      <ion-button  shape="round" (click)="niveauAcces()">Niveau d'accés</ion-button>
+    </div>
   </div>
   <form >
-
   </form>
   <ion-row class="ion-margin-vertical">
     <ion-col size="12" size-sm="6" size-md="6" size-lg="6" size-xl="6" style="border: 2px solid rgb(20, 20, 20);">

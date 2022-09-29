@@ -1,7 +1,10 @@
+/* eslint-disable @typescript-eslint/dot-notation */
+/* eslint-disable @typescript-eslint/adjacent-overload-signatures */
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { IonDatetime, ModalController } from '@ionic/angular';
+import { IonDatetime, ModalController, ToastController } from '@ionic/angular';
 import { format, parseISO } from 'date-fns';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-crud-contrat',
@@ -10,7 +13,7 @@ import { format, parseISO } from 'date-fns';
 })
 export class CrudContratPage implements OnInit {
   @ViewChild(IonDatetime) datetime: IonDatetime;
-  @Input() contrat: any;
+  // @Input() contrat: any;
   @Input() contratInfo: any;
   @Input() employeInfo: any;
   isUpdate= false;
@@ -28,7 +31,7 @@ export class CrudContratPage implements OnInit {
   selectedDate2= format(new Date(),'yyyy-MM-dd');
   selectedDate3= format(new Date(),'yyyy-MM-dd');
 
-  constructor(private modalctrl: ModalController)
+  constructor(private modalctrl: ModalController,private toastctrl: ToastController,)
   {
 
    }
@@ -38,7 +41,7 @@ export class CrudContratPage implements OnInit {
   }
 
   loadContrat(){
-    if (this.contratInfo.ID){
+    if (this.contratInfo){
       this.isUpdate = true;
       this.idEmp=this.contratInfo.IdEmploye;
       this.idContrat=this.contratInfo.ID;
@@ -57,9 +60,6 @@ export class CrudContratPage implements OnInit {
   }
   closeModal(){
     this.modalctrl.dismiss(null, 'closed');
-
-  }
-  onSubmit(){
 
   }
     dateChanged(value){
@@ -87,4 +87,46 @@ export class CrudContratPage implements OnInit {
       this.datetime.confirm(true);
 
     }
+    /* onSubmit(){
+    if(this.formattedString===''){
+      this.presentToast('Veillez mettre le nom SVP!!!!');
+    }else if(this.formattedString2===''){
+      this.presentToast('Veillez mettre l\'adresse SVP!!!!');
+    }else if (this.formattedString3===''){
+      this.presentToast('Veillez mettre le numéro SVP!!!!');
+    }else{
+      return new Promise (() =>{
+        const headers = new Headers();
+        headers.append('Accept', 'application/json');
+        headers.append('Content-Type', 'application/json' );
+        // ----------------------
+        let txId='';
+        if (this.direction){
+          txId='&IdDirection='+this.direction.ID ;
+        }
+
+        const apiUrl=environment.endPoint+'direction_action.php?Action=SAVE_DIRECTION'+
+        txId+'&Nom='+this.nom+'&Adresse='+this.adresse+'&Tel='+this.telephone+'&Token='+environment.tokenUser;
+        // ---------------
+        console.log(apiUrl);
+        this.http.get(apiUrl).subscribe(async data =>{
+          console.log(data);
+          if(data['OK']!== '0'){
+            // this.router.navigate(['/personnel']);
+            this.modalctrl.dismiss(data,'create');
+          }
+
+        });
+      });
+    }
+  } */
+  onSubmit(){}
+  async presentToast(a){
+    const toast = await this.toastctrl.create({
+      message:a,
+      duration: 1500,
+      position: 'top'
+    });
+    toast.present();
+  }
 }
