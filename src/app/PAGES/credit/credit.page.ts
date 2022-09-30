@@ -55,6 +55,7 @@ export class CreditPage implements OnInit {
   constructor(private menu: MenuController,private loadingService: LoadingService,private http: HttpClient)
    {
     this.loadCredit();
+    this.loadEmploye();
     }
 
   ngOnInit() {
@@ -138,9 +139,21 @@ export class CreditPage implements OnInit {
   }
 
   loadCredit(){
+    let IdEmploye=''; let datedebut= '';
+    let datefin= '';
+    if(this.id){
+      IdEmploye ='&IDEMPLOYE='+this.id ;
+      console.log(IdEmploye);
+    }
+    if(this.selectedDate){
+      datedebut='&DATEDEBUT='+this.selectedDate;
+    }
+    if(this.selectedDate2){
+      datefin='&DATEFIN='+this.selectedDate2;
+    }
     this.loadingService.presentLoading();
-    this.readAPI(environment.endPoint+'credit_action.php?Action=LISTE_CREDIT&DATEDEBUT='+this.selectedDate+
-    '&DATEFIN='+this.selectedDate2+'&Token='+environment.tokenUser)
+    this.readAPI(environment.endPoint+'credit_action.php?Action=LISTE_CREDIT'+IdEmploye+
+    datedebut+datefin+'&Token='+environment.tokenUser)
     .subscribe((listes) =>{
       this.loadingService.dismiss();
       // console.log(Listes);
@@ -152,7 +165,7 @@ export class CreditPage implements OnInit {
 
   }
   readAPI(url: string){
-    //console.log(url);
+    console.log(url);
     return this.http.get(url);
 
   }
@@ -164,6 +177,15 @@ export class CreditPage implements OnInit {
   }
   removeCredit(credit: any){
 
+  }
+  //  Employe
+  loadEmploye(){
+    this.readAPI(environment.endPoint+'employe_action.php?Action=GET_EMPLOYE&Token='+environment.tokenUser)
+    .subscribe((listes) =>{
+      // console.log(Listes);
+      this.listeEmploye=listes ;
+      this.users=listes;
+    });
   }
   doRefresh(event){
     this.loadCredit();
