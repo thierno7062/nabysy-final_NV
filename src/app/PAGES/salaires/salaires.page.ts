@@ -82,7 +82,7 @@ export class SalairesPage implements OnInit {
 
 
    // Segments
-  segmentList: Array<string> = ['PAIEMENT OU AVANCE SALAIRE', 'HISTORIQUE DES SALAIRES'];
+  segmentList: Array<string> = ['PAIEMENT OU AVANCE SALAIRE', 'HISTORIQUE DES SALAIRES','CREDIT','HISTORIQUE DES CREDITS'];
   selectedSegment: string;
   slideList: Array<string> = [
     'Slide Segment 1',
