@@ -1,3 +1,4 @@
+/* eslint-disable prefer-const */
 /* eslint-disable eqeqeq */
 /* eslint-disable no-trailing-spaces */
 /* eslint-disable @typescript-eslint/dot-notation */
@@ -20,7 +21,8 @@ export class CrudContratPage implements OnInit {
   @Input() employeInfo: any;
   isUpdate= false;
   idEmp: string; idContrat: ''; SERVICE: '';
-  Titre_Contrat: ''; Type_contrat: '';
+  Titre_Contrat: ''; Type_contrat: number;
+  bulkEdit= true;
 
   // select date
   formattedString= '';
@@ -29,7 +31,7 @@ export class CrudContratPage implements OnInit {
   dateValue2= format(new Date(),'yyyy-MM-dd')+ 'T09:00:00.000Z';
   showPicker = false;
   selectedDate= format(new Date(),'yyyy-MM-dd');
-  selectedDate2= format(new Date(),'yyyy-MM-dd');
+  selectedDate2: string;
 
   constructor(private modalctrl: ModalController,private toastctrl: ToastController,
     private http: HttpClient,
@@ -57,6 +59,9 @@ export class CrudContratPage implements OnInit {
       this.formattedString2=this.contratInfo.DateFin;
       this.Titre_Contrat=this.contratInfo.TitreContrat;
       this.Type_contrat=this.contratInfo.Illimite;
+      if(this.Type_contrat==1){
+        this.bulkEdit=false;
+      }
     }
 
     if (this.employeInfo){
@@ -92,9 +97,9 @@ export class CrudContratPage implements OnInit {
     if(this.formattedString==''){
       this.presentToast('Veillez mettre la date de Départ SVP!!!!');
     }
-    else if (this.Titre_Contrat===''){
+    else if (this.Titre_Contrat=== null){
       this.presentToast('Veillez mettre le Titre du contrat SVP!!!!');
-    }else if (this.Type_contrat == ''){
+    }else if (this.Type_contrat == null){
       this.presentToast('Veillez mettre le Type du contrat SVP!!!!');
     }
     else{
@@ -107,9 +112,12 @@ export class CrudContratPage implements OnInit {
         if (this.idContrat){
           txId='&IDCONTRAT='+this.contratInfo.ID ;
         }
-
+        let datefn='';
+        if (this.bulkEdit==true){
+          datefn='&DATEFIN='+this.selectedDate2 ;
+        }
         const apiUrl=environment.endPoint+'employe_action.php?Action=AJOUT_CONTRAT_EMPLOYE'+'&IDEMPLOYE='+this.idEmp+
-        txId+'&DATEDEBUT='+this.selectedDate+'&DATEFIN='+this.selectedDate2+'&ILLIMITE='+this.Type_contrat+
+        txId+'&DATEDEBUT='+this.selectedDate+datefn+'&ILLIMITE='+this.Type_contrat+
         '&TITRE_CONTRAT='+this.Titre_Contrat+'&Token='+environment.tokenUser;
         // ---------------
         console.log(apiUrl);
@@ -144,5 +152,15 @@ export class CrudContratPage implements OnInit {
     this.selectedDate2= '';
     this.formattedString2= '';
     this.loadContrat();
+  }
+  illimite(){
+    this.bulkEdit=false;
+    this.selectedDate2= '';
+    this.formattedString2= '';
+  }
+  limite(){
+    this.bulkEdit=true;
+    this.formattedString2= format(new Date(),'yyyy-MM-dd');
+    this.selectedDate2=format(new Date(),'yyyy-MM-dd');
   }
 }

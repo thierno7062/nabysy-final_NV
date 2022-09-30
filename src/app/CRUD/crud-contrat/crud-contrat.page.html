@@ -37,19 +37,30 @@
         <p><ion-text color="dark">{{isUpdate? this.contratInfo.ANCIENNETE : this.employeInfo.ANCIENNETE }}</ion-text></p>
       </ion-label>
     </ion-item>
-    <ion-radio-group value="TypeAbsence"  mode="ios" [(ngModel)]="Type_contrat" color="primary" >
+    <ion-radio-group value="TypeAbsence"  mode="ios" [(ngModel)]="Type_contrat" color="primary" style="background-color: green;">
       <ion-row>
-        <ion-col size="4"><ion-item>
+        <ion-col size="2">
+            <ion-label>Type de Contrat</ion-label>
+        </ion-col>
+        <ion-col size="2"><ion-item>
           <small>CDD</small>
-          <ion-radio slot="start" value="0"></ion-radio>
+          <ion-radio slot="start" value="0" (click)="limite()"></ion-radio>
         </ion-item></ion-col>
-        <ion-col size="4"><ion-item>
+        <ion-col size="2"><ion-item>
           <small>CDI</small>
-          <ion-radio slot="start" value="1"></ion-radio>
+          <ion-radio slot="start" value="1" (click)="illimite()"></ion-radio>
         </ion-item></ion-col>
-        <ion-col size="4"><ion-item>
+        <ion-col size="2"><ion-item>
           <small>Stage</small>
-          <ion-radio slot="start" value=""></ion-radio>
+          <ion-radio slot="start" value="" [disabled]="true"></ion-radio>
+        </ion-item></ion-col>
+        <ion-col size="2"><ion-item>
+          <small>Contrat d’apprentissage</small>
+          <ion-radio slot="start" value=""  [disabled]="true"></ion-radio>
+        </ion-item></ion-col>
+        <ion-col size="2"><ion-item>
+          <small>Contrat d’intérim</small>
+          <ion-radio slot="start" value="" [disabled]="true"></ion-radio>
         </ion-item></ion-col>
       </ion-row>
     </ion-radio-group>
@@ -78,13 +89,13 @@
     </ion-modal>
 
     <!-- Date de fin -->
-    <ion-item id="open-modal2">
+    <ion-item id="open-modal2" *ngIf="bulkEdit">
       <ion-label>Date de Fin </ion-label>
       <ion-text tappable slot="end">{{ formattedString2 }}</ion-text>
       <ion-icon icon="calendar-outline" slot="end" color="primary" tappable></ion-icon>
     </ion-item>
 
-    <ion-modal trigger="open-modal2" mode="md">
+    <ion-modal trigger="open-modal2" mode="md" *ngIf="bulkEdit">
       <ng-template>
         <ion-content>
           <ion-datetime
