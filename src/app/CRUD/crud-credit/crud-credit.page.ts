@@ -18,10 +18,11 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./crud-credit.page.scss'],
 })
 export class CrudCreditPage implements OnInit {
+  @ViewChild(IonDatetime) datetime: IonDatetime;
 
   @Input() creditInfo: any;
   isUpdate: boolean;
-
+  date: '';
   // ionic selectable************
   searchTerm: string;
   selected_user= null;
@@ -31,8 +32,8 @@ export class CrudCreditPage implements OnInit {
   @ViewChild('selectComponent') selectComponent: IonicSelectableComponent;
 
   // Date
-  @ViewChild(IonDatetime) datetime: IonDatetime;
-  formattedString= format(new Date(),'yyyy-MM-dd');
+
+   formattedString= format(new Date(),'yyyy-MM-dd');
   dateValue= format(new Date(),'yyyy-MM-dd');
   showPicker = false;
   selectedDate= format(new Date(),'yyyy-MM-dd');
@@ -76,11 +77,12 @@ export class CrudCreditPage implements OnInit {
   }
   dateChanged(value){
     this.dateValue= value;
-    this.formattedString= format(parseISO(value),  'dd MMMM, yyyy');
+    this.formattedString= format(parseISO(value),  'yyyy-MM-dd');
+    this.selectedDate=format(parseISO(value),  'yyyy-MM-dd');
     console.log(format(parseISO(value),  'yyyy-MM-dd'));
+    console.log('selectedDate= '+this.selectedDate);
     this.showPicker= false;
     //  this.selectedDate=value;
-    this.selectedDate=format(parseISO(value),  'yyyy-MM-dd');
 
   }
   close(){
@@ -89,6 +91,7 @@ export class CrudCreditPage implements OnInit {
   }
   select(){
     this.datetime.confirm(true);
+    console.log('selectedDate= '+this.selectedDate);
   //  this.loadSalary();
   }
   clear(){
@@ -158,6 +161,10 @@ export class CrudCreditPage implements OnInit {
 
   }
   onSubmit(){
+
+    console.log(this.selectedDate);
+    console.log(this.formattedString);
+
 
   }
   montantMoratoire(){

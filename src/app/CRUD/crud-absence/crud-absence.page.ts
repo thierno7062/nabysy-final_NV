@@ -57,6 +57,7 @@ export class CrudAbsencePage implements OnInit {
    selectedMode= 'date';
    showPicker = false;
    dateValue= format(new Date(),'yyyy-MM-dd')+ 'T09:00:00.000Z';
+   dateValue2= format(new Date(),'yyyy-MM-dd')+ 'T09:00:00.000Z';
    formattedString= '';
    formattedString2= '';
    timeString= '';
@@ -336,12 +337,7 @@ export class CrudAbsencePage implements OnInit {
       this.sortEmploye= 0;
       this.sortKey= null;
     }
-
   }
-
-
-
-
 
   absencePourTous(afficherTost=false){
     if(this.isPaid===true){
@@ -414,35 +410,50 @@ export class CrudAbsencePage implements OnInit {
       });
   }
 
-  //Date
-  setToday(){
+    //Date
+   setToday(){
     // this.formattedString= format(parseISO(format(new Date(), 'yyyy-MM-dd')+ 'T09:00:00.000Z'), 'HH:mm, MMM d, yyyy');
-    this.formattedString= format(parseISO(format(new Date(), 'yyyy-MM-dd')+ 'T09:00:00.000Z'),  'HH:mm:ss, yyyy-MM-d ');
-    this.formattedString2= format(parseISO(format(new Date(), 'yyyy-MM-dd')+ 'T09:00:00.000Z'), 'HH:mm:ss, yyyy-MM-d ');
+    this.formattedString= format(parseISO(format(new Date(), 'yyyy-MM-dd')+ 'T09:00:00.000Z'),  ' yyyy-MM-dd ');
+    this.formattedString2= format(parseISO(format(new Date(), 'yyyy-MM-dd')+ 'T09:00:00.000Z'), ' yyyy-MM-dd ');
     this.timeString= format(parseISO(format(new Date(), 'yyyy-MM-dd')+ 'T09:00:00.000Z'), 'HH:mm:ss');
     this.timeString2= format(parseISO(format(new Date(), 'yyyy-MM-dd')+ 'T09:00:00.000Z'), 'HH:mm:ss');
     }
     dateChanged(value){
      this.dateValue= value;
      this.formattedString= format(parseISO(value),  'yyyy-MM-dd');
-     this.timeString= format(parseISO(value),  ' HH:mm:ss');
+    //  this.timeString= format(parseISO(value),  ' HH:mm:ss');
      this.showPicker= false;
      this.selectedDate=format(parseISO(value),'yyyy-MM-dd');
-     this.selectedTime=format(parseISO(value),'HH:mm:ss');
+    //  this.selectedTime=format(parseISO(value),'HH:mm:ss');
      }
-     dateChangedFin(value){
+      timeChanged(value){
       this.dateValue= value;
+      this.timeString= format(parseISO(value),' HH:mm:ss');
+      this.showPicker= false;
+      this.selectedTime=format(parseISO(value),'HH:mm:ss');
+      }
+     dateChangedFin(value){
+      this.dateValue2= value;
      this.formattedString2= format(parseISO(value),  'yyyy-MM-dd');
-     this.timeString2= format(parseISO(value),  ' HH:mm:ss');
      this.showPicker= false;
      this.selectedDate2=format(parseISO(value),'yyyy-MM-dd');
-     this.selectedTime2=format(parseISO(value),'HH:mm:ss');
      }
+     timeChangedEnd(value){
+      this.dateValue2= value;
+      this.timeString2= format(parseISO(value),' HH:mm:ss');
+      this.showPicker= false;
+      this.selectedTime2=format(parseISO(value),'HH:mm:ss');
+      }
      close(){
        this.datetime.cancel(true);
      }
      select(){
        this.datetime.confirm(true);
+       console.log('selectedDate= '+this.selectedDate);
+       console.log('selectedDate2= '+this.selectedDate2);
+       console.log('selectedTime= '+this.selectedTime);
+       console.log('selectedTime2= '+this.selectedTime2);
+
 
      }
 
