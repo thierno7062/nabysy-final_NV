@@ -91,70 +91,17 @@
           </ng-template>
         </ionic-selectable>
         </ion-item>
-
-        <ion-item>
-          <ion-label position="floating" >Titre du Crédit</ion-label>
-          <ion-input [(ngModel)]='this.titre'></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label position="floating" >Montant du Crédit</ion-label>
-          <ion-input [(ngModel)]='this.montant'></ion-input>
-        </ion-item>
-
-        <ion-item id="open-modal" [button]="">
-          <ion-label>Date </ion-label>
-          <ion-text tappable slot="end">{{ formattedString|date: 'dd MMMM YYYY' }}</ion-text>
-          <ion-icon icon="calendar-outline" slot="end" color="primary" tappable></ion-icon>
-        </ion-item>
-        <!-- <ion-modal trigger="open-modal" mode="md" >
-          <ng-template>
-            <ion-content>
-              <ion-datetime
-                #datetime
-                [value]="dateValue" size="cover"
-                (ionChange)="dateChanged(datetime.value)"
-                (ionCancel)="showPicker=false;">
-              </ion-datetime >
-              <ion-row>
-                <ion-col size="4"><ion-button (click)="close()" color="danger" class="dismiss">Dismiss</ion-button></ion-col>
-                <ion-col size="4"></ion-col>
-                <ion-col size="4"><ion-button (click)="select()" color="primary" expand="full">Choisir</ion-button></ion-col>
-              </ion-row>
-            </ion-content>
-          </ng-template>
-        </ion-modal> -->
-
-        <!-- <ion-item>
-          <ion-button id="open-date">Date de Début</ion-button>
-          <ion-modal trigger="">
-            <ng-template>
-              <ion-content>
-                <ion-datetime>
-
-                </ion-datetime>
-              </ion-content>
-            </ng-template>
-          </ion-modal>
-        </ion-item> -->
         <ion-item id="date" >
           <ion-label>Date </ion-label>
           <ion-text tappable slot="end">{{ formattedString|date: 'dd MMMM YYYY' }}</ion-text>
           <ion-icon icon="calendar-outline" slot="end" color="primary" tappable></ion-icon>
         </ion-item>
-
-         <!-- <ion-item>
-           <ion-label>Pick date</ion-label>
-           <ion-input
-             value="{{ formattedString | date: 'dd MMMM yyyy' }}"
-             id="date"
-             class="ion-text-end"
-           ></ion-input>
-          </ion-item> -->
-          <ion-popover trigger="date" size="cover">
+          <ion-popover trigger="date" size="cover" side="top" alignment="center" style="margin-bottom: 20px; height: 75%; ">
             <ng-template>
               <ion-datetime
               #datetime
-                [(ngModel)]="selectedDate"
+              presentation="date"
+                [(ngModel)]="selectedDate" size="cover"
                 (ionChange)="dateChanged(datetime.value)"
                 (ionCancel)="showPicker=false;"
               ></ion-datetime>
@@ -165,23 +112,19 @@
               </ion-row>
             </ng-template>
           </ion-popover>
-          <!-- // presentation="date" -->
+          <!-- // -->
 
-       <!--  <form #form>
-          <ion-modal class="datetime-modal" trigger="open-date">
-                  <ng-template>
-                    <ion-content>
-                      <ion-datetime
-                        [value]="dateValue"
-                        #dateTime
-                        (ionChange)="form.value.date = dateTime.value"
-                      ></ion-datetime>
-                    </ion-content>
-                  </ng-template>
-           </ion-modal>
-        </form> -->
+        <ion-item>
+          <ion-label position="floating" >Titre du Crédit</ion-label>
+          <ion-input [(ngModel)]='this.titre'></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating" >Montant du Crédit</ion-label>
+          <ion-input [(ngModel)]='this.montant'></ion-input>
+        </ion-item>
+
         <ion-item *ngIf="!isUpdate">
-          <ion-radio-group value="TypeAbsence"  mode="ios" [(ngModel)]="moratoire" color="primary" >
+          <ion-radio-group value="Moratoire"  mode="ios" [(ngModel)]="moratoire" color="primary" >
             <ion-row>
               <ion-col size="4">
                   <ion-label>Moratoire</ion-label>

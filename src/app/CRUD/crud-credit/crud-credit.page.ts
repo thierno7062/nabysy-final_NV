@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/dot-notation */
 /* eslint-disable max-len */
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 /* eslint-disable @typescript-eslint/member-ordering */
@@ -5,7 +6,7 @@
 /* eslint-disable no-trailing-spaces */
 import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { IonDatetime, NavParams, ToastController } from '@ionic/angular';
+import { IonDatetime, ModalController, NavParams, ToastController } from '@ionic/angular';
 import { format, parseISO } from 'date-fns';
 import { IonicSelectableComponent } from 'ionic-selectable';
 import { LoadingService } from 'src/app/services/loading.service';
@@ -47,7 +48,7 @@ export class CrudCreditPage implements OnInit {
   NbMois: '';
 
   constructor(private popupModalService: PopupModalService,private http: HttpClient,private navParams: NavParams,
-    private loadingService: LoadingService,private toastctrl: ToastController)
+    private loadingService: LoadingService,private toastctrl: ToastController,private modalctrl: ModalController)
     {
       this.loadEmploye();
      }
@@ -62,6 +63,7 @@ export class CrudCreditPage implements OnInit {
       console.log(this.creditInfo);
       this.loadBeneficiaire();
       this.isUpdate=true;
+      // this.moratoire=this.creditInfo.MontantMoratoir;
       this.montantMorat=this.creditInfo.MontantMoratoir;
       this.dureeMort=this.creditInfo.NbMois;
       this.titre=this.creditInfo.Titre;
@@ -69,9 +71,6 @@ export class CrudCreditPage implements OnInit {
       this.mois=this.creditInfo.Mois;
       this.selectedDate=this.creditInfo.DatePremierMoratoir;
       this.formattedString=this.creditInfo.DatePremierMoratoir;
-
-
-
 
     }
   }
@@ -162,8 +161,64 @@ export class CrudCreditPage implements OnInit {
   }
   onSubmit(){
 
-    console.log(this.selectedDate);
-    console.log(this.formattedString);
+    if(this.formattedString===''){
+      this.presentToast('Veillez mettre la Date SVP!!!!');
+    }else if (this.titre===''){
+      this.presentToast('Veillez mettre le titre du crédit SVP!!!!');
+    }
+    else if (this.montant===''){
+      this.presentToast('Veillez mettre le titre du crédit SVP!!!!');
+    }
+    else if (this.moratoire===''){
+      this.presentToast('Veillez mettre le titre du crédit SVP!!!!');
+    }else{
+      return new Promise (() =>{
+        const headers = new Headers();
+        headers.append('Accept', 'application/json');
+        headers.append('Content-Type', 'application/json' );
+        // ----------------------
+        let txmontant='';
+        let txduree='';
+        if(!this.creditInfo){
+
+          if (this.bulkEdit===true){
+            txmontant='&MONTANT_MORATOIR='+this.moratoire ;
+          }
+          if (this.bulkEdit===false){
+            txduree='&DUREE_MORATOIR='+this.moratoire;
+          }
+        }if(this.creditInfo){
+          txmontant='&MONTANT_MORATOIR='+this.creditInfo.MontantMoratoir ;
+        }
+
+        let txIdBenficiaire='';
+        let idCredit= '';
+        if(this.creditInfo){
+          idCredit='&IDCREDIT='+this.creditInfo.IdCredit;
+          txIdBenficiaire='&IDEMPLOYE='+this.creditInfo.IdEmploye ;
+        }else{
+          if (this.selected){
+            txIdBenficiaire='&IDEMPLOYE='+this.selected.ID ;
+          }
+        }
+
+        // -----------
+
+        const apiUrl=environment.endPoint+'credit_action.php?Action=NOUVEAU_CREDIT'+idCredit+txIdBenficiaire+
+        '&TITRE='+this.titre+'&MONTANT_CREDIT='+this.montant+'&DATEDEBUT='+this.selectedDate+
+        txmontant+txduree+'&Token='+environment.tokenUser;
+        // ---------------
+        console.log(apiUrl);
+        this.http.get(apiUrl).subscribe(async data =>{
+          console.log(data);
+          if(data['OK']!== '0'){
+            // this.router.navigate(['/personnel']);
+            this.modalctrl.dismiss(data,'create');
+          }
+
+        });
+      });
+    }
 
 
   }
