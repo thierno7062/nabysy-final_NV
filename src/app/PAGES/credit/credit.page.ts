@@ -194,7 +194,7 @@ export class CreditPage implements OnInit {
     console.log(credit);
     this.modalctrl.create({
       component: CrudCreditPage,
-      componentProps:{ credit }
+      componentProps:{ creditInfo: credit }
     }).then(modal =>{
       modal.present();
       return modal.onDidDismiss();

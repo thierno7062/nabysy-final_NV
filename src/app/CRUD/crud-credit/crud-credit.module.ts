@@ -7,11 +7,13 @@ import { IonicModule } from '@ionic/angular';
 import { CrudCreditPageRoutingModule } from './crud-credit-routing.module';
 
 import { CrudCreditPage } from './crud-credit.page';
+import { IonicSelectableModule } from 'ionic-selectable';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
+    IonicSelectableModule,
     IonicModule,
     CrudCreditPageRoutingModule
   ],

@@ -1,9 +1,225 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>crud-credit</ion-title>
+    <ion-title>Fiche credit</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="closeModal()" expand="block" fill="clear" color="danger">
+        Fermer
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <ion-title *ngIf="!isUpdate">{{isUpdate? 'Modifier une Crédit': 'Créer une Crédit'}}</ion-title>
 
+  <ion-card>
+    <ion-card-content>
+      <ion-list >
+        <div *ngIf="!selected">
+          <ion-item *ngIf="isUpdate">
+            <ion-label>
+              <ion-text >Bénéficiaire:</ion-text>
+              <p><ion-text color="dark">{{this.prenom+' '+this.nom}} </ion-text></p>
+              <p><ion-text color="dark">{{this.fonction}} </ion-text></p>
+            </ion-label>
+            <ion-avatar slot="start">
+              <div class="avatar">
+                <img  [src]="this.photo" alt="" slot="start ">
+              </div>
+            </ion-avatar>
+            <ion-buttons slot="end">
+              <ion-button  style="background-color: #3880ff;" shape="round"><ion-icon slot="start" name="eye-outline" ></ion-icon> </ion-button>
+             </ion-buttons>
+          </ion-item>
+        </div>
+
+        <ion-item *ngIf="selected">
+          <ion-label>
+            <ion-text >Bénéficiaire:</ion-text>
+            <p><ion-text color="dark">{{this.selected.Prenom+' '+this.selected.Nom}} </ion-text></p>
+            <p><ion-text color="dark">{{this.selected.Fonction}} </ion-text></p>
+          </ion-label>
+          <ion-avatar slot="start">
+            <div class="avatar">
+              <img [src]="this.selected.PHOTO_URL" alt="" slot="start ">
+            </div>
+          </ion-avatar>
+          <ion-buttons slot="end">
+            <ion-button  style="background-color: #3880ff;" shape="round"><ion-icon slot="start" name="eye-outline" ></ion-icon> </ion-button>
+           </ion-buttons>
+        </ion-item>
+        <ion-item>
+          <ion-label>{{isUpdate ? 'Modifier le ' :'Selectionnez un '}}Bénéficiaire</ion-label>
+
+          <ionic-selectable #selectComponent [(ngModel)]="selected" itemValueField="ID"
+          itemTextField="Prenom" [items]="users" headerColor="primary" [canSearch]="true"
+          searchFailText=" Rien n'a été trouvé:("  [canClear]="true"
+          >
+          <!-- ****************************** -->
+          <ng-template ionicSelectableCloseButtonTemplate color="danger">
+            <ion-button fill="clear" color="danger">
+              <ion-icon  name="close-circle"></ion-icon>
+            </ion-button>
+
+          </ng-template>
+
+          <ng-template ionicSelectableItemTemplate let-user="item">
+            {{user.Prenom +' '+ user.Nom +'   ====> '+user.Fonction+' ===>Matricule: '+user.ID }}
+          </ng-template>
+          <!-- ******************************** -->
+          <ng-template ionicSelectableFooterTemplate>
+            <ion-toolbar>
+              <ion-row>
+                <ion-col size="4">
+                  <ion-button expand="full" (click)="clear()">
+                    Annuler
+                  </ion-button>
+                </ion-col >
+                <ion-col  size="4">
+                  <ion-button expand="full" (click)="toggleItems()" [disabled]="!selectComponent.itemsToConfirm.length">
+                    Décocher
+                  </ion-button>
+                </ion-col>
+                <ion-col size="4">
+                  <ion-button expand="full" (click)="confirm()" [disabled]="!selectComponent.itemsToConfirm.length">
+                    Confirmer
+                  </ion-button>
+                </ion-col>
+              </ion-row>
+            </ion-toolbar>
+          </ng-template>
+        </ionic-selectable>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating" >Titre du Crédit</ion-label>
+          <ion-input [(ngModel)]='this.titre'></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating" >Montant du Crédit</ion-label>
+          <ion-input [(ngModel)]='this.montant'></ion-input>
+        </ion-item>
+
+        <ion-item id="open-modal" >
+          <ion-label>Date </ion-label>
+          <ion-text tappable slot="end">{{ formattedString|date: 'dd MMMM YYYY' }}</ion-text>
+          <ion-icon icon="calendar-outline" slot="end" color="primary" tappable></ion-icon>
+        </ion-item>
+        <ion-modal trigger="open-modal" mode="md" class="open-modal">
+          <ng-template>
+            <ion-content>
+              <ion-datetime
+                #datetime
+                [value]="dateValue" size="cover"
+                (ionChange)="dateChanged(datetime.value)"
+                (ionCancel)="showPicker=false;">
+              </ion-datetime >
+              <ion-row>
+                <ion-col size="4"><ion-button (click)="close()" color="danger" class="dismiss">Dismiss</ion-button></ion-col>
+                <ion-col size="4"></ion-col>
+                <ion-col size="4"><ion-button (click)="select()" color="primary" expand="full">Choisir</ion-button></ion-col>
+              </ion-row>
+            </ion-content>
+          </ng-template>
+        </ion-modal>
+        <ion-item *ngIf="!isUpdate">
+          <ion-radio-group value="TypeAbsence"  mode="ios" [(ngModel)]="moratoire" color="primary" >
+            <ion-row>
+              <ion-col size="4">
+                  <ion-label>Moratoire</ion-label>
+              </ion-col>
+              <!-- <ion-col size=""></ion-col> -->
+              <ion-col size="4"><ion-item>
+                <small>Montant Moratoire</small>
+                <ion-radio slot="start" value="" (click)="montantMoratoire()"color="primary"></ion-radio>
+              </ion-item></ion-col>
+              <ion-col size="4"><ion-item>
+                <small>Durée Moratoire</small>
+                <ion-radio slot="start" value="1" (click)="dureeMoratoire()" color="success"></ion-radio>
+              </ion-item></ion-col>
+            </ion-row>
+          </ion-radio-group>
+        </ion-item>
+        <ion-item *ngIf="isUpdate">
+          <ion-radio-group value="TypeAbsence"  mode="ios" [(ngModel)]="moratoire" color="primary" >
+            <ion-row>
+              <ion-col size="4">
+                  <ion-label>Moratoire</ion-label>
+              </ion-col>
+              <!-- <ion-col size=""></ion-col> -->
+              <ion-col size="4"><ion-item>
+                <small>Montant Moratoire</small>
+                <ion-radio slot="start" [value]="montantMorat" (click)="montantMoratoire()"></ion-radio>
+              </ion-item></ion-col>
+              <ion-col size="4"><ion-item>
+                <small>Durée Moratoire</small>
+                <ion-radio slot="start" [value]="dureeMort" (click)="dureeMoratoire()"></ion-radio>
+              </ion-item></ion-col>
+            </ion-row>
+          </ion-radio-group>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Montant Moratoire</ion-label>
+          <ion-input [(ngModel)]='this.moratoire' *ngIf="bulkEdit"></ion-input>
+
+
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Durée Moratoire</ion-label>
+          <ion-input [(ngModel)]='this.moratoire' *ngIf="!bulkEdit"></ion-input>
+        </ion-item>
+        <ion-item *ngIf="isUpdate" style="border: 1px solid #000;">
+          <ion-label>
+            <ion-text >Montant Moratoire</ion-text>
+            <p><ion-text color="dark">{{montantMorat}}</ion-text></p>
+          </ion-label>
+        </ion-item>
+        <ion-item *ngIf="isUpdate" style="border: 1px solid #000;">
+          <ion-label>
+            <ion-text >Nombre de Mois</ion-text>
+            <p><ion-text color="dark">{{dureeMort}}</ion-text></p>
+          </ion-label>
+        </ion-item>
+        <!-- <ion-item>
+          <input type="file" [(ngModel)]="fichier" (change)="selectedFile($event)">
+          <ion-button (click)="joindreFichier()"  shape="round">
+            Envoyer
+          </ion-button>
+        </ion-item> -->
+        <!-- <ion-item> -->
+           <!-- stats -->
+            <!-- <div class="stats-container"  *ngIf="this.nbElement>0">
+              <div class="stat-container1" >
+                <ion-text><span class="stat">Fichiers ci-Joints ===></span></ion-text>
+                <ion-text><span class="description">{{nbElement+' Fichier(s) trouvé(s)'}}</span></ion-text>
+              </div>
+              <div class="stat-container" *ngFor="let fichier of listeFichier">
+                <ion-button  fill="clear" shape="round" [attr.href]='fichier.URL' style="width: 80px;">
+                  <ion-icon slot="start" name="document" class="stat-icon" tappable></ion-icon>
+                </ion-button>
+                <ion-text><small class="description">{{fichier.NOMFICHIER}}</small></ion-text>
+              </div>
+
+            </div> -->
+        <!-- </ion-item> -->
+      </ion-list>
+
+      <ion-row  >
+        <ion-col size="4" class="prev" ></ion-col>
+
+        <ion-col size="4" >
+          <ion-button fill="outline"
+          expand="block"
+          color="primary"
+          type="submit"
+          (click)="onSubmit()"
+          > {{isUpdate?'Modifier':'Enregistrer'}}</ion-button>
+
+        </ion-col>
+
+        <ion-col size="4" ></ion-col>
+
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
 </ion-content>

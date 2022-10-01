@@ -5,7 +5,7 @@
 /* eslint-disable no-trailing-spaces */
 import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { IonDatetime, ToastController } from '@ionic/angular';
+import { IonDatetime, NavParams, ToastController } from '@ionic/angular';
 import { format, parseISO } from 'date-fns';
 import { IonicSelectableComponent } from 'ionic-selectable';
 import { LoadingService } from 'src/app/services/loading.service';
@@ -19,36 +19,35 @@ import { environment } from 'src/environments/environment';
 })
 export class CrudCreditPage implements OnInit {
 
-@Input() credit: any;
-isUpdate: boolean;
+  @Input() creditInfo: any;
+  isUpdate: boolean;
 
-// ionic selectable************
-searchTerm: string;
-selected_user= null;
-selected: any;
-users: any;
-toggle= true;
-@ViewChild('selectComponent') selectComponent: IonicSelectableComponent;
+  // ionic selectable************
+  searchTerm: string;
+  selected_user= null;
+  selected: any;
+  users: any;
+  toggle= true;
+  @ViewChild('selectComponent') selectComponent: IonicSelectableComponent;
 
-// Date
-@ViewChild(IonDatetime) datetime: IonDatetime;
-formattedString= format(new Date(),'yyyy-MM-dd');
-dateValue= format(new Date(),'yyyy-MM-dd');
-showPicker = false;
-selectedDate= format(new Date(),'yyyy-MM-dd');
+  // Date
+  @ViewChild(IonDatetime) datetime: IonDatetime;
+  formattedString= format(new Date(),'yyyy-MM-dd');
+  dateValue= format(new Date(),'yyyy-MM-dd');
+  showPicker = false;
+  selectedDate= format(new Date(),'yyyy-MM-dd');
 
-photo: '';
-listeEmploye: any;
-id: number;
+  photo: '';
+  listeEmploye: any;
+  id: number;
   beneficiaire: any;
-  nom: '';
-  prenom: '';
-  fonction: '';
+  nom: ''; prenom: ''; fonction: '';moratoire: '';mois: '';
+  bulkEdit= true; titre: ''; montant: ''; montantMorat: ''; dureeMort: '';
+  NbMois: '';
 
-  constructor(private popupModalService: PopupModalService,private http: HttpClient,
+  constructor(private popupModalService: PopupModalService,private http: HttpClient,private navParams: NavParams,
     private loadingService: LoadingService,private toastctrl: ToastController)
     {
-      this.loadBeneficiaire();
       this.loadEmploye();
      }
 
@@ -57,8 +56,21 @@ id: number;
   }
 
   loadCredit(){
-    if(this.credit){
-      console.log(this.credit);
+    // this.creditInfo= this.navParams.get('data');
+    if(this.creditInfo){
+      console.log(this.creditInfo);
+      this.loadBeneficiaire();
+      this.isUpdate=true;
+      this.montantMorat=this.creditInfo.MontantMoratoir;
+      this.dureeMort=this.creditInfo.NbMois;
+      this.titre=this.creditInfo.Titre;
+      this.montant=this.creditInfo.Montant;
+      this.mois=this.creditInfo.Mois;
+      this.selectedDate=this.creditInfo.DatePremierMoratoir;
+      this.formattedString=this.creditInfo.DatePremierMoratoir;
+
+
+
 
     }
   }
@@ -114,7 +126,7 @@ id: number;
 
   }
   loadBeneficiaire(){
-    this.readAPI(environment.endPoint+'employe_action.php?Action=GET_EMPLOYE&IdEmploye='+this.credit.ID+'&Token='+environment.tokenUser)
+    this.readAPI(environment.endPoint+'employe_action.php?Action=GET_EMPLOYE&IdEmploye='+this.creditInfo.IdEmploye+'&Token='+environment.tokenUser)
     .subscribe((listes) =>{
       this.beneficiaire=listes ;
       console.log(this.beneficiaire);
@@ -144,6 +156,15 @@ id: number;
     // this.modalctrl.dismiss(null, 'closed');
     this.popupModalService.dismiss();
 
+  }
+  onSubmit(){
+
+  }
+  montantMoratoire(){
+    this.bulkEdit=true;
+  }
+  dureeMoratoire(){
+    this.bulkEdit=false;
   }
 
 }
