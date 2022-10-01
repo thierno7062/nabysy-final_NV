@@ -122,6 +122,18 @@
             </ion-content>
           </ng-template>
         </ion-modal>
+        <ion-item>
+          <ion-button id="open-date">Date de Début</ion-button>
+          <ion-modal>
+            <ng-template>
+              <ion-content>
+                <ion-datetime>
+
+                </ion-datetime>
+              </ion-content>
+            </ng-template>
+          </ion-modal>
+        </ion-item>
         <ion-item *ngIf="!isUpdate">
           <ion-radio-group value="TypeAbsence"  mode="ios" [(ngModel)]="moratoire" color="primary" >
             <ion-row>
