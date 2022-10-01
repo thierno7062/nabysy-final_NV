@@ -62,6 +62,8 @@ export class CrudAbsencePage implements OnInit {
    timeString= '';
    timeString2= '';
 
+  searchTerm: string;
+
   constructor(private modalctrl: ModalController,private popupModalService: PopupModalService,
     private http: HttpClient,private route: ActivatedRoute,
     private toastctrl: ToastController) {

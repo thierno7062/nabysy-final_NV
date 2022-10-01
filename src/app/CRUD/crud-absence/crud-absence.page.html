@@ -14,275 +14,234 @@
   <ion-title *ngIf="!isUpdate">Créer une Absence</ion-title>
   <ion-title *ngIf="isUpdate">{{this.pourtous==='1'?'ABSENCE POUR TOUS':this.prenom +' '+ this.nom }}</ion-title>
 
-<ion-card>
-  <ion-card-content>
-    <ion-list >
-      <ion-item>
-        <ion-label position="floating">Motif</ion-label>
-        <ion-input [(ngModel)]='this.motif' ></ion-input>
+  <ion-card>
+    <ion-card-content>
+      <ion-list >
+        <ion-item>
+          <ion-label position="floating">Motif</ion-label>
+          <ion-input [(ngModel)]='this.motif' ></ion-input>
+        </ion-item>
+        <!-- <ion-item>
+          <ion-label position="floating">Date Debut</ion-label>
+          <ion-input [(ngModel)]='this.dateDebut'></ion-input>
+        </ion-item> -->
+        <ion-item id="open-modal" >
+
+          <ion-label>Date de départ</ion-label>
+          <ion-text tappable slot="end">{{ formattedString }}</ion-text>
+          <ion-icon icon="calendar-outline" slot="end" color="primary" tappable></ion-icon>
+        </ion-item>
+        <ion-modal trigger="open-modal" mode="md" class="open-modal">
+          <ng-template>
+            <ion-content>
+              <ion-datetime
+                #datetime
+                [value]="dateValue" size="cover"
+                (ionChange)="dateChanged(datetime.value)"
+                (ionCancel)="showPicker=false;">
+              </ion-datetime >
+                <ion-button (click)="close()" color="danger" class="dismiss">Dismiss</ion-button>
+                <ion-button (click)="select()" color="primary" >Select</ion-button>
+            </ion-content>
+          </ng-template>
+        </ion-modal>
+
+        <ion-item>
+          <ion-label>Heure Debut</ion-label>
+          <ion-text tappable slot="end">{{ timeString }}</ion-text>
+        </ion-item>
+
+        <!-- Date de fin -->
+        <ion-item id="open-modal2">
+          <ion-label>Date de Fin </ion-label>
+          <ion-text tappable slot="end">{{ formattedString2 }}</ion-text>
+          <ion-icon icon="calendar-outline" slot="end" color="primary" tappable></ion-icon>
+        </ion-item>
+
+        <ion-modal trigger="open-modal2" mode="md">
+          <ng-template>
+            <ion-content>
+              <ion-datetime
+                #datetime
+                [value]="dateValue" size="cover"
+                (ionChange)="dateChangedFin(datetime.value)"
+                (ionCancel)="showPicker=false;">
+              </ion-datetime >
+
+                <ion-button (click)="close()" color="danger" class="dismiss">Dismiss</ion-button>
+                <ion-button (click)="select()" color="primary" >Select</ion-button>
+
+            </ion-content>
+          </ng-template>
+        </ion-modal>
+
+        <ion-item>
+          <ion-label>Heure Fin</ion-label>
+          <ion-text tappable slot="end">{{ timeString2 }}</ion-text>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Paye</ion-label>
+          <h2  *ngIf="isPaid">OUI</h2>
+          <h2  *ngIf="!isPaid">NON</h2>
+          <ion-toggle mode="ios" [(ngModel)]="isPaid" ></ion-toggle>
+        </ion-item>
+      </ion-list>
+
+      <ion-list lines="none" *ngIf="!isUpdate">
+        <ion-item>
+          <ion-label>Absence Individuelle</ion-label>
+          <h2  *ngIf="choix">OUI</h2>
+          <h2  *ngIf="!choix">NON</h2>
+          <ion-toggle (ionChange)="togglepaspourTous()" mode="ios" [(ngModel)]="choix"></ion-toggle>
+        </ion-item>
+        <hr style="border-bottom:1px solid gray ;">
+      </ion-list>
+
+      <ion-row>
+        <ion-col size="4" class="prev" > </ion-col>
+        <ion-col size="4" *ngIf="!choix" >
+          <ion-button fill="outline" *ngIf="!isUpdate"
+          expand="block"
+          color="primary"
+          type="submit"
+          (click)="onSubmit()"
+          >
+        {{isUpdate ? 'Modifier' :'Enregistrer'}}</ion-button>
+        <ion-button fill="outline" *ngIf="isUpdate"
+          expand="block"
+          color="primary"
+          type="submit"
+          (click)="onUpdate()"
+          >
+        {{isUpdate ? 'Modifier' :'Enregistrer'}}</ion-button>
+        </ion-col>
+        <ion-col size="4" > </ion-col>
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-item *ngIf="choix" style="text-align: center;">
+    <ion-label>Veillez sélectionner les employés correspondants ci-dessous</ion-label>
+  </ion-item>
+  <ion-row  *ngIf="choix">
+    <ion-col size="4"></ion-col>
+    <ion-col size="4"  class="ion-justify-content-center">
+      <div class="ion-searchbar">
+        <ion-label color="light">
+          <ion-searchbar
+          placeholder="Rechercher un employe ici..."
+          [(ngModel)]="searchTerm"
+          showCancelButton="focus"
+          cancelButtonText="center"
+          cancelButtonIcon="none"
+          animated></ion-searchbar>
+        </ion-label>
+      </div>
+    </ion-col>
+    <ion-col size="4">
+      <ion-item lines="none">
+        <ion-buttons slot="end">
+          <ion-button fill="outline" *ngIf="!isUpdate"
+              color="primary"
+              type="submit"
+              (click)="onSubmit()"
+              >
+            {{isUpdate ? 'Modifier' :'Enregistrer'}}</ion-button>
+            <ion-button fill="outline" *ngIf="isUpdate"
+            color="primary"
+            type="submit"
+            (click)="onUpdate()"
+            >
+          {{isUpdate ? 'Modifier' :'Enregistrer'}}</ion-button>
+        </ion-buttons>
       </ion-item>
-      <!-- <ion-item>
-        <ion-label position="floating">Date Debut</ion-label>
-        <ion-input [(ngModel)]='this.dateDebut'></ion-input>
-      </ion-item> -->
-      <ion-item id="open-modal" >
+    </ion-col>
+  </ion-row>
+ <!-- <ion-card *ngIf="bulkIndividuel"> -->
+  <ion-card *ngIf="choix">
+    <ion-card-content>
+      <ion-row class="header-row" >
+        <ion-col size="2" >
+          <!-- <ion-col size="2"> -->
+          Select
+        </ion-col>
+        <ion-col size="2" tappable (click)="sortBy('Nom')">
+          Nom
+          <ion-icon name="arrow-down" *ngIf="sortEmploye === 1"></ion-icon>
+          <ion-icon name="arrow-up" *ngIf="sortEmploye === 2"></ion-icon>
+        </ion-col>
+        <ion-col size="2" >
+          Prénom
+        </ion-col>
+        <ion-col size="2" >
+          Fonction
+        </ion-col>
+        <ion-col size="2">
+          Affectation
+        </ion-col>
+      <!--  <ion-col size="2" >
+          Télephone
+        </ion-col> -->
+      <!--  <ion-col size="2" *ngIf="!bulkEdit">
+          Action
+        </ion-col> -->
+      </ion-row>
 
-        <ion-label>Date de départ</ion-label>
-        <ion-text tappable slot="end">{{ formattedString }}</ion-text>
-        <ion-icon icon="calendar-outline" slot="end" color="primary" tappable></ion-icon>
-      </ion-item>
-      <ion-modal trigger="open-modal" mode="md" class="open-modal">
-        <ng-template>
-          <ion-content>
-            <ion-datetime
-              #datetime
-              [value]="dateValue" size="cover"
-              (ionChange)="dateChanged(datetime.value)"
-              (ionCancel)="showPicker=false;">
-            </ion-datetime >
-              <ion-button (click)="close()" color="danger" class="dismiss">Dismiss</ion-button>
-              <ion-button (click)="select()" color="primary" >Select</ion-button>
-          </ion-content>
-        </ng-template>
-      </ion-modal>
+      <!-- <ion-row *ngFor="let row of listeEmploye; let i = index;" class="data-row" (click)="userdetails(row)" > -->
+      <ion-row *ngFor="let row of listeEmploye| filter: searchTerm  ; let i = index;" class="data-row">
 
-      <ion-item>
-        <ion-label>Heure Debut</ion-label>
-        <ion-text tappable slot="end">{{ timeString }}</ion-text>
-      </ion-item>
-
-      <!-- Date de fin -->
-      <ion-item id="open-modal2">
-        <ion-label>Date de Fin </ion-label>
-        <ion-text tappable slot="end">{{ formattedString2 }}</ion-text>
-        <ion-icon icon="calendar-outline" slot="end" color="primary" tappable></ion-icon>
-      </ion-item>
-
-      <ion-modal trigger="open-modal2" mode="md">
-        <ng-template>
-          <ion-content>
-            <ion-datetime
-              #datetime
-              [value]="dateValue" size="cover"
-              (ionChange)="dateChangedFin(datetime.value)"
-              (ionCancel)="showPicker=false;">
-            </ion-datetime >
-
-              <ion-button (click)="close()" color="danger" class="dismiss">Dismiss</ion-button>
-              <ion-button (click)="select()" color="primary" >Select</ion-button>
-
-          </ion-content>
-        </ng-template>
-      </ion-modal>
-
-      <ion-item>
-        <ion-label>Heure Fin</ion-label>
-        <ion-text tappable slot="end">{{ timeString2 }}</ion-text>
-      </ion-item>
-
-      <ion-item>
-        <ion-label>Paye</ion-label>
-        <h2  *ngIf="isPaid">OUI</h2>
-        <h2  *ngIf="!isPaid">NON</h2>
-        <ion-toggle mode="ios" [(ngModel)]="isPaid" ></ion-toggle>
-      </ion-item>
-    </ion-list>
-
-    <ion-row  >
-      <ion-col size="4" class="prev" >
-
-      </ion-col>
+        <ion-col size="2">
+          <ion-checkbox [(ngModel)]="row.IsChecked"></ion-checkbox>
+            </ion-col>
+            <ion-col size="2" >
+              {{ row.Nom}}
+            </ion-col>
+            <ion-col  size="2">
+              {{ row.Prenom}}
+            </ion-col>
+            <ion-col size="2">
+              {{ row.Adresse}}
+            </ion-col>
+            <ion-col size="2" >
+              {{ row.Tel}}
+            </ion-col>
 
 
-      <ion-col size="4" *ngIf="!choix" >
-        <ion-button fill="outline" *ngIf="!isUpdate"
-        expand="block"
-        color="primary"
-        type="submit"
-        (click)="onSubmit()"
-        >
-      {{isUpdate ? 'Modifier' :'Enregistrer'}}</ion-button>
-      <ion-button fill="outline" *ngIf="isUpdate"
+      </ion-row>
+
+      <!-- ***********************Submit************************** -->
+      <ion-row>
+        <ion-col size="4" class="prev">
+
+        </ion-col>
+
+
+        <ion-col size="4">
+          <ion-button fill="outline" *ngIf="!isUpdate"
+          expand="block"
+          color="primary"
+          type="submit"
+          (click)="onSubmit()"
+          >
+        {{isUpdate ? 'Modifier' :'Enregistrer'}}</ion-button>
+        <ion-button fill="outline" *ngIf="isUpdate"
         expand="block"
         color="primary"
         type="submit"
         (click)="onUpdate()"
         >
       {{isUpdate ? 'Modifier' :'Enregistrer'}}</ion-button>
-      </ion-col>
+        </ion-col>
 
-      <ion-col size="4" >
+        <ion-col size="4" >
 
-      </ion-col>
-      <ion-list>
-        <ion-label color="primary">{{this.selectedDate}}</ion-label><br>
-        <ion-label color="danger" style="margin-bottom: 3px;">{{'   '+this.selectedTime}}</ion-label><br>
-        <ion-label>{{'   '+this.selectedDate2}}</ion-label><br>
-        <ion-label color="danger">{{'   '+this.selectedTime2}}</ion-label><br>
-        <!-- <ion-item>
-        </ion-item>
-        <ion-item>
-        </ion-item>
-        <ion-item>
-        </ion-item>
-        <ion-item>
-        </ion-item> -->
-      </ion-list>
+        </ion-col>
+      </ion-row>
+      <!-- ***************************** -->
 
 
-      <ion-col size="12" *ngIf="choix">
-        <ion-item>
-          <ion-label>Veillez sélectionner les employés correspondants ci-dessous</ion-label>
-        </ion-item>
-      </ion-col>
-    </ion-row>
-  </ion-card-content>
-</ion-card>
-
-
-  <!-- <ion-item *ngIf="inputUpdate">
-
-    <ion-radio-group name="auto" >
-        <ion-list-header>
-          <ion-title>Absence Individuelle</ion-title>
-        </ion-list-header>
-        <ion-row>
-          <ion-item color="success">
-            <ion-label class="choix">OUI</ion-label>
-            <ion-radio value="oui" (click)="togglepaspourTous()"></ion-radio>
-          </ion-item>
-          <ion-item>
-            <ion-label class="choix" >NON</ion-label>
-            <ion-radio value="non" (click)="togglepourTous()"></ion-radio>
-          </ion-item>
-        </ion-row>
-    </ion-radio-group>
-  </ion-item> -->
-  <ion-list lines="none" *ngIf="!isUpdate">
-    <ion-item>
-      <ion-label>Absence Individuelle</ion-label>
-      <h2  *ngIf="choix">OUI</h2>
-      <h2  *ngIf="!choix">NON</h2>
-      <ion-toggle (ionChange)="togglepaspourTous()" mode="ios" [(ngModel)]="choix"></ion-toggle>
-    </ion-item>
-    <hr style="border-bottom:1px solid gray ;">
-  </ion-list>
-
- <!-- <ion-card *ngIf="bulkIndividuel"> -->
-  <ion-card *ngIf="choix">
-  <ion-card-content>
-    <ion-row class="header-row" >
-      <ion-col size="2" >
-        <!-- <ion-col size="2"> -->
-        Select
-      </ion-col>
-      <ion-col size="2" tappable (click)="sortBy('Nom')">
-        Nom
-        <ion-icon name="arrow-down" *ngIf="sortEmploye === 1"></ion-icon>
-        <ion-icon name="arrow-up" *ngIf="sortEmploye === 2"></ion-icon>
-      </ion-col>
-      <ion-col size="2" >
-        Prénom
-      </ion-col>
-      <ion-col size="2" >
-        Fonction
-      </ion-col>
-      <ion-col size="2">
-        Affectation
-      </ion-col>
-     <!--  <ion-col size="2" >
-        Télephone
-      </ion-col> -->
-     <!--  <ion-col size="2" *ngIf="!bulkEdit">
-        Action
-      </ion-col> -->
-    </ion-row>
-
-    <!-- <ion-row *ngFor="let row of listeEmploye; let i = index;" class="data-row" (click)="userdetails(row)" > -->
-    <ion-row *ngFor="let row of listeEmploye; let i = index;" class="data-row">
-
-      <ion-col size="2">
-        <ion-checkbox [(ngModel)]="row.IsChecked"></ion-checkbox>
-          </ion-col>
-          <ion-col size="2" >
-            {{ row.Nom}}
-          </ion-col>
-          <ion-col  size="2">
-            {{ row.Prenom}}
-          </ion-col>
-          <ion-col size="2">
-            {{ row.Adresse}}
-          </ion-col>
-          <ion-col size="2" >
-            {{ row.Tel}}
-          </ion-col>
-        <!--   <ion-col size="2" >
-            {{ row.Tel}}
-          </ion-col> -->
-      <!-- <ion-col size="2" *ngIf="!bulkEdit">
-         <ion-button size="small" (click)="userdetails(i)" color="primary" fill="clear">
-          <ion-icon name="eye-outline"></ion-icon>
-        </ion-button>
-      </ion-col> -->
-
-    </ion-row>
-
-    <!-- ***********************Submit************************** -->
-    <ion-row>
-      <ion-col size="4" class="prev">
-
-      </ion-col>
-
-
-      <ion-col size="4">
-        <ion-button fill="outline" *ngIf="!isUpdate"
-        expand="block"
-        color="primary"
-        type="submit"
-        (click)="onSubmit()"
-        >
-      {{isUpdate ? 'Modifier' :'Enregistrer'}}</ion-button>
-      <ion-button fill="outline" *ngIf="isUpdate"
-      expand="block"
-      color="primary"
-      type="submit"
-      (click)="onUpdate()"
-      >
-    {{isUpdate ? 'Modifier' :'Enregistrer'}}</ion-button>
-      </ion-col>
-
-      <ion-col size="4" >
-
-      </ion-col>
-    </ion-row>
-    <!-- ***************************** -->
-
-    <ion-row>
-      <ion-col size="12" class="ion-text-center">
-
-      </ion-col>
-    </ion-row>
-
-    <ion-row>
-      <ion-col size="2">
-
-      </ion-col>
-      <ion-col size="2">
-
-      </ion-col>
-
-      <ion-col size="4" class="ion-text-center">
-
-      </ion-col>
-
-      <ion-col size="2">
-
-      </ion-col>
-      <ion-col size="2">
-
-      </ion-col>
-    </ion-row>
-  </ion-card-content>
- </ion-card>
-  </ion-content>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
 
