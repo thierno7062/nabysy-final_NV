@@ -140,6 +140,14 @@ const routes: Routes = [
     path: 'crud-contrat',
     loadChildren: () => import('./CRUD/crud-contrat/crud-contrat.module').then( m => m.CrudContratPageModule)
   },
+  {
+    path: 'acces-users',
+    loadChildren: () => import('./CRUD/acces-users/acces-users.module').then( m => m.AccesUsersPageModule)
+  },
+  {
+    path: 'niveau-acces',
+    loadChildren: () => import('./CRUD/niveau-acces/niveau-acces.module').then( m => m.NiveauAccesPageModule)
+  },
 
 
 

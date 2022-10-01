@@ -37,6 +37,33 @@
         <p><ion-text color="dark">{{isUpdate? this.contratInfo.ANCIENNETE : this.employeInfo.ANCIENNETE }}</ion-text></p>
       </ion-label>
     </ion-item>
+    <ion-radio-group value="TypeAbsence"  mode="ios" [(ngModel)]="Type_contrat" color="primary" style="background-color: green;">
+      <ion-row>
+        <ion-col size="2">
+            <ion-label>Type de Contrat</ion-label>
+        </ion-col>
+        <ion-col size="2"><ion-item>
+          <small>CDD</small>
+          <ion-radio slot="start" value="0" (click)="limite()"></ion-radio>
+        </ion-item></ion-col>
+        <ion-col size="2"><ion-item>
+          <small>CDI</small>
+          <ion-radio slot="start" value="1" (click)="illimite()"></ion-radio>
+        </ion-item></ion-col>
+        <ion-col size="2"><ion-item>
+          <small>Stage</small>
+          <ion-radio slot="start" value="" [disabled]="true"></ion-radio>
+        </ion-item></ion-col>
+        <ion-col size="2"><ion-item>
+          <small>Contrat d’apprentissage</small>
+          <ion-radio slot="start" value=""  [disabled]="true"></ion-radio>
+        </ion-item></ion-col>
+        <ion-col size="2"><ion-item>
+          <small>Contrat d’intérim</small>
+          <ion-radio slot="start" value="" [disabled]="true"></ion-radio>
+        </ion-item></ion-col>
+      </ion-row>
+    </ion-radio-group>
     <ion-item id="open-modal" >
 
       <ion-label>Date de départ</ion-label>
@@ -52,20 +79,23 @@
             (ionChange)="dateChanged(datetime.value)"
             (ionCancel)="showPicker=false;">
           </ion-datetime >
-            <ion-button (click)="close()" color="danger" class="dismiss">Dismiss</ion-button>
-            <ion-button (click)="select()" color="primary" >Select</ion-button>
+          <ion-row>
+            <ion-col size="4"><ion-button (click)="close()" color="danger" class="dismiss">Dismiss</ion-button></ion-col>
+            <ion-col size="4"><ion-button (click)="effacedateDebut()" color="warning" class="dismiss">Effacer</ion-button></ion-col>
+            <ion-col size="4"><ion-button (click)="select()" color="primary" >Select</ion-button></ion-col>
+          </ion-row>
         </ion-content>
       </ng-template>
     </ion-modal>
 
     <!-- Date de fin -->
-    <ion-item id="open-modal2">
+    <ion-item id="open-modal2" *ngIf="bulkEdit">
       <ion-label>Date de Fin </ion-label>
       <ion-text tappable slot="end">{{ formattedString2 }}</ion-text>
       <ion-icon icon="calendar-outline" slot="end" color="primary" tappable></ion-icon>
     </ion-item>
 
-    <ion-modal trigger="open-modal2" mode="md">
+    <ion-modal trigger="open-modal2" mode="md" *ngIf="bulkEdit">
       <ng-template>
         <ion-content>
           <ion-datetime
@@ -74,55 +104,39 @@
             (ionChange)="dateChangedFin(datetime.value)"
             (ionCancel)="showPicker=false;">
           </ion-datetime >
-
-            <ion-button (click)="close()" color="danger" class="dismiss">Dismiss</ion-button>
-            <ion-button (click)="select()" color="primary" >Select</ion-button>
-
+            <ion-row>
+              <ion-col size="4"><ion-button (click)="close()" color="danger" class="dismiss">Dismiss</ion-button></ion-col>
+              <ion-col size="4"><ion-button (click)="effacedateFin()" color="warning" class="dismiss">Effacer</ion-button></ion-col>
+              <ion-col size="4"><ion-button (click)="select()" color="primary" >Select</ion-button></ion-col>
+            </ion-row>
         </ion-content>
       </ng-template>
     </ion-modal>
-
-     <!-- Date d'embauche -->
-     <ion-item id="open-modal3">
-      <ion-label>Date de Fin </ion-label>
-      <ion-text tappable slot="end">{{ formattedString3 }}</ion-text>
-      <ion-icon icon="calendar-outline" slot="end" color="primary" tappable></ion-icon>
-    </ion-item>
-
-    <ion-modal trigger="open-modal3" mode="md">
-      <ng-template>
-        <ion-content>
-          <ion-datetime
-            #datetime
-            [value]="dateValue3" size="cover"
-            (ionChange)="dateChangedAmbauche(datetime.value)"
-            (ionCancel)="showPicker=false;">
-          </ion-datetime >
-
-            <ion-button (click)="close()" color="danger" class="dismiss">Dismiss</ion-button>
-            <ion-button (click)="select()" color="primary" >Select</ion-button>
-
-        </ion-content>
-      </ng-template>
-    </ion-modal>
-
-
-    <ion-item *ngIf="isUpdate">
-      <ion-label position="floating">idContrat</ion-label>
-      <ion-input [(ngModel)]='this.idContrat'  ></ion-input>
-    </ion-item>
-    <ion-item *ngIf="isUpdate">
-      <ion-label position="floating">idContrat</ion-label>
-      <ion-input [(ngModel)]='this.idContrat'></ion-input>
-    </ion-item>
     <ion-item>
+      <ion-label position="floating">Titre de Contrat</ion-label>
+      <ion-select placeholder="Sélectionnez le titre du contrat " [(ngModel)]="Titre_Contrat" required>
+        <ion-select-option value=""></ion-select-option>
+        <ion-select-option value="CONTRAT DE TRAVAIL">CONTRAT DE TRAVAIL</ion-select-option>
+        <ion-select-option value="CONTRAT DE STAGE">CONTRAT DE STAGE</ion-select-option>
+        <ion-select-option value="CONTRAT ESSAIE">CONTRAT ESSAIE</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <!-- <ion-item >
+      <ion-label position="floating">Type de Contrat</ion-label>
+      <ion-select placeholder="Sélectionnez le type de contrat" [(ngModel)]="Type_contrat" required>
+        <ion-select-option value=""></ion-select-option>
+        <ion-select-option value="0">CDD</ion-select-option>
+        <ion-select-option value="1">CDI</ion-select-option>
+      </ion-select>
+    </ion-item> -->
+    <!-- <ion-item>
       <ion-label position="floating">idEmp</ion-label>
       <ion-input [(ngModel)]='this.idEmp'></ion-input>
     </ion-item>
     <ion-item>
       <ion-label position="floating">idEmp</ion-label>
       <ion-input [(ngModel)]='this.idEmp'></ion-input>
-    </ion-item>
+    </ion-item> -->
   </ion-list>
   <ion-button fill="outline"expand="block"color="primary"type="submit"(click)="onSubmit()">
     {{isUpdate ? 'Modifier' :'Enregistrer'}}

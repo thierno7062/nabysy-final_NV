@@ -3,6 +3,24 @@
     <ion-button fill="clear" slot="start" color="light" (click)="_openSideNav()">
       <ion-icon slot="icon-only" name="menu"> </ion-icon>
     </ion-button>
+    <ion-label>
+      <ion-text tappable color="light" style="margin-left: 20px; margin-right: 30px; font-weight: bold;"
+      routerLink="/home"> Accueil</ion-text>
+      <ion-text tappable color="light" style="margin-right: 30px; font-weight: bold;"
+      routerLink="/absence" > Absence</ion-text>
+      <ion-text tappable color="light" style="margin-right: 30px; font-weight: bold;"
+      routerLink="/direction"> Administration</ion-text>
+      <ion-text tappable color="light" style="margin-right: 30px; font-weight: bold;"
+        routerLink="/affectation"> Affectation</ion-text>
+        <ion-text tappable color="light" style="margin-right: 30px; font-weight: bold;"
+        routerLink="/personnel"> Personnel</ion-text>
+        <ion-text tappable color="light" style="margin-right: 30px; font-weight: bold;"
+        routerLink="/salaires"> Salaire</ion-text>
+        <ion-text tappable color="light" style="margin-right: 30px; font-weight: bold;"
+        routerLink="/prime"> Prime</ion-text>
+        <ion-text tappable color="light" style="margin-right: 30px; font-weight: bold;"
+        routerLink="/credit"> Crédit</ion-text>
+    </ion-label>
     <ion-avatar slot="end" *ngIf="this.photoUrl">
       <img [src]="this.photoUrl" alt=""/>
     </ion-avatar>

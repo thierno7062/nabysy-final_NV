@@ -15,6 +15,8 @@ import { PopupModalService } from 'src/app/services/popup-modal.service';
 import { format, parseISO } from 'date-fns';
 import { IonDatetime } from '@ionic/angular';
 import { FormBuilder } from '@angular/forms';
+import { AccesUsersPage } from '../acces-users/acces-users.page';
+import { NiveauAccesPage } from '../niveau-acces/niveau-acces.page';
 
 
 @Component({
@@ -60,6 +62,10 @@ export class CrudEmployePage implements OnInit {
      }
 
   ngOnInit() {
+    this.infoEmp();
+  this.createForm();
+  }
+  infoEmp(){
     if (this.employe.ID>0){
       console.log(this.employe.Tel);
       this.isUpdate = true;
@@ -101,7 +107,6 @@ export class CrudEmployePage implements OnInit {
       this.CFCE_TAUX_PATRONAL=0;this.IPRES_TAUXCOMPLCADRE_E=0;this.IPRES_TAUXCOMPLCADRE_P=0;this.sexe='F';
       this.SITUATION_FAMILLE='Célibataire';this.telephone='+221';
     }
-  this.createForm();
   }
   onSubmit(){
     if(this.nom===''){
@@ -276,4 +281,40 @@ export class CrudEmployePage implements OnInit {
     queryParams:employe
         });
       }
+
+
+  ajouterAcces(acces: any){
+    this.modalctrl.create({
+      component: AccesUsersPage,
+      componentProps: {accesInfo: acces, employeInfo: this.employe }
+    }).then(modal =>{
+          modal.present();
+          return modal.onDidDismiss();
+        }).then(({data, role})=> {
+          console.log(data);
+          console.log(role);
+          if(role === 'create'){
+
+          this.refreshEmploye();
+        // console.log(this.usercontrat2);
+      }
+   });
+  }
+  niveauAcces(acces: any){
+    this.modalctrl.create({
+      component: NiveauAccesPage,
+      componentProps: {accesInfo: acces, employeInfo: this.employe }
+    }).then(modal =>{
+          modal.present();
+          return modal.onDidDismiss();
+        }).then(({data, role})=> {
+          console.log(data);
+          console.log(role);
+          if(role === 'create'){
+
+          this.refreshEmploye();
+        // console.log(this.usercontrat2);
+      }
+   });
+  }
 }
