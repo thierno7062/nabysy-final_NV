@@ -1,11 +1,13 @@
+/* eslint-disable @typescript-eslint/dot-notation */
 /* eslint-disable no-trailing-spaces */
 /* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable @typescript-eslint/member-ordering */
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { IonDatetime, IonSlides, MenuController } from '@ionic/angular';
+import { AlertController, IonDatetime, IonSlides, MenuController, ModalController } from '@ionic/angular';
 import { format, parseISO } from 'date-fns';
 import { IonicSelectableComponent } from 'ionic-selectable';
+import { CrudCreditPage } from 'src/app/CRUD/crud-credit/crud-credit.page';
 import { LoadingService } from 'src/app/services/loading.service';
 import { environment } from 'src/environments/environment';
 
@@ -52,7 +54,8 @@ export class CreditPage implements OnInit {
     today= format(new Date(),'yyyy-MM-dd');
     yesterday: any ; yesterdayToString: any; hier: any;
     listeCredit: any;
-  constructor(private menu: MenuController,private loadingService: LoadingService,private http: HttpClient)
+  constructor(private menu: MenuController,private loadingService: LoadingService,private http: HttpClient,
+    private modalctrl: ModalController,private alertctrl: AlertController)
    {
     this.loadCredit();
     this.loadEmploye();
@@ -169,15 +172,79 @@ export class CreditPage implements OnInit {
     return this.http.get(url);
 
   }
+  addCredit(){
+    this.modalctrl.create({
+      component: CrudCreditPage
+    }).
+      then(modal =>{
+        modal.present();
+        return modal.onDidDismiss();
+      }).then(({data, role})=> {
+        console.log(data);
+        console.log(role);
+        if(role === 'create'){
+          this.loadCredit();
+        }
+    });
+  }
   creditDetail(credit: any){
 
   }
   updateCredit(credit: any){
-
+    console.log(credit);
+    this.modalctrl.create({
+      component: CrudCreditPage,
+      componentProps:{ credit }
+    }).then(modal =>{
+      modal.present();
+      return modal.onDidDismiss();
+    }).then(({data, role})=> {
+      console.log(data);
+      console.log(role);
+      if(role === 'create'){
+          this.loadCredit();
+      }
+    });
   }
   removeCredit(credit: any){
+    this.alertctrl.create({
+      header:'Suppresion',
+      message:'voulez vous supprimer ?',
+      buttons:[{
+        text:'oui',
+        handler:()=>new Promise (resolve =>{
+            /* let body = {
+              action: 'SUPPRIME_DIRECTION',
+              id:ID,
 
+            }; */
+            const headers = new Headers();
+            headers.append('Accept', 'application/json');
+            headers.append('Content-Type', 'application/json' );
+            const apiUrl=environment.endPoint+'credit_action.php?Action=SUPPRIMER_CREDIT&IDCREDIT='+
+            credit.IdCredit+'&Token='+environment.tokenUser;
+            console.log(apiUrl);
+            this.http.get(apiUrl).subscribe(async data =>{
+              console.log(data);
+              if(data['OK'] >0){
+                 //this.router.navigate(['personnel']);
+                 const pos=this.listeCredit.indexOf(credit);
+                 console.log(pos);
+                 if (pos>-1){
+                  this.listeCredit.splice(pos,1);
+                  // this.loadAbsence();
+                 }
+              }else{
+                console.log(data['OK']);
+              }
+            });
+          })
+      },
+       {text:'No'}
+    ]
+    }).then(alertE1 =>alertE1.present()) ;
   }
+
   //  Employe
   loadEmploye(){
     this.readAPI(environment.endPoint+'employe_action.php?Action=GET_EMPLOYE&Token='+environment.tokenUser)
