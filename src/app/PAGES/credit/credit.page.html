@@ -180,7 +180,7 @@
               <!-- <ion-label>Date {{item.DateEnreg | date:'fullDate' }}</ion-label> -->
               <!-- <ion-label>Enregistrée le  {{item.DateEnreg | date:'fullDate'}} {{'à '+item.HeureEnreg}}</ion-label> -->
               <ion-label>Enregistrée  {{item.DateEnreg===today ?"Aujourd\'hui" : (item.DateEnreg=== yesterdayToString ? 'Hier': 'le '+item.DateEnreg | date:'fullDate')}} {{'à '+item.HeureEnreg}}</ion-label>
-              <ion-label slot="end">N°  {{item.ID }}</ion-label>
+              <ion-label slot="end">N°  {{item.IdCredit }}</ion-label>
 
             </ion-item>
             <ion-list slot="content">

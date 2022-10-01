@@ -206,6 +206,7 @@ export class CreditPage implements OnInit {
       }
     });
   }
+  // IDCREDIT
   removeCredit(credit: any){
     this.alertctrl.create({
       header:'Suppresion',
