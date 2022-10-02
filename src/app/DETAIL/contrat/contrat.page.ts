@@ -32,13 +32,14 @@ export class ContratPage implements OnInit {
   nbElement: any; fichier: any;
   PHOTO_URL: '';
 
+  urlFile: '';
   constructor(private router: Router,private popupModalService: PopupModalService,private modalctrl: ModalController,
     private route: ActivatedRoute,private http: HttpClient,private menu: MenuController,
     private loadingService: LoadingService,private toastctrl: ToastController)
      {
       this.loadDirection();
     this.loadService();
-    this.getfichier();
+
     }
 
   ngOnInit() {
@@ -47,6 +48,7 @@ export class ContratPage implements OnInit {
   }
   closeModal(){
     this.popupModalService.dismiss();
+    this.loadEmploye();
   }
   loadEmploye(){
     this.loadingService.presentLoading();
@@ -91,6 +93,7 @@ export class ContratPage implements OnInit {
         this.DateEmbauche=this.usercontrat2.DateEmbauche; this.ANCIENNETE=this.usercontrat2.ANCIENNETE;
         this.DIRECTION=this.usercontrat2.DIRECTION; this.SERVICE=this.usercontrat2.SERVICE;
         this.PHOTO_URL=this.userDetails.PHOTO_URL;
+        this.getfichier();
 
       });
       });
@@ -150,6 +153,7 @@ export class ContratPage implements OnInit {
       this.listeFichiers=listes ;
       console.log(this.listeFichiers);
       this.nbElement=this.listeFichiers.length  ;
+      this.urlFile=this.listeFichiers.URL  ;
 
     });
   });
@@ -252,5 +256,12 @@ export class ContratPage implements OnInit {
           this.loadEmploye();
         }
       });
+  }
+  doRefresh(event){
+    this.loadEmploye();
+    this.loadDirection();
+    this.loadService();
+    this.getfichier();
+    event.target.complete();
   }
 }

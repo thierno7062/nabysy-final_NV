@@ -9,6 +9,10 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
   <!-- page header -->
   <ion-header mode="ios">
     <ion-toolbar>
@@ -94,8 +98,8 @@
               </ion-button>
             </ion-item>
           </div>
-          <div class="stat-container" *ngFor="let item of listeFichiers" >
-            <ion-button >
+          <div class="stat-container" *ngFor="let item of listeFichiers" [attr.href]='urlFile'>
+            <ion-button [attr.href]='urlFile'>
               <ion-icon name="document"></ion-icon>
             </ion-button>
             <ion-label>

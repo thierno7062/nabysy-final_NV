@@ -121,22 +121,32 @@
         <ion-select-option value="CONTRAT ESSAIE">CONTRAT ESSAIE</ion-select-option>
       </ion-select>
     </ion-item>
-    <!-- <ion-item >
-      <ion-label position="floating">Type de Contrat</ion-label>
-      <ion-select placeholder="Sélectionnez le type de contrat" [(ngModel)]="Type_contrat" required>
-        <ion-select-option value=""></ion-select-option>
-        <ion-select-option value="0">CDD</ion-select-option>
-        <ion-select-option value="1">CDI</ion-select-option>
-      </ion-select>
-    </ion-item> -->
-    <!-- <ion-item>
-      <ion-label position="floating">idEmp</ion-label>
-      <ion-input [(ngModel)]='this.idEmp'></ion-input>
+    <ion-item *ngIf="isUpdate">
+      <!-- <ion-label>Awesome Label</ion-label> -->
+      <input type="file" [(ngModel)]="fichier" (change)="selectedFile($event)">
+      <ion-button (click)="joindreFichier()"  shape="round">
+        Envoyer
+      </ion-button>
     </ion-item>
-    <ion-item>
-      <ion-label position="floating">idEmp</ion-label>
-      <ion-input [(ngModel)]='this.idEmp'></ion-input>
-    </ion-item> -->
+    <ion-item *ngIf="isUpdate">
+       <!-- stats -->
+        <div class="stats-container"  *ngIf="this.nbElement>0">
+          <div class="stat-container1" >
+            <ion-text><span class="stat">Fichiers ci-Joints ===></span></ion-text>
+            <ion-text><span class="description">{{nbElement+' Fichier(s) trouvé(s)'}}</span></ion-text>
+          </div>
+          <div class="stat-container" *ngFor="let fichier of listfile">
+            <ion-button  fill="clear" shape="round" [attr.href]='url' style="width: 80px;">
+              <ion-icon slot="start" name="document" class="stat-icon" tappable></ion-icon>
+            </ion-button>
+            <ion-text><small class="description">{{fichier.NOMFICHIER}}</small></ion-text>
+            <ion-button (click)="deleteFile(fichier)" fill="clear" shape="round">
+             <ion-icon slot="end" name="trash" color="danger"></ion-icon>
+            </ion-button>
+          </div>
+
+        </div>
+    </ion-item>
   </ion-list>
   <ion-button fill="outline"expand="block"color="primary"type="submit"(click)="onSubmit()">
     {{isUpdate ? 'Modifier' :'Enregistrer'}}
