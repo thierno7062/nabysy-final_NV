@@ -1,0 +1,20 @@
+ion-content{
+  div{
+    //pour tous title
+      &.DETAIL{
+        text-align: center;
+        ion-card{
+          ion-card-content{
+            ion-text{
+              h1{
+                font-weight: bold ;
+                font-family: Georgia, 'Times New Roman', Times, serif;
+                text-decoration: #000;
+              }
+            }
+          }
+          background-color: #2dd36f;
+        }
+      }
+  }
+}

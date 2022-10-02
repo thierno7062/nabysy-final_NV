@@ -8,7 +8,9 @@ import { AlertController, IonDatetime, IonSlides, MenuController, ModalControlle
 import { format, parseISO } from 'date-fns';
 import { IonicSelectableComponent } from 'ionic-selectable';
 import { CrudCreditPage } from 'src/app/CRUD/crud-credit/crud-credit.page';
+import { DetailCreditPage } from 'src/app/DETAIL/detail-credit/detail-credit.page';
 import { LoadingService } from 'src/app/services/loading.service';
+import { PopupModalService } from 'src/app/services/popup-modal.service';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -55,7 +57,7 @@ export class CreditPage implements OnInit {
     yesterday: any ; yesterdayToString: any; hier: any;
     listeCredit: any;
   constructor(private menu: MenuController,private loadingService: LoadingService,private http: HttpClient,
-    private modalctrl: ModalController,private alertctrl: AlertController)
+    private modalctrl: ModalController,private alertctrl: AlertController,private popupModalService: PopupModalService)
    {
     this.loadCredit();
     this.loadEmploye();
@@ -187,14 +189,15 @@ export class CreditPage implements OnInit {
         }
     });
   }
-  creditDetail(credit: any){
 
+  creditDetail(credit: any){
+    this.popupModalService.presentModalcredit(credit);
   }
   updateCredit(credit: any){
     console.log(credit);
     this.modalctrl.create({
       component: CrudCreditPage,
-      componentProps:{ creditInfo: credit }
+      componentProps:{ creditInfos: credit }
     }).then(modal =>{
       modal.present();
       return modal.onDidDismiss();

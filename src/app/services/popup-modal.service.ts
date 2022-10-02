@@ -13,6 +13,7 @@ import { PrintBulletin2Page } from '../pages/print-bulletin2/print-bulletin2.pag
 import { AvancePage } from '../CRUD/avance/avance.page';
 import { DetailSalairePage } from '../DETAIL/detail-salaire/detail-salaire.page';
 import { DetailPrimePage } from '../DETAIL/detail-prime/detail-prime.page';
+import { DetailCreditPage } from '../DETAIL/detail-credit/detail-credit.page';
 /* --------------------------------------------------------------------- */
 
 @Injectable({
@@ -108,6 +109,16 @@ export class PopupModalService {
       component: DetailSalairePage,
       componentProps:{
         data: salaire,
+      }
+
+    });
+    return await modal.present();
+  }
+  async presentModalcredit(credit: any){
+    const modal = await this.modalCtrl.create({
+      component: DetailCreditPage,
+      componentProps:{
+        data: credit,
       }
 
     });
