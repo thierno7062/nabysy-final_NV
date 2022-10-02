@@ -80,6 +80,11 @@
               </div>
             </div>
             <div>
+              <ion-text color="dark">
+                <h1>Accés au Réseaux:{{employe.ACCES_RESEAU==='0'?' NON':' OUI'}}</h1>
+              </ion-text>
+            </div>
+            <div>
               <ion-button (click)="openContrat(employe)">
                 <ion-icon name="document-text" style="font-size: 100px;"></ion-icon><br>
               </ion-button>
@@ -121,7 +126,7 @@
       </div>
     </div>
     <div>
-      <ion-button  shape="round" (click)="ajouterAcces(this.employe)">Accés</ion-button>
+      <ion-button  shape="round" (click)="ajouterAcces(this.employe)">{{employe.ACCES_RESEAU==='0'?'Créer ':'Voir '}}Accés</ion-button>
       <ion-button  shape="round" (click)="niveauAcces(this.employe)" *ngIf="this.employe.NIVEAUACCES">
         Niveau d'accés
       </ion-button>
