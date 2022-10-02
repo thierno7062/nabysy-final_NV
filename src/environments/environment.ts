@@ -7,6 +7,7 @@ export const environment = {
   production: false,
   userName: '',
   passWord: '',
+  appInfo: null,
   userProfile: null,
   endPoint:'https://technopharm.homeip.net/',
   // endPoint:'https://technopharm.homeip.net/',

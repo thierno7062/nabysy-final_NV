@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController, LoadingController, NavController, ToastController } from '@ionic/angular';
 import { environment } from 'src/environments/environment';
+import { NabysyGlobalServiceService } from '../services/nabysy-global-service.service';
 import { UserInfosServiceService } from '../user-infos-service.service';
 
 @Component({
@@ -28,7 +29,13 @@ export class LoginPage implements OnInit {
    private http: HttpClient,
     private navctrl: NavController,
     private infosUserSrv: UserInfosServiceService,
-  ) { }
+    private nabysyGSrv: NabysyGlobalServiceService,
+  ) {
+    environment.appInfo={ID:1,Nom:'Paul & Aïcha Machinerie',Adresse:'Dakar',IdResponsable:0,Tel:'+221 33 836 14 77',Email:'',Contact:''} ;
+    //console.log(environment.appInfo);
+    console.log('Chargement des données...');
+    nabysyGSrv.loadAppInfosFromAPI();
+   }
 
   ngOnInit() {
   }
@@ -105,7 +112,7 @@ export class LoginPage implements OnInit {
           console.log(environment.userProfile);
           console.log('Ouverture du Menu Principal');
           this.router.navigate(['/home']);
-        });        
+        });
       //toast.present();
       }else{
         environment.employeConnecte=null;

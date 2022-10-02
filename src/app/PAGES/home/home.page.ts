@@ -4,6 +4,7 @@ import { MenuController } from '@ionic/angular';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { LoadingService } from 'src/app/services/loading.service';
+import { NabysyGlobalServiceService } from 'src/app/services/nabysy-global-service.service';
 
 @Component({
   selector: 'app-home',
@@ -45,7 +46,7 @@ export class HomePage implements OnInit {
   listeRapports: any;
 
   constructor( private router: Router,private loadingService: LoadingService,
-    private menu: MenuController,
+    private menu: MenuController,public nbService: NabysyGlobalServiceService,
     private http: HttpClient,) {
       this.nomEmploye='';
       this.prenomEmploye='';
