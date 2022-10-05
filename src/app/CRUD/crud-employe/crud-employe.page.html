@@ -126,9 +126,9 @@
       </div>
     </div>
     <div>
-      <ion-button  shape="round" (click)="ajouterAcces(this.employe)">{{employe.ACCES_RESEAU==='0'?'Créer ':'Voir '}}Accés</ion-button>
-      <ion-button  shape="round" (click)="niveauAcces(this.employe)" *ngIf="this.employe.NIVEAUACCES">
-        Niveau d'accés
+      <ion-button  shape="round" (click)="ajouterAcces(this.employe)">{{employe.ACCES_RESEAU==='0'?'Créer un Accès au Réseau':'Modifier l\'Accès Réseau'}}</ion-button>
+      <ion-button  shape="round" (click)="niveauAcces(this.employe)" *ngIf="this.employe.ACCES_RESEAU>0">
+        Niveau d'accès {{this.employe?.NIVEAUACCES}}
       </ion-button>
     </div>
   </div>
@@ -162,6 +162,7 @@
               <ion-datetime
                 #datetime
                 [value]="dateValue" size="cover"
+                [min]="1900-01-01"
                 (ionChange)="dateChanged(datetime.value)"
                 (ionCancel)="showPicker=false;">
               </ion-datetime >
@@ -217,6 +218,8 @@
                 [value]="dateValue" size="cover"
                 (ionChange)="dateChangedFin(datetime.value)"
                 (ionCancel)="showPicker=false;">
+                [min]="2000-01-01T00:00:00"
+                [max]="2030-01-01T00:00:00"
               </ion-datetime >
                 <ion-button (click)="close()" color="danger" class="dismiss">Dismiss</ion-button>
                 <ion-button (click)="select()" color="primary" >Select</ion-button>

@@ -102,6 +102,8 @@ export class CrudEmployePage implements OnInit {
         this.sexe= 'F';
       }
     }else{
+      this.isUpdate = false;
+      this.employe.ID=0;
       this.SITUATION_FAMILLE=this.employe.SITUATION_FAMILLE; this.Salaire=0;this.SurSalaire=0;this.PART_TRIMF=0;this.PART_IRPP=0;
       this.IPRES_TAUX_PATRONAL=0;this.IPRES_TAUX_E=0;this.CSS_TAUX_ALLOCFAMILLE_PATRONAL=0; this.CSS_TAUX_ACCIDENT_PATRONAL=0;
       this.CFCE_TAUX_PATRONAL=0;this.IPRES_TAUXCOMPLCADRE_E=0;this.IPRES_TAUXCOMPLCADRE_P=0;this.sexe='F';
@@ -143,26 +145,39 @@ export class CrudEmployePage implements OnInit {
         console.log(apiUrl);
         this.http.get(apiUrl).subscribe(async data =>{
           console.log(data);
-           if(data['OK']!== '0'){
+           if(data['OK']!== 0 && data['OK'] !=='0'){
             // this.router.navigate(['/personnel']);
             // this.modalctrl.dismiss(data,'create');
+            if (data['Extra']){
+              this.isUpdate = true;
+              this.employe.ID=parseInt(data['Extra'],2);
+              this.presentToast('Opération enregistrée correctement.');
+            }{
+              console.log('Opération enregistrée mais IdEmploye non actualié');
+            }
             this.loadingService.presentLoading();
           }else{
-            this.presentToast('Veillez remplir tous les champs SVP!!!!');
+            this.presentToast('Veillez remplir tous les champs SVP!!!!',true);
           }
 
         });
       });
     }
   }
-  async presentToast(a){
+  async presentToast(a,isError=false){
+    let toastCss='custom-toast';
+    if (isError !==false){
+      toastCss='custom-toast-error';
+    }
     const toast = await this.toastctrl.create({
       message:a,
       duration: 1500,
-      position: 'top'
+      position: 'middle',
+      cssClass: toastCss
     });
     toast.present();
   }
+
   closeModal(){
     // this.modalctrl.dismiss(null, 'closed');
     this.router.navigate(['personnel']);
@@ -175,8 +190,12 @@ export class CrudEmployePage implements OnInit {
       if(this.employe){
         this.idDirection=this.employe.IdDirection;
         this.idService=this.employe.IdService;
+        if (this.employe.ID>0){
+          console.log('Une modification = Oui');
+          this.isUpdate = true;
+        }
       }
-      console.log(this.idDirection);
+      this.loadEmployeFromAPI();
 
     });
 
@@ -284,6 +303,10 @@ export class CrudEmployePage implements OnInit {
 
 
   ajouterAcces(acces: any){
+    if (this.employe.ID===0){
+      this.presentToast('Employé non existant. Vueillez créer un employé avant de lui attribuer un accès svp.',true);
+      return ;
+    }
     this.modalctrl.create({
       component: AccesUsersPage,
       componentProps: {accesInfo: acces, employeInfo: this.employe }
@@ -311,10 +334,32 @@ export class CrudEmployePage implements OnInit {
           console.log(data);
           console.log(role);
           if(role === 'create'){
-
-          this.refreshEmploye();
-        // console.log(this.usercontrat2);
-      }
+            this.employe=data;
+            this.refreshEmploye();
+        }
    });
   }
+
+  loadEmployeFromAPI(){
+    this.route.queryParams.subscribe(res =>{
+      console.log(res);
+      this.employe=res;
+      if (this.employe.ID !==0 && this.employe.ID !=='0'){
+        console.log('ID-Employé = '+this.employe.ID);
+        this.idService=this.employe.IdService;
+        this.url=environment.endPoint+'employe_action.php?Action=GET_EMPLOYE&IdEmploye='+this.employe.ID+
+        '&Token='+environment.tokenUser;
+        this.readAPI(this.url)
+        .subscribe((data) =>{
+          console.log(data);
+          if (data['0']){
+            console.log(data['0']);
+            this.employe=data['0'];
+          }
+          console.log(this.employe);
+        });
+      }
+    });
+  }
+
 }

@@ -72,3 +72,17 @@ ion-modal{
   }
 }
 
+// Configuration des Toasts
+ion-toast.custom-toast {
+  --background: #1a6d05;
+  --box-shadow: 3px 3px 10px 0 rgba(0, 0, 0, 0.2);
+  --color: #f3f2f7;
+}
+
+//Toast d'erreur
+ion-toast.custom-toast-error {
+  --background: #db2c0d;
+  --box-shadow: 3px 3px 10px 0 rgba(0, 0, 0, 0.2);
+  --color: #cfd4d4;
+}
+

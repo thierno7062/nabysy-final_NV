@@ -93,32 +93,36 @@ export class DetailEmployePage implements OnInit {
     this.userDetails= this.navParams.get('data');
     this.idDirection=this.userDetails.IdDirection;
       console.log('idDirection: '+this.idDirection);
-      this.url=environment.endPoint+'direction_action.php?Action=GET_DIRECTION&IdDirection='+this.idDirection+
-      '&Token='+environment.tokenUser;
-      this.readAPI(this.url)
-      .subscribe((data) =>{
-        this.direction=data ;
-        // this.products=data;
-        console.log(data);
-        console.log(data['0']);
-        this.nom_Direction=this.direction['0'].Nom;
-      });
+      if (this.idDirection>0){
+        this.url=environment.endPoint+'direction_action.php?Action=GET_DIRECTION&IdDirection='+this.idDirection+
+        '&Token='+environment.tokenUser;
+        this.readAPI(this.url)
+        .subscribe((data) =>{
+          this.direction=data ;
+          // this.products=data;
+          console.log(data);
+          console.log(data['0']);
+          this.nom_Direction=this.direction['0'].Nom;
+        });
+      }
   }
 
   loadService(){
     this.userDetails= this.navParams.get('data');
     this.idService=this.userDetails.IdService;
       console.log('idService: '+this.idService);
-      this.url=environment.endPoint+'service_action.php?Action=GET_SERVICE&IdService='+this.idService+
-      '&Token='+environment.tokenUser;
-      this.readAPI(this.url)
-      .subscribe((data) =>{
-        this.service=data ;
-        // this.products=data;
-        console.log(data);
-        console.log(data['0']);
-        this.nom_Service=this.service['0'].Nom;
-      });
+      if (this.idService>0){
+        this.url=environment.endPoint+'service_action.php?Action=GET_SERVICE&IdService='+this.idService+
+        '&Token='+environment.tokenUser;
+        this.readAPI(this.url)
+        .subscribe((data) =>{
+          this.service=data ;
+          // this.products=data;
+          console.log(data);
+          console.log(data['0']);
+          this.nom_Service=this.service['0'].Nom;
+        });
+      }
   }
 
   readAPI(url: string){

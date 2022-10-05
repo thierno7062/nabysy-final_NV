@@ -5,7 +5,7 @@
         Fermer
       </ion-button>
     </ion-buttons>
-    <ion-title>{{isUpdate?'Modifier Accés':'Nouveau Accés'}}</ion-title>
+    <ion-title>{{isUpdate?'Modifier l\'Accès':'Nouvel Accès'}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -16,19 +16,6 @@
         <ion-text>Employe</ion-text>
         <p *ngIf="isUpdate"><ion-text color="dark">{{this.accesInfo.Prenom+' '+this.accesInfo.Prenom}}</ion-text></p>
         <p *ngIf="!isUpdate"><ion-text color="dark">{{this.employeInfo.Prenom+' '+this.employeInfo.Nom}}</ion-text></p>
-      </ion-label>
-    </ion-item>
-    <ion-item>
-      <ion-label>
-        <ion-text >Direction</ion-text>
-        <!-- <p><ion-text color="dark">{{isUpdate? this.accesInfo.DIRECTION :this.employeInfo.DIRECTION }}</ion-text></p> -->
-        <p><ion-text color="dark">{{this.employeInfo.DIRECTION }}</ion-text></p>
-      </ion-label>
-    </ion-item>
-    <ion-item *ngIf="this.SERVICE">
-      <ion-label >
-        <ion-text >Service</ion-text>
-        <p><ion-text color="dark">{{ this.SERVICE }}</ion-text></p>
       </ion-label>
     </ion-item>
     <ion-item>
@@ -48,7 +35,7 @@
     </ion-item>
     <ion-item>
       <ion-label position="floating">ACCES_RESEAU</ion-label>
-      <ion-select placeholder="Sélectionnez le Niveau d'accés" [(ngModel)]="accesReseau" required>
+      <ion-select placeholder="Autoriser l'accès au Réseau" [(ngModel)]="accesReseau" required>
         <ion-select-option value="1">OUI</ion-select-option>
         <ion-select-option value="">NON</ion-select-option>
       </ion-select>

@@ -71,24 +71,35 @@ export class NiveauAccesPage implements OnInit {
         '&NIVEAUACCES='+this.niveauAcces+'&Token='+environment.tokenUser;
         // ---------------
         console.log(apiUrl);
-        console.log(this.niveauAcces);
-
+        //console.log(this.niveauAcces);
         this.http.get(apiUrl).subscribe(async data =>{
           console.log(data);
-          if(data['OK']!== '0'){
-            // this.router.navigate(['/personnel']);
+          //console.log(data['OK']);
+          //const typeOK=typeof data['OK'];
+          //console.log(typeOK);
+          if(data['OK'] !== 0 && data['OK'] !=='0'){
+            console.log(data['Extra']);
+            this.presentToast(data['Extra']);
             this.modalctrl.dismiss(data,'create');
+          }else{
+            console.log('Erreur: '+data['TxErreur']);
+            this.presentToast(data['TxErreur'],true);
           }
-
         });
       });
     }
   }
-  async presentToast(a){
+
+  async presentToast(a,isError=false){
+    let toastCss='custom-toast';
+    if (isError !==false){
+      toastCss='custom-toast-error';
+    }
     const toast = await this.toastctrl.create({
       message:a,
       duration: 1500,
-      position: 'top'
+      position: 'middle',
+      cssClass: toastCss
     });
     toast.present();
   }

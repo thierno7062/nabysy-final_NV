@@ -48,7 +48,7 @@ export class AccesUsersPage implements OnInit {
       console.log(this.idEmp);
     }
     if(this.isUpdate===false){
-      console.log('Pas d\'accés pour '+this.employeInfo.Prenom+' '+this.employeInfo.Nom);
+      console.log('Pas d\'accès pour '+this.employeInfo.Prenom+' '+this.employeInfo.Nom);
     }
   }
   closeModal(){
@@ -80,26 +80,35 @@ export class AccesUsersPage implements OnInit {
           txprofile='&PROFILE='+this.profile;
         }
         const apiUrl=environment.endPoint+'employe_action.php?Action=SAVE_EMPLOYE'+'&IdEmploye='+this.idEmp+
-        '&LOGIN='+this.login+'&PASSWORD='+this.password+'&PROFILE='+this.profile+
+        '&LOGIN='+this.login+'&PASSWORD='+this.password+txprofile+
         '&ACCES_RESEAU='+this.accesReseau+'&Token='+environment.tokenUser;
         // ---------------
         console.log(apiUrl);
         this.http.get(apiUrl).subscribe(async data =>{
           console.log(data);
-          if(data['OK']!== '0'){
+          if(data['OK']!== 0 && data['OK'] !=='0'){
             // this.router.navigate(['/personnel']);
+            this.presentToast('Opération terminée correctement.');
             this.modalctrl.dismiss(data,'create');
+          }else{
+            //On affiche l' Erreur
+            this.presentToast(data['TxErreur'],true);
           }
 
         });
       });
     }
   }
-  async presentToast(a){
+  async presentToast(a,isError=false){
+    let toastCss='custom-toast';
+    if (isError !==false){
+      toastCss='custom-toast-error';
+    }
     const toast = await this.toastctrl.create({
       message:a,
       duration: 1500,
-      position: 'top'
+      position: 'middle',
+      cssClass: toastCss
     });
     toast.present();
   }

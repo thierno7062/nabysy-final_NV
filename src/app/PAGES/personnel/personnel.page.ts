@@ -91,7 +91,7 @@ export class PersonnelPage implements OnInit {
   removeEmploye(employe: any){
     this.alertctrl.create({
       header:'Suppresion',
-      message:'voulez vous supprimer ?',
+      message:'voulez vous supprimer '+employe.Prenom+' '+employe.Nom+' de la liste du personnel de votre structure ?',
       buttons:[{
         text:'oui',
         handler:()=>new Promise (() =>{
@@ -110,7 +110,6 @@ export class PersonnelPage implements OnInit {
                 if (pos>-1){
                   this.listeEmploye.splice(pos,1);
                   this.refreshPerson();
-
                  }
               }else{
                 console.log(data['OK']);
@@ -118,7 +117,7 @@ export class PersonnelPage implements OnInit {
             });
           })
       },
-       {text:'No'}
+       {text:'NON'}
     ]
     }).then(alertE1 =>alertE1.present()) ;
 
@@ -127,24 +126,6 @@ export class PersonnelPage implements OnInit {
   }
 
   addEmploye(){
-   /*  this.modalctrl.create({
-      component: CrudEmployePage
-    }).
-    then(modal =>{
-      modal.present();
-      return modal.onDidDismiss();
-    }).then(({data, role})=> {
-      console.log(data);
-      console.log(role);
-      if(role === 'create'){
-        const newIdEmploye=data.Extra;
-        this.service.get(newIdEmploye).subscribe(async newdata =>{
-            this.listeEmploye.push(newdata[0]);
-            //console.log(this.listeEmploye);
-            this.refreshPerson();
-        });
-      }
-    }); */
     this.router.navigateByUrl('/crud-employe');
   }
 
