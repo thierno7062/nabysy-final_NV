@@ -59,6 +59,7 @@
       <!-- location -->
       <div class="location">
         <ion-text> Adresse: <span class="emphasis">{{' '+employe.Adresse}}</span> </ion-text>
+
       </div>
 
       <!-- talent scout -->
@@ -75,6 +76,7 @@
                   </ion-fab-button> -->
 
               <div class="text-container">
+                <ion-text><span class="name">ID: {{employe.ID}}</span></ion-text>
                 <ion-text><span class="name">{{employe.DateEmbauche}}</span></ion-text>
                 <ion-text><span class="description">{{employe?.Fonction}}</span></ion-text>
               </div>
@@ -130,6 +132,11 @@
       <ion-button  shape="round" (click)="niveauAcces(this.employe)" *ngIf="this.employe.ACCES_RESEAU>0">
         Niveau d'accès {{this.employe?.NIVEAUACCES}}
       </ion-button>
+      <ion-chip color="danger">Pointage Biométrique Obligatoir: 
+      <ion-select placeholder="Sélectionnez" [(ngModel)]="employe.CAN_IGNORE_POINTAGE" required>
+        <ion-select-option value="0">OUI</ion-select-option>
+        <ion-select-option value="1">NON</ion-select-option>
+      </ion-select></ion-chip>
     </div>
   </div>
   <form >
@@ -140,11 +147,11 @@
       <ion-list >
         <ion-item>
           <ion-label position="floating">Prenom</ion-label>
-          <ion-input [(ngModel)]='this.prenom'  type="text" required></ion-input>
+          <ion-input [(ngModel)]='this.employe.Prenom'  type="text" required></ion-input>
         </ion-item>
         <ion-item>
           <ion-label position="floating">Nom</ion-label>
-          <ion-input [(ngModel)]='this.nom' type="text" required ></ion-input>
+          <ion-input [(ngModel)]='this.employe.Nom' type="text" required ></ion-input>
         </ion-item>
         <!-- <ion-item>
           <ion-label position="floating">Date de Naissance</ion-label>
@@ -153,7 +160,7 @@
 
         <ion-item id="open-modal" >
           <ion-label position="floating">Date de Naissance</ion-label>
-          <ion-input tappable [(ngModel)]='this.formattedString' required></ion-input>
+          <ion-input tappable [(ngModel)]='this.employe.DATENAIS' required></ion-input>
           <ion-icon icon="calendar-outline" slot="end" color="primary" tappable></ion-icon>
         </ion-item>
         <ion-modal trigger="open-modal" mode="md" class="open-modal">
@@ -173,15 +180,15 @@
         </ion-modal>
         <ion-item>
           <ion-label position="floating">Fonction</ion-label>
-          <ion-input [(ngModel)]='this.fonction' required></ion-input>
+          <ion-input [(ngModel)]='this.employe.Fonction' required></ion-input>
         </ion-item>
         <ion-item>
           <ion-label position="floating">Adresse</ion-label>
-          <ion-input [(ngModel)]='this.adresse'required></ion-input>
+          <ion-input [(ngModel)]='this.employe.Adresse'required></ion-input>
         </ion-item>
         <ion-item>
           <ion-label position="floating">Téléphone</ion-label>
-          <ion-input [(ngModel)]='this.telephone' value="+221" required></ion-input>
+          <ion-input [(ngModel)]='this.employe.Tel' value="+221" required></ion-input>
         </ion-item>
         <ion-item>
           <ion-label>Sexe</ion-label>
@@ -206,7 +213,7 @@
         </ion-item> -->
         <ion-item id="open-modal2">
           <ion-label position="floating">Date d'embauche</ion-label>
-          <ion-input tappable [(ngModel)]='this.formattedString2' type="text"></ion-input>
+          <ion-input tappable [(ngModel)]='this.employe.DateEmbauche' type="text"></ion-input>
           <ion-icon icon="calendar-outline" slot="end" color="primary" tappable></ion-icon>
         </ion-item>
 
@@ -219,7 +226,7 @@
                 (ionChange)="dateChangedFin(datetime.value)"
                 (ionCancel)="showPicker=false;">
                 [min]="2000-01-01T00:00:00"
-                [max]="2030-01-01T00:00:00"
+                [max]="2100-01-01T00:00:00"
               </ion-datetime >
                 <ion-button (click)="close()" color="danger" class="dismiss">Dismiss</ion-button>
                 <ion-button (click)="select()" color="primary" >Select</ion-button>

@@ -29,19 +29,20 @@ export class CrudEmployePage implements OnInit {
   // @Input() employe: any;
   isUpdate= false;
   // eslint-disable-next-line @typescript-eslint/naming-convention
-  nom: '';  prenom: '';  fonction: ''; adresse: ''; telephone: string;  sexe: string;
+  nom: '';  prenom: '';  fonction: ''; adresse: string; telephone: string;  sexe: string;
     idDirection: number;  idService: string;  hideMe: boolean;  message: boolean; hideMe2: boolean;
   message_txt_M: boolean;  message_txt_F: boolean;  url: string ; id: number;  employe: any;  infoEmploye: any;
   direction: any; service: any; nom_Direction: string;nom_Service: string;SITUATION_FAMILLE: string; Salaire: number; SurSalaire: number;
   NbPerformance: number; PART_TRIMF: number;PART_IRPP: number ;IPRES_TAUX_PATRONAL: number;IPRES_TAUX_E: number;
   CSS_TAUX_ALLOCFAMILLE_PATRONAL: number;CSS_TAUX_ACCIDENT_PATRONAL: number;CFCE_TAUX_PATRONAL: number;IPRES_TAUXCOMPLCADRE_E: number;
   IPRES_TAUXCOMPLCADRE_P: number;
+  CAN_IGNORE_POINTAGE: number;
 
   /*
   **DATE TIME
   */
   selectedDate= format(new Date(),'yyyy-MM-dd');
-   selectedDate2= format(new Date(),'yyyy-MM-dd');
+  selectedDate2= format(new Date(),'yyyy-MM-dd');
   //  modes = ['date', 'month', 'month-year','year'];
    selectedMode= 'date';
    showPicker = false;
@@ -63,11 +64,12 @@ export class CrudEmployePage implements OnInit {
 
   ngOnInit() {
     this.infoEmp();
-  this.createForm();
+    this.createForm();
   }
   infoEmp(){
     if (this.employe.ID>0){
-      console.log(this.employe.Tel);
+      console.log('IdEmployé: '+this.employe.ID);
+      this.id=this.employe.ID ;
       this.isUpdate = true;
       this.nom=this.employe.Nom; this.prenom= this.employe.Prenom; this.fonction= this.employe.Fonction;
       this.adresse= this.employe.Adresse; this.telephone= this.employe.Tel; this.sexe= this.employe.Sexe;
@@ -80,6 +82,8 @@ export class CrudEmployePage implements OnInit {
       this.IPRES_TAUX_E=this.employe.IPRES_TAUX_E;this.CSS_TAUX_ALLOCFAMILLE_PATRONAL=this.employe.CSS_TAUX_ALLOCFAMILLE_PATRONAL;
       this.CSS_TAUX_ACCIDENT_PATRONAL=this.employe.CSS_TAUX_ACCIDENT_PATRONAL;this.CFCE_TAUX_PATRONAL=this.employe.CFCE_TAUX_PATRONAL;
       this.IPRES_TAUXCOMPLCADRE_E=this.employe.IPRES_TAUXCOMPLCADRE_E;this.IPRES_TAUXCOMPLCADRE_P=this.employe.IPRES_TAUXCOMPLCADRE_P;
+      this.CAN_IGNORE_POINTAGE=this.employe.CAN_IGNORE_POINTAGE;
+
       if(this.employe.IdDirection>0 ){
         this.hideMe = true;
       }else if(this.employe.IdService>0){
@@ -104,10 +108,19 @@ export class CrudEmployePage implements OnInit {
     }else{
       this.isUpdate = false;
       this.employe.ID=0;
+      this.id=0;
       this.SITUATION_FAMILLE=this.employe.SITUATION_FAMILLE; this.Salaire=0;this.SurSalaire=0;this.PART_TRIMF=0;this.PART_IRPP=0;
       this.IPRES_TAUX_PATRONAL=0;this.IPRES_TAUX_E=0;this.CSS_TAUX_ALLOCFAMILLE_PATRONAL=0; this.CSS_TAUX_ACCIDENT_PATRONAL=0;
       this.CFCE_TAUX_PATRONAL=0;this.IPRES_TAUXCOMPLCADRE_E=0;this.IPRES_TAUXCOMPLCADRE_P=0;this.sexe='F';
       this.SITUATION_FAMILLE='Célibataire';this.telephone='+221';
+      this.CAN_IGNORE_POINTAGE=0;
+      this.employe.DateEmbauche='1900-01-01';
+      this.employe.DATENAIS='1900-01-01';
+      this.employe.Sexe='M' ;
+      this.employe.Adresse='' ;
+      this.employe.Tel='+221';
+      this.employe.Fonction='';
+
     }
   }
   onSubmit(){
@@ -115,7 +128,7 @@ export class CrudEmployePage implements OnInit {
       this.presentToast('Veillez mettre le nom SVP!!!!');
     }else if(this.prenom===''){
       this.presentToast('Veillez mettre votre prénom SVP!!!!!!');
-    }else if(this.adresse===''){
+    }else if(this.employe.Adresse===''){
       this.presentToast('Veillez mettre l\'adresse SVP!!!!');
     }else if (this.telephone===''){
       this.presentToast('Veillez indiquer le numéro SVP!!!!');
@@ -134,13 +147,15 @@ export class CrudEmployePage implements OnInit {
         if (this.service){
           TxService='&IdService='+this.idService;
         } */
-        const apiUrl=environment.endPoint+'employe_action.php?Action=SAVE_EMPLOYE'+TxId+'&Nom='+this.nom+'&Prenom='+this.prenom+
-        '&Fonction='+this.fonction+'&Sexe='+this.sexe+'&Adresse='+this.adresse+'&Tel='+this.telephone.trim()+'&DATENAIS='+ this.selectedDate+
-        '&DateEmbauche='+this.selectedDate2+'&Salaire='+this.Salaire+'&SurSalaire='+this.SurSalaire+'&PART_TRIMF='+this.PART_TRIMF+
+        const apiUrl=environment.endPoint+'employe_action.php?Action=SAVE_EMPLOYE'+TxId+'&Nom='+this.employe.Nom+'&Prenom='+this.employe.Prenom+
+        '&Fonction='+this.employe.Fonction+'&Sexe='+this.employe.Sexe+'&Adresse='+this.employe.Adresse+'&Tel='+this.employe.Tel+'&DATENAIS='+ this.employe.DATENAIS+
+        '&DateEmbauche='+this.employe.DateEmbauche+'&Salaire='+this.employe.Salaire+'&SurSalaire='+this.employe.SurSalaire+'&PART_TRIMF='+this.PART_TRIMF+
         '&PART_IRPP='+ this.PART_IRPP+'&IPRES_TAUX_PATRONAL='+this.IPRES_TAUX_PATRONAL+'&IPRES_TAUX_E='+this.IPRES_TAUX_E+
         '&CSS_TAUX_ALLOCFAMILLE_PATRONAL='+this.CSS_TAUX_ALLOCFAMILLE_PATRONAL+'&CSS_TAUX_ACCIDENT_PATRONAL='+this.CSS_TAUX_ACCIDENT_PATRONAL+
         '&CFCE_TAUX_PATRONAL='+this.CFCE_TAUX_PATRONAL+'&IPRES_TAUXCOMPLCADRE_E='+this.IPRES_TAUXCOMPLCADRE_E+
-        '&IPRES_TAUXCOMPLCADRE_P='+this.IPRES_TAUXCOMPLCADRE_P+'&SITUATION_FAMILLE='+this.SITUATION_FAMILLE+'&Token='+environment.tokenUser;
+        '&IPRES_TAUXCOMPLCADRE_P='+this.IPRES_TAUXCOMPLCADRE_P+'&SITUATION_FAMILLE='+this.SITUATION_FAMILLE+
+        '&CAN_IGNORE_POINTAGE='+this.employe.CAN_IGNORE_POINTAGE+
+        '&Token='+environment.tokenUser;
         // ---------------
         console.log(apiUrl);
         this.http.get(apiUrl).subscribe(async data =>{
@@ -148,11 +163,11 @@ export class CrudEmployePage implements OnInit {
            if(data['OK']!== 0 && data['OK'] !=='0'){
             // this.router.navigate(['/personnel']);
             // this.modalctrl.dismiss(data,'create');
-            if (data['Extra']){
+            if (parseInt(data['Extra'],2) >0 ){
               this.isUpdate = true;
               this.employe.ID=parseInt(data['Extra'],2);
               this.presentToast('Opération enregistrée correctement.');
-            }{
+            }else{
               console.log('Opération enregistrée mais IdEmploye non actualié');
             }
             this.loadingService.presentLoading();
@@ -277,16 +292,18 @@ export class CrudEmployePage implements OnInit {
       this.formattedString= format(parseISO(value),  'yyyy-MM-dd');
       this.showPicker= false;
       this.selectedDate=format(parseISO(value),'yyyy-MM-dd');
-      }
-      dateChangedFin(value){
+      this.employe.DATENAIS=format(parseISO(value),'yyyy-MM-dd');
+    }
+    dateChangedFin(value){
        this.dateValue= value;
       this.formattedString2= format(parseISO(value),  'yyyy-MM-dd');
       this.showPicker= false;
       this.selectedDate2=format(parseISO(value),'yyyy-MM-dd');
-      }
-      close(){
+      this.employe.DateEmbauche=format(parseISO(value),'yyyy-MM-dd');
+    }
+    close(){
         this.datetime.cancel(true);
-      }
+    }
       select(){
         this.datetime.confirm(true);
 
