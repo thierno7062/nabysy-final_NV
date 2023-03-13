@@ -107,15 +107,16 @@ export class CrudEmployePage implements OnInit {
       }
     }else{
       this.isUpdate = false;
-      this.employe.ID=0;
+      this.employe= {ID:0,DATENAIS:'1970-01-01', DateEmbauche:'2020-01-01'};
+      //this.employe.ID=0;
       this.id=0;
       this.SITUATION_FAMILLE=this.employe.SITUATION_FAMILLE; this.Salaire=0;this.SurSalaire=0;this.PART_TRIMF=0;this.PART_IRPP=0;
       this.IPRES_TAUX_PATRONAL=0;this.IPRES_TAUX_E=0;this.CSS_TAUX_ALLOCFAMILLE_PATRONAL=0; this.CSS_TAUX_ACCIDENT_PATRONAL=0;
       this.CFCE_TAUX_PATRONAL=0;this.IPRES_TAUXCOMPLCADRE_E=0;this.IPRES_TAUXCOMPLCADRE_P=0;this.sexe='F';
       this.SITUATION_FAMILLE='Célibataire';this.telephone='+221';
       this.CAN_IGNORE_POINTAGE=0;
-      this.employe.DateEmbauche='1900-01-01';
-      this.employe.DATENAIS='1900-01-01';
+      //this.employe.DateEmbauche='1900-01-01';
+      //this.employe.DATENAIS='1900-01-01';
       this.employe.Sexe='M' ;
       this.employe.Adresse='' ;
       this.employe.Tel='+221';
