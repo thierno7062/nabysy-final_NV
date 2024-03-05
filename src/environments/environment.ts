@@ -9,7 +9,8 @@ export const environment = {
   passWord: '',
   appInfo: null,
   userProfile: null,
-  endPoint:'https://technoweb.homeip.net:8080/',
+  endPoint: 'https://cloud-549579568.onetsolutions.network/nabysyrhrs/',
+  //endPoint:'https://technoweb.homeip.net/nabysyrhrs/',
   //endPoint: 'https://groupe-pam.net/nabysyrhrs/',
   employeConnecte: null,
   tokenUser:''

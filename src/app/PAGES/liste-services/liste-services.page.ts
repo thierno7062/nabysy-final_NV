@@ -199,10 +199,13 @@ export class ListeServicesPage implements OnInit {
       if(role === 'create'){
         const newIdService=data.Extra;
         this.getService(newIdService).subscribe(async newdata =>{
-          this.listeService.push(newdata[0]);
-          this.refreshServices();
+          if (newdata){
+            this.listeService.push(newdata[0]);
             console.log(this.listeService);
-
+          }
+          this.refreshDirection();
+          this.refreshSousDirection();
+          //this.refreshServices();
         });
       }
     });
@@ -288,8 +291,14 @@ export class ListeServicesPage implements OnInit {
       });
   }
   doRefresh(event){
-    this.refreshServices();
+    this.refreshAllinfos();
     event.target.complete();
+  }
+
+  refreshAllinfos(){
+    this.refreshDirection();
+    this.refreshSousDirection();
+    this.refreshServices();
   }
 
 
